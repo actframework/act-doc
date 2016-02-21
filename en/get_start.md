@@ -1,6 +1,6 @@
 # Getting start with ActFramework
 
-## Prerequisites
+## <a name="prerequisites"></a>Prerequisites
 
 You need JDK and Maven to create Act application. An internet connection should be ready for downloading libraries from maven central repository
 
@@ -17,7 +17,7 @@ You can download JDK from [Java official web site](http://www.oracle.com/technet
 
 You can download maven from [Maven official web site](http://maven.apache.org/). Follow the [instructions](http://maven.apache.org/install.html) to install maven on your operating system
 
-## Create the "Hello world" application
+## <a name="create_hello_world_app"></a>Create the "Hello world" application
 
 Act use maven to build project. The easiest way to start your Act application is to get a copy of [the sample pom file](https://gist.github.com/greenlaw110/5d06ebd848c87c46302d) and use it to create the application.
 
