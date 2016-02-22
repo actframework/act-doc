@@ -231,9 +231,69 @@ If you were a minimalist like me, you might feel things like `Controller.Util.re
 
     ![simplify_controller_util_2](../img/getting_start/simplify_controller_util_2.png)
 
-In either case, you can write more expressive way to render the result.
+In either case, you can write in a more expressive way to render the result.
 
-Now let's wrap up with the section. In this section you have learned:
+## <a name="anatomy"></a>The anatomy of a Act application
+
+Act use the standard maven layout to organize the project with a few specific rule. After first compile an Act application looks like this:
+
+```
+.
+├── pom.xml
+├── src
+│   ├── main
+│   │   ├── asset                               -> public assets, can be accessed via "/asset"
+│   │   │   ├── css                             -> CSS files
+│   │   │   ├── img                             -> Image files
+│   │   │   └── js                              -> Javascript files
+│   │   ├── java                                -> Java sources
+│   │   │   └── com
+│   │   │       └── mycom
+│   │   │           └── myprj
+│   │   │               ├── Application.java    -> application entry
+│   │   │               ├── conf                -> source code built-in configuration
+│   │   │               ├── controller          -> controllers
+│   │   │               ├── event               -> events and event listeners
+│   │   │               ├── mail                -> mailers
+│   │   │               ├── model               -> models and data access objects
+│   │   │               ├── sys                 -> system level utilities
+│   │   │               └── util                -> general utilities
+│   │   └── resources                           -> resource files
+│   │       ├── conf                            -> configuration file root
+│   │       │   ├── common                      -> common configurations applied to all profiles
+│   │       │   ├── sit                         -> "sit" profile configurations that overwrite commond configurations
+│   │       │   └── dev                         -> "dev" profile configurations that overwrite commond configurations
+│   │       ├── messages.properties             -> message resource files
+│   │       ├── routes                          -> route table file
+│   │       └── rythm                           -> RythmEngine template root
+│   │           ├── com
+│   │           │   └── mycomp
+│   │           │       └── myprj
+│   │           │           ├── controller      -> templates for controller actions
+│   │           │           └── mail            -> templates for mailer actions
+│   │           └── __global.rythm              -> global template utilities
+│   └── test
+│       ├── java                                -> unit test java sources
+│       │   └── com
+│       │       └── mycom
+│       │           └── myprj
+│       └── resources                           -> unit test resources
+└── target                                      -> maven build target root
+    ├── dist                                    -> where the build dist package stored
+    └── tmp
+        └── uploads                             -> the temporary dir to store the uploaded files
+```
+
+Note your application might look a little bit different from above in that
+
+1. the package structure is totally project specifc. E.g. you might not ave a `controller` folder, instead you have `service` folder to put in all the RESTful service classes. And your business logic layer might not be organized in one `model` folder, instead in a set of different packages. In general Act does not define how your organize your java source package, you are in complete freedom to do that based on your project needs.
+1. The `common` configuration folder is a convention used by Act to look for default configurations. However the `sit` and `dev` are the profiles defined by yourself, you are free to give them a different name or add other profiles e.g. `uat` and `prod` etc. It is totally okay if you decide not to define profile and just use `common` configurations.
+1. The `route` file is optional. You can just rely on the annotation based route. However if `route` table is provided it allows to overwrite the annotation based route definition
+
+
+## Wrap up
+
+In this section you have learned:
 
 1. Getting Prerequisites ready
 1. Generating project skeleton using maven and the sample pom file
@@ -241,4 +301,4 @@ Now let's wrap up with the section. In this section you have learned:
 1. Adding action handlers
 1. Using template to render complex response
 1. Handling request parameter
-
+1. The anatomy of an Act application
