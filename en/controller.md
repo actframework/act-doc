@@ -41,6 +41,28 @@ If you haven't define any template, the handler will be a dumb handler which ret
 
 If you have a template file created in proper location, ActFramework will render that file and put the render result into the response body
 
+**Tips** Although it does not require a controller to extend any class, it is good to have your controller class to extend `act.controller.Controller.Util` to get a set of handy utilities that helps to return responses. If your controller already extends other classes, you can use `static import` to achieve the same effect as demonstrated below:
+
+1. Extend `act.controller.Controller.Util`:
+
+    ```java
+    import act.Controller;
+    public class MyController extends Controller.Util {
+        ...
+    } 
+    ``` 
+
+1. import static:
+
+    ```java
+    import static act.Controller.Util.*;
+    public class MyController extends Controller.Util {
+        ...
+    } 
+    ```
+
+**Note** In the following section of this page, it assumes the controller code has extended the `Controller.Util` class or has the static import statement as shown above.
+
  
 ## <a name="parameter"></a>Getting parameters
 
@@ -168,7 +190,7 @@ The above `createOrder` method is also able to bind the JSON body:
 
 With ActFramework you have multiple ways of specifying response to be sent back, all of them are easy to understand and very expressive.
 
-### Implicit 200 Okay
+### <a name="implicity-200"></a>Implicit 200 Okay
 
 If there is no return type and thrown exception on an action handler method, ActFramework will automatically return an empty `200 Okay` response unless a template has been defined for the method. This is useful when the action handler is to servicing a RESTful POST or PUT request, e.g.
 
@@ -179,7 +201,7 @@ public void createOrder(Order order) {
 }
 ```
 
-### Explicity 200 Okay
+### <a name="explicity-200"></a>Explicity 200 Okay
 
 For developer who really want to make everything be explicity, here are two ways to create a `200 Okay` response:
 
@@ -190,7 +212,7 @@ For developer who really want to make everything be explicity, here are two ways
     public Result createOrder(Order order) {
         orderService.save(order);
         return ok();
-        // or Ok();
+        // or return new Ok();
     }
     ```
 
@@ -213,16 +235,58 @@ You can even throw out the result implicitly
         ok();
     }
     ```
-**Note** ActFramework will enhance your controller action method, so that if a `Result` type exception has been returned in the source code be thrown out automatically
+**Note** ActFramework will enhance your controller action method, so that if a `Result` type exception has been returned in the source code be thrown out automatically.
 
-### Returning data to response
+### <a name="return-404"></a>Return 404 Not Found
+
+The server respond with `404 NotFound` automatically when it cannot find a handler to service an incoming request in route table. However there are cases that your business logic needs to return a 404 response, e.g. when a query to an order by order ID cannot locate the order in the database with the given order ID, here is what you can do:
+
+```java
+@GetAction("/order/{orderId}")
+public Order getOrder(String orderId) {
+    Order order = dao.findById(orderId);
+    if (null == order) {
+        throw new NotFound();
+    }
+}
+```
+
+A more expressive way to do that is:
+
+```java
+@GetAction("/order/{orderId}")
+public Order getOrder(String orderId) {
+    Order order = dao.findById(orderId);
+    notFoundIfNull(order);
+}
+```
+
+The utmost expressive way is:
+
+```java
+@GetAction("/order/{orderId}")
+public Order getOrder(String orderId) {
+    return dao.findById(orderId);
+}
+```
+
+ActFramework will check if there is return type on action handler signature and it returns `null` then 404 will be send to response automatically.
+
+
+
+### <a name="return-400"></a>Return 400 Bad Request
+
+
+
+
+### <a name="return-data"></a>Returning data to response
 
 ActFramework does not require you to return a `Result` type in your action handler if there are data needs to be returned although you are free to do that. The following two action handlers have the same effect when the `accept` header is `application/json`:
 
 ```java
 @GetAction("/order/{orderId}")
 public Order getOrder(String orderId) {
-    return orderService.findById(orderId);
+    return dao.findById(orderId);
 }
 ```
 
@@ -239,7 +303,7 @@ However the first style is recommended because:
 1. It is simpler
 1. It allow the flexibility of content-negotiation
 
-### Render template
+### <a name="render-template"></a>Render template
 
 For classic MVC application it always needs to render response via templating solution. There are three ways to render through templating.
 
