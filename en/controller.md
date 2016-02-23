@@ -272,12 +272,13 @@ public Order getOrder(String orderId) {
 
 ActFramework will check if there is return type on action handler signature and it returns `null` then 404 will be send to response automatically.
 
-
-
 ### <a name="return-400"></a>Return 400 Bad Request
 
+TBD
 
+### <a name="return-400"></a>Return other error request
 
+TBD
 
 ### <a name="return-data"></a>Returning data to response
 
@@ -338,3 +339,4 @@ For classic MVC application it always needs to render response via templating so
     As shown above, when the first parameter passed to `renderTemplate` is a String literal, (not String variable), it will treated as template path, instead of render argument
     
 
+TBD
