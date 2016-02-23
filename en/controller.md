@@ -272,11 +272,25 @@ public Order getOrder(String orderId) {
 
 ActFramework will check if there is return type on action handler signature and it returns `null` then 404 will be send to response automatically.
 
-### <a name="return-400"></a>Return 400 Bad Request
-
-TBD
-
 ### <a name="return-400"></a>Return other error request
+
+Here is the demo code shows how to return response with different HTTP status code
+
+```java
+public void foo(int status) {
+    badRequestIf(400 == status);
+    unauthorizedIf(401 == status);
+    forbiddenIf(403 == status);
+    notFoundIf(404 == status);
+    conflictIf(409 == status);
+    // not anyone of the above?
+    throw ActServerError.of(status);
+} 
+```
+
+### <a name="exception-mapping"></a>Automatic map Java Exception to Response
+
+Got exception not handled? ActFramework map them to response automatically!
 
 TBD
 
