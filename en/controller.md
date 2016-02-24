@@ -2,7 +2,7 @@
 
 ActFramework provides maximum flexibility in creating controller and action handlers.
 
-## <a name="term"></a>Terms
+## <a name="term"></a>Concept
 
 1. **Controller**. Controller refers to a class that contains one or more action handlers. 
     
@@ -292,7 +292,11 @@ public void foo(int status) {
 
 Got exception not handled? ActFramework map them to response automatically!
 
-TBD
+1. `IllegalArgumentException` -> 400 Bad Request
+1. `IndexOutOfBoundsException` -> 400 Bad Request
+1. `IllegalStateException` -> 409 Conflict
+1. `UnsupportedOperationException` -> 501 Not Implemented
+1. Other uncaught exception -> 500 Internal Error
 
 ### <a name="return-data"></a>Returning data to response
 
@@ -353,4 +357,89 @@ For classic MVC application it always needs to render response via templating so
     As shown above, when the first parameter passed to `renderTemplate` is a String literal, (not String variable), it will treated as template path, instead of render argument
     
 
-TBD
+### <a name="render-binary"></a>Render binary data
+
+1. Render binnary as stream embedded in browser (e.g. a PDF or image):
+
+    ```java
+    @GetAction("/user/{userId}/avatar")
+    public Result getAvatar(String userId) {
+        User user = userDao.findById(userId);
+        return binary(user.getAvatarFile());
+    }
+    ```
+    
+2. Render binnary as a download file
+
+    ```java
+    @GetAction("/invoice/{id}/photoCopy")
+    public Result downloadInvoicePhotoCopy(String id) {
+        Invoice invoice = dao.findById(id);
+        return download(invoice.getPhoto());
+    }
+    ```
+
+## <a name="content-negotiation"></a>Content awareness
+
+ActFramework detects the request's `accept` header and render content accordingly
+
+```java
+@GetAction("/person/{id}")
+public Person getPerson(String id) {
+    return dao.findById(id);
+}
+```
+
+With the action handler code showed above, if the request's `Accept` header is "application/json", the response will be something like:
+
+```
+{
+  "firstName": "John",
+  "lastName": "Smith"
+}
+```
+
+While if the header is `text/html` or `text/plain`, the response will just be the plain String like
+
+```
+John Smith
+```
+
+You can define template files with different suffix if you need tweak the default rendered result:
+
+`getPerson.html`
+
+```
+@args Person result
+<div>
+  <span class="label">First name</span><span>@result.getFirstName()</span>
+</div>
+<div>
+  <span class="label">Last name</span><span>@result.getLastName()</span>
+</div>
+```
+
+`getPerson.json`
+
+```
+@args Person result
+{
+    "firstName": "@result.getFirstName()",
+    "lastName: "@result.getLastName()"
+}
+```
+
+ActFramework will pickup the propery template file based on the `Accept` header
+
+## Wrap up
+
+In the section we have explained/demonstrates:
+
+1. The concept of `Controller` and `Action handler` in ActFramework
+1. How to write a simple controller
+1. How to handle request parameters includingn binding request parameters to POJO instance
+1. How to respond request with different status code
+1. How to return data
+1. How to find/specify template to render the response
+1. How to get or download binary data
+1. How `Accept` header impact ActFramework's behavior 
