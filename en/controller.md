@@ -283,7 +283,7 @@ public void foo(int status) {
     forbiddenIf(403 == status);
     notFoundIf(404 == status);
     conflictIf(409 == status);
-    // not anyone of the above?
+    // none of the above?
     throw ActServerError.of(status);
 } 
 ```
