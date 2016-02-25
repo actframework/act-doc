@@ -23,6 +23,12 @@ Let's create a simple Contact model with three properties:
 ```java
 package com.mycom.myprj;
 
+import act.db.DB;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+
 @Entity(name = "ctct")
 public class Contact {
     @Id
