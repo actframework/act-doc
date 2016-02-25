@@ -59,10 +59,10 @@ public Profile getProfile(String id) {
 }
 ```
 
-The above code allows the front end send request to `getProfile` in following two styles:
+The above code allows the front end send request to `getProfile` using two different styles:
 
-1. `$.get('/profile/' + id, function(profile) {...})`
-2. `$.get('/profile', {id: id}, function(profile){...})`
+1. `/profile/<profile_id>`
+2. `/profile?id=<profile_id>`
 
 ## The `routes` file
 

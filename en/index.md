@@ -15,11 +15,12 @@ ActFramework is created to make programming MVC application in Java easy and fun
 
 1. [Controller](controller.md)
 1. [Routing](routing.md)
-1. Model and DAO
+1. [Model and DAO](model.md)
 1. Templating
 
 ## Advanced Topics
 
+1. Interceptors
 1. Handling file upload
 1. Jobs and schedulers
 1. Events
