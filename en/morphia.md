@@ -52,7 +52,7 @@ public class Product extends MorphiaModel<Product> {
 
 Now that the model has been defined, let's take a look at how to use built-in DAO to do CRUD operations.
 
-```
+```java
 package com.mycom.myprj;
 
 import act.controller.Controller;
