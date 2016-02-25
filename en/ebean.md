@@ -16,11 +16,11 @@ In order to use Ebean you need to add the following dependencies in your `pom.xm
 
 Let's create a simple Contact model with three properties:
 
-1. firstName
-1. lastName
-1. address
+1. `firstName`
+1. `lastName`
+1. `address`
 
-```
+```java
 package com.mycom.myprj;
 
 @Entity(name = "ctct")

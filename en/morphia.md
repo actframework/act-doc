@@ -16,10 +16,10 @@ In order to use Morphia you need to add the following dependencies in your `pom.
 
 Let's create a simple Product model with two properties:
 
-1. name
-1. price
+1. `name`
+1. `price`
 
-```
+```java
 package com.mycom.myprj;
 
 import org.mongodb.morphia.annotations.Entity;
