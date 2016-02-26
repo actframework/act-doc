@@ -1,6 +1,6 @@
 # Jobs and Scheduler
 
-Job and scheduler is one of the best feature provide by ActFramework. It makes job scheduling really a handy piece of work. What you need to do is just create a public method without return result and parameter. The method could be either static or virtual.
+Job and scheduler is one of the best feature of ActFramework. It makes job scheduling really a handy piece of work. What you need to do is just create a public method without return result and parameter. The method could be either static or virtual.
 
 ## Run logic regularly
 
@@ -61,15 +61,17 @@ public class Foo {
     }
     
     @Cron("cron.password_reminder.scan")
-    public void runPerConfiguredCron() {
+    public void runPerConfiguredCrontab() {
         ...
     }
 }
 ```
 
-## Invoken along with other job
+## Invoke along with other job
 
 ```java
+package com.mycom.myrpj;
+
 import act.job.*;
 
 public class Foo {
@@ -78,17 +80,17 @@ public class Foo {
        ...
    } 
    
-   @AlongWith("Foo.jobA")
+   @AlongWith("com.mycom.myrpj.Foo.jobA")
    public void asyncInvokedAlongWithJobA() {
        ...
    }
    
-   @InvokeBefore("Foo.jobA")
+   @InvokeBefore("com.mycom.myrpj.Foo.jobA")
    public void invokeBeforeJobA() {
        ...
    }
    
-   @InvokeAfter("Foo.jobA")
+   @InvokeAfter("com.mycom.myrpj.Foo.jobA")
    public void invokeAfterJobA() {
        ...
    }
@@ -135,11 +137,10 @@ public void home(@Context AppJobManager jobManager) {
             System.out.println("home entry invoked");
         }
     });
-    jobManager.delay(new Callable<Object>() {
+    jobManager.delay(new Runnable() {
         @Override
-        public Object call() throws Exception {
+        public void run() {
             System.out.println("delayed log");
-            return null;
         }
     }, "5s");
     String engine = "rythm";
