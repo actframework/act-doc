@@ -72,13 +72,21 @@ You don't have the `Bar` injected into your `foo` instance
 
 You can ask Act to inject class instance you need in an controller action method by declaring the parameter with `act.di.Context` annotation:
 
-```
+```java
 public Result handleXyzRequest(String s, int i, @Context Bar bar) {
     ...
 }
 ```
 
 When Act detect that `Bar bar` is annotated with `Context`, it will not try to create an new Bar and bind it with request parameters, instead `App.newInstance()` will be called to create the `Bar` instance and feed into the `handleXyzRequest` method
+
+**Note** You don't need to add `@Context` to inject `ActionContext` object, it will always get injected into action handler if declared in the parameter list:
+
+```java
+public void handleXyzResult(Stirng s, ActionContext context) {
+    ...
+}
+```
 
 ## Create module class
 

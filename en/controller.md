@@ -186,6 +186,26 @@ The above `createOrder` method is also able to bind the JSON body:
 
 **Note** ActFramework does NOT support binding to XML data at the current stage 
 
+### <a name="file"></a>Binding to file
+
+Suppose you have the file upload form in your html page:
+
+```html
+<form method="POST" enctype="multipart/form-data" action="/upload">
+    Please specify file to upload: <input type="file" name="myfile"><br />
+    <input type="submit" value="submit">
+</form>
+```
+
+You can declare the file in your action handler method as:
+
+```java
+public void handleUpload(File myfile) {
+    ...
+}
+```
+
+
 ## <a name="response"></a>Specify responses
 
 With ActFramework you have multiple ways of specifying response to be sent back, all of them are easy to understand and very expressive.
