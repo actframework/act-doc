@@ -1,6 +1,28 @@
 # Templating
 
-ActFramework can plugin different templating solutions. At the moment [Rythm](http://rythmengine.org) is supported.
+ActFramework can plugin different templating solutions. At the moment [Rythm](http://rythmengine.org) is fully supported. Freemarker and Velocity is limited supported.
+
+** Note to use freemarker and velcoity templating you need to add the dependencies into your pom.xml file respectively:
+
+Freemarker templating dependency:
+
+```xml
+<dependency>
+    <groupId>org.actframework</groupId>
+    <artifactId>act-freemarker</artifactId>
+    <version>0.1.1-SNAPSHOT</version>
+</dependency>
+```
+
+Velocity templating dependency:
+
+```xml
+<dependency>
+    <groupId>org.actframework</groupId>
+    <artifactId>act-velocity</artifactId>
+    <version>0.1.1-SNAPSHOT</version>
+</dependency>
+```
 
 ## template file location
 
@@ -92,4 +114,6 @@ Foo is @foo
 
 ## Reference
 
-Please visit [Rythm official website](http://rythmengine.org) to get detail information on how to use Rythm
+* Please visit [Rythm official website](http://rythmengine.org) to get detail information on how to use Rythm
+* Please visit [Velocity official website](http://velocity.apache.org) to get detail information on how to use Velocity
+* Please visit [Freemarker official website](http://freemarker.incubator.apache.org/) to get detail information on how to use Freemarker
