@@ -93,8 +93,8 @@ public class ContactController extends Controller.Util {
     private EbeanDao<Long, Contact> dao;
 
     @Inject
-    public ContactController(App app) {
-        dao = $.cast(app.dbServiceManager().dao(Contact.class));
+    public ContactController(EbeanDao<Long, Contact> dao) {
+        this.dao = dao;
     }
 
     @GetAction
