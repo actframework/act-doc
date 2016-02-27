@@ -302,3 +302,5 @@ In this section you have learned:
 1. Using template to render complex response
 1. Handling request parameter
 1. The anatomy of an Act application
+
+[Back to index](index.md)

@@ -81,7 +81,7 @@ public class Foo {
    } 
    
    @AlongWith("com.mycom.myrpj.Foo.jobA")
-   public void asyncInvokedAlongWithJobA() {
+   public void asyncInvokeAlongWithJobA() {
        ...
    }
    
@@ -147,3 +147,5 @@ public void home(@Context AppJobManager jobManager) {
     Controller.Util.render(engine);
 }
 ```
+
+[Back to index](index.md)

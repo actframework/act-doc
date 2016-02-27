@@ -103,3 +103,5 @@ Act has three built-in directives:
 ## Creating route with configuration API
 
 TBD
+
+[Back to index](index.md)

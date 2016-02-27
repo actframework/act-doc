@@ -102,3 +102,5 @@ public class GreetingModule extends AbstractModule {
 ```
 
 **Tips** You don't need to create your own `Injector` via calling `Guice.createInjector(...)`. Declaring your module classes, and Act will locate them to create the injector for you. 
+
+[Back to index](index.md)

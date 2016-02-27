@@ -158,3 +158,5 @@ private Contact.Dao dao = $.cast(app.dbServiceManager().dao(Contact.class));
 ```
 
 So ActFramework detects your implementation of the DAO and will use that class instead of the standard one.
+
+[Back to index](index.md)

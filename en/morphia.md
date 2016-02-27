@@ -173,3 +173,5 @@ private Product.Dao dao = Product.dao();
 ```
 
 So ActFramework detects your implementation of the DAO and will use that class instead of the standard one.
+
+[Back to index](index.md)

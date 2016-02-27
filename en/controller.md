@@ -463,3 +463,5 @@ In the section we have explained/demonstrates:
 1. How to find/specify template to render the response
 1. How to get or download binary data
 1. How `Accept` header impact ActFramework's behavior 
+
+[Back to index](index.md)
