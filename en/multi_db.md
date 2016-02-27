@@ -1,6 +1,6 @@
 # Multi DB Application
 
-ActFramework provides support to Multiple datasource in your application.
+ActFramework provides support to multiple data sources in your application.
 
 ## Configuration
 
@@ -16,7 +16,7 @@ db.db2.driver=org.h2.Driver
 db.db2.url=jdbc:h2:mem:test
 ```
 
-As per above configuration, two databases will be configured:
+As per above configuration, two database sources will be configured:
 
 1. db1, also the default datasource, is a mongodb connection to `localhost/test`
 1. db2, is a ebean connection using h2 jdbc driver connecting to in memory databse named `test`
