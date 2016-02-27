@@ -12,6 +12,26 @@ In order to use Morphia you need to add the following dependencies in your `pom.
 </dependency>
 ```
 
+## Configuration
+
+A very simple mongodb configuration:
+
+```
+# If you have only one DBPlugin in your class path, then
+# you do not need to specify the db.impl configuration
+db.impl=act.db.morphia.MorphiaPlugin
+db.uri=mongodb://localhost/mydb
+```
+
+**Tips** You don't even need that configuration. ActFramework will put all your mongodb data into the `test` database
+
+A little bit more sophisticated configuration:
+
+```
+db.url=mongodb://<username>:<password>@<host1>:<port1>,<host2>:<port2>,...,hostN:portN/dbname?replicaSet=...&connectTimeoutMS=...
+```
+
+
 ## Model
 
 Let's create a simple Product model with two properties:

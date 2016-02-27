@@ -12,6 +12,34 @@ In order to use Ebean you need to add the following dependencies in your `pom.xm
 </dependency>
 ```
 
+You will also need to import your JDBC or database packages something like
+
+```xml
+<dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <version>1.4.178</version>
+</dependency>
+```
+
+## Configuration
+
+```
+# If you have only one DBPlugin in your class path, then
+# you do not need to specify the db.impl configuration
+db.impl=act.db.ebean.EbeanPlugin
+# database driver default to org.h2.Driver
+db.driver=...
+# database Url default to jdbc:h2:mem:tests
+db.url=...
+# username default is empty
+db.username=...
+# password default is empty
+db.password=...
+# If specified then app scan package will be used instead
+db.db2.agentPackage=act.doc.sample.**
+```
+
 ## Model
 
 Let's create a simple Contact model with three properties:
