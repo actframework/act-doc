@@ -126,7 +126,7 @@ public class Foo {
 }
 ```
 
-## Adhoc job schedule
+## Adhoc job scheduling
 
 ```java
 @GetAction

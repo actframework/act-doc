@@ -23,9 +23,6 @@ public class Foo {
 @Controller("/customer")
 public class CustomerController {
     
-    @Inject
-    Customer.Dao customerDao;
-    
     @PostAction("/")
     public void createCustomer(Customer customer, @Context EventBus eventBus) {
         customerDao.save(customer);
@@ -62,9 +59,6 @@ public class CustomerCreated extends ActEventListenerBase<ActEvent<Customer>> {
 ```java
 @Controller("/customer")
 public class CustomerController {
-    
-    @Inject
-    Customer.Dao customerDao;
     
     @PostAction("/")
     public void createCustomer(Customer customer, @Context EventBus eventBus) {
