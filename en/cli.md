@@ -91,7 +91,7 @@ For many time you might find that you are repeating code between RESTful control
 
 ```java
 @Controller("/customer")
-public class CustomerService extends Controller.Util {
+public class CustomerService {
     
     @Inject
     private Customer.Dao customerDao;
