@@ -15,6 +15,7 @@ import act.cli.Command;
 import act.cli.Optional;
 import act.cli.Required;
 import act.cli.JsonView;
+import act.util.PropSpec;
 
 public class CustomerAdmin {
     
