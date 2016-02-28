@@ -1,20 +1,19 @@
-# Controller and Action handler
+# 控制器和响应方法
 
-ActFramework provides maximum flexibility in creating controller and action handlers.
+ActFramework在定义控制器和响应方法上提供了足够的机制允许你以不同的方式来定义逻辑
 
-## <a name="term"></a>Concept
+## <a name="term"></a>概念
 
-1. **Controller**. Controller refers to a class that contains one or more action handlers. 
+1. **控制器**. 控制器是指一个包括了若干请求响应器的Java类
     
-    Note in ActFramework it does NOT require controller class to extend a specific class, neither does it require controller class to be annotated with a certain annotation  
+    **注意** ActFramework并不要求控制器集成某个特定的类，也不要求控制器加上某个特定注解
 
-1. **Action handler**. An action handler is a method that provides logic to handler an incoming request. In other words, action handler is a method that has been configured as a route destination.
+1. **响应器** 指某个方法提供了一定的逻辑代码响应发送到特定路径的请求。简单的说如果在应用运行的时候有路由条目配置到某个方法，该方法即为响应器。
 
-    An action handler could be either static method or non-static method
+    响应器可以是静态方法也可以是虚方法
 
-## <a name="a-simple-controller"></a>A simple controller
+## <a name="a-simple-controller"></a>一个简单的控制器
 
-A very simple controller with one action handler could be as simple as
 
 ```java
 package com.mycom.myprj.controller;
@@ -24,26 +23,28 @@ public class MyController {
 }
 ``` 
 
-The `home()` method is an action handler if there are an entry in the `route` table like:
+如果应用程序的路由表(/resources/routes)定义了一下条目：
 
 ```
 GET / com.mycom.myprj.controller.MyController.home
 ```
 
-You can also use annotation based routing which is usually easier way to go:
+以上代码就成了一个简单的控制器，在其中定义了一个响应器`home`
 
-```
+除了路由表，你也可以通过注解来加载路由：
+
+```java
 @GetAction("/")
 public void home() {}
 ```
 
-If you haven't define any template, the handler will be a dumb handler which returns `200 Okay` response with no body content
+如果没有定义相应的模板，该响应器对发送到`/`的请求只会送回200 Okay的代码。
 
-If you have a template file created in [proper location](templating.md#location), ActFramework will render that file and put the render result into the response body
+如果在[特定的地方](templating.md#location)定义了模板代码，ActFramework会调用模板并生成响应结果。
 
-**Tips** Although it does not require a controller to extend any class, it is good to have your controller class to extend `act.controller.Controller.Util` to get a set of handy utilities that helps to return responses. If your controller already extends other classes, you can use `static import` to achieve the same effect as demonstrated below:
+**小贴士** 尽管控制器不需要继承任何类，ActFramework推荐你的控制器继承`act.controller.Controll.Util`类，这样你可以在你的控制器中方便的使用各种工具方法。当你的控制器已经继承了其他类的时候，你可以使用`import static`来实现相同的功能：
 
-1. Extend `act.controller.Controller.Util`:
+1. 继承 `act.controller.Controller.Util`:
 
     ```java
     import act.Controller;
@@ -61,16 +62,16 @@ If you have a template file created in [proper location](templating.md#location)
     } 
     ```
 
-**Note** In the following section of this page, it assumes the controller code has extended the `Controller.Util` class or has the static import statement as shown above.
+**注意** 本页下面的代码例子都假设控制器继承了`Controller.Util`类
 
  
-## <a name="parameter"></a>Getting parameters
+## <a name="parameter"></a>获得请求参数
 
-ActFramework automatically popluate your action handler parameters from
+ActFramework从一下来源自动填充响应器参数：
 
-1. URL path variables
-1. Query parameters
-1. Form post parameters
+1. URL路径参数
+1. 查询参数
+1. 表单参数
 
 ```
 @PutAction("/customer/{customerId}/order/{orderId}")
@@ -79,11 +80,11 @@ public void updateOrderAmount(String customerId, String orderId, int amount) {
 }
 ```
 
-In the above example, the `customerId` and `orderId` is the URL path variable and `amount` is either the query param specified in the URL or the form data depending on the PUT request encoding.
+如上例所示URL路径变量`customerId`和`orderId`被自动填充为响应器参数，参数`amount`则来自查询参数或者表单参数
 
-### <a name="binding"></a>Binding to POJO
+### <a name="binding"></a>POJO绑定
 
-ActFramework support binding complex form data to a domain model class (a POJO). Suppose you have the following model class:
+ActFramework可以将复杂的表单变量绑定到域模型对象（POJO实例）. 假设你有如下类:
 
 ```java
 public class Order {
@@ -134,7 +135,7 @@ public class Order {
 }
 ```
 
-Your html order creation form:
+你的订单表单如下:
 
 ```html
 <form action="/customer/@customer.getId()/order" method="POST">
@@ -154,7 +155,7 @@ Your html order creation form:
 </form>
 ```
 
-You can have an action to handle creating new `Order`:
+你可以在响应器中直接声明`Order`类型变量:
 
 ```java
 @PostAction("/customer/{customerId}/order")
@@ -164,9 +165,9 @@ public void createOrder(String customerId, Order order) {
 }
 ```
 
-### <a name="json-param"></a>Binding from JSON content
+### <a name="json-param"></a>JSON内容绑定
 
-The above `createOrder` method is also able to bind the JSON body: 
+上面的`createOrder`响应器也可以从类似下面的JSON内容绑定: 
 
 ```JSON
 {
@@ -184,11 +185,11 @@ The above `createOrder` method is also able to bind the JSON body:
 }
 ```
 
-**Note** ActFramework does NOT support binding to XML data at the current stage 
+**Note** ActFramework暂不支持从XML内容的绑定 
 
-### <a name="file"></a>Binding to file
+### <a name="file"></a>获取上传文件
 
-Suppose you have the file upload form in your html page:
+假设你的文件上传表单如下:
 
 ```html
 <form method="POST" enctype="multipart/form-data" action="/upload">
@@ -197,7 +198,7 @@ Suppose you have the file upload form in your html page:
 </form>
 ```
 
-You can declare the file in your action handler method as:
+你可以直接在你的响应器中申明`File`类型参数：
 
 ```java
 public void handleUpload(File myfile) {
@@ -206,13 +207,13 @@ public void handleUpload(File myfile) {
 ```
 
 
-## <a name="response"></a>Specify responses
+## <a name="response"></a>发回响应
 
-With ActFramework you have multiple ways of specifying response to be sent back, all of them are easy to understand and very expressive.
+ActFramework提供多种不同的方法让开发人员指定响应内容，每种方式都简单易用。
 
-### <a name="implicity-200"></a>Implicit 200 Okay
+### <a name="implicity-200"></a>自动返回200 Okay
 
-If there is no return type and thrown exception on an action handler method, ActFramework will automatically return an empty `200 Okay` response unless a template has been defined for the method. This is useful when the action handler is to servicing a RESTful POST or PUT request, e.g.
+当响应器方法没有返回类型，也没有抛出异常ActFramework自动发回代码为`200 Okay`的空响应。如果有[相应的模板定义](templating.md#location)，则根据模板生成返回内容。自动返回可以让一些PUT和POST的响应器非常简练：
 
 ```java
 @PostAction("/order")
@@ -221,22 +222,22 @@ public void createOrder(Order order) {
 }
 ```
 
-### <a name="explicity-200"></a>Explicity 200 Okay
+### <a name="explicity-200"></a>程序中制定返回200 Okay
 
-For developer who really want to make everything be explicity, here are two ways to create a `200 Okay` response:
+对于有轻微强迫症的猿们，一定要通过程序显示返回200 Okay才舒服，ActFramework提供两种方式：
 
-1. Return result
+1. 返回`org.osgl.mvc.result.Result`
 
     ```java
     @PostAction("/order")
     public Result createOrder(Order order) {
         orderService.save(order);
         return ok();
-        // or return new Ok();
+        // 或者 return new Ok();
     }
     ```
 
-1. Throw out result
+1. 抛出`org.osgl.mvc.result.Result`
 
     ```java
     @PostAction("/order")
@@ -246,7 +247,8 @@ For developer who really want to make everything be explicity, here are two ways
         // or throw new Ok();
     }
     ```
-You can even throw out the result implicitly
+
+你甚至可以将`Result`隐式抛出:
 
     ```java
     @PostAction("/order")
@@ -255,11 +257,12 @@ You can even throw out the result implicitly
         ok();
     }
     ```
-**Note** ActFramework will enhance your controller action method, so that if a `Result` type exception has been returned in the source code be thrown out automatically.
 
-### <a name="return-404"></a>Return 404 Not Found
+**注意** ActFramework会对控制器的响应方法做字节码增强，当某一条语句返回`Result`类型，但没有返回上级调用，框架会自动将Result作为异常抛出，这就是上例可以简单写一句`ok()`的原因所在
 
-The server respond with `404 NotFound` automatically when it cannot find a handler to service an incoming request in route table. However there are cases that your business logic needs to return a 404 response, e.g. when a query to an order by order ID cannot locate the order in the database with the given order ID, here is what you can do:
+### <a name="return-404"></a>返回404 Not Found
+
+对于http服务来讲，当请求的资源无法找到的时候服务器应该返回`404 NotFound`响应。ActFramework程序可以使用如下方式返回`404`错误：
 
 ```java
 @GetAction("/order/{orderId}")
@@ -271,7 +274,7 @@ public Order getOrder(String orderId) {
 }
 ```
 
-A more expressive way to do that is:
+对上述代码的一种更为简洁的表述为：
 
 ```java
 @GetAction("/order/{orderId}")
@@ -281,7 +284,7 @@ public Order getOrder(String orderId) {
 }
 ```
 
-The utmost expressive way is:
+而极简方式则为：
 
 ```java
 @GetAction("/order/{orderId}")
@@ -290,11 +293,11 @@ public Order getOrder(String orderId) {
 }
 ```
 
-ActFramework will check if there is return type on action handler signature and it returns `null` then 404 will be send to response automatically.
+你没有看错，没有任何语句检查返回订单对象是否为空。ActFramework将自动检查，如果响应器返回空值，且方法申明有返回类型，则自动返回`404`错误
 
-### <a name="return-400"></a>Return other error request
+### <a name="return-400"></a>返回其他错误
 
-Here is the demo code shows how to return response with different HTTP status code
+下面的代码演示了如何返回其他错误类型：
 
 ```java
 public void foo(int status) {
@@ -308,9 +311,9 @@ public void foo(int status) {
 } 
 ```
 
-### <a name="exception-mapping"></a>Automatic map Java Exception to Response
+### <a name="exception-mapping"></a>从Java异常自动映射为HTTP错误响应
 
-Got exception not handled? ActFramework map them to response automatically!
+你的代码有异常抛出嘛? ActFramework会自动将它们映射为错误响应：
 
 1. `IllegalArgumentException` -> 400 Bad Request
 1. `IndexOutOfBoundsException` -> 400 Bad Request
@@ -318,9 +321,9 @@ Got exception not handled? ActFramework map them to response automatically!
 1. `UnsupportedOperationException` -> 501 Not Implemented
 1. Other uncaught exception -> 500 Internal Error
 
-### <a name="return-data"></a>Returning data to response
+### <a name="return-data"></a>返回数据
 
-ActFramework does not require you to return a `Result` type in your action handler if there are data needs to be returned although you are free to do that. The following two action handlers have the same effect when the `accept` header is `application/json`:
+ActFramework允许返回任何类型的数据，并根据上下文情况判断最终返回格式。当请求的`Accept`http头设置为`application/json`的时候下面两组代码的效果是完全相同的:
 
 ```java
 @GetAction("/order/{orderId}")
@@ -337,22 +340,22 @@ public Result getOrder(String orderId) {
 }
 ```
 
-However the first style is recommended because:
+推荐使用第一种方式，原因在于：
 
-1. It is simpler
-1. It allow the flexibility of content-negotiation
+1. 更加简洁
+1. 当请求要求不同的返回格式的时候，ActFramework能够满足要求
 
-### <a name="render-template"></a>Render template
+### <a name="render-template"></a>使用模板
 
-For classic MVC application it always needs to render response via templating solution. There are three ways to render through templating.
+传统的MVC应用几乎都会设计模板。ActFramework支持下面三种方式来调用模板:
 
-1. Implicity template rendering
+1. 隐式模板调用
 
-    For any action handler, if the corresponding template is defined, the template will always be called to render the response
+    对于任何响应器，如果定义了相应的模板文件，则总是启用模板文件来生成响应。
     
-    If an action handler has return value, the value will be passed to the template by variable named `result`
+    如果响应器返回某个对象，该对象可以在模板中使用`result`参数来引用
     
-1. Explicity `renderTemplate` call
+1. 显示模板调用
 
     ```java
     @GetAction("/order/editForm")
@@ -362,9 +365,9 @@ For classic MVC application it always needs to render response via templating so
         return renderTemplate(order, hasWritePermission);
     }
     ```
-    The above code will call the template (location by convention) with parameter named `order` and `hasWritePermission`
+    以上代码明确调用模板来生成响应结果。在调用模板的时候传进两个参数`order`和`hasWritePermission`，这两个参数可以在模板中被直接引用
     
-1. Specify the template path
+1. 显示调用模板并制定路径
 
     ```java
     @GetAction("/order/editForm")
