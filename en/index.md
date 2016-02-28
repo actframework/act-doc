@@ -25,7 +25,7 @@ ActFramework is created to make programming MVC application in Java easy and fun
 1. [Jobs and schedulers](jobs.md)
 1. [Events](event.md)
 1. [Sending email](email.md)
-1. Creating CLI commander
+1. [Creating CLI commander](cli.md)
 1. Using CLI to inspect and manage your application
 1. Using act-aaa to implement security
 1. Using act-storage to implement file persistence
