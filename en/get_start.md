@@ -120,9 +120,7 @@ Once you've done the work, switch to your browser and navigate to <a href="http:
 
 ![browser-hellowrold](../img/getting_start/bye_in_browser.png)
 
-<div class="alert alert-info" role="alert">
-<strong>Tips</strong> You do NOT need to restart the application if you need to check the effect of your code changes. ActFramework can sense the source code change and rebuild the application in memory
-</div>
+**Tips** You do NOT need to restart the application if you need to check the effect of your code changes. ActFramework can sense the source code change and rebuild the application in memory
 
 ### 6. Use template to create response
 
@@ -140,7 +138,7 @@ Then add a rythm template file named `sayHello.html` for the method. The file ne
 
 ![idea-rythm-sayhello](../img/getting_start/idea_rythm_sayhello.png)
 
-The rule of template finding is:
+The rule of template locating is:
 
 ```
 /src/main/resources/rythm/com/mycom/helloworld/App

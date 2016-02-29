@@ -1,8 +1,8 @@
-# Access SQL Database with Ebean
+# 使用Ebean访问SQL Database
 
-## Setup
+## 安装
 
-In order to use Ebean you need to add the following dependencies in your `pom.xml` file:
+在你的`pom.xml`文件中加上一下依赖：
 
 ```xml
 <dependency>
@@ -12,7 +12,7 @@ In order to use Ebean you need to add the following dependencies in your `pom.xm
 </dependency>
 ```
 
-You will also need to import your JDBC or database packages something like
+根据你的数据库类型，你也需要加入相应的JDBC访问包的依赖。比如：
 
 ```xml
 <dependency>
@@ -22,7 +22,7 @@ You will also need to import your JDBC or database packages something like
 </dependency>
 ```
 
-## Configuration
+## 配置
 
 ```
 # If you have only one DBPlugin in your class path, then
@@ -40,9 +40,9 @@ db.password=...
 db.db2.agentPackage=act.doc.sample.**
 ```
 
-## Model
+## 域模型
 
-Let's create a simple Contact model with three properties:
+下面创建一个简单的域模型，该模型有三个字段：
 
 1. `firstName`
 1. `lastName`
@@ -95,11 +95,11 @@ public class Contact {
 }
 ```
 
-**Note** unlike Morphia which allows you to extend your Model class to `MorphiaModel`, Ebean plugin does not support that at the moment.
+**注意** 和Morphia访问层不同，Ebean访问层目前暂时不提供类似`MorphiaModel`的父类.
 
-## DAO and CRUD
+## 数据访问对象和CRUD
 
-Now that the model has been defined, let's take a look at how to use built-in DAO to do CRUD operations.
+一下代码演示如何使用EbeanDao来进行CRUD操作:
 
 ```java
 package com.mycom.myprj;
@@ -156,11 +156,7 @@ public class ContactController extends Controller.Util {
 }
 ```
 
-**Note** the different between Morphia plugin and Ebean plugin on how to get the Dao instance.
-
-## Search
-
-Act provide a set of search methods in `Dao` interface:
+## 查询操作
 
 ```java
 // find by last name
@@ -173,18 +169,17 @@ Iterable<Product> contacts = dao.findBy("firstName,lastName", firstName, lastNam
 Iterable<Product> contacts = dao.findBy("firstName", Pattern.compile(firstName));
 ```
 
-## Extend `EbeanDao`
+## 扩展`EbeanDao`
+
 TBD
 
-## Using extended DAO class
+## 使用扩展的DAO类
 
-Once you have extended the DAO, you can use it following the same way as shown above, just change the type as shown below:
+假如你定义了扩展的DAO，你可以直接使用依赖注入来获取其实例:
 
 ```java
 //private EbeanDao<Contact> dao = $.cast(app.dbServiceManager().dao(Contact.class));
 private Contact.Dao dao = $.cast(app.dbServiceManager().dao(Contact.class));
 ```
 
-So ActFramework detects your implementation of the DAO and will use that class instead of the standard one.
-
-[Back to index](index.md)
+[返回目录](index.md)

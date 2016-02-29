@@ -1,20 +1,20 @@
-# Dependency Injection
+# 依赖注入
 
-ActFramework support Dependency Injection with Google Guice. You need to add the following dependency in your `pom.xml` file to use it:
+ActFramework支持基于Google Guice的依赖注入. 要使用依赖注入你需要在`pom.xml`文件中加入下面的依赖:
 
 ```
 <dependency>
     <groupId>org.actframework</groupId>
     <artifactId>act-guice</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
 </dependency>
 ```
 
-## Declare inject object
+## 申明需要注入的对象
 
-In ActFramework the `javax.inject.Inject` annotation is used to declare the inject object. You can declare the inject object follow the three standard ways
+ActFramework通过`javax.inject.Inject`注解识别需要注入的对象. 你可以通过一下三种标准方式申明需要注入的对象：
 
-### Field injection
+### 字段注入
 
 ```java
 public class Foo {
@@ -23,7 +23,7 @@ public class Foo {
 }
 ```
 
-### Constructor injection
+### 构造器注入
 
 ```java
 public class Foo {
@@ -36,7 +36,7 @@ public class Foo {
 }
 ```
 
-### Setter injection
+### 设置器(Setter)注入
 
 ```java
 public class Foo {
@@ -48,11 +48,11 @@ public class Foo {
 }
 ```
 
-**Tips** The Field injection is clean and simple, but not unit test friendly.
+**小贴士** 字段注入最为简明，不过对单元测试会造成一些麻烦
 
-## Create object instance that has DI
+## 获取有依赖申明的对象
 
-Always use `act.app.App.newInstance(Class)` method to create the instance you need, it will inject the dependency declared in your class
+在ActFramework里你不需要使用`Guice`的`Injector`来获取对象实例。请使用`act.app.App::newInstance(Class)`方法来创建对象实例:
 
 ```java
 App app = App.instance();
@@ -60,17 +60,9 @@ App app = App.instance();
 Foo foo = app.newInstance(Foo.class);
 ```
 
-If you do something like:
+## 响应器参数的依赖注入
 
-```java
-Foo foo = new Foo();
-```
-
-You don't have the `Bar` injected into your `foo` instance
-
-## Inject into controller action method
-
-You can ask Act to inject class instance you need in an controller action method by declaring the parameter with `act.di.Context` annotation:
+如果你希望框架注入对象到响应器的参数列表，请用`act.di.Context`注解来声明该参数:
 
 ```java
 public Result handleXyzRequest(String s, int i, @Context Bar bar) {
@@ -78,9 +70,9 @@ public Result handleXyzRequest(String s, int i, @Context Bar bar) {
 }
 ```
 
-When Act detect that `Bar bar` is annotated with `Context`, it will not try to create an new Bar and bind it with request parameters, instead `App.newInstance()` will be called to create the `Bar` instance and feed into the `handleXyzRequest` method
+一旦ActFramework检测到`Context`注解, 会使用`App::newInstance(Class)`来创建该对象，否则会使用POJO绑定来创建对象
 
-**Note** You don't need to add `@Context` to inject `ActionContext` object, it will always get injected into action handler if declared in the parameter list:
+**小贴士** 对于`act.app.ActionContext`类型不需要使用`Context`注解，ActFramework总是注入该类型对象
 
 ```java
 public void handleXyzResult(Stirng s, ActionContext context) {
@@ -88,9 +80,9 @@ public void handleXyzResult(Stirng s, ActionContext context) {
 }
 ```
 
-## Create module class
+## `AbstractModule`类
 
-Like your usual Guice application, you are free to create any number of Module class e.g.
+和通常的Guice应用一样，你可以创建Module类来申明注入绑定规则:
 
 ```java
 public class GreetingModule extends AbstractModule {
@@ -101,6 +93,6 @@ public class GreetingModule extends AbstractModule {
 }
 ```
 
-**Tips** You don't need to create your own `Injector` via calling `Guice.createInjector(...)`. Declaring your module classes, and Act will locate them to create the injector for you. 
+**小贴士** 在ActFramework中你不必使用Module类来创建`Injector`对象实例。框架会自动寻找所有申明的Module类并在内部创建`Injector`实例
 
-[Back to index](index.md)
+[返回目录](index.md)

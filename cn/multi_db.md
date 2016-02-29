@@ -1,8 +1,8 @@
-# Multi DB Application
+# 多数据源应用
 
-ActFramework provides support to multiple data sources in your application.
+ActFramework支持在应用中使用多个数据源
 
-## Configuration
+## 配置
 
 ```
 db.instances=db1,db2
@@ -16,14 +16,14 @@ db.db2.driver=org.h2.Driver
 db.db2.url=jdbc:h2:mem:test
 ```
 
-As per above configuration, two database sources will be configured:
+上面的配置指定了连个数据源
 
-1. db1, also the default datasource, is a mongodb connection to `localhost/test`
-1. db2, is a ebean connection using h2 jdbc driver connecting to in memory databse named `test`
+1. db1, 第一个也是默认数据源, 是一个mongodb连接，访问`localhost/test`
+1. db2, 是一个ebean连接，使用h2 jdbc驱动连接到名字为`test`的内存数据库
 
-## Specify database in Model class
+## 在域模型类中指定数据源
 
-The `Blog` model will use the default db, which is `db1`
+下面的`Blog`模型没有特定指定数据源，因此会使用默认的数据源, 在以上配置中是`db1`
 
 ```java
 package com.mycom.myprj;
@@ -36,7 +36,7 @@ public class Blog extends MorphiaModel<Blog> {
     ...
 }
 ```
-The `Account` model will use the `db2` data source:
+下面的`Account`模型通过`@DB`z注解指定了使用`db2`数据源:
 
 ```java
 import act.db.DB;
@@ -51,4 +51,4 @@ public class Account {
 }
 ```
 
-[Back to index](index.md)
+[返回目录](index.md)

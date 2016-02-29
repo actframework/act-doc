@@ -1,8 +1,8 @@
-# Access MongoDB with Morphia
+# 使用Morphia访问MongoDB数据库
 
-## Setup
+## 安装
 
-In order to use Morphia you need to add the following dependencies in your `pom.xml` file:
+要在ActFramework应用中使用Morphia，请在`pom.xml`文件中添加一下依赖:
 
 ```xml
 <dependency>
@@ -12,29 +12,26 @@ In order to use Morphia you need to add the following dependencies in your `pom.
 </dependency>
 ```
 
-## Configuration
+## 配置
 
-A very simple mongodb configuration:
+简单的配置:
 
 ```
-# If you have only one DBPlugin in your class path, then
-# you do not need to specify the db.impl configuration
-db.impl=act.db.morphia.MorphiaPlugin
 db.uri=mongodb://localhost/mydb
 ```
 
-**Tips** You don't even need that configuration. ActFramework will put all your mongodb data into the `test` database
+**小贴士** 你甚至不需要任何配置. ActFramework会自动连接到本地MongoDB服务器的test数据库
 
-A little bit more sophisticated configuration:
+稍微复杂一点的配置:
 
 ```
 db.url=mongodb://<username>:<password>@<host1>:<port1>,<host2>:<port2>,...,hostN:portN/dbname?replicaSet=...&connectTimeoutMS=...
 ```
 
 
-## Model
+## 域模型
 
-Let's create a simple Product model with two properties:
+下面创建一个简单的域模型，该模型有两个字段：
 
 1. `name`
 1. `price`
@@ -68,9 +65,9 @@ public class Product extends MorphiaModel<Product> {
 }
 ```
 
-## DAO and CRUD
+## 数据访问对象和CRUD
 
-Now that the model has been defined, let's take a look at how to use built-in DAO to do CRUD operations.
+一下代码演示如何使用MorphiaDao来进行CRUD操作:
 
 ```java
 package com.mycom.myprj;
@@ -118,9 +115,7 @@ public class ProductController extends Controller.Util {
 }
 ```
 
-## Search
-
-Act provide a set of search methods in `Dao` interface:
+## 查询操作
 
 ```java
 // find by name
@@ -136,9 +131,9 @@ Iterable<Product> products = dao.findBy("name, price <", name, 100000);
 Iterable<Product> products = dao.findBy("name", Pattern.compile("laptop"));
 ```
 
-## Extend `MorphiaDao`
+## 使用扩展的DAO类
 
-Sometime it is good to extend the `MorphiaDao` class and create a dedicated DAO class for a certain type to build some domain logic, in which case you extend's the DAO's concept to business service.
+你可以根据需要扩展`MorphiaDao`类，并加入业务逻辑
 
 ```java
 @Entity("prod")
@@ -183,15 +178,13 @@ public class Product extends MorphiaModel<Product> {
 
 ```
 
-## Using extended DAO class
+## 使用扩展的DAO类
 
-Once you have extended the DAO, you can use it following the same way as shown above, just change the type as shown below:
+假如你定义了扩展的DAO，你可以使用同样的接口来获取其实例:
 
 ```java
 //private MorphiaDao<Product> dao = Product.dao();
 private Product.Dao dao = Product.dao();
 ```
 
-So ActFramework detects your implementation of the DAO and will use that class instead of the standard one.
-
-[Back to index](index.md)
+[返回目录](index.md)

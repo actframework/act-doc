@@ -1,33 +1,31 @@
-# Getting start with ActFramework
+# ActFramework简介
 
-## <a name="prerequisites"></a>Prerequisites
+## <a name="prerequisites"></a>准备工作
 
-You need JDK and Maven to create Act application. An internet connection should be ready for downloading libraries from maven central repository
+你需要JDK和Maven来使用ActFramework创建应用程序. 因为需要Maven通过网络从中央库下载依赖包，一个良好的互联网链接也是必须的
 
-1. JDK (Java Development Kit), version 1.6 and above
-1. Maven (Project Management Tool), version 3.3 and above
+1. JDK (Java Development Kit), version 1.7或以上
+1. Maven (Project Management Tool), version 3.3或以上
 
-If you already have the JDK and Maven installed you can safely skip the following sections.
+### 安装JDK
 
-### Install JDK
+从[Java官网](http://www.oracle.com/technetwork/java/javase/downloads/index.html)下载JDK并安装
 
-You can download JDK from [Java official web site](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+### 安装Maven
 
-### Install Maven
+从[Maven官网](http://maven.apache.org/)下载Maven. 参照[教程](http://maven.apache.org/install.html)安装Maven到你的操作系统
 
-You can download maven from [Maven official web site](http://maven.apache.org/). Follow the [instructions](http://maven.apache.org/install.html) to install maven on your operating system
+## <a name="create_hello_world_app"></a>创建一个"Hello world"应用程序
 
-## <a name="create_hello_world_app"></a>Create the "Hello world" application
+ActFramework使用maven构建项目. 目前最简单的办法是拷贝[pom实例文件](https://gist.github.com/greenlaw110/5d06ebd848c87c46302d)到你的项目中
 
-Act use maven to build project. The easiest way to start your Act application is to get a copy of [the sample pom file](https://gist.github.com/greenlaw110/5d06ebd848c87c46302d) and use it to create the application.
-
-### 1. Generate application skeleton using maven:
+### 1. 使用maven生成应用框架:
 
 ```
 mvn archetype:generate -DgroupId=com.mycom.helloworld -DartifactId=helloworld -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 ``` 
 
-After running the above command, your project directory should look like: 
+运行上述命令之后你的项目目录应该是下面的样子: 
 
 ```
 .
@@ -48,28 +46,28 @@ After running the above command, your project directory should look like:
                             └── AppTest.java
 ```
 
-Now get a copy of [the sample pom file](https://gist.github.com/greenlaw110/5d06ebd848c87c46302d) and replace the `pom.xml` file generated.
+下面拷贝[pom示例文件](https://gist.github.com/greenlaw110/5d06ebd848c87c46302d)并替换自动生成的`pom.xml`文件.
 
-### 2. Import the maven project into your IDE
+### 2. 导入项目到你的IDE
 
-All major IDEs support importing maven project. Here we will use IntelliJ IDEA as an example.
+基本上所有的IDE都支持maven项目. 下面使用IntelliJ IDEA做演示.
 
-Select `File/New/Project from Existing Sources...` to launch the import wizard as shown below:
+选择`File/New/Project from Existing Sources...`启动导入向导:
 
 ![idea-import-wizard](../img/getting_start/idea_import_step1.png)
 
-Select the `pom.xml` file in your generated project and press `OK` button, then keep clicking on "Next" button till the end of the wizard.
+在文件选择框中选定`pom.xml`文件并点击`OK`按钮, 然后一直按"Next"按钮直到结束.
 
-Once the maven project has been imported, you can open it in Intelli IDEA:
+导入后在Intelli IDEA中打开项目:
 
 ![idea-helloworld-prj](../img/getting_start/idea_prj_first_view.png) 
 
-### 3. Add request handler
+### 3. 加入请求响应器
 
-Update your `App.java` 
+更新`App.java`文件 
 
-1. Provide handler to incoming request by sending back "Hello World!"
-2. Update `main` method to have Act to run this application 
+1. 加入一个返回"Hello World!"的响应器
+2. 更新`main`方法让ActFramework运行程序 
 
 ```java
 package com.mycom.helloworld;
@@ -93,21 +91,21 @@ public class App {
 }
 ```
 
-### 4. Run the application
+### 4. 启动应用
 
-Now press `ctrl-shift-F10` to run `App` in intelliJ IDEA:
+现在按`ctrl-shift-F10`来启动`App`
 
 ![idea-run-app](../img/getting_start/idea_run_app.png)
 
-Go to your browser and open <a href="http://localhost:5460"><code>http://localhost:5460</code></a>
+启动浏览器并打开<a href="http://localhost:5460"><code>http://localhost:5460</code></a>
 
 ![browser-hellowrold](../img/getting_start/helloworld_in_browser.png)
 
-Congratulations! you have created your first Actframework application and view it's effect. Easy, isn't it? But it's not the end of our journey, let's keep moving...
+Duang! 你的第一个Actframework程序启动起来了. 很简单，不是吗？坐稳了，旅程才刚刚开始……
 
-### 5. Add more handlers
+### 5. 加入更多的请求响应器
 
-There is no web application that is created to just handle request send to one endpoint. Let's add another action handler in our `App.java` so it able to handle request sent to `/bye` endpoint. Here is the code of the new action handler that needs to be added into `App.java`
+没有那个Web应用只能响应一个请求. 现在加入另一个响应器到`App.java`文件中，该响应器处理发送到`/bye`的请求.
 
 ```java
     @GetAction("/bye")
@@ -116,19 +114,17 @@ There is no web application that is created to just handle request send to one e
     }
 ``` 
 
-Once you've done the work, switch to your browser and navigate to <a href="http://localhost:5460/bye"><code>http://localhost:5460/bye</code></a>, you should be able to get:
+加完方法后, 切换到你的浏览器打开<a href="http://localhost:5460/bye"><code>http://localhost:5460/bye</code></a>, 你应该能看到如下效果:
 
 ![browser-hellowrold](../img/getting_start/bye_in_browser.png)
 
-<div class="alert alert-info" role="alert">
-<strong>Tips</strong> You do NOT need to restart the application if you need to check the effect of your code changes. ActFramework can sense the source code change and rebuild the application in memory
-</div>
+**小贴士** 使用ActFramework开发不需要重启应用，改完代码后直接刷F5即可看到效果
 
-### 6. Use template to create response
+### 6. 使用模板
 
-In a real project, there is just no way for you to return a simple string to the response. In most cases you end up with applying a templating system to render your html response. Act has build in the [Rythm](http://rythmengine.org) support. Now let's enhance our application by creating a template for hello world response.
+真正的项目不会只是返回字串那么简单，通常都需要使用模板来定义返回内容. ActFramework内置了[Rythm](http://rythmengine.org)模板引擎.　现在开始增强应用程序使用模板来定义输出
 
-First update the `App.java` and change the `sayHello` method to:
+首先更新`App.java`将`sayHello`方法改变为:
 
 ```java
     @GetAction
@@ -136,30 +132,30 @@ First update the `App.java` and change the `sayHello` method to:
     }
 ```
 
-Then add a rythm template file named `sayHello.html` for the method. The file needs to be put under `/src/main/resources/rythm/com/mycom/helloworld/App` directory:
+在`/src/main/resources/rythm/com/mycom/helloworld/App`目录下添加一个`sayHello.html`文件
 
 ![idea-rythm-sayhello](../img/getting_start/idea_rythm_sayhello.png)
 
-The rule of template finding is:
+**小贴士** 模板文件定位规则是:
 
 ```
 /src/main/resources/rythm/com/mycom/helloworld/App
 -------------------
-  resource root
+  资源文件根目录
                    rythm
                    ------
-                   Template 
-                   engine 
+                   模板 
+                   引擎 
                    id
                          com/mycom/helloworld/App
                          ---------------------------
-                         Controller class full name
+                         控制器类的全名
                          
 ```
 
-And the file name `sayHello.html` is the action method name, in our case, the `sayHello` plus the suffix represent the response format, which in our case, the `.html`
+文件名`sayHello.html`则对应请求响应方法和响应内容格式，在我们的例子中`sayHello`对应了方法名，而后缀`.html`则对应响应内容格式
 
-To make it easier for you to follow up, here is the content of the template file:
+下面是模板文件内容:
 
 ```html
 <!DOCTYPE html>
@@ -173,17 +169,17 @@ To make it easier for you to follow up, here is the content of the template file
 </html>
 ``` 
 
-Once you've done the changes, switch back to your browser and navigate to <a href="http://localhost:5460"><code>http://localhost:5460</code></a>, you get the new hello world page:
+创建好模板文件之后, 切换回浏览器并打开<a href="http://localhost:5460"><code>http://localhost:5460</code></a>你应该看到如下效果:
 
 ![browser-hellowrold-2](../img/getting_start/helloworld2_in_browser.png)
 
-As an exercise, please apply the same change to the `sayBye` method.
+留一道家庭作业：将`sayBye`方法改造为使用模板返回响应结果
 
-### 7. Handle request parameters
+### 7. 处理请求参数
 
-Now let's add some dynamic to our hello world app. We want to make it able to say hello to anyone by sending request to `/?who=anyone`, where `who` is the request parameter name.
+现在让我们给hello world应用增加一些动态特性，让程序能够对任何人说hello。假设请求发送方式允许增加一个参数`who`:　`GET /?who=anyone`
 
-Here is the changed `sayHello` method:
+`sayHello`响应方法需要做相应的更改:
 
 ```java
     @GetAction
@@ -195,14 +191,14 @@ Here is the changed `sayHello` method:
     }
 ```
 
-Note you need to import `Result` and `Controller` to make it compilable:
+**注意** `Result` and `Controller`是两个新的类，需要使用下面的语句导入
 
 ```java
 import act.controller.Controller;
 import org.osgl.mvc.result.Result;
 ```
  
-And the changed `sayHello.html` file:
+下面是修改后的`sayHello.html`模板文件:
 
 ```html
 <!DOCTYPE html>
@@ -217,90 +213,92 @@ And the changed `sayHello.html` file:
 </html>
 ``` 
 
-Once you've done the change, go to your browser and navigate to <a href="http://localhost:5460?who=Act"><code>http://localhost:5460?who=Act</code></a>, you should get the result：
+完成修改后，切换到浏览器并打开<a href="http://localhost:5460?who=Act"><code>http://localhost:5460?who=Act</code></a>, 你应该能看到如下结果：
 
 ![browser-hellowrold-3](../img/getting_start/helloworld3_in_browser.png)
 
-If you were a minimalist like me, you might feel things like `Controller.Util.render` a little bit annoying, there are two ways to simplify it:
+上面的代码有用到`Controller.Util.render`方法，写起来比较冗长，简化这种写法有两种途径:
 
-1. Make your controller extends `act.controller.Controller.Util` class, which is my favorite way to get things done:
+1. 让控制器继承`act.controller.Controller.Util`类, 这也是我比较喜欢的一种方式:
 
     ![simplify_controller_util_1](../img/getting_start/simplify_controller_util_1.png)
     
-2. In some rare case that your controller has already extended from other class, then [static import](https://docs.oracle.com/javase/1.5.0/docs/guide/language/static-import.html) is your friend:
+2. 如果你的控制器已经继承了其他类，这时候你可以使用[静态引用](https://docs.oracle.com/javase/1.5.0/docs/guide/language/static-import.html):
 
     ![simplify_controller_util_2](../img/getting_start/simplify_controller_util_2.png)
 
-In either case, you can write in a more expressive way to render the result.
+不管那种方式你都可以用一种更简洁的方式来调用｀Controller.Util｀类`render`方法：
 
-## <a name="anatomy"></a>The anatomy of a Act application
+```java
+    render(who);
+```
 
-Act use the standard maven layout to organize the project with a few specific rule. After first compile an Act application looks like this:
+## <a name="anatomy"></a>ActFramework应用项目剖析
+
+ActFramework使用标准的maven项目布局来组织文件. 第一次编译后的项目看起来是这样的:
 
 ```
 .
 ├── pom.xml
 ├── src
 │   ├── main
-│   │   ├── asset                               -> public assets, can be accessed via "/asset"
-│   │   │   ├── css                             -> CSS files
-│   │   │   ├── img                             -> Image files
-│   │   │   └── js                              -> Javascript files
-│   │   ├── java                                -> Java sources
+│   │   ├── asset                               -> 静态资源, 可以直接通过"/asset"访问
+│   │   │   ├── css                             -> CSS 文件
+│   │   │   ├── img                             -> 图片文件
+│   │   │   └── js                              -> Javascript 文件
+│   │   ├── java                                -> Java 源码
 │   │   │   └── com
 │   │   │       └── mycom
 │   │   │           └── myprj
-│   │   │               ├── Application.java    -> application entry
-│   │   │               ├── conf                -> source code built-in configuration
-│   │   │               ├── controller          -> controllers
-│   │   │               ├── event               -> events and event listeners
-│   │   │               ├── mail                -> mailers
-│   │   │               ├── model               -> models and data access objects
-│   │   │               ├── sys                 -> system level utilities
-│   │   │               └── util                -> general utilities
-│   │   └── resources                           -> resource files
-│   │       ├── conf                            -> configuration file root
-│   │       │   ├── common                      -> common configurations applied to all profiles
-│   │       │   ├── sit                         -> "sit" profile configurations that overwrite commond configurations
-│   │       │   └── dev                         -> "dev" profile configurations that overwrite commond configurations
-│   │       ├── messages.properties             -> message resource files
-│   │       ├── routes                          -> route table file
-│   │       └── rythm                           -> RythmEngine template root
+│   │   │               ├── Application.java    -> 应用程序入口(提供main()方法)
+│   │   │               ├── controller          -> 控制器目录
+│   │   │               ├── event               -> 事件和事件响应器目录
+│   │   │               ├── mail                -> 邮件发送器目录
+│   │   │               ├── model               -> 域模型以及数据访问对象目录
+│   │   │               └── util                -> 工具类目录
+│   │   └── resources                           -> 资源文件
+│   │       ├── conf                            -> 配置根目录
+│   │       │   ├── common                      -> 存放缺省配置
+│   │       │   ├── sit                         -> "sit" 配置
+│   │       │   └── dev                         -> "dev" 配置
+│   │       ├── messages.properties             -> 国际化资源文件
+│   │       ├── routes                          -> 路由表
+│   │       └── rythm                           -> Rythm模板根目录
 │   │           ├── com
 │   │           │   └── mycomp
 │   │           │       └── myprj
-│   │           │           ├── controller      -> templates for controller actions
-│   │           │           └── mail            -> templates for mailer actions
-│   │           └── __global.rythm              -> global template utilities
+│   │           │           ├── controller      -> 控制器模板目录
+│   │           │           └── mail            -> 邮件发送器模板目录
+│   │           └── __global.rythm              -> 全局模板工具
 │   └── test
-│       ├── java                                -> unit test java sources
+│       ├── java                                -> 单元测试源文件
 │       │   └── com
 │       │       └── mycom
 │       │           └── myprj
-│       └── resources                           -> unit test resources
-└── target                                      -> maven build target root
-    ├── dist                                    -> where the build dist package stored
+│       └── resources                           -> 单元测试资源
+└── target                                      -> maven项目构建目录
+    ├── dist                                    -> 发布包目录
     └── tmp
-        └── uploads                             -> the temporary dir to store the uploaded files
+        └── uploads                             -> 存放上传文件的临时目录
 ```
 
-Note your application might look a little bit different from above in that
+**注意** 根据你的应用程序的包组织方式，你看到的有可能和以上结构有不一样的地方
 
-1. the package structure is totally project specifc. E.g. you might not ave a `controller` folder, instead you have `service` folder to put in all the RESTful service classes. And your business logic layer might not be organized in one `model` folder, instead in a set of different packages. In general Act does not define how your organize your java source package, you are in complete freedom to do that based on your project needs.
-1. The `common` configuration folder is a convention used by Act to look for default configurations. However the `sit` and `dev` are the profiles defined by yourself, you are free to give them a different name or add other profiles e.g. `uat` and `prod` etc. It is totally okay if you decide not to define profile and just use `common` configurations.
-1. The `route` file is optional. You can just rely on the annotation based route. However if `route` table is provided it allows to overwrite the annotation based route definition
+1. 包组织方式完全由项目决定。你的项目中可能使用了`service`包而不是`controller`来存放所有的RESTful控制器类。 而你的业务层也许不是一个`model`包, 而是分布在多个不同的包里. ActFramework在项目文件组织上没有任何限制
+1. ActFramework使用`common`配置目录来获取缺省的配置信息。而上例所示的`sit`和`dev`目录则完全由项目决定，你可以使用其他任何名字，你也可以增加另一种配置组，比如`uat`。如果项目不需要多个配置组，使用`common`即可。
+1. 如果路由都通过注解方式指定，`routes`文件可以不用提供. 一旦`routes`文件被检测到，其中的条目可以覆盖注解指定路由
 
 
-## Wrap up
+## 总结
 
-In this section you have learned:
+本单元说明了一下内容
 
-1. Getting Prerequisites ready
-1. Generating project skeleton using maven and the sample pom file
-1. Creating Act application by using `RunApp.start` in the `main` method
-1. Adding action handlers
-1. Using template to render complex response
-1. Handling request parameter
-1. The anatomy of an Act application
+1. 准备工作
+1. 通过maven生成项目文件，如何拷贝示例`pom.xml`文件覆盖生成的`pom.xml`文件
+1. 在`main`方法调用`RunApp.start`方法来启动ActFramework应用程序
+1. 添加请求响应方法
+1. 使用模板来生成复杂响应
+1. 处理请求参数
+1. ActFramework程序结构解析
 
 [Back to index](index.md)

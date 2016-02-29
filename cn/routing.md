@@ -1,14 +1,14 @@
-# Routing
+# 路由
 
-ActFramework support building routing table in three different ways:
+ActFramework应用程序可以使用三种不同的方式来创建路由:
 
-1. Through annotation put on an action handler method
-1. Through `route` file
-1. Through configuration API
+1. 在响应方法上标记相关注解
+1. 通过`routes`路由表文件
+1. 通过配置API
 
-## Routing with actions handler method annotation
+## 通过注解创建路由
 
-The following annotation are supported:
+下面的注解可以指定路由:
 
 1. `org.osgl.mvc.annotation.Action`
 1. `org.osgl.mvc.annotation.GetAction`
@@ -16,7 +16,7 @@ The following annotation are supported:
 1. `org.osgl.mvc.annotation.PutAction`
 1. `org.osgl.mvc.annotation.DeleteAction`
 
-Sample code:
+示例代码：
 
 ```java
 @GetAction("/profile/{id}")
@@ -43,14 +43,14 @@ public void deleteProfile(String id) {
 }
 ```
 
-**Tips**: Use `Action` annotation when an action handler needs to handler request through multiple HTTP methods:
+**小贴士**: 当某个响应方法处理多种不同的HTTP方法请求时可以使用`@Action`注解：
 
 ```java
 @Action("/", methods = {H.Method.GET, H.Method.POST})
 public void home() {}
 ```
 
-**Tips**: You can have one action handler to answer multiple request URL:
+**小贴士**: 你可以通过注解将不同的请求路径映射到同一个响应方法上:
 
 ```java
 @GetAction({"/profile/{id}", "/profile"})
@@ -59,14 +59,14 @@ public Profile getProfile(String id) {
 }
 ```
 
-The above code allows the front end send request to `getProfile` using two different styles:
+依据上例的配置`getProfile`可以处理下面两种请求:
 
 1. `/profile/<profile_id>`
 2. `/profile?id=<profile_id>`
 
-## The `routes` file
+## `routes`路由表文件
 
-If you prefer the `PlayFramework` style routing, you are free to create a `routes` file under your `/src/main/resources` folder. The equivalent `routes` file replacing the above annotations should be look like (suppose the controller class is `com.mycom.myprj.MyController`):
+如果你更喜欢`PlayFramework`形式的路由表, 你可以在`/src/main/resources`目录下创建一个`routes`文件. 和上面注解路由相对应的`routes`文件内容如下所示(假设控制器的类名为`com.mycom.myprj.MyController`):
 
 ```
 GET /profile/{id} com.mycom.myprj.MyController.getProfile
@@ -75,33 +75,40 @@ PUT /profile/{id}/address com.mycom.myprj.MyController.updateAddress
 DELETE /profile/{id}
 ```
 
-In general any route entry defined in the `routes` file composed of three parts:
+规则：路由表条目由下面三个部分组成：
 
 ```
-(GET|POST|DELETE|PUT|*) <url> <handler>
+(GET|POST|DELETE|PUT|*) <path> <handler>
+----------------------- 
+   HTTP请求方法
+                        ------
+                        请求路径
+                               -----------
+                               响应器规范
 ```
 
-### Handler directives
+### 响应器指令
 
-By default the `handler` part of route entry indicate an action handler method defined in a controller class. However you can use handler directive to specify handler that are not action handler method. E.g.
+通常来讲响应器规范部分由控制器类名加上响应方法方法名组成. 不过你也可以使用响应器指令来定义不同的响应器：
 
 ```
-# map /tmp url to /tmp dir
 GET /tmp externalfile:/tmp
 GET /public file:/public
 GET /3215430325 echo:some-code
+GET /google redirect:http://google.com
 ```
 
-Act has three built-in directives:
+ActFramework内置四种响应器指令
 
-1. `echo`: Any string after `echo:` will be sent to the response. This is especially useful when service, e.g. Godaddy needs you to respond with a specific code when request is sent to a certain endpoint
-1. `file`: Allows you to send back static file under the application's base dir
-1. `externalfile`: Allows you to send back any static file
+1. `echo`: `echo:`后面的字串会被发送回请求端.
+1. `file`: 发送应用程序根目录一下的静态文件
+1. `externalfile`: 发送任何指定的静态文件
+1. `redirect`: 发送重定向响应
 
-**Notes**, the entry specified in `routes` file can overwrite the route specified with action annotations.
+**注意**, `routes`文件中的条目可以覆盖由注解指定的路由
 
-## Creating route with configuration API
+## 通过配置API构建路由
 
 TBD
 
-[Back to index](index.md)
+[返回目录](index.md)

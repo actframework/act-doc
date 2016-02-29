@@ -377,12 +377,13 @@ public Result getOrder(String orderId) {
         return renderTemplate("/myTemplateRoot/orderForm.html", order, hasWritePermission);
     }
     ```
-    As shown above, when the first parameter passed to `renderTemplate` is a String literal, (not String variable), it will treated as template path, instead of render argument
+    
+    在上例中传递给`renderTemplate`的第一个参数是一个字串量(String literal)，而不是一个变量。在这种情况下，ActFramework将其作为模板路径处理，其他的参数则继续作为模板参数处理。
     
 
-### <a name="render-binary"></a>Render binary data
+### <a name="render-binary"></a>发回二进制数据
 
-1. Render binnary as stream embedded in browser (e.g. a PDF or image):
+1. 发回嵌入二进制流（例如图片或者嵌入式PDF）
 
     ```java
     @GetAction("/user/{userId}/avatar")
@@ -392,7 +393,7 @@ public Result getOrder(String orderId) {
     }
     ```
     
-2. Render binnary as a download file
+2. 发回下载文件
 
     ```java
     @GetAction("/invoice/{id}/photoCopy")
@@ -402,9 +403,9 @@ public Result getOrder(String orderId) {
     }
     ```
 
-## <a name="content-negotiation"></a>Content awareness
+## <a name="content-negotiation"></a>内容格式
 
-ActFramework detects the request's `accept` header and render content accordingly
+ActFramework检测请求的`Accept`头并根据其设定生成不同的响应内容
 
 ```java
 @GetAction("/person/{id}")
@@ -413,22 +414,22 @@ public Person getPerson(String id) {
 }
 ```
 
-With the action handler code showed above, if the request's `Accept` header is "application/json", the response will be something like:
+对于上例代码，当`Accept`头设置为"application/json"的时候, 响应是JSON体:
 
-```
+```json
 {
   "firstName": "John",
   "lastName": "Smith"
 }
 ```
 
-While if the header is `text/html` or `text/plain`, the response will just be the plain String like
+当设置为`text/html`或`text/plain`的时候, 响应将调用`Person.toString()`方法，生成下面的内容
 
 ```
 John Smith
 ```
 
-You can define template files with different suffix if you need tweak the default rendered result:
+你甚至可以为响应器定义多个不同的后缀名的模板文件。
 
 `getPerson.html`
 
@@ -452,19 +453,24 @@ You can define template files with different suffix if you need tweak the defaul
 }
 ```
 
-ActFramework will pickup the propery template file based on the `Accept` header
+ActFramework根据`Accept`头的内容来选择适合的模板文件
 
-## Wrap up
+## 回话和快闪对象
 
-In the section we have explained/demonstrates:
+TBD...
 
-1. The concept of `Controller` and `Action handler` in ActFramework
-1. How to write a simple controller
-1. How to handle request parameters includingn binding request parameters to POJO instance
-1. How to respond request with different status code
-1. How to return data
-1. How to find/specify template to render the response
-1. How to get or download binary data
-1. How `Accept` header impact ActFramework's behavior 
+## 总结
 
-[Back to index](index.md)
+本章讲述了一下概念：
+
+1. 控制器`Controller`和响应器`Action handler`的概念
+1. 如何写一个简单的控制器
+1. 如何获取请求参数以及POJO绑定
+1. 如何发回不同的响应代码
+1. 如何返回数据
+1. 如何隐式或显示的指定响应模板
+1. 如何返回二进制流或下载文档
+1. `Accept`头对ActFramework行为的影响 
+1. 如何使用回话和快闪对象
+
+[返回目录](index.md)

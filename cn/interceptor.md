@@ -1,19 +1,19 @@
-# Interceptors
+# 拦截器
 
-ActFramework support creating interceptor in two different ways:
+ActFramework应用程序可以使用两种方式创建拦截器:
 
-1. Annotation based interception method (PlayFramework style)
-1. Api based interceptor
+1. 基于注解的方式 (类似PlayFramework)
+1. 通过继承写拦截器类
 
-## Annotation based interceptor
+## 基于注解的拦截器
 
-The idea of annotation based interceptor is completely borrowed from PlayFramework 1.x.
+该设计完全基于PlayFramework 1.x的方式
 
 ### Before
 
-Methods annotated with the @Before annotation are executed before each action call for this Controller.
+在某方法上使用`@Before`注解告诉ActFramework在执行该类中的所有请求响应器之前先调用该方法
 
-So, to create a security check:
+下面我们使用拦截器来创建一个安全检查：
 
 ```java
 public class Admin extends Controller.Util {
@@ -34,7 +34,7 @@ public class Admin extends Controller.Util {
 }
 ```
 
-If you don’t want the @Before method to intercept all action calls, you can specify a list of actions to exclude:
+如果不需要拦截器拦截发送给某些响应器的请求，可以使用`unless`参数来指定豁免清单:
 
 ```java
 public class Admin extends Controller.Util {
@@ -55,7 +55,7 @@ public class Admin extends Controller.Util {
 }
 ```
 
-Or if you want the `@Before` method to intercept a list of action calls, you can specify a only param :
+另一方面，你也可以使用`only`参数来指定该拦截器唯一作用于的响应器:
 
 ```java
 public class Admin extends Controller.Util {
@@ -68,11 +68,11 @@ public class Admin extends Controller.Util {
 }
 ```
 
-The `unless` and `only` parameters are available for the `@After`, `@Before` and `@Finally` annotations.
+除了`@Before`, `unless`和`only`参数也可以在`@After`, `@Catch`和`@Finally`注解中使用.
 
 ### @After
 
-Methods annotated with the `@After` annotation are executed after action handler call for this Controller.
+标注有`@After`的方法在执行本类中所有的响应器之后被调用.
 
 ```java
 public class Admin extends Controller.Util {
@@ -93,7 +93,7 @@ public class Admin extends Controller.Util {
 
 ### @Catch
 
-Methods annotated with `@Catch` are called if another action method throws the specified exception. The thrown exception is passed as a parameter to the `@Catch` method.
+如果某方法标注有`@Catch`，该方法在当前类的响应器抛出异常后被调用. 被抛出的异常作为参数传递给`@Catch`方法.
 
 ```java
 public class Admin extends Controller.Util {
@@ -113,7 +113,7 @@ public class Admin extends Controller.Util {
 }
 ```
 
-As with normal Java exception handling, you can catch a super-class to catch more exception types. If you have more than one catch method, you can specify their priority so that they are executed in order of priority (priority 1 is executed first).
+和通常的Java异常处理类似，你可以在`@Catch`拦截器方法中申明父类异常来捕获子类异常
 
 ```java
 public class Admin extends Controller.Util {
@@ -141,9 +141,7 @@ public class Admin extends Controller.Util {
 
 ### @Finally
 
-Methods annotated with the `@Finally` annotation are always executed after each action call to this Controller.
-
-`@Finally`-methods are called both after successful action calls and if an error occurred.
+标注有`@Finally`注解的方法在当前控制器的响应方法执行完成之后被调用，即便响应方法抛出异常，该拦截器也会被调用
 
 ```java
 public class Admin extends Controller.Util {
@@ -161,15 +159,16 @@ public class Admin extends Controller.Util {
 }
 ```
 
-### Controller hierarchy
+### 类继承对拦截器的影响
 
-If a Controller class is a subclass of another Controller class, interceptions are applied to the full Controller hierarchy.
+如果控制器继承了某个基类，在基类中定义的拦截器也适用于子类控制器
 
-### Adding more interceptors using the @With annotation
+### 使用@With注解来重用拦截器定义
 
-Because Java does not allow multiple inheritance, it can be very limiting to rely on the Controller hierarchy to apply interceptors. But you can define some interceptors in a totally different class, and link them with any controller using the `@With` annotation.
+如果你的控制器已经继承了某个基类，而你需要重用定义在另一个类的拦截器，可以通过`@With`注解来实现:
 
-Example:
+
+某个定义了拦截器的类:
 
 ```java
 public class Secure extends Controller.Util {
@@ -183,19 +182,19 @@ public class Secure extends Controller.Util {
 }    
 ```
 
-And on another Controller:
+控制器类:
 
 ```java
 @With(Secure.class)
-public class Admin extends Controller.Util {
+public class Admin extends MyOtherBaseClass {
     
     …
 }
 ```
 
-## Inheritant from XxxInterceptor
+## 实现拦截器接口
 
-Annotation based interceptor is very handy to write interception logic that local to a certain controller or a group of controllers. However if you have interception logic that should be applied to all controllers, you need to inherit from XxxInterceptors
+基于注解的拦截器非常轻量，不过只适用于定义或这引用了拦截器的控制器。如果需要实现全局拦截，可以通过继承XxxInterceptor来实现
 
 ```java
 import act.app.ActionContext;
@@ -230,10 +229,12 @@ public class MockRequestContentAcceptor extends BeforeInterceptor {
 
 ```
 
-The above code implement a logic that will be called before everytime invoking an action handler. There are similar Interceptor base classes including:
+上面的代码拦截所有的请求，检查是否有`fmt`参数，如果发现`fmt`参数则设置相应的`Accept`头。
+
+类似的拦截器接口还有：
 
 1. `act.handler.builtin.controller.AfterInterceptor`
 1. `act.handler.builtin.controller.ExceptionInterceptor`
 1. `act.handler.builtin.controller.FinallyInterceptor`
 
-[Back to index](index.md)
+[返回目录](index.md)

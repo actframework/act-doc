@@ -1,8 +1,8 @@
-# Jobs and Scheduler
+# 任务调度
 
-Job and scheduler is one of the best feature of ActFramework. It makes job scheduling really a handy piece of work. What you need to do is just create a public method without return result and parameter. The method could be either static or virtual.
+任务调度支持是ActFramework的一项很棒的功能，你可以用一种前所未有的简洁方式来进行任务调度，只需要在没有返回类型和参数类型的方法上使用不同的注解制定任务触发条件即可。方法可以是静态的或者虚方法。
 
-## Run logic regularly
+## 定期运行
 
 ```java
 import act.job.Every;
@@ -36,7 +36,7 @@ public class Foo {
 }
 ```
 
-## Run logic at fixed delay
+## 固定间隔运行
 
 ```java
 import act.job.FixedDelay;
@@ -49,7 +49,7 @@ public class Foo {
 }
 ```
 
-## Cron job
+## Cron调度
 
 ```java
 import act.job.Cron;
@@ -67,7 +67,7 @@ public class Foo {
 }
 ```
 
-## Invoke along with other job
+## 和其他任务联动执行
 
 ```java
 package com.mycom.myrpj;
@@ -97,7 +97,7 @@ public class Foo {
 }
 ```
 
-## Listening to application events
+## 处理应用程序事件
 
 ```java
 import act.job.*;
@@ -126,7 +126,7 @@ public class Foo {
 }
 ```
 
-## Adhoc job scheduling
+## 通过API调度任务
 
 ```java
 @GetAction
@@ -148,4 +148,4 @@ public void home(@Context AppJobManager jobManager) {
 }
 ```
 
-[Back to index](index.md)
+[返回目录](index.md)

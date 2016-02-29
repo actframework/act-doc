@@ -6,7 +6,7 @@ ActFramework support Dependency Injection with Google Guice. You need to add the
 <dependency>
     <groupId>org.actframework</groupId>
     <artifactId>act-guice</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -52,7 +52,7 @@ public class Foo {
 
 ## Create object instance that has DI
 
-Always use `act.app.App.newInstance(Class)` method to create the instance you need, it will inject the dependency declared in your class
+Always use `act.app.App::newInstance(Class)` method to create the instance you need, it will inject the dependency declared in your class
 
 ```java
 App app = App.instance();
@@ -78,7 +78,7 @@ public Result handleXyzRequest(String s, int i, @Context Bar bar) {
 }
 ```
 
-When Act detect that `Bar bar` is annotated with `Context`, it will not try to create an new Bar and bind it with request parameters, instead `App.newInstance()` will be called to create the `Bar` instance and feed into the `handleXyzRequest` method
+When Act detect that `Bar bar` is annotated with `Context`, it will not try to create an new Bar and bind it with request parameters, instead `App::newInstance(Class)` will be called to create the `Bar` instance and feed into the `handleXyzRequest` method
 
 **Note** You don't need to add `@Context` to inject `ActionContext` object, it will always get injected into action handler if declared in the parameter list:
 

@@ -3,7 +3,7 @@
 ActFramework support building routing table in three different ways:
 
 1. Through annotation put on an action handler method
-1. Through `route` file
+1. Through `routes` file
 1. Through configuration API
 
 ## Routing with actions handler method annotation
@@ -90,13 +90,15 @@ By default the `handler` part of route entry indicate an action handler method d
 GET /tmp externalfile:/tmp
 GET /public file:/public
 GET /3215430325 echo:some-code
+GET /google redirect:http://google.com
 ```
 
-Act has three built-in directives:
+Act has four built-in directives:
 
 1. `echo`: Any string after `echo:` will be sent to the response. This is especially useful when service, e.g. Godaddy needs you to respond with a specific code when request is sent to a certain endpoint
 1. `file`: Allows you to send back static file under the application's base dir
 1. `externalfile`: Allows you to send back any static file
+1. `redirect`: Allows you to specify a redirection
 
 **Notes**, the entry specified in `routes` file can overwrite the route specified with action annotations.
 

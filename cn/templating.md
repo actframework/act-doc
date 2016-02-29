@@ -1,10 +1,10 @@
-# Templating
+# 模板
 
-ActFramework can plugin different templating solutions. At the moment [Rythm](http://rythmengine.org) is fully supported. Freemarker and Velocity is limited supported.
+ActFramework支持不同的模板引擎. [Rythm](http://rythmengine.org)是缺省引擎，目前支持最好. 另外对Freemarker和Velocity提供了有限的支持.
 
-** Note to use freemarker and velcoity templating you need to add the dependencies into your pom.xml file respectively:
+**注意** 如果要使用freemarker或velcoity需要在`pom.xml`文件中分别加上下面的依赖:
 
-Freemarker templating dependency:
+Freemarker依赖:
 
 ```xml
 <dependency>
@@ -14,7 +14,7 @@ Freemarker templating dependency:
 </dependency>
 ```
 
-Velocity templating dependency:
+Velocity依赖:
 
 ```xml
 <dependency>
@@ -24,15 +24,15 @@ Velocity templating dependency:
 </dependency>
 ```
 
-## <a name="location"></a>template file location
+## <a name="location"></a>模板文件的位置
 
-The convention of locating a template file is:
+ActFramework依照一下管理访问模板文件:
 
 ```
 /src/main/resources/{template-plugin-id}/{controller-class}/{action-method}.{fmt-suffix}
 ```
 
-For example, if you have a controller class defined as:
+假设你的控制器类是
 
 ```java
 package com.mycom.myprj;
@@ -50,20 +50,22 @@ public class MyController {
 }
 ``` 
 
-You can create two template files corresponding to the `home()` and `getFoo()` action methods:
+对应与`home()`和`getFoo()`响应方法的连个模板文件分别为:
 
 1. `/src/main/resources/rythm/com/mycom/myprj/MyController/home.html`
 1. `/src/main/resources/rythm/com/mycom/myprj/MyController/getFoo.html`
 
-When the request to `/foo` endpoints accept `application/json` content, then you can create a json template at 
+如果你的应用需要对发送到`/foo`的请求支持`application/json`格式, 你可以创建json格式模板文件如下: 
 
 ```
 /src/main/resources/rythm/com/mycom/myprj/MyController/getFoo.json
 ``` 
 
-## Passing parameter to template
+## 模板参数传递
 
-ActFramework use ASM to enhance your controller method so that you don't need to manually put template arguments into a Map type context, like what you did in Spring MVC:
+ActFramework使用ASM对响应方法做了增强，因此你不必像在Spring MVC应用中那样显示指定参数
+
+一个SpringMVC的响应方法：
 
 ```java
 public String foo(String a, String b, int c, ModelMap modelMap) {
@@ -75,7 +77,7 @@ public String foo(String a, String b, int c, ModelMap modelMap) {
 }
 ```
 
-In Act, your code could much more clean:
+用ActFramework重写上面的方法:
 
 ```java
 public Result foo(String a, String b, int c) {
@@ -84,7 +86,7 @@ public Result foo(String a, String b, int c) {
 }
 ```
 
-And in your rythm template you declare your template argument and use them as follows:
+在Rythm引擎中申明参数:
 
 ```
 @args String a, String b, int c
@@ -95,9 +97,9 @@ c = @c
 </pre>
 ```
 
-## Passing return result to template
+## 想模板传递返回值
 
-If your action method just need to pass one parameter into the template, you can choose to return it:
+如果你的控制器需要向模板传递返回值
 
 ```java
 public Foo getFoo() {
@@ -105,17 +107,17 @@ public Foo getFoo() {
 }
 ```
 
-In your template you use name `result` to refer to the return instance:
+在模板中通过`result`名字来引用返回值:
 
 ```
 @args Foo result
 Foo is @foo
 ```
 
-## Reference
+## 参考
 
-* Please visit [Rythm official website](http://rythmengine.org) to get detail information on how to use Rythm
-* Please visit [Velocity official website](http://velocity.apache.org) to get detail information on how to use Velocity
-* Please visit [Freemarker official website](http://freemarker.incubator.apache.org/) to get detail information on how to use Freemarker
+* [Rythm官网](http://rythmengine.org)
+* [Velocity官网](http://velocity.apache.org)
+* [Freemarker官网](http://freemarker.incubator.apache.org/)
 
-[Back to index](index.md)
+[返回目录](index.md)

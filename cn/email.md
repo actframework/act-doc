@@ -1,13 +1,13 @@
-# Sending Email
+# 发送邮件
 
-Sending email is very simple in ActFramework. What you need to do is:
+在ActFramework发送邮件是非常简单的工作。如果你的某个类具有邮件发送方法，你需要：
 
-1. Use `Mailer` annotation to tag your class that contains send mail methods
-1. Extend your class to `Mailer.Util` class or add a static import statement:
+1. 使用`act.mail.Mailer`注解标记该类
+1. 让该类继承`Mailer.Util`类或者使用静态引入
 
     `import static act.mail.Mailer.Util.*`
     
-## Creating mailer class and methods
+## 创建邮件发送方法
 
 ```java
 package com.mycom.myprj;
@@ -42,38 +42,38 @@ public class PostOffice extends Mailer.Util {
 }
 ```
 
-## Creating mailer templates
+## 创建邮件模板
 
-Now that you have the mailer created, you can create the template corresponding to the mailer methods:
+为每一个邮件发送方法创建对应的模板。模板的位置和控制器响应方法模板位置依照同样规则，对于上例中的`sendWelcome`和`sendBye`方法，对应的模板文件分别为:
 
 1. `src/main/resources/rythm/com/mycom/myprj/PostOffice/sendWelcome.html`:
 
-```html
-<html>
-<head></head>
-<body>
-@args com.mycom.myprj.Contact who
-<h1>Welcome @who.getFirstName()!</h1>
-<p>Blah Blah</p>
-</body>
-</html>
-```
+    ```html
+    <html>
+    <head></head>
+    <body>
+    @args com.mycom.myprj.Contact who
+    <h1>Welcome @who.getFirstName()!</h1>
+    <p>Blah Blah</p>
+    </body>
+    </html>
+    ```
 
 1. `src/main/resources/rythm/com/mycom/myprj/PostOffice/sendBye.html`:
 
-```html
-<html>
-<head></head>
-<body>
-@args com.mycom.myprj.Contact who
-<h1>Good bye @who.getFirstName()!</h1>
-</body>
-</html>
-```
+    ```html
+    <html>
+    <head></head>
+    <body>
+    @args com.mycom.myprj.Contact who
+    <h1>Good bye @who.getFirstName()!</h1>
+    </body>
+    </html>
+    ```
 
-## Calling mailer methods
+## 调用邮件发送方法
 
-You can call the mailer method directly from any where, like the following controller code:
+你可以简单地通过方法调用发送邮件
 
 ```java
 public class MyController {
@@ -97,11 +97,11 @@ public class MyController {
 }
 ```
 
-## Calling mailer method asynchronously
+## 异步调用邮件发送方法
 
-Usually executing mailer method involves IPC to external services (e.g. your SMTP server), which could be time consuming. So you would prefer to execute mailer method asynchrously and return back immediately. You can use ActFramework's event dispatching mechanism to achieve that.
+因为涉及远程通信，邮件发送通常来讲是比较耗时的操作。如果在控制器中调用邮件发送会造成结果返回延时。通常的做法是采用异步方式发送邮件，在ActFramework中，你可以通过事件分派来实现:
 
-1. Mark your mailer methods to be an event handler
+1. 使用`act.event.On`注解将邮件发送方法标注为异步事件响应器
     
     ```java
     @On(value = "contact-created", async = true)
@@ -118,7 +118,7 @@ Usually executing mailer method involves IPC to external services (e.g. your SMT
     }
     ``` 
     
-1. Trigger event instead of call mailer method directly:
+1. 在需要调用邮件发送方法的时候触发事件
 
     ```java
     public class MyController {
@@ -142,4 +142,4 @@ Usually executing mailer method involves IPC to external services (e.g. your SMT
     }
     ```
     
-    [Back to index](index.md)
+[返回目录](index.md)

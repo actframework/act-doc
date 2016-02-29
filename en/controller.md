@@ -451,6 +451,10 @@ You can define template files with different suffix if you need tweak the defaul
 
 ActFramework will pickup the propery template file based on the `Accept` header
 
+## Session and Flash
+
+TBD...
+
 ## Wrap up
 
 In the section we have explained/demonstrates:
@@ -463,5 +467,6 @@ In the section we have explained/demonstrates:
 1. How to find/specify template to render the response
 1. How to get or download binary data
 1. How `Accept` header impact ActFramework's behavior 
+1. How to use `Session` and `Flash` Object
 
 [Back to index](index.md)

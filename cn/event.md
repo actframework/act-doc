@@ -1,12 +1,12 @@
-# Event in ActFramework
+# 事件
 
-ActFramework provides utmost expressive way to bind and dispatch events.
+ActFramework提供简单易用的事件绑定和分派机制
 
-## Simple Event Framework
+## 简单事件框架
 
-Simple event framework allows developer to use any String as the event to trigger and bind event handlers. And event handler could be simple as a public method that are annotated with `act.event.On` annotation:
+简单事件让开发人员直接使用字串来定义事件。而事件响应方法则是一个有`act.event.On`注解标注的普通Java方法。分派简单事件可以传入任何参数，这些参数都将传入事件响应方法。
 
-### Declaring event handler
+### 申明事件响应方法
 
 ```java
 public class Foo {
@@ -17,7 +17,7 @@ public class Foo {
 }
 ```
 
-### Trigger event
+### 触发事件
 
 ```java
 @Controller("/customer")
@@ -31,12 +31,12 @@ public class CustomerController {
 }
 ```
 
-## Typesafe Event Framework
+## 类型安全事件框架
 
-Typesafe event framework is more classic way to bind and dispatch event.
+类型安全事件框架实现更加传统的事件绑定和分派机制
 
 
-### Declaring event handler
+### 申明事件响应方法
 
 ```java
 import act.event.ActEvent;
@@ -53,7 +53,7 @@ public class CustomerCreated extends ActEventListenerBase<ActEvent<Customer>> {
 }
 ```
 
-### Trigger event
+### 触发事件
 
 
 ```java
@@ -68,7 +68,7 @@ public class CustomerController {
 }
 ```
 
-## Comparison between two event framework
+## 两种事件框架的比较
 
 <table>
 <thead>
@@ -78,24 +78,24 @@ public class CustomerController {
 </thead>
 <tbody>
 <tr>
-<td>Simple event framework</td>
+<td>简单事件框架</td>
 <td>
-Simple, lightweight and very expressive to declare event handler
+简单，轻量，更易表达
 </td>
 <td>
-Not type safe<br/> reflection based method call
+没有类型安全<br/>基于反射的事件方法调用
 </td>
 </tr>
 <tr>
-<td>Typesafe event framework</td>
+<td>类型安全事件框架</td>
 <td>
-Typesafe; better runtime performance
+类型安全; 运行时效率更高
 </td>
 <td>
-Slightly verbose to declare event handler
+申明事件响应器以及触发事件的代码较为冗长
 </td>
 </tr>
 </tbody>
 </table>
 
-[Back to index](index.md)
+[返回目录](index.md)
