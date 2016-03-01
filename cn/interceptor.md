@@ -34,12 +34,12 @@ public class Admin extends Controller.Util {
 }
 ```
 
-如果不需要拦截器拦截发送给某些响应器的请求，可以使用`unless`参数来指定豁免清单:
+如果不需要拦截器拦截发送给某些响应器的请求，可以使用`except`参数来指定豁免清单:
 
 ```java
 public class Admin extends Controller.Util {
  
-    @Before(unless="login")
+    @Before(except="login")
     static void checkAuthentification() {
         if(session.get("user") == null) {
             redirect("/login");
@@ -68,7 +68,7 @@ public class Admin extends Controller.Util {
 }
 ```
 
-除了`@Before`, `unless`和`only`参数也可以在`@After`, `@Catch`和`@Finally`注解中使用.
+除了`@Before`, `except`和`only`参数也可以在`@After`, `@Catch`和`@Finally`注解中使用.
 
 ### @After
 
