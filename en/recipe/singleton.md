@@ -115,7 +115,7 @@ public class MySingletonConsumer {
 }
 ``` 
 
-or into your [action method](../controller.md#term)
+or into your [action handler](../controller.md#term)
 
 ```java
 @GetAction("/foo")
