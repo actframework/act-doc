@@ -106,7 +106,7 @@ public void handleXyzResult(Stirng s, ActionContext context) {
 
 ## Create module class
 
-Like your usual Guice application, you are free to create any number of Module class e.g.
+If you are using Guice implementation, like your usual Guice application, you can create any number of Module class e.g.
 
 ```java
 public class GreetingModule extends AbstractModule {
