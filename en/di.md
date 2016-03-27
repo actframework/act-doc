@@ -1,14 +1,27 @@
 # Dependency Injection
 
-ActFramework support Dependency Injection with Google Guice. You need to add the following dependency in your `pom.xml` file to use it:
+ActFramework support dependency injection based on [JSR330](https://jcp.org/en/jsr/detail?id=330)  
 
-```
-<dependency>
-    <groupId>org.actframework</groupId>
-    <artifactId>act-guice</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
-</dependency>
-```
+At the moment there are two DI implementation:
+
+1. [Based on Guice](https://github.com/actframework/act-guice-plugin)To use this implementation, add the following dependency into your `pom.xml` file:
+    ```
+    <dependency>
+        <groupId>org.actframework</groupId>
+        <artifactId>act-guice</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </dependency>
+    ```
+2. [Based on Feather](https://github.com/actframework/act-feather). To use Feather based DI, add the following dependency into your `pom.xml` file: 
+    ```
+    <dependency>
+        <groupId>org.actframework</groupId>
+        <artifactId>act-feather</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </dependency>
+    ```
+    
+**Note** You can't use both guice and feather. Choose one for your application
 
 ## Declare inject object
 
@@ -47,6 +60,9 @@ public class Foo {
     }
 }
 ```
+
+**Note** Feather implementation does NOT support Setter injection!
+
 
 **Tips** The Field injection is clean and simple, but not unit test friendly.
 

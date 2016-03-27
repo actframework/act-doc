@@ -1,14 +1,28 @@
 # 依赖注入
 
-ActFramework支持基于Google Guice的依赖注入. 要使用依赖注入你需要在`pom.xml`文件中加入下面的依赖:
+ActFramework支持基于[JSR330](https://jcp.org/en/jsr/detail?id=330)的依赖注入. 
 
-```
-<dependency>
-    <groupId>org.actframework</groupId>
-    <artifactId>act-guice</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
-</dependency>
-```
+目前有两种实现：
+
+1. [基于Guice的实现](https://github.com/actframework/act-guice-plugin)。要使用guice实现，在`pom.xml`文件中加入以下依赖：
+    ```
+    <dependency>
+        <groupId>org.actframework</groupId>
+        <artifactId>act-guice</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </dependency>
+    ```
+2. [基于Feather的实现](https://github.com/actframework/act-feather)。要使用feather实现，在`pom.xml`文件中加入：
+    ```
+    <dependency>
+        <groupId>org.actframework</groupId>
+        <artifactId>act-feather</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </dependency>
+    ```
+
+
+**注意** 你不能在项目中同时使用guice和feather. 你只能任选一个加入到你的项目中
 
 ## 申明需要注入的对象
 
@@ -48,6 +62,8 @@ public class Foo {
 }
 ```
 
+**注意** Feather实现目前不支持设置器注入！
+
 **小贴士** 字段注入最为简明，不过对单元测试会造成一些麻烦
 
 ## 获取有依赖申明的对象
@@ -82,7 +98,7 @@ public void handleXyzResult(Stirng s, ActionContext context) {
 
 ## `AbstractModule`类
 
-和通常的Guice应用一样，你可以创建Module类来申明注入绑定规则:
+如果使用guice实现，和通常的Guice应用一样，你可以创建Module类来申明注入绑定规则:
 
 ```java
 public class GreetingModule extends AbstractModule {
