@@ -5,6 +5,7 @@ ActFramework support dependency injection based on [JSR330](https://jcp.org/en/j
 At the moment there are two DI implementation:
 
 1. [Based on Guice](https://github.com/actframework/act-guice-plugin)To use this implementation, add the following dependency into your `pom.xml` file:
+
     ```
     <dependency>
         <groupId>org.actframework</groupId>
@@ -12,7 +13,9 @@ At the moment there are two DI implementation:
         <version>0.1.1-SNAPSHOT</version>
     </dependency>
     ```
+
 2. [Based on Feather](https://github.com/actframework/act-feather). To use Feather based DI, add the following dependency into your `pom.xml` file: 
+
     ```
     <dependency>
         <groupId>org.actframework</groupId>
