@@ -5,6 +5,7 @@ ActFramework支持基于[JSR330](https://jcp.org/en/jsr/detail?id=330)的依赖�
 目前有两种实现：
 
 1. [基于Guice的实现](https://github.com/actframework/act-guice-plugin)。要使用guice实现，在`pom.xml`文件中加入以下依赖：
+
     ```
     <dependency>
         <groupId>org.actframework</groupId>
@@ -12,7 +13,9 @@ ActFramework支持基于[JSR330](https://jcp.org/en/jsr/detail?id=330)的依赖�
         <version>0.1.1-SNAPSHOT</version>
     </dependency>
     ```
+
 2. [基于Feather的实现](https://github.com/actframework/act-feather)。要使用feather实现，在`pom.xml`文件中加入：
+
     ```
     <dependency>
         <groupId>org.actframework</groupId>
