@@ -64,7 +64,7 @@ public Profile getProfile(String id) {
 1. `/profile/<profile_id>`
 2. `/profile?id=<profile_id>`
 
-## `routes`路由表文件
+## 路由表文件：`routes`
 
 如果你更喜欢`PlayFramework`形式的路由表, 你可以在`/src/main/resources`目录下创建一个`routes`文件. 和上面注解路由相对应的`routes`文件内容如下所示(假设控制器的类名为`com.mycom.myprj.MyController`):
 
