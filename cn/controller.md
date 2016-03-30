@@ -224,7 +224,7 @@ public void createOrder(Order order) {
 
 ### <a name="explicity-200"></a>程序中制定返回200 Okay
 
-对于有轻微强迫症的猿们，一定要通过程序显示返回200 Okay才舒服，ActFramework提供两种方式：
+对于有轻微强迫症的猿们，一定要通过程序显式返回200 Okay才舒服，ActFramework提供两种方式：
 
 1. 返回`org.osgl.mvc.result.Result`
 
