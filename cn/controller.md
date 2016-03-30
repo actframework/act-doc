@@ -355,7 +355,7 @@ public Result getOrder(String orderId) {
     
     如果响应器返回某个对象，该对象可以在模板中使用`result`参数来引用
     
-1. 显示模板调用
+1. 显式模板调用
 
     ```java
     @GetAction("/order/editForm")
@@ -367,7 +367,7 @@ public Result getOrder(String orderId) {
     ```
     以上代码明确调用模板来生成响应结果。在调用模板的时候传进两个参数`order`和`hasWritePermission`，这两个参数可以在模板中被直接引用
     
-1. 显示调用模板并制定路径
+1. 显式调用模板并制定路径
 
     ```java
     @GetAction("/order/editForm")
@@ -468,7 +468,7 @@ TBD...
 1. 如何获取请求参数以及POJO绑定
 1. 如何发回不同的响应代码
 1. 如何返回数据
-1. 如何隐式或显示的指定响应模板
+1. 如何隐式或显式的指定响应模板
 1. 如何返回二进制流或下载文档
 1. `Accept`头对ActFramework行为的影响 
 1. 如何使用回话和快闪对象
