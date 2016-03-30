@@ -455,7 +455,7 @@ John Smith
 
 ActFramework根据`Accept`头的内容来选择适合的模板文件
 
-## 回话和快闪对象
+## 会话和快闪对象
 
 TBD...
 
