@@ -1,6 +1,6 @@
 # 如何在ActFramework中创建单例
 
-Java中创建单例是一个[有趣的话题](http://www.javaworld.com/article/2073352/core-java/simply-singleton.html) 人们对此进行了[很多讨论(http://stackoverflow.com/questions/70689/what-is-an-efficient-way-to-implement-a-singleton-pattern-in-java). 
+Java中创建单例是一个[有趣的话题](http://www.javaworld.com/article/2073352/core-java/simply-singleton.html) 人们对此进行了[很多讨论](http://stackoverflow.com/questions/70689/what-is-an-efficient-way-to-implement-a-singleton-pattern-in-java). 
 
 ## 常规方法
 
