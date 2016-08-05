@@ -362,7 +362,7 @@ public Result getOrder(String orderId) {
     public Result orderEditForm(String orderId) {
         Order order = orderService.findById(orderId);
         boolean hasWritePermission = ...;
-        return renderTemplate(order, hasWritePermission);
+        return render(order, hasWritePermission);
     }
     ```
     以上代码明确调用模板来生成响应结果。在调用模板的时候传进两个参数`order`和`hasWritePermission`，这两个参数可以在模板中被直接引用
