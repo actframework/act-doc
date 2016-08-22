@@ -109,7 +109,7 @@ In your template you use name `result` to refer to the return instance:
 
 ```
 @args Foo result
-Foo is @foo
+Foo is @result
 ```
 
 ## Reference
