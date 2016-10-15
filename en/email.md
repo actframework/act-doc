@@ -118,7 +118,7 @@ Usually executing mailer method involves IPC to external services (e.g. your SMT
     }
     ``` 
     
-1. Trigger event instead of call mailer method directly:
+1. Trigger event instead of calling mailer method directly:
 
     ```java
     public class MyController {
