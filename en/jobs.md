@@ -130,7 +130,7 @@ public class Foo {
 
 ```java
 @GetAction
-public void home(@Context AppJobManager jobManager) {
+public void home(@Provided AppJobManager jobManager) {
     jobManager.now(new Runnable() {
         @Override
         public void run() {
