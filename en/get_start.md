@@ -284,7 +284,7 @@ Act use the standard maven layout to organize the project with a few specific ru
 
 Note your application might look a little bit different from above in that
 
-1. the package structure is totally project specifc. E.g. you might not ave a `controller` folder, instead you have `service` folder to put in all the RESTful service classes. And your business logic layer might not be organized in one `model` folder, instead in a set of different packages. In general Act does not define how your organize your java source package, you are in complete freedom to do that based on your project needs.
+1. the package structure is totally project specifc. E.g. you might not have a `controller` folder, instead you have `service` folder to put in all the RESTful service classes. And your business logic layer might not be organized in one `model` folder, instead in a set of different packages. In general Act does not define how your organize your java source package, you are in complete freedom to do that based on your project needs.
 1. The `common` configuration folder is a convention used by Act to look for default configurations. However the `sit` and `dev` are the profiles defined by yourself, you are free to give them a different name or add other profiles e.g. `uat` and `prod` etc. It is totally okay if you decide not to define profile and just use `common` configurations.
 1. The `route` file is optional. You can just rely on the annotation based route. However if `route` table is provided it allows to overwrite the annotation based route definition
 
