@@ -600,4 +600,126 @@ Default value: `null`
 
 Note, the default port that specified in [http.port](#http_port) configuration and shall not be specified in this namedPorts configuration
 
-#### [ping.path]
+#### [ping_path]ping.path
+
+Aliases
+
+* **act.ping.path**
+
+Specify the ping path. If this setting is specified, then when session resolving, system will check if the current URL matches the setting. If matched then session cookie expiration time will not be changed. Otherwise the expiration time will refresh
+
+Default value: `null`
+
+#### [profile]profile
+
+Aliases
+
+* **act.profile**
+
+Specifies the profile to load configuration If this setting is specified, and there is a folder named as the `profile` setting sit under `/resource/conf` folder, then the properties files will be loaded from that folder.
+
+Default value: the value of the {@link Act#mode()}
+
+Note, unlike other configuration items which is usually specified in the configuration file. `profile` setting is load by `System#getProperty(String)`, thus it is usually specified with JVM argument `Dprofile=<profile>`
+
+#### [resolver_error_template_path_impl]resolver.error_template_path.impl
+
+Aliases
+
+* **resolver.error_template_path**
+* **act.resolver.error_template_path**
+* **act.resolver.error_template_path.impl**
+
+Specifies error page (template) path resolver implementation by class name
+
+Default value: `act.util.ErrorTemplatePathResolver.DefaultErrorTemplatePathResolver`
+
+#### [resolver_template_path_impl]resolver.template_path.impl
+
+Aliases
+
+* **resolver.template_path**
+* **act.resolver.template_path**
+* **resolver.template_path.impl**
+
+specifies the class that is type of `act.view.TemplatePathResolver`. Application developer could use this configuration to add some flexibility to template path resolving logic, e.g. different home for different locale or different home for different device type etc.
+
+Default value: `act.view.TemplatePathResolver`
+
+#### [scan_package]scan_package
+
+Aliases
+
+* **act.scan_package**
+
+Specify the app package in which all classes is subject to bytecode processing, e.g enhancement and injection. This setting should be specified when application loaded. Otherwise Act will try to process all classes found in application's lib and classes folder, which might cause performance issue on startup 
+
+#### [secret]secret
+
+Aliases
+
+* **act.secret**
+
+Specifies the secret key the application used to do general encrypt/decrypt/sign etc
+
+Default value: `myawesomeapp`
+
+Note, make sure you set this value on PROD mode
+
+#### [session_prefix]session.prefix
+
+Aliases
+
+* **act.session.prefix**
+
+Specifies the prefix to be prepended to the session cookie name. Let's say the default cookie name is ｀act_session｀, and user specifies the prefix ｀my_app｀
+then the session cookie name will be ｀my_app_session｀
+
+Note this setting also impact the ｀AppConfig#flashCookieName()｀
+
+Default value: ｀act`
+
+#### [session_ttl]session.ttl
+
+Aliases
+
+* **act.session.ttl**
+
+specifies the session duration in seconds. If user failed to interact with server for amount of time that exceeds the setting then the session will be destroyed
+
+Default value: `60 * 30` i.e half an hour
+
+#### [session_persistent_enabled]session.persistent.enabled
+
+Aliases
+
+* **session.persistent**
+* **act.session.persistent**
+* **act.session.persistent.enabled**
+
+Specify whether the system should treat session cookie as [persistent cookie](http://en.wikipedia.org/wiki/HTTP_cookie#Persistent_cookie). If this setting is enabled, then the user's session will not be destroyed after browser closed. 
+
+Default value: `false`
+
+#### [session_encrypt_enabled]session.encrypt.enabled
+
+Aliases
+
+* **session.encrypt**
+* **act.session.encrypt**
+* **act.session.encrypt.enabled**
+
+{@code session.encrypted.enabled} specify whether the system should encrypt the key/value pairs in the session cookie. Enable session encryption will greatly improve the security but with the cost of additional CPU usage and a little bit longer time on request processing. 
+
+Default value: `false`
+
+#### [session_key_username]session.key.username
+
+Aliases
+
+* **act.session.key.username**
+
+Specifies the session key for username of the login user
+
+Default value: `username`
+
