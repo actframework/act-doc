@@ -588,7 +588,7 @@ Aliases
 
 * **act.namedPorts**
 
-specifies a list of port names this application listen to. These are additional ports other than the default [http_port]
+specifies a list of port names this application listen to. These are additional ports other than the default [http_port](http.port)
 
 The list is specified as
 
@@ -598,6 +598,6 @@ act.namedPorts=admin:8888;ipc:8899
 
 Default value: `null`
 
-Note, the default port that specified in [http_port] configuration and shall not be specified in this namedPorts configuration
+Note, the default port that specified in [http_port](http.port) configuration and shall not be specified in this namedPorts configuration
 
 
