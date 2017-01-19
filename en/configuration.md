@@ -50,7 +50,7 @@ Aliases
 
 Specify the name of session cache used in Act application
 
-Default value: the value set in [cache_name](cache.name) configuration
+Default value: the value set in [cache.name](#cache_name) configuration
 
 #### [cli_page_size_json]cli.page.size.json
 
@@ -115,7 +115,7 @@ Turn on/off CLI over http feature.
 
 Default value: `false`
 
-Once CLI Over HTTP is turned on, it allows admin to access CLI commands over HTTP through the [cli_over_http.port](configured port)
+Once CLI Over HTTP is turned on, it allows admin to access CLI commands over HTTP through the [configured port](#cli_over_http.port)
 
 #### [cli_over_http_authority_impl]cli_over_http.authority.impl
 
@@ -167,7 +167,7 @@ Aliases
 
 * **act.cookie.domain_provider**
 
-Specify the provider that returns the domain name. When not specified then it returns a provider that always return the value configured in [host](host) configuration.
+Specify the provider that returns the domain name. When not specified then it returns a provider that always return the value configured in [host](#host) configuration.
 
 Valid configuration values:
 
@@ -479,7 +479,7 @@ Aliases
 * **act.idgen.node_id.provider**
 * **act.idgen.node_id.provider.impl**
 
-Specify the `act.util.IdGenerator.NodeIdProvider` implementation by class name. The node id provider is responsible to generate the node id for a CUID (Cluster Unique Identifer). When not specified, then Act will use the `IdGenerator.NodeIdProvider.IpProvider` that return the node id calculated from the node's ip address based on [idgen_node_id_effective_ip_bytes_size](effective ip bytes) configuration
+Specify the `act.util.IdGenerator.NodeIdProvider` implementation by class name. The node id provider is responsible to generate the node id for a CUID (Cluster Unique Identifer). When not specified, then Act will use the `IdGenerator.NodeIdProvider.IpProvider` that return the node id calculated from the node's ip address based on [effective ip bytes](#idgen_node_id_effective_ip_bytes_size) configuration
 
 Default value: `null`
 
@@ -509,7 +509,7 @@ Specifies the `act.util.IdGenerator.StartIdProvider` implementation by class nam
 
 Default value: `act.util.IdGenerator.StartIdProvider.DefaultStartIdProvider`
 
-The default provider will get the ID from [idgen_start_id_file](predefined file), or if file IO is not allowed, it will use the timestamp.
+The default provider will get the ID from [predefined file](#idgen_start_id_file), or if file IO is not allowed, it will use the timestamp.
 
 #### [idgen_start_id_file]idgen.start_id.file
 
@@ -588,7 +588,7 @@ Aliases
 
 * **act.namedPorts**
 
-specifies a list of port names this application listen to. These are additional ports other than the default [http_port](http.port)
+specifies a list of port names this application listen to. These are additional ports other than the default [http.port](#http_port)
 
 The list is specified as
 
@@ -598,6 +598,6 @@ act.namedPorts=admin:8888;ipc:8899
 
 Default value: `null`
 
-Note, the default port that specified in [http_port](http.port) configuration and shall not be specified in this namedPorts configuration
+Note, the default port that specified in [http.port](#http_port) configuration and shall not be specified in this namedPorts configuration
 
-
+#### [ping.path]
