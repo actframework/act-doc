@@ -369,6 +369,32 @@ Specifies the default time format used to parse/output time string
 
 Default value: the pattern of `java.text.DateFormat.getTimeInstance()`
 
+#### [handler_missing_authentication_impl]handler.missing_authentication.impl
+
+Aliases
+
+* **handler.missing_authentication**
+* **act.handler.missing_authentication**
+* **act.handler.missing_authentication.impl**
+
+Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified.
+
+Default value: `act.util.RedirectToLoginUrl` which redirect the user to [login URL](url_login)
+
+Other options: `act.util.ReturnUnauthorized` which respond with `401 Unauthorised`
+
+#### [handler_missing_authentication_ajax_impl]handler.missing_authentication.ajax.impl
+
+Aliases
+
+* **handler.missing_authentication.ajax**
+* **act.handler.missing_authentication.ajax**
+* **act.handler.missing_authentication.ajax.impl**
+
+Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified on ajax request
+
+Default value: the setting of [handler.missing_authentication.impl](handler_missing_authentication_ajax_impl)
+
 #### [host]host
 
 Aliases
@@ -719,7 +745,123 @@ Aliases
 
 * **act.session.key.username**
 
-Specifies the session key for username of the login user
+Specifies the session key for username of the login user. Authentication plugin shall use the session key configured to access the username.
 
 Default value: `username`
 
+#### [session_mapper_impl]session.mapper.impl
+
+Aliases
+
+* **session.mapper**
+* **act.session.mapper**
+* **act.session.mapper.impl**
+
+Specify the implementation of `act.util.SessionMapper` by class name. A session mapper can be used to serialize session/flash to response or on the flippering side, deserialize session/flash info from request.
+
+#### [session_secure_enabled]session.secure.enabled
+
+Aliases
+
+* **session.secure**
+* **act.session.secure**
+* **act.session.secure.enabled**
+
+specifies whether the session cookie should be set as secure. Enable secure session will cause session cookie only effective in https connection. Literally this will enforce the web site to run default by https.
+
+Default value: the setting of [http.secure](http_secure_enabled)
+
+**Note** when Act server is running in DEV mode session http only will be disabled without regarding to the `session.secure.enabled` setting
+
+#### [source_version]source.version
+
+Aliases
+
+* **act.source.version**
+
+Specifies the Java source version. This configuration has impact only when app is running in DEV mode
+
+Default value: `1.7`
+
+Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below here.
+
+#### [source_version]source.version
+
+Aliases
+
+* **act.source.version**
+
+Specifies the Java source version. This configuration has impact only when app is running in DEV mode
+
+Default value: `1.7`
+
+Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below here.
+
+#### [target_version]target.version
+
+Aliases
+
+* **act.target.version**
+
+Specifies the Java target version. This configuration has impact only when app is running in DEV mode
+
+Default value: `1.7`
+
+Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below here.
+
+#### [template_home]template.home
+
+Aliases
+
+* **act.template.home**
+
+Specifies where the view templates resides. If not specified then will use the view engine name (in lowercase) as the template home.
+
+**Note** it is highly recommended NOT to set this configuration item
+
+#### [unknown_http_method_handler_impl]unknown_http_method_handler.impl
+
+Aliases
+
+* **unknown_http_method_handler**
+* **act.unknown_http_method_handler**
+* **act.unknown_http_method_handler.impl**
+
+Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcessor` that process the HTTP methods that are not recognized by `act.route.Router`, e.g. "OPTION", "PATCH" etc
+
+#### [url_login]url.login
+
+Aliases
+
+* **act.url.login**
+
+Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the default implementation of `MissingAuthenticationHandler`, see [handler.missing_authentication.impl]
+(handler_missing_authentication_impl)
+
+Default value: `/login`
+
+#### [url_login_ajax]url.login.ajax
+
+Aliases
+
+* **act.url.login.ajax**
+
+Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the default implementation of `MissingAuthenticationHandler` when answering ajax request. See [handler.missing_authentication.ajax.impl](handler_missing_authentication_ajax_impl)
+
+#### [view_default]view.default
+
+Aliases
+
+* **act.view.default**
+
+Specifies the default view engine name. If there are multiple views registered and default view are available, then it will be used at priority when loading the templates
+
+Default value: `rythm` see [Rythm Engine](http://rythmengine.org)
+
+Other options:
+
+* freemarker - need [act-freemarker](https://github.com/actframework/act-freemarker) plugin
+* velocity - need [act-velocity]https://github.com/actframework/act-velocity() plugin
+* mustache - need [act-mustache](https://github.com/actframework/act-mustache) plugin
+* thymeleaf - need [act-thymeleaf]https://github.com/actframework/act-thymeleaf() plugin
+* beetl - need [act-beetl](https://github.com/actframework/act-beetl) plugin
