@@ -860,8 +860,8 @@ Default value: `rythm` see [Rythm Engine](http://rythmengine.org)
 
 Other options:
 
-* freemarker - need [act-freemarker](https://github.com/actframework/act-freemarker) plugin
-* velocity - need [act-velocity](https://github.com/actframework/act-velocity) plugin
-* mustache - need [act-mustache](https://github.com/actframework/act-mustache) plugin
-* thymeleaf - need [act-thymeleaf](https://github.com/actframework/act-thymeleaf) plugin
-* beetl - need [act-beetl](https://github.com/actframework/act-beetl) plugin
+* `freemarker` - need [act-freemarker](https://github.com/actframework/act-freemarker) plugin
+* `velocity` - need [act-velocity](https://github.com/actframework/act-velocity) plugin
+* `mustache` - need [act-mustache](https://github.com/actframework/act-mustache) plugin
+* `thymeleaf` - need [act-thymeleaf](https://github.com/actframework/act-thymeleaf) plugin
+* `beetl` - need [act-beetl](https://github.com/actframework/act-beetl) plugin
