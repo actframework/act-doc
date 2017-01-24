@@ -72,7 +72,7 @@ ActFramework automatically popluate your action handler parameters from
 1. Query parameters
 1. Form post parameters
 
-```
+```java
 @PutAction("/customer/{customerId}/order/{orderId}")
 public void updateOrderAmount(String customerId, String orderId, int amount) {
     ...

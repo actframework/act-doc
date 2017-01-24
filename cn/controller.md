@@ -73,7 +73,7 @@ ActFramework从一下来源自动填充响应器参数：
 1. 查询参数
 1. 表单参数
 
-```
+```java
 @PutAction("/customer/{customerId}/order/{orderId}")
 public void updateOrderAmount(String customerId, String orderId, int amount) {
     ...
