@@ -32,4 +32,4 @@ ActFramework is created to make programming MVC application in Java easy and fun
 
 ## References
 
-1. Configuration
+1. [Configuration](configuration.md)

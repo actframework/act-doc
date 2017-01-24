@@ -30,6 +30,6 @@ ActFramework可以让开发人员以更加简洁有趣的方式开发MVC应用�
 1. Using act-aaa to implement security
 1. Using act-storage to implement file persistence
 
-## References
+## 参考手册
 
-1. Configuration
+1. [配置](configuration.md)
