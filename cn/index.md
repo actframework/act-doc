@@ -22,7 +22,7 @@ ActFramework可以让开发人员以更加简洁有趣的方式开发MVC应用�
 
 1. [依赖注入](di.md)
 1. [拦截器](interceptor.md)
-1. [作业调度](jobs.md)
+1. [作业调度](job.md)
 1. [事件绑定与分发](event.md)
 1. [发送邮件](email.md)
 1. [创建命令行程序](cli.md)
