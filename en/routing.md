@@ -3,7 +3,7 @@
 ActFramework support building routing table in three different ways:
 
 1. Through annotation put on an action handler method
-1. Through `routes` file
+1. Through `resources/routes.conf` file
 1. Through configuration API
 
 ## Routing with actions handler method annotation

@@ -3,7 +3,7 @@
 ActFramework应用程序可以使用三种不同的方式来创建路由:
 
 1. 在响应方法上标记相关注解
-1. 通过`routes`路由表文件
+1. 通过`resources/routes.conf`路由表文件
 1. 通过配置API
 
 ## 通过注解创建路由
