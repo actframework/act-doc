@@ -2,7 +2,7 @@
 
 ## 安装
 
-在你的`pom.xml`文件中加上一下依赖：
+在你的`pom.xml`文件中加上以下依赖：
 
 ```xml
 <dependency>
@@ -99,7 +99,7 @@ public class Contact {
 
 ## 数据访问对象和CRUD
 
-一下代码演示如何使用EbeanDao来进行CRUD操作:
+以下代码演示如何使用EbeanDao来进行CRUD操作:
 
 ```java
 package com.mycom.myprj;

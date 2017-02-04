@@ -23,7 +23,7 @@ public class MyController {
 }
 ``` 
 
-如果应用程序的路由表(/resources/routes)定义了一下条目：
+如果应用程序的路由表(/resources/routes)定义了以下条目：
 
 ```
 GET / com.mycom.myprj.controller.MyController.home
@@ -67,7 +67,7 @@ public void home() {}
  
 ## <a name="parameter"></a>获得请求参数
 
-ActFramework从一下来源自动填充响应器参数：
+ActFramework从以下来源自动填充响应器参数：
 
 1. URL路径参数
 1. 查询参数
@@ -461,7 +461,7 @@ TBD...
 
 ## 总结
 
-本章讲述了一下概念：
+本章讲述了以下概念：
 
 1. 控制器`Controller`和响应器`Action handler`的概念
 1. 如何写一个简单的控制器
