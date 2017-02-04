@@ -8,7 +8,6 @@ In ActFramework the `javax.inject.Inject` annotation is used to declare the inje
 You can declare the inject object follow the three standard ways
 
 **Field injection**
-
 ```java
 public class Foo {
     @Inject
@@ -17,7 +16,6 @@ public class Foo {
 ```
 
 **Constructor injection**
-
 ```java
 public class Foo {
     private Bar bar
@@ -30,7 +28,6 @@ public class Foo {
 ```
 
 **Setter injection**
-
 ```java
 public class Foo {
     private Bar bar

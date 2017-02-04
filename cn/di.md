@@ -7,7 +7,6 @@ ActFramework支持基于[JSR330](https://jcp.org/en/jsr/detail?id=330)的依赖�
 ActFramework通过`javax.inject.Inject`注解识别需要注入的对象. 你可以通过一下三种标准方式申明需要注入的对象：
 
 **字段注入**
-
 ```java
 public class Foo {
     @Inject
@@ -16,7 +15,6 @@ public class Foo {
 ```
 
 **构造器注入**
-
 ```java
 public class Foo {
     private Bar bar
@@ -29,7 +27,6 @@ public class Foo {
 ```
 
 **设置器(Setter)注入**
-
 ```java
 public class Foo {
     private Bar bar
