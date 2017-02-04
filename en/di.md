@@ -7,7 +7,7 @@ ActFramework support dependency injection based on [JSR330](https://jcp.org/en/j
 In ActFramework the `javax.inject.Inject` annotation is used to declare the inject object. 
 You can declare the inject object follow the three standard ways
 
-### Field injection
+**Field injection**
 
 ```java
 public class Foo {
@@ -16,7 +16,7 @@ public class Foo {
 }
 ```
 
-### Constructor injection
+**Constructor injection**
 
 ```java
 public class Foo {
@@ -29,7 +29,7 @@ public class Foo {
 }
 ```
 
-### Setter injection
+**Setter injection**
 
 ```java
 public class Foo {
