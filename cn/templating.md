@@ -26,7 +26,7 @@ Velocity依赖:
 
 ## <a name="location"></a>模板文件的位置
 
-ActFramework依照一下管理访问模板文件:
+ActFramework依照以下管理访问模板文件:
 
 ```
 /src/main/resources/{template-plugin-id}/{controller-class}/{action-method}.{fmt-suffix}

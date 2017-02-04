@@ -101,7 +101,7 @@ GET /google redirect:http://google.com
 ActFramework内置四种响应器指令
 
 1. `echo`: `echo:`后面的字串会被发送回请求端.
-1. `file`: 发送应用程序根目录一下的静态文件
+1. `file`: 发送应用程序根目录以下的静态文件
 1. `externalfile`: 发送任何指定的静态文件
 1. `redirect`: 发送重定向响应
 

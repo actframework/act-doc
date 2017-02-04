@@ -2,7 +2,7 @@
 
 ## 安装
 
-要在ActFramework应用中使用Morphia，请在`pom.xml`文件中添加一下依赖:
+要在ActFramework应用中使用Morphia，请在`pom.xml`文件中添加以下依赖:
 
 ```xml
 <dependency>
@@ -67,7 +67,7 @@ public class Product extends MorphiaModel<Product> {
 
 ## 数据访问对象和CRUD
 
-一下代码演示如何使用MorphiaDao来进行CRUD操作:
+以下代码演示如何使用MorphiaDao来进行CRUD操作:
 
 ```java
 package com.mycom.myprj;
