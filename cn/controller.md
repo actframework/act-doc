@@ -23,7 +23,7 @@ public class MyController {
 }
 ``` 
 
-如果应用程序的路由表(/resources/routes)定义了以下条目：
+如果应用程序的路由表(/resources/routes.conf)定义了一下条目：
 
 ```
 GET / com.mycom.myprj.controller.MyController.home

@@ -24,7 +24,7 @@ public class MyController {
 }
 ``` 
 
-The `home()` method is an action handler if there are an entry in the `route` table like:
+The `home()` method is an action handler if there is an entry in the `/resources/routes.conf` file like:
 
 ```
 GET / com.mycom.myprj.controller.MyController.home
