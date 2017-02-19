@@ -30,6 +30,11 @@ ActFramework可以让开发人员以更加简洁有趣的方式开发MVC应用�
 1. Using act-aaa to implement security
 1. Using act-storage to implement file persistence
 
+## 小灶
+
+1. [控制JSON响应字段](recipe/json-response.md)
+1. [ActFramework中使用单例](recipe/singleton.md)
+
 ## 参考手册
 
 1. [配置](configuration.md)
