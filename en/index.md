@@ -30,6 +30,11 @@ ActFramework is created to make programming MVC application in Java easy and fun
 1. Using act-aaa to implement security
 1. Using act-storage to implement file persistence
 
+## Recipe
+
+1. [Managing JSON response fields](recipe/json-response.md)
+1. [Singleton in ActFramework](recipe/singleton.md)
+
 ## References
 
 1. [Configuration](configuration.md)
