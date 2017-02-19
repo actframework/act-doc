@@ -33,6 +33,7 @@ ActFramework is created to make programming MVC application in Java easy and fun
 ## Recipe
 
 1. [Managing JSON response fields](recipe/json-response.md)
+1. [File upload in Actframework](recipe/file-upload.md)
 1. [Singleton in ActFramework](recipe/singleton.md)
 
 ## References
