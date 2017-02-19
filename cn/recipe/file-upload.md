@@ -100,3 +100,5 @@ public Archive handleMultipleFiles(File[] files, String subject, String desc) {
 ```
 
 这就是多文件上传的方式。
+
+完整的源代码保存在[码云](http://git.oschina.net/greenlaw110/blog_act_file_upload)上
