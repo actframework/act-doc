@@ -34,6 +34,7 @@ ActFramework可以让开发人员以更加简洁有趣的方式开发MVC应用�
 
 1. [控制JSON响应字段](recipe/json-response.md)
 1. [处理文件上传](recipe/file-upload.md)
+1. [任务调度](recipe/job-schedule.md)
 1. [ActFramework中使用单例](recipe/singleton.md)
 
 ## 参考手册
