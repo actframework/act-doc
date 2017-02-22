@@ -44,25 +44,17 @@ public class Foo {
 ```java
 App app = App.instance();
 // this ensure Bar has been injected into Foo
-Foo foo = app.newInstance(Foo.class);
+Foo foo = app.getInstance(Foo.class);
 ```
 
 ## 响应器参数的依赖注入
 
-如果你希望框架注入对象到响应器的参数列表，请用`org.osgl.inject.annotation.Provided`注解来声明该参数:
+当框架检测到响应函数参数列表中某个参数类型有依赖注入绑定，框架自动使用依赖注入提供该参数值
 
 ```java
-public Result handleXyzRequest(String s, int i, @Provided Bar bar) {
-    ...
-}
-```
-
-一旦ActFramework检测到`Provided`注解, 会使用`App::newInstance(Class)`来创建该对象，否则会使用POJO绑定来创建对象
-
-**小贴士** 对于`act.app.ActionContext`类型不需要使用`Provided`注解，ActFramework总是注入该类型对象
-
-```java
-public void handleXyzResult(Stirng s, ActionContext context) {
+// suppose XyzDao has bound provider, then framework will use the provider to 
+// value for `dao` parameter
+public Result handleXyzRequest(String s, int i, ActionContext context, XyzDao dao) {
     ...
 }
 ```
