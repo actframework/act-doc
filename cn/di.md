@@ -47,7 +47,13 @@ App app = App.instance();
 Foo foo = app.getInstance(Foo.class);
 ```
 
-## 响应器参数的依赖注入
+## 方法参数的依赖注入
+
+Actframework支持三种方法参数注入：
+
+1. [响应器方法](controller.md)
+2. [命令器方法](cli.md)
+3. [任务方法](job.md)
 
 当框架检测到响应函数参数列表中某个参数类型有依赖注入绑定，框架自动使用依赖注入提供该参数值
 
