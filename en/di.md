@@ -40,7 +40,7 @@ public class Foo {
 
 **Tips** The Field injection is clean and simple, but not unit test friendly.
 
-## Create object instance that has DI
+## Create object instance in actframework
 
 ```java
 App app = App.instance();
@@ -56,26 +56,22 @@ Foo foo = new Foo();
 
 You don't have the `Bar` injected into your `foo` instance
 
-## Inject into controller action method
+## Inject action method parameter
 
-You can ask Act to inject class instance you need in an controller action method by declaring the parameter with 
-`org.osgl.inject.annotation.Provided` annotation:
+Actframework support parameter value injection in the following three cases
 
-```java
-public Result handleXyzRequest(String s, int i, @Provided Bar bar) {
-    ...
-}
-```
+1. [Controller action handler](controller.md)
+2. [Command handler](cli.md)
+3. [Job method](job.md)
 
-When Act detect that `Bar bar` is annotated with `Provided`, it will not try to create an new Bar and 
-bind it with request parameters, instead `App::newInstance(Class)` will be called to create 
-the `Bar` instance and feed into the `handleXyzRequest` method
+If framework detect a certain parameter type has provider registered, then it will 
+inject the parameter value using the provider automatically
 
-**Note** You don't need to add `@Provided` to inject `ActionContext` object, it will always get injected 
-into action handler if declared in the parameter list:
 
 ```java
-public void handleXyzResult(Stirng s, ActionContext context) {
+// suppose XyzDao has bound provider, then framework will use the provider to 
+// value for `dao` parameter
+public Result handleXyzRequest(String s, int i, ActionContext context, XyzDao dao) {
     ...
 }
 ```
