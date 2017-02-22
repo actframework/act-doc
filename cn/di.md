@@ -65,7 +65,7 @@ public Result handleXyzRequest(String s, int i, ActionContext context, XyzDao da
 }
 ```
 
-## `AbstractModule`类
+## 通过Moudule类声明绑定
 
 如果你以前使用过guice，和通常的Guice应用一样，你可以创建Module类来申明注入绑定规则:
 
