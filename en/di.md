@@ -76,7 +76,7 @@ public Result handleXyzRequest(String s, int i, ActionContext context, XyzDao da
 }
 ```
 
-## Create module class
+## Declare binding rule with module class
 
 If you have used `Guice` before, like your usual Guice application, you can create Module 
 classes to define binding logic, e.g.
