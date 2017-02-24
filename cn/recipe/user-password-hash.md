@@ -73,7 +73,7 @@ public final User authenticate(String email, String password) {
 
 ## 链接
 
-* [文档首页](/doc/index.md)
+* [文档首页](../index.md)
 * [ActFramework官网](http://actframework.org)
 * [ActFramework[@开源中国](https://my.oschina.net/u/103410)](https://www.oschina.net/p/actframework)
 * [ActFramework[@码云](https://my.oschina.net/buthink)](https://git.oschina.net/actframework/actframework)
