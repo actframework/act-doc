@@ -37,6 +37,7 @@ ActFramework is created to make programming MVC application in Java easy and fun
 1. [Job scheduling in ActFramework](recipe/job-schedule.md)
 1. [Singleton in ActFramework](recipe/singleton.md)
 1. [Dependency Injection - inject object types](recipe/di-inject-type.md)
+1. [Secure user password in ActFramework app](recipe/user-password-hash.md)
 
 ## References
 
