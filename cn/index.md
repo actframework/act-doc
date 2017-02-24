@@ -37,6 +37,7 @@ ActFramework可以让开发人员以更加简洁有趣的方式开发MVC应用�
 1. [任务调度](recipe/job-schedule.md)
 1. [ActFramework中使用单例](recipe/singleton.md)
 1. [依赖注入 - 注入对象类型](recipe/di-inject-type.md)
+1. [用户密码的存储与验证机制与应用](recipe/user-password-hash.md)
 
 ## 参考手册
 
