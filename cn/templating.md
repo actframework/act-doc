@@ -1,8 +1,24 @@
 # 模板
 
-ActFramework支持不同的模板引擎. [Rythm](http://rythmengine.org)是缺省引擎，目前支持最好. 另外对Freemarker和Velocity提供了有限的支持.
+ActFramework支持不同的模板引擎. [Rythm](http://rythmengine.org)是缺省引擎，目前支持最好. 另外通过插件支持一下模板引擎:
+
+* [Beetl](http://www.ibeetl.com) - 模板ID: beetl
+* [FreeMarker](http://freemarker.apache.org) - 模板ID: freemarker
+* [Mustache](https://github.com/spullara/mustache.java) - 模板ID: mustache
+* [Thymeleaf](http://www.thymeleaf.org/) - 模板ID: thymeleaf
+* [Velocity](http://velocity.apache.org) - 模板ID: velocity
 
 **注意** 如果要使用freemarker或velcoity需要在`pom.xml`文件中分别加上下面的依赖:
+
+Beelt依赖:
+
+```xml
+<dependency>
+    <groupId>org.actframework</groupId>
+    <artifactId>act-beelt</artifactId>
+    <version>0.6.0-SNAPSHOT</version>
+</dependency>
+```
 
 Freemarker依赖:
 
@@ -10,9 +26,30 @@ Freemarker依赖:
 <dependency>
     <groupId>org.actframework</groupId>
     <artifactId>act-freemarker</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.6.0-SNAPSHOT</version>
 </dependency>
 ```
+
+Mustache依赖:
+
+```xml
+<dependency>
+    <groupId>org.actframework</groupId>
+    <artifactId>act-mustache</artifactId>
+    <version>0.6.0-SNAPSHOT</version>
+</dependency>
+```
+
+Thymeleaf依赖:
+
+```xml
+<dependency>
+    <groupId>org.actframework</groupId>
+    <artifactId>act-thymeleaf</artifactId>
+    <version>0.6.0-SNAPSHOT</version>
+</dependency>
+```
+
 
 Velocity依赖:
 
@@ -20,7 +57,7 @@ Velocity依赖:
 <dependency>
     <groupId>org.actframework</groupId>
     <artifactId>act-velocity</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.6.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -97,9 +134,11 @@ c = @c
 </pre>
 ```
 
+**注意** 其他模板不需要参数声明
+
 ## 想模板传递返回值
 
-如果你的控制器需要向模板传递返回值
+如果你的控制器需要向模板传递函数返回值
 
 ```java
 public Foo getFoo() {
@@ -116,8 +155,12 @@ Foo is @foo
 
 ## 参考
 
-* [Rythm官网](http://rythmengine.org)
-* [Velocity官网](http://velocity.apache.org)
+* [Beetl官网](http://www.ibeetl.com)
 * [Freemarker官网](http://freemarker.incubator.apache.org/)
+* [Velocity官网](http://velocity.apache.org)
+* [Mustache官网](https://github.com/spullara/mustache.java)
+* [Rythm官网](http://rythmengine.org)
+* [Thymeleaf官网](http://www.thymeleaf.org/)
+* [Velocity官网](http://velocity.apache.org)
 
 [返回目录](index.md)
