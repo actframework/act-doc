@@ -23,12 +23,12 @@ Factory is an alternative of Module class. We can rewrite the above Module class
 ```java
 public class MyFactory {
 
-    @Provided
+    @Provides
     public MyService getOneService(OneService oneService) {
         return oneService;
     }
 
-    @Provided
+    @Provides
     @Named("two")
     public MyService getTwoService(TwoService twoService) {
         return twoService;
