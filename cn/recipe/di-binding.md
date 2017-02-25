@@ -23,12 +23,12 @@ public class MyModule extends org.osgl.inject.Module {
 ```java
 public class MyFactory {
 
-    @Provided
+    @Provides
     public MyService getOneService(OneService oneService) {
         return oneService;
     }
 
-    @Provided
+    @Provides
     @Named("two")
     public MyService getTwoService(TwoService twoService) {
         return twoService;
