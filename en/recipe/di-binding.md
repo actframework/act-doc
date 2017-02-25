@@ -40,12 +40,12 @@ public class MyFactory {
 ## 3. Auto binding
 
 The thrid way is "Auto binding" which does not require explicitly defining Module or Factory. 
-However it must add `@AutoBind` annotation to the interface or class that needs to be bound to 
+However it must add `@act.inject.AutoBind` annotation to the interface or class that needs to be bound to 
 other implementations
 
 ```java
 // The interface
-@AutoBind
+@act.inject.AutoBind
 public interface MyService {
     void service();
 }
@@ -60,11 +60,11 @@ public class OneService implements MyService {
 }
 ```
 
-Use `@Named` annotation to define Qualified implementation
+Use `@javax.inject.Named` annotation to define Qualified implementation
 
 ```java
 // The implemention two
-@Named("two")
+@javax.inject.Named("two")
 public class TwoService implements MyService {
     public void service() {Act.LOGGER.info("TWO is servicing");}
 }
@@ -77,12 +77,12 @@ Use the dependency injection
 public class Serviced {
     
     // this one will get bind to the default implementation: OneService
-    @Inject
+    @javax.inject.Inject
     private MyService one;
 
     // this one will get bind to TwoService
-    @Inject
-    @Named("two")
+    @javax.inject.Inject
+    @javax.inject.Named("two")
     private MyService two;
 }
 ```
