@@ -165,4 +165,13 @@ Foo is @foo
 * [Thymeleaf](http://www.thymeleaf.org/)
 * [Velocity](http://velocity.apache.org)
 
+### Demo project
+
+You can checkout the view demo project at [github](https://github.com/actframework/act-demo-apps/tree/master/views) or [码云](https://git.oschina.net/actframework/demo-apps/tree/master/views?dir=1&filepath=views)
+
+The demo project shows:
+
+* Integrate multiple template engines in your project
+* How different template engines present error info in dev mode
+
 [Back](index.md)
