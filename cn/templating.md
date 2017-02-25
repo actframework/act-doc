@@ -1,7 +1,8 @@
 # 模板
 
-ActFramework支持不同的模板引擎. [Rythm](http://rythmengine.org)是缺省引擎，目前支持最好. 另外通过插件支持一下模板引擎:
+目前ActFramework支持的模板引擎:
 
+* **[Rythm](http://rythmengine.org)** (框架内置) - 模板ID: rythm
 * [Beetl](http://www.ibeetl.com) - 模板ID: beetl
 * [FreeMarker](http://freemarker.apache.org) - 模板ID: freemarker
 * [Mustache](https://github.com/spullara/mustache.java) - 模板ID: mustache
