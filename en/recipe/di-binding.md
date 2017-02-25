@@ -30,8 +30,8 @@ public class MyFactory {
 
     @Provided
     @Named("two")
-    public MyService getTwoService(TwoService oneService) {
-        return TwoService;
+    public MyService getTwoService(TwoService twoService) {
+        return twoService;
     }
 
 }
