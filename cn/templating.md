@@ -2,14 +2,14 @@
 
 目前ActFramework支持的模板引擎:
 
-* **[Rythm](http://rythmengine.org)** (框架内置) - 模板ID: rythm
-* [Beetl](http://www.ibeetl.com) - 模板ID: beetl
-* [FreeMarker](http://freemarker.apache.org) - 模板ID: freemarker
-* [Mustache](https://github.com/spullara/mustache.java) - 模板ID: mustache
-* [Thymeleaf](http://www.thymeleaf.org/) - 模板ID: thymeleaf
-* [Velocity](http://velocity.apache.org) - 模板ID: velocity
+* **[Rythm](http://rythmengine.org)** (框架内置) - 引擎ID: rythm
+* [Beetl](http://www.ibeetl.com) - 引擎ID: beetl
+* [FreeMarker](http://freemarker.apache.org) - 引擎ID: freemarker
+* [Mustache](https://github.com/spullara/mustache.java) - 引擎ID: mustache
+* [Thymeleaf](http://www.thymeleaf.org/) - 引擎ID: thymeleaf
+* [Velocity](http://velocity.apache.org) - 引擎ID: velocity
 
-**注意** 如果要使用freemarker或velcoity需要在`pom.xml`文件中分别加上下面的依赖:
+**注意** 如果要使用非Rythm模板引擎需要在`pom.xml`文件中分别加入响应的依赖:
 
 Beelt依赖:
 
@@ -137,7 +137,7 @@ c = @c
 
 **注意** 其他模板不需要参数声明
 
-## 想模板传递返回值
+## 向模板传递返回值
 
 如果你的控制器需要向模板传递函数返回值
 
@@ -163,5 +163,16 @@ Foo is @foo
 * [Rythm官网](http://rythmengine.org)
 * [Thymeleaf官网](http://www.thymeleaf.org/)
 * [Velocity官网](http://velocity.apache.org)
+
+
+### 演示项目
+
+你可以在[github](https://github.com/actframework/act-demo-apps/tree/master/views)或者[码云](https://git.oschina.net/actframework/demo-apps/tree/master/views?dir=1&filepath=views)上访问模板引擎演示项目 
+
+该演示项目展示了:
+
+* 如何在项目中集成多个模板引擎
+* 在开发模式下各个模板引擎对错误显示的支持
+
 
 [返回目录](index.md)
