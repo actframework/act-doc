@@ -58,7 +58,7 @@ public class OneService implements MyService {
 }
 ```
 
-使用`@Named`注解定义Qualified的实现
+使用`@javax.inject.Named`注解定义Qualified的实现
 
 ```java
 // The implemention two
@@ -80,7 +80,7 @@ public class Serviced {
 
     // this one will get bind to TwoService
     @javax.inject.Inject
-    @Named("two")
+    @javax.inject.Named("two")
     private MyService two;
 }
 ```
