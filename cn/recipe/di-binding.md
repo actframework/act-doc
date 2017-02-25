@@ -23,12 +23,12 @@ public class MyModule extends org.osgl.inject.Module {
 ```java
 public class MyFactory {
 
-    @Provides
+    @org.osgl.inject.annotation.Provides
     public MyService getOneService(OneService oneService) {
         return oneService;
     }
 
-    @Provides
+    @org.osgl.inject.annotation.Provides
     @Named("two")
     public MyService getTwoService(TwoService twoService) {
         return twoService;
@@ -43,7 +43,7 @@ public class MyFactory {
 
 ```java
 // The interface
-@AutoBind
+@act.inject.AutoBind
 public interface MyService {
     void service();
 }
@@ -62,7 +62,7 @@ public class OneService implements MyService {
 
 ```java
 // The implemention two
-@Named("two")
+@javax.inject.Named("two")
 public class TwoService implements MyService {
     public void service() {Act.LOGGER.info("TWO is servicing");}
 }
@@ -75,11 +75,11 @@ public class TwoService implements MyService {
 public class Serviced {
     
     // this one will get bind to the default implementation: OneService
-    @Inject
+    @javax.inject.Inject
     private MyService one;
 
     // this one will get bind to TwoService
-    @Inject
+    @javax.inject.Inject
     @Named("two")
     private MyService two;
 }
