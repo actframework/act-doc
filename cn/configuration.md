@@ -34,7 +34,7 @@ Default value: `Auto`, i.e. `org.osgl.cache.CacheServiceProvider.Impl.Auto`. Thi
 
 #### [cache_name]cache.name
 
-Aliases
+别名
 
 * **act.cache.name**
 
@@ -44,7 +44,7 @@ Default value: `_act_app_`
 
 #### [cache_name_session]cache.name.session
 
-Aliases
+别名
 
 * **act.cache.name.session**
 
@@ -54,7 +54,7 @@ Default value: the value set in [cache.name](#cache_name) configuration
 
 #### [cli_page_size_json]cli.page.size.json
 
-Aliases
+别名
 
 * **act.cli.page.size.json**
 
@@ -64,7 +64,7 @@ Default value: 10
 
 #### [cli_page_size_table]cli.page.size.table
 
-Aliases
+别名
 
 * **act.cli.page.size.table**
 
@@ -75,7 +75,7 @@ Default value: 22
 
 #### [cli_port]cli.port
 
-Aliases
+别名
 
 * **act.cli.port**
 
@@ -85,7 +85,7 @@ Default value: `5461`
 
 #### [cli_session_expiration]cli.session.expiration
 
-Aliases
+别名
 
 * **act.cli.session.expiration**
 
@@ -95,7 +95,7 @@ Default value: `300`, i.e. 5 minutes
 
 ### [cli_session_max]cli.session.max
 
-Aliases
+别名
 
 * **act.cli.session.max**
 
@@ -105,7 +105,7 @@ Default value: `3`
 
 #### [cli_over_http_enabled]cli_over_http.enabled
 
-Aliases
+别名
 
 * **cli_over_http**
 * **act.cli_over_http**
@@ -119,7 +119,7 @@ Once CLI Over HTTP is turned on, it allows admin to access CLI commands over HTT
 
 #### [cli_over_http_authority_impl]cli_over_http.authority.impl
 
-Aliases
+别名
 
 * **cli_over_http.authority**
 * **act.cli_over_http.authority**
@@ -131,7 +131,7 @@ Default value: `CliOverHttpAuthority.AllowAll` which allows any request sent thr
 
 #### [cli_over_http_port]cli_over_http.port
 
-Aliases
+别名
 
 * **act.cli_over_http.port**
 
@@ -141,7 +141,7 @@ Default value: `5462`
 
 #### [cli_over_http_title]cli_over_http.title
 
-Aliases
+别名
 
 * **act.cli_over_http.title**
 
@@ -151,7 +151,7 @@ Default value: `Cli Over Http`
 
 #### [cli_over_http_syscmd_enabled]cli_over_http.syscmd.enabled
 
-Aliases
+别名
 
 * **cli_over_http.syscmd**
 * **act.cli_over_http.syscmd**
@@ -163,7 +163,7 @@ Default value: `true`
 
 #### [cookie_domain_provider]cookie.domain_provider
 
-Aliases
+别名
 
 * **act.cookie.domain_provider**
 
@@ -179,7 +179,7 @@ Default value: `null`
 
 #### [cors]cors.enabled
 
-Aliases
+别名
 
 * **cors**
 * **act.cors**
@@ -193,7 +193,7 @@ Once `cors` is enabled, ActFramework will add CORS specific headers (listed belo
 
 #### [cors_option_check]cors.option.check.enabled
 
-Aliases
+别名
 
 * **cors.option.check**
 * **act.cors.option.check**
@@ -211,7 +211,7 @@ However header `access-control-allow-origin` is always added without regarding t
 
 #### [cors_origin]cors.origin
 
-Aliases
+别名
 
 * **act.cors.origin**
 
@@ -221,7 +221,7 @@ This configuration specifies the default `Access-Control-Allow-Origin` header va
 
 #### [cors_headers]cors.headers
 
-Aliases
+别名
 
 * **act.cors.headers**
 
@@ -231,7 +231,7 @@ This configuration specifies the default value for `Access-Control-Allow-Headers
 
 #### [cors_headers_expose]cors.headers.expose
 
-Aliases
+别名
 
 * **act.cors.headers.expose**
 
@@ -241,7 +241,7 @@ This configuration specifies the default value for `Access-Control-Expose-Header
 
 #### [cors_headers_allowed]cors.headers.allowed
 
-Aliases
+别名
 
 * **act.cors.headers.allowed**
 
@@ -251,7 +251,7 @@ This configuration specifies the default value for `Access-Control-Allow-Headers
 
 #### [cors_max_age]cors.max_age
 
-Aliases
+别名
 
 * **act.cors.max_age**
 
@@ -261,7 +261,7 @@ This configuration specifies the default value for `Access-Control-Max-Age` head
 
 #### [content_suffix_aware_enabled]content_suffix.aware.enabled
 
-Aliases
+别名
 
 * **content_suffix.aware**
 * **act.content_suffix.aware**
@@ -273,7 +273,7 @@ Default value: `false`
 
 #### [csrf]csrf.enabled
 
-Aliases
+别名
 
 * **csrf**
 * **act.csrf**
@@ -287,7 +287,7 @@ Once this configuration is turned on the framework will check all POST/PUT/DELET
 
 #### [csrf_param_name]csrf.param_name
 
-Aliases
+别名
 
 * **act.csrf.param_name**
 
@@ -297,7 +297,7 @@ Default value: `__csrf__`
 
 #### [csrf_header_name]csrf.header_name
 
-Aliases
+别名
 
 * **act.csrf.param_name**
 
@@ -307,7 +307,7 @@ Default value: `XSRF-TOKEN`
 
 #### [csrf_protector]csrf.protector.impl
 
-Aliases
+别名
 
 * **csrf.protector**
 * **act.csrf.protector**
@@ -323,7 +323,7 @@ For differences between `HMAC` and `RANDOM` please checkout http://security.stac
 
 #### [db_seq_gen_impl]db.seq_gen.impl
 
-Aliases
+别名
 
 * **db.seq_gen**
 * **act.db.seq_gen**
@@ -333,7 +333,7 @@ Specify database sequence generator. Which must be class name of the  implementa
 
 #### [encoding]encoding
 
-Aliases
+别名
 
 * **act.encoding**
 
@@ -341,7 +341,7 @@ Specify application default encoding. Default value is `UTF-8`. It is highly rec
 
 #### [fmt_date]fmt.date
 
-Aliases
+别名
 
 * **act.fmt.date**
 
@@ -351,7 +351,7 @@ Default value: the pattern of `java.text.DateFormat.getDateInstance()`
 
 #### [fmt_date_time]fmt.date_time
 
-Aliases
+别名
 
 * **act.fmt.date_time**
 
@@ -361,7 +361,7 @@ Default value: the pattern of `java.text.DateFormat.getDateTimeInstance()`
 
 #### [fmt_time]fmt.time
 
-Aliases
+别名
 
 * **act.fmt.time**
 
@@ -371,7 +371,7 @@ Default value: the pattern of `java.text.DateFormat.getTimeInstance()`
 
 #### [handler_missing_authentication_impl]handler.missing_authentication.impl
 
-Aliases
+别名
 
 * **handler.missing_authentication**
 * **act.handler.missing_authentication**
@@ -385,7 +385,7 @@ Other options: `act.util.ReturnUnauthorized` which respond with `401 Unauthorise
 
 #### [handler_missing_authentication_ajax_impl]handler.missing_authentication.ajax.impl
 
-Aliases
+别名
 
 * **handler.missing_authentication.ajax**
 * **act.handler.missing_authentication.ajax**
@@ -397,7 +397,7 @@ Default value: the setting of [handler.missing_authentication.impl](handler_miss
 
 #### [host]host
 
-Aliases
+别名
 
 * **act.host**
 
@@ -407,7 +407,7 @@ Default value: `localhost`
 
 #### [http.external_server.enabled]http.external_server.enabled
 
-Aliases
+别名
 
 * **http.external_server**
 * **act.http.external_server**
@@ -421,7 +421,7 @@ Note act does not listen to external port directly. The recommended pattern is t
 
 #### [http.port.external]http.port.external
 
-Aliases
+别名
 
 * **act.http.port.external**
 
@@ -435,7 +435,7 @@ Specifies the external secure port which is used to construct the full URL when 
 
 #### [http_params_max]http.params.max
 
-Aliases
+别名
 
 * **act.http.params.max**
 
@@ -445,7 +445,7 @@ Default value: `1000`
 
 #### [http_port]http.port
 
-Aliases
+别名
 
 * **act.http.port**
 
@@ -455,7 +455,7 @@ Default value: `5460`
 
 #### [http_secure_enabled]http.secure.enabled
 
-Aliases 
+别名 
 
 * **http.secure**
 * **act.http.secure**
@@ -467,7 +467,7 @@ Default value: `false` when app is running in `DEV` mode, `true` if app is runni
 
 #### [i18n_enabled]i18n.enabled
 
-Aliases
+别名
 
 * **i18n**
 * **act.i18n**
@@ -479,7 +479,7 @@ Default value: `false`
 
 #### [i18n_locale_param_name]i18n.locale.param_name
 
-Aliases
+别名
 
 * **act.i18n.locale.param_name**
 
@@ -489,7 +489,7 @@ Default value: `act_locale`
 
 #### [i18n_locale_cookie_name]i18n.locale.cookie_name
 
-Aliases
+别名
 
 * **act.i18n.locale.cookie_name**
 
@@ -499,7 +499,7 @@ Default value: `act_locale`
 
 #### [idgen_node_id_provider_impl]idgen.node_id.provider.impl
 
-Aliases
+别名
 
 * **idgen.node_id.provider**
 * **act.idgen.node_id.provider**
@@ -511,7 +511,7 @@ Default value: `null`
 
 #### [idgen_node_id_effective_ip_bytes_size]idgen.node_id.effective_ip_bytes.size
 
-Aliases
+别名
 
 * **idgen.node_id.effective_ip_bytes**
 * **act.idgen.node_id.effective_ip_bytes**
@@ -525,7 +525,7 @@ Default value: `4`
 
 #### [idgen_start_id_provider_impl]idgen.start_id.provider.impl
 
-Aliases
+别名
 
 * **idgen.start_id.provider**
 * **act.idgen.start_id.provider**
@@ -539,7 +539,7 @@ The default provider will get the ID from [predefined file](#idgen_start_id_file
 
 #### [idgen_start_id_file]idgen.start_id.file
 
-Aliases
+别名
 
 * **act.idgen.start_id.file**
 
@@ -549,7 +549,7 @@ Default value: `.act.id-app`
 
 #### [idgen_seq_id_provider_impl]idgen.seq_id.provider.impl
 
-Aliases
+别名
 
 * **idgen.seq_id.provider**
 * **act.idgen.seq_id.provider**
@@ -561,7 +561,7 @@ Default value: `act.util.IdGenerator.SequenceProvider.AtomicLongSeq`
 
 #### [idgen_encoder_impl]idgen.encoder.impl
 
-Aliases
+别名
 
 * **idgen.encoder**
 * **act.idgen.encoder**
@@ -578,7 +578,7 @@ Default value: `act.util.IdGenerator.SafeLongEncoder`
 
 #### [locale]locale
 
-Aliases
+别名
 
 * **act.locale**
 
@@ -588,7 +588,7 @@ Default value: `java.util.Locale#getDefault`
 
 #### [job_pool_size]job.pool.size
 
-Aliases
+别名
 
 * **job.pool**
 * **act.job.pool**
@@ -600,7 +600,7 @@ Default value: `10`
 
 #### [modules]modules
 
-Aliases
+别名
 
 * **act.modules**
 
@@ -610,7 +610,7 @@ Default value: `null`
 
 #### [namedPorts]namedPorts
 
-Aliases
+别名
 
 * **act.namedPorts**
 
@@ -628,7 +628,7 @@ Note, the default port that specified in [http.port](#http_port) configuration a
 
 #### [ping_path]ping.path
 
-Aliases
+别名
 
 * **act.ping.path**
 
@@ -638,7 +638,7 @@ Default value: `null`
 
 #### [profile]profile
 
-Aliases
+别名
 
 * **act.profile**
 
@@ -650,7 +650,7 @@ Note, unlike other configuration items which is usually specified in the configu
 
 #### [resolver_error_template_path_impl]resolver.error_template_path.impl
 
-Aliases
+别名
 
 * **resolver.error_template_path**
 * **act.resolver.error_template_path**
@@ -662,7 +662,7 @@ Default value: `act.util.ErrorTemplatePathResolver.DefaultErrorTemplatePathResol
 
 #### [resolver_template_path_impl]resolver.template_path.impl
 
-Aliases
+别名
 
 * **resolver.template_path**
 * **act.resolver.template_path**
@@ -674,7 +674,7 @@ Default value: `act.view.TemplatePathResolver`
 
 #### [scan_package]scan_package
 
-Aliases
+别名
 
 * **act.scan_package**
 
@@ -682,7 +682,7 @@ Specify the app package in which all classes is subject to bytecode processing, 
 
 #### [secret]secret
 
-Aliases
+别名
 
 * **act.secret**
 
@@ -694,7 +694,7 @@ Note, make sure you set this value on PROD mode
 
 #### [session_prefix]session.prefix
 
-Aliases
+别名
 
 * **act.session.prefix**
 
@@ -707,7 +707,7 @@ Default value: ｀act`
 
 #### [session_ttl]session.ttl
 
-Aliases
+别名
 
 * **act.session.ttl**
 
@@ -717,7 +717,7 @@ Default value: `60 * 30` i.e half an hour
 
 #### [session_persistent_enabled]session.persistent.enabled
 
-Aliases
+别名
 
 * **session.persistent**
 * **act.session.persistent**
@@ -729,7 +729,7 @@ Default value: `false`
 
 #### [session_encrypt_enabled]session.encrypt.enabled
 
-Aliases
+别名
 
 * **session.encrypt**
 * **act.session.encrypt**
@@ -741,7 +741,7 @@ Default value: `false`
 
 #### [session_key_username]session.key.username
 
-Aliases
+别名
 
 * **act.session.key.username**
 
@@ -751,7 +751,7 @@ Default value: `username`
 
 #### [session_mapper_impl]session.mapper.impl
 
-Aliases
+别名
 
 * **session.mapper**
 * **act.session.mapper**
@@ -761,7 +761,7 @@ Specify the implementation of `act.util.SessionMapper` by class name. A session 
 
 #### [session_secure_enabled]session.secure.enabled
 
-Aliases
+别名
 
 * **session.secure**
 * **act.session.secure**
@@ -775,7 +775,7 @@ Default value: the setting of [http.secure](http_secure_enabled)
 
 #### [source_version]source.version
 
-Aliases
+别名
 
 * **act.source.version**
 
@@ -787,7 +787,7 @@ Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below 
 
 #### [source_version]source.version
 
-Aliases
+别名
 
 * **act.source.version**
 
@@ -799,7 +799,7 @@ Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below 
 
 #### [target_version]target.version
 
-Aliases
+别名
 
 * **act.target.version**
 
@@ -811,7 +811,7 @@ Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below 
 
 #### [template_home]template.home
 
-Aliases
+别名
 
 * **act.template.home**
 
@@ -821,7 +821,7 @@ Specifies where the view templates resides. If not specified then will use the v
 
 #### [unknown_http_method_handler_impl]unknown_http_method_handler.impl
 
-Aliases
+别名
 
 * **unknown_http_method_handler**
 * **act.unknown_http_method_handler**
@@ -831,7 +831,7 @@ Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcess
 
 #### [url_login]url.login
 
-Aliases
+别名
 
 * **act.url.login**
 
@@ -842,7 +842,7 @@ Default value: `/login`
 
 #### [url_login_ajax]url.login.ajax
 
-Aliases
+别名
 
 * **act.url.login.ajax**
 
@@ -850,7 +850,7 @@ Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the defa
 
 #### [view_default]view.default
 
-Aliases
+别名
 
 * **act.view.default**
 
