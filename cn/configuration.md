@@ -1,24 +1,24 @@
-<h1 data-book="configuration">Configuration</h1>
+<h1 data-book="configuration">配置</h1>
 
-This chapter documents each ActFramework configuration item details
+本章节文档包含 ActFramework 各配置项的详细描述
 
 #### [basic_authentication]basic_authentication.enabled
 
-Aliases:
+别名
 
 * **basic_authentication**
 * **act.basic_authentication**
 * **act.basic_authentication.enabled**
 
-Turn on/off [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) in ActFramework application.
+在 ActFramework 应用中开启或关闭 [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) 功能.
 
-Default value: `false`
+默认值: `false`
 
-**Note** there is no logic around this configuration in the core ActFramework. It is up to the security plugins like `act-aaa-plugin` to use the value of this setting
+**注意** 在 ActFramework 核心模块中并不包含该配置的具体逻辑. 由安全插件，如 `act-aaa-plugin` 使用此配置项的值.
 
 #### [cache_impl]cache.impl
 
-Aliases
+别名
 
 * **cache**
 * **act.cache**
