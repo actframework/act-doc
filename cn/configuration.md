@@ -27,6 +27,7 @@
 指定缓存服务的实现. 配置必须是名称为 `org.osgl.cache.CacheServiceProvider` 的实现类.
 
 默认值: `Auto`, i.e. `org.osgl.cache.CacheServiceProvider.Impl.Auto`. 该实现将根据缓存的提供者使用以下顺序自动选择:
+
 1. 检查是否 `MemcachedServiceProvider` 能够被实例化, 如果不能则继续
 2. 检查是否 `EhCacheServiceProvider` 能够被实例化, 如果不能则继续
 3. 载入 `SimpleCacheServiceProvider` 实例，这将使用内存来实现缓存服务
@@ -47,9 +48,9 @@
 
 * **act.cache.name.session**
 
-Specify the name of session cache used in Act application
+指定用于的应用程序的缓存会话的名称.
 
-默认值: the value set in [cache.name](#cache_name) configuration
+默认值: 配置项 [cache.name](#cache_name) 的值
 
 #### [cli_page_size_json]cli.page.size.json
 
@@ -57,7 +58,7 @@ Specify the name of session cache used in Act application
 
 * **act.cli.page.size.json**
 
-Specify the maximum records in one page for JSON layout by CLI command
+指定 CLI 命令行模式下 JSON 格式一页能显示的最大数据条目.
 
 默认值: 10
 
@@ -67,7 +68,7 @@ Specify the maximum records in one page for JSON layout by CLI command
 
 * **act.cli.page.size.table**
 
-Specify the maximum records in one page for table layout by CLI command
+指定 CLI 命令行模式下 Table 布局一页能显示的最大数据条目.
 
 默认值: 22
 
@@ -78,7 +79,7 @@ Specify the maximum records in one page for table layout by CLI command
 
 * **act.cli.port**
 
-Set the CLI telnet port
+设置 CLI telnet 端口.
 
 默认值: `5461`
 
@@ -88,7 +89,7 @@ Set the CLI telnet port
 
 * **act.cli.session.expiration**
 
-Specify the number of seconds a cli session can exists after last user interaction
+指定 CLI 会话的在最后一次用户交互后的保持时间，单位: 秒.
 
 默认值: `300`, i.e. 5 minutes
 
@@ -98,7 +99,7 @@ Specify the number of seconds a cli session can exists after last user interacti
 
 * **act.cli.session.max**
 
-Specifies the maximum number of cli session threads can exists concurrently
+指定 CLI 会话线程可以同时存在的最大数量.
 
 默认值: `3`
 
@@ -110,11 +111,11 @@ Specifies the maximum number of cli session threads can exists concurrently
 * **act.cli_over_http**
 * **act.cli_over_http.enabled**
 
-Turn on/off CLI over http feature.
+启用或关闭 CLI 的 HTTP 支持.
 
 默认值: `false`
 
-Once CLI Over HTTP is turned on, it allows admin to access CLI commands over HTTP through the [configured port](#cli_over_http.port)
+一旦启用 CLI 的 HTTP 支持, 它将允许管理员通过 HTTP 的 [configured port](#cli_over_http.port) 端口来执行 CLI 命令.
 
 #### [cli_over_http_authority_impl]cli_over_http.authority.impl
 
