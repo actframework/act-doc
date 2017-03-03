@@ -125,9 +125,9 @@
 * **act.cli_over_http.authority**
 * **act.cli_over_http.authority.impl**
 
-Configure the authority provider for CLI over http access. The specified value should be a class name of `act.cli.CliOverHttpAuthority` implementation.
+为 CL I配置通过 http 访问的授权提供者. 指定的值应该是一个类名为 `act.cli.CliOverHttpAuthority` 的实现.
 
-默认值: `CliOverHttpAuthority.AllowAll` which allows any request sent through.
+默认值: `CliOverHttpAuthority.AllowAll` 默认允许发送任何请求.
 
 #### [cli_over_http_port]cli_over_http.port
 
@@ -135,7 +135,7 @@ Configure the authority provider for CLI over http access. The specified value s
 
 * **act.cli_over_http.port**
 
-Set the HTTP port for CLI Over HTTP service
+设置 CLI 通过 HTTP 服务的访问的端口.
 
 默认值: `5462`
 
@@ -145,7 +145,7 @@ Set the HTTP port for CLI Over HTTP service
 
 * **act.cli_over_http.title**
 
-Specify the title to be displayed on the CLI Over Http page
+指定要显示在 CLI 访问的 Http 页面的标题.
 
 默认值: `Cli Over Http`
 
@@ -157,7 +157,7 @@ Specify the title to be displayed on the CLI Over Http page
 * **act.cli_over_http.syscmd**
 * **act.cli_over_http.syscmd.enabled**
 
-Turn on/off access to system command on CLI Over Http
+开启或关闭通过 HTTP 的 CLI 访问系统命令.
 
 默认值: `true`
 
@@ -167,13 +167,13 @@ Turn on/off access to system command on CLI Over Http
 
 * **act.cookie.domain_provider**
 
-Specify the provider that returns the domain name. When not specified then it returns a provider that always return the value configured in [host](#host) configuration.
+指定返回的域名的提供者. 当没有指定时, 它将总是返回配置在 [host](#host) 的值.
 
-Valid configuration values:
+合法的配置参数:
 
-1. Class name of implementation of `javax.inject.Provider` that returns a `String` typed value
+1. `javax.inject.Provider` 类的实现类的类名，将返回一个 `String` 类型的值.
 
-2. `dynamic` or `flexible` or `contextual`, all means the domain name will get from the current request's domain
+2. `dynamic` 或 `flexible` 或 `contextual`, 均表示域名将从当前域请求中取值.
 
 默认值: `null`
 
@@ -184,8 +184,7 @@ Valid configuration values:
 * **cors**
 * **act.cors**
 * **act.cors.enabled**
-
-Turn on/off [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) in ActFramework application.
+开启或关闭 ActFramework 应用的 [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) 支持.
 
 默认值: `false`
 
