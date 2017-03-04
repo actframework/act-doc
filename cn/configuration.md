@@ -273,23 +273,25 @@ This configuration specifies the 默认值 for `Access-Control-Allow-Headers` he
 
 This configuration specifies the 默认值 for `Access-Control-Max-Age` header when [cors](#cors) is enabled
 
-#### [content_suffix_aware_enabled]content_suffix.aware.enabled
+#### [content_suffix_aware]content_suffix.aware
 
 别名
 
-* **content_suffix.aware**
+* **content_suffix.aware.enabled**
 * **act.content_suffix.aware**
 * **act.content_suffix.aware.enabled**
 
 Once enabled then the framework automatically recognize request with content suffix, e.g. `/customer/123/json` or `/customer/123.json` will match the route `/customer/123` and set the request `Accept` header value to `application/json`
 
+**注意** 后缀和有效URL路径之间用`/`分隔
+
 默认值: `false`
 
-#### [csrf]csrf.enabled
+#### [csrf]csrf
 
 别名
 
-* **csrf**
+* **csrf.enabled**
 * **act.csrf**
 * **act.csrf.enabled**
 
@@ -298,6 +300,16 @@ Turn on/off global [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_For
 默认值: `false`
 
 Once this configuration is turned on the framework will check all POST/PUT/DELETE request for CSRF token. If it doesn't match then the request will get rejected with 403 Forbidden response
+
+#### [csrf_cookie_name]csrf.cookie_name
+
+Aliases
+
+* **act.csrf.cookie_name**
+
+Specify the name of the cookie used to convey the csrf token generated on the server for the first request coming from a client
+
+Default value: `XSRF-TOKEN`, the name used by AngularJs
 
 #### [csrf_param_name]csrf.param_name
 
@@ -319,11 +331,11 @@ Set the response header name for CSRF token generated from server
 
 默认值: `XSRF-TOKEN`
 
-#### [csrf_protector]csrf.protector.impl
+#### [csrf_protector]csrf.protector
 
 别名
 
-* **csrf.protector**
+* **csrf.protector.impl**
 * **act.csrf.protector**
 * **act.csrf.protector.impl**
 
@@ -335,11 +347,21 @@ Other options in `act.security.CSRFProtector.Predefined`: `RANDOM`
 
 For differences between `HMAC` and `RANDOM` please checkout http://security.stackexchange.com/questions/52224/csrf-random-value-or-hmac
 
-#### [db_seq_gen_impl]db.seq_gen.impl
+#### [dsp_token]dsp.token
+
+Aliases
+
+* **act.dsp.token**
+
+Specify the name of "double submission protect token"
+
+Default value: `act_dsp_token`
+
+#### [db_seq_gen]db.seq_gen
 
 别名
 
-* **db.seq_gen**
+* **db.seq_gen.impl**
 * **act.db.seq_gen**
 * **act.db.seq_gen.impl**
 
@@ -352,6 +374,16 @@ Specify database sequence generator. Which must be class name of the  implementa
 * **act.encoding**
 
 Specify application default encoding. 默认值 is `UTF-8`. It is highly recommended not to change the default setting.
+
+#### [enum_resolving_case_sensitive]enum.resolving.case_sensitive
+
+别名
+
+* **act.enum.resolving.case_sensitive**
+
+Specifies whether it allow enum resolving for request parameters to ignore case
+
+Default value: `false` meaning enum resolving is case insensitive
 
 #### [fmt_date]fmt.date
 
@@ -383,11 +415,35 @@ Specifies the default time format used to parse/output time string
 
 默认值: the pattern of `java.text.DateFormat.getTimeInstance()`
 
-#### [handler_missing_authentication_impl]handler.missing_authentication.impl
+#### [handler_csrf_check_failure]handler.csrf_check_failure
+
+Aliases
+
+* **handler.csrf_check_failure.impl**
+* **act.handler.csrf_check_failure**
+* **act.handler.csrf_check_failure.impl**
+
+Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified.
+
+Default value: the setting of [handler.missing_authentication](#handler_missing_authentication)
+
+#### [handler_csrf_check_failure_ajax]handler.csrf_check_failure.ajax
+
+Aliases
+
+* **handler.csrf_check_failure.ajax.impl**
+* **act.handler.csrf_check_failure.ajax**
+* **act.handler.csrf_check_failure.ajax.impl**
+
+Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified on an ajax request
+
+Default value: the setting of [handler.csrf_check_failure](handler_csrf_check_failure)
+
+#### [handler_missing_authentication]handler.missing_authentication
 
 别名
 
-* **handler.missing_authentication**
+* **handler.missing_authentication.impl**
 * **act.handler.missing_authentication**
 * **act.handler.missing_authentication.impl**
 
@@ -397,17 +453,27 @@ Specifies implementation of `act.util.MissingAuthenticationHandler` interface by
 
 Other options: `act.util.ReturnUnauthorized` which respond with `401 Unauthorised`
 
-#### [handler_missing_authentication_ajax_impl]handler.missing_authentication.ajax.impl
+#### [handler_missing_authentication_ajax]handler.missing_authentication.ajax
 
 别名
 
-* **handler.missing_authentication.ajax**
+* **handler.missing_authentication.ajax.impl**
 * **act.handler.missing_authentication.ajax**
 * **act.handler.missing_authentication.ajax.impl**
 
 Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified on ajax request
 
-默认值: the setting of [handler.missing_authentication.impl](handler_missing_authentication_ajax_impl)
+默认值: the setting of [handler.missing_authentication](handler_missing_authentication_ajax)
+
+#### [handler_unknown_http_method]handler.unknown_http_method
+
+Aliases
+
+* **handler.unknown_http_method.impl**
+* **act.handler.unknown_http_method**
+* **act.handler.unknown_http_method.impl**
+
+Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcessor` that process the HTTP methods that are not recognized by `act.route.Router`, e.g. "OPTION", "HEAD" etc
 
 #### [host]host
 
@@ -419,11 +485,11 @@ Specifies the hostname the application listen to
 
 默认值: `localhost`
 
-#### [http.external_server.enabled]http.external_server.enabled
+#### [http_external_server]http.external_server
 
 别名
 
-* **http.external_server**
+* **http.external_server.enabled**
 * **act.http.external_server**
 * **act.http.external_server.enabled**
 
@@ -432,6 +498,26 @@ Specify if the app is running behind a front end http server, e.g. nginx
 默认值: `true` when running in `PROD` mode; `false` when running in `DEV` mode
 
 Note act does not listen to external port directly. The recommended pattern is to have a front end HTTP server (e.g. nginx) to handle the external request and forward to act
+
+#### [http_params_max]http.params.max
+
+别名
+
+* **act.http.params.max**
+
+Specifies the maximum number of http parameters. This can be used to prevent the hash collision DOS attack. If this configuration is set to any value larger than 0, ActFramework will check the request parameter number, if the number is larger than the setting, then a `413 Request Entity Too Large` response is returned immediately
+
+默认值: `128`
+
+#### [http_port]http.port
+
+别名
+
+* **act.http.port**
+
+Specifies the default http port the application listen to.
+
+默认值: `5460`
 
 #### [http.port.external]http.port.external
 
@@ -447,25 +533,7 @@ Specifies the external port which is used to construct the full URL
 
 Specifies the external secure port which is used to construct the full URL when app is running on secure channel
 
-#### [http_params_max]http.params.max
-
-别名
-
-* **act.http.params.max**
-
-Specifies the maximum number of http parameters. This can be used to prevent the hash collision DOS attack. If this configuration is set to any value larger than 0, ActFramework will check the request parameter number, if the number is larger than the setting, then a `413 Request Entity Too Large` response is returned immediately
-
-默认值: `1000`
-
-#### [http_port]http.port
-
-别名
-
-* **act.http.port**
-
-Specifies the default http port the application listen to.
-
-默认值: `5460`
+Default value: 443
 
 #### [http_secure_enabled]http.secure.enabled
 
@@ -479,11 +547,11 @@ Specifies whether the default http port is listening on secure channel or not.
 
 默认值: `false` when app is running in `DEV` mode, `true` if app is running in `RPOD` mode
 
-#### [i18n_enabled]i18n.enabled
+#### [i18n]i18n
 
 别名
 
-* **i18n**
+* **i18n.enabled**
 * **act.i18n**
 * **act.i18n.enabled**
 
@@ -511,17 +579,17 @@ Specify the name for the locale cookie
 
 默认值: `act_locale`
 
-#### [idgen_node_id_provider_impl]idgen.node_id.provider.impl
+#### [idgen_node_id_provider]idgen.node_id.provider
 
 别名
 
-* **idgen.node_id.provider**
+* **idgen.node_id.provider.impl**
 * **act.idgen.node_id.provider**
 * **act.idgen.node_id.provider.impl**
 
 Specify the `act.util.IdGenerator.NodeIdProvider` implementation by class name. The node id provider is responsible to generate the node id for a CUID (Cluster Unique Identifer). When not specified, then Act will use the `IdGenerator.NodeIdProvider.IpProvider` that return the node id calculated from the node's ip address based on [effective ip bytes](#idgen_node_id_effective_ip_bytes_size) configuration
 
-默认值: `null`
+默认值: `act.util.IdGenerator.NodeIdProvider.IpProvider`
 
 #### [idgen_node_id_effective_ip_bytes_size]idgen.node_id.effective_ip_bytes.size
 
@@ -537,11 +605,11 @@ Note the bigger this number is, the longer the CUID will be. However it should b
 
 默认值: `4`
 
-#### [idgen_start_id_provider_impl]idgen.start_id.provider.impl
+#### [idgen_start_id_provider]idgen.start_id.provider
 
 别名
 
-* **idgen.start_id.provider**
+* **idgen.start_id.provider.impl**
 * **act.idgen.start_id.provider**
 * **act.idgen.start_id.provider.impl**
 
@@ -561,11 +629,11 @@ Specifies the start id persistent file for start ID counter.
 
 默认值: `.act.id-app`
 
-#### [idgen_seq_id_provider_impl]idgen.seq_id.provider.impl
+#### [idgen_seq_id_provider]idgen.seq_id.provider
 
 别名
 
-* **idgen.seq_id.provider**
+* **idgen.seq_id.provider.impl**
 * **act.idgen.seq_id.provider**
 * **act.idgen.seq_id.provider.impl**
 
@@ -573,11 +641,11 @@ Specifies the impelementation of `act.util.IdGenerator.SequenceProvider` by clas
 
 默认值: `act.util.IdGenerator.SequenceProvider.AtomicLongSeq`
 
-#### [idgen_encoder_impl]idgen.encoder.impl
+#### [idgen_encoder]idgen.encoder
 
 别名
 
-* **idgen.encoder**
+* **idgen.encoder.impl**
 * **act.idgen.encoder**
 * **act.idgen.encoder.impl**
 
@@ -590,16 +658,6 @@ Available options:
 
 默认值: `act.util.IdGenerator.SafeLongEncoder`
 
-#### [locale]locale
-
-别名
-
-* **act.locale**
-
-Specifies the application default locale.
-
-默认值: `java.util.Locale#getDefault`
-
 #### [job_pool_size]job.pool.size
 
 别名
@@ -611,6 +669,28 @@ Specifies the application default locale.
 Specifies the maximum number of threads can exists in the application's job manager's thread pool
 
 默认值: `10`
+
+#### [locale]locale
+
+别名
+
+* **act.locale**
+
+Specifies the application default locale.
+
+默认值: `java.util.Locale#getDefault`
+
+#### [metric]metric
+
+Aliases
+
+* **metric.enabled**
+* **act.metric**
+* **act.metric.enabled**
+
+Turn on/off metric in Act application
+
+Default value: `true`
 
 #### [modules]modules
 
@@ -686,6 +766,16 @@ specifies the class that is type of `act.view.TemplatePathResolver`. Application
 
 默认值: `act.view.TemplatePathResolver`
 
+#### [resource_preload_size_limit]resource.preload.size.limit
+
+Aliases
+
+* **act.resource.preload.size.limit**
+
+Specifies the maximum number of bytes of a resource that can be preload into memory. Specifies `0` or negative number to disable resource preload feature
+
+Default value: `1024 * 10`, i.e. 10KB
+
 #### [scan_package]scan_package
 
 别名
@@ -705,6 +795,16 @@ Specifies the secret key the application used to do general encrypt/decrypt/sign
 默认值: `myawesomeapp`
 
 Note, make sure you set this value on PROD mode
+
+#### [server_header]server.header
+
+Aliases
+
+* **act.server.header**
+
+Specifies the server header to be output to the response
+
+Default value: `act`
 
 #### [session_prefix]session.prefix
 
@@ -729,11 +829,11 @@ specifies the session duration in seconds. If user failed to interact with serve
 
 默认值: `60 * 30` i.e half an hour
 
-#### [session_persistent_enabled]session.persistent.enabled
+#### [session_persistent]session.persistent
 
 别名
 
-* **session.persistent**
+* **session.persistent.enabled**
 * **act.session.persistent**
 * **act.session.persistent.enabled**
 
@@ -741,11 +841,11 @@ Specify whether the system should treat session cookie as [persistent cookie](ht
 
 默认值: `false`
 
-#### [session_encrypt_enabled]session.encrypt.enabled
+#### [session_encrypt]session.encrypt
 
 别名
 
-* **session.encrypt**
+* **session.encrypt.enabled**
 * **act.session.encrypt**
 * **act.session.encrypt.enabled**
 
@@ -773,11 +873,13 @@ Specifies the session key for username of the login user. Authentication plugin 
 
 Specify the implementation of `act.util.SessionMapper` by class name. A session mapper can be used to serialize session/flash to response or on the flippering side, deserialize session/flash info from request.
 
-#### [session_secure_enabled]session.secure.enabled
+Default value: `act.util.SessionMapper.DefaultSessionMapper`, use cookie to serialize/deserizalize session
+
+#### [session_secure]session.secure
 
 别名
 
-* **session.secure**
+* **session.secure.enabled**
 * **act.session.secure**
 * **act.session.secure.enabled**
 
@@ -832,16 +934,6 @@ Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below 
 Specifies where the view templates resides. If not specified then will use the view engine name (in lowercase) as the template home.
 
 **注意** it is highly recommended NOT to set this configuration item
-
-#### [unknown_http_method_handler_impl]unknown_http_method_handler.impl
-
-别名
-
-* **unknown_http_method_handler**
-* **act.unknown_http_method_handler**
-* **act.unknown_http_method_handler.impl**
-
-Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcessor` that process the HTTP methods that are not recognized by `act.route.Router`, e.g. "OPTION", "PATCH" etc
 
 #### [url_login]url.login
 
