@@ -214,9 +214,9 @@ Default value: calculated based on the following logic:
 
 E.g.
 
-When app name is `HelloWorld`, the cookie prefix is `hel-`
-When app name is `Hello World`, the cookie prefix is `he-wo-`
-When app name is `Hello My World`, the cookie prefix is `hmw-`
+* When app name is `HelloWorld`, the cookie prefix is `hel-`
+* When app name is `Hello World`, the cookie prefix is `he-wo-`
+* When app name is `Hello My World`, the cookie prefix is `hmw-`
 
 #### [cors]cors
 
