@@ -191,6 +191,32 @@
 
 默认值: `null`
 
+
+#### [cookie_prefix]cookie.prefix
+
+别名
+
+* **act.cookie.prefix**
+
+Specifies the prefix to be prepended to name of the cookies used in ActFramework, e.g. session, flash, xsrf etc. Let's say the default cookie name is ｀act_session｀, and user specifies the prefix ｀my_app｀then the session cookie name will be ｀my_app_session｀
+
+Note this setting also impact the ｀AppConfig#flashCookieName()｀
+
+默认值: calculated based on the following logic:
+
+1. find the app's name, if not found, then use `act` as app name
+2. split the app name by spaces
+3. check the length of splited string array
+3.1 if there is only one string in the array, then return the first 3 chars of the string, or the string if string len is leass than 3
+3.2 if there are two strings in the array, then pick up the first 2 chars of each string and concatenate by dash `-`
+3.3 pick up the first char of the first 3 strings in the array
+
+E.g.
+
+When app name is `HelloWorld`, the cookie prefix is `hel-`
+When app name is `Hello World`, the cookie prefix is `he-wo-`
+When app name is `Hello My World`, the cookie prefix is `hmw-`
+
 #### [cors]cors
 
 别名
@@ -805,19 +831,6 @@ Aliases
 Specifies the server header to be output to the response
 
 Default value: `act`
-
-#### [session_prefix]session.prefix
-
-别名
-
-* **act.session.prefix**
-
-Specifies the prefix to be prepended to the session cookie name. Let's say the default cookie name is ｀act_session｀, and user specifies the prefix ｀my_app｀
-then the session cookie name will be ｀my_app_session｀
-
-Note this setting also impact the ｀AppConfig#flashCookieName()｀
-
-默认值: ｀act`
 
 #### [session_ttl]session.ttl
 
