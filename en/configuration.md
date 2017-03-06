@@ -208,9 +208,9 @@ Default value: calculated based on the following logic:
 1. find the app's name, if not found, then use `act` as app name
 2. split the app name by spaces
 3. check the length of splited string array
-3.1 if there is only one string in the array, then return the first 3 chars of the string, or the string if string len is leass than 3
-3.2 if there are two strings in the array, then pick up the first 2 chars of each string and concatenate by dash `-`
-3.3 pick up the first char of the first 3 strings in the array
+   1 if there is only one string in the array, then return the first 3 chars of the string, or the string if string len is leass than 3
+   2 if there are two strings in the array, then pick up the first 2 chars of each string and concatenate by dash `-`
+   3 pick up the first char of the first 3 strings in the array
 
 E.g.
 
