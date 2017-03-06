@@ -200,7 +200,7 @@
 
 默认值: `true`
 
-启用此配置时, ActFramework 将仅向 HTTP OPTION 请求添加以下CORS相关标头:
+启用此配置时, ActFramework 将仅向 HTTP OPTION 请求添加以下 CORS 相关标头:
 
 * access-control-allow-headers
 * access-control-expose-headers
@@ -226,7 +226,7 @@
 
 默认值: `Content-Type, X-HTTP-Method-Override`
 
-This configuration specifies the default value for `Access-Control-Allow-Headers` and `Access-Control-Expose-Headers` headers
+此配置指定 `Access-Control-Allow-Headers` 和 `Access-Control-Expose-Headers` 标头的默认值.
 
 #### [cors_headers_expose]cors.headers.expose
 
@@ -236,7 +236,7 @@ This configuration specifies the default value for `Access-Control-Allow-Headers
 
 默认值: `null`
 
-This configuration specifies the default value for `Access-Control-Expose-Headers` header value. If not provided then system will use the value provided by [cors.headers](#cors_headers)
+此配置指定 `Access-Control-Expose-Headers` 标头的默认值。 如果没有提供，那么系统将使用 [cors.headers](#cors_headers) 提供的值.
 
 #### [cors_headers_allowed]cors.headers.allowed
 
@@ -246,7 +246,7 @@ This configuration specifies the default value for `Access-Control-Expose-Header
 
 默认值: `null`
 
-This configuration specifies the default value for `Access-Control-Allow-Headers` header value. If not provided then system will use the value provided by [cors.headers](#cors_headers)
+此配置指定 `Access-Control-Allow-Headers` 标头的默认值。 如果没有提供，那么系统将使用 [cors.headers](#cors_headers) 提供的值.
 
 #### [cors_max_age]cors.max_age
 
