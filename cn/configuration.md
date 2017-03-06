@@ -188,7 +188,7 @@
 
 默认值: `false`
 
-Once `cors` is enabled, ActFramework will add CORS specific headers (listed below) into the HTTP response by default. ActFramework will also create HTTP Option request handler when this configuration is turned on.
+一旦 `cors`被开启, ActFramework 将默认在响应中自动添加下面列表指定的 HTTP 头. 当此配置开启, ActFramework 同时也将在请求中创建 HTTP OPTION.
 
 #### [cors_option_check]cors.option.check.enabled
 
@@ -200,13 +200,13 @@ Once `cors` is enabled, ActFramework will add CORS specific headers (listed belo
 
 默认值: `true`
 
-When this configuration is enabled, ActFramework will add the following CORS relevant headers only to HTTP OPTION request:
+启用此配置时, ActFramework 将仅向 HTTP OPTION 请求添加以下CORS相关标头:
 
 * access-control-allow-headers
 * access-control-expose-headers
 * access-control-max-age
 
-However header `access-control-allow-origin` is always added without regarding to the HTTP request method when [cors](#cors) configuration is enabled.
+当启用 [cors](#cors) 配置时, 无论 HTTP 请求的方法，总是会添加 `access-control-allow-origin` 到 HTTP 头.
 
 #### [cors_origin]cors.origin
 
@@ -216,7 +216,7 @@ However header `access-control-allow-origin` is always added without regarding t
 
 默认值: `*`
 
-This configuration specifies the default `Access-Control-Allow-Origin` header value
+此配置指定默认的 `Access-Control-Allow-Origin` 标头值.
 
 #### [cors_headers]cors.headers
 
