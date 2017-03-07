@@ -457,7 +457,28 @@ ActFramework根据`Accept`头的内容来选择适合的模板文件
 
 ## 会话和快闪对象
 
-TBD...
+如果需要在多个HTTP请求之间保存数据, 可以将它们存入会话(Session)或者快闪(Flash)中. 在Session中的数据在整个用户会话过程中均可使用. 在Flash中的数据仅维持到下一个请求.
+
+一个很重要的概念是Session以及Flash数据并非存在服务器中,而是通过Cookie机制在每个接下来的HTTP请求里携带这些数据. 因此数据大小是有限制的(最多4KB)而且只能保存为字符串
+
+当然, ActFramework使用了应用配置的密匙来对cookie内容进行签名以确保其不会被篡改, 否则就会失效. 另外ActFramework的session并不是用来当做缓存(Cache)使用的. 如果你需要缓存一些和Session相关的结构化数据, 可以调用`Session.cache()` APIs. 例如:
+
+
+```java
+@GetAction
+public void index(H.Session session, Message.Dao dao) {
+    List<String> messages = session.cached("messages");
+    if (null == messages) {
+        // Cache miss
+        messages = dao.findByUser(me);
+        session.cacheFor30Min("messages", messages);
+    }
+    render(messages);
+}
+```
+
+Session数据在用户关闭浏览器之后即失效, 除非你打开了[session.persistent](configuration#session_persistent)配置
+需要注意的一点, 虽然都能保存结构化数据, 但是缓存和传统的Servlet HTTP Session对象有不同的语义. 你不能指望数据总是存在缓存中. 因此应用必须处理缓存失效的情况. 这也确保了你的应用完全无状态化.
 
 ## 总结
 
