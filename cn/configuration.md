@@ -256,7 +256,7 @@
 
 默认值: 30*60 (seconds)
 
-This configuration specifies the default value for `Access-Control-Max-Age` header when [cors](#cors) is enabled
+当启用 [cors](#cors) 时, 此配置指定 `Access-Control-Max-Age` 标头的默认值.
 
 #### [content_suffix_aware_enabled]content_suffix.aware.enabled
 
@@ -266,7 +266,7 @@ This configuration specifies the default value for `Access-Control-Max-Age` head
 * **act.content_suffix.aware**
 * **act.content_suffix.aware.enabled**
 
-Once enabled then the framework automatically recognize request with content suffix, e.g. `/customer/123/json` or `/customer/123.json` will match the route `/customer/123` and set the request `Accept` header value to `application/json`
+启用此配置项，框架将自动识别具有内容后缀的请求，例如 `/customer/123/json` 或 `/customer/123.json`, 将匹配路径 `/customer/123`, 并将请求 `Accept` 头的值设置为 `application/json`.
 
 默认值: `false`
 
@@ -278,11 +278,11 @@ Once enabled then the framework automatically recognize request with content suf
 * **act.csrf**
 * **act.csrf.enabled**
 
-Turn on/off global [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet) protect
+开启/关闭全局 [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet) 保护.
 
 默认值: `false`
 
-Once this configuration is turned on the framework will check all POST/PUT/DELETE request for CSRF token. If it doesn't match then the request will get rejected with 403 Forbidden response
+此配置开启，框架将检查所有 POST/PUT/DELETE 请求的 CSRF 令牌. 如果它不匹配, 则该请求将返回 403 Forbidden 的响应.
 
 #### [csrf_param_name]csrf.param_name
 
@@ -290,7 +290,7 @@ Once this configuration is turned on the framework will check all POST/PUT/DELET
 
 * **act.csrf.param_name**
 
-Set the request parameter name for CSRF token
+设置 CSRF 令牌的请求参数名称.
 
 默认值: `__csrf__`
 
@@ -300,7 +300,7 @@ Set the request parameter name for CSRF token
 
 * **act.csrf.param_name**
 
-Set the response header name for CSRF token generated from server
+设置从服务端生成的 CSRF 令牌的响应头的名称. 
 
 默认值: `XSRF-TOKEN`
 
@@ -312,13 +312,13 @@ Set the response header name for CSRF token generated from server
 * **act.csrf.protector**
 * **act.csrf.protector.impl**
 
-Set the implementation of `act.security.CSRFProtector`. The value of this configuration could be either a name of the class that implements `act.security.CSRFProtector` interface or the name of the enum defined in `act.security.CSRFProtector.Predefined`.
+设置 `act.security.CSRFProtector` 的实现. 此配置的值可以是 `act.security.CSRFProtector` 接口的类的实现, 也可以是 `act.security.CSRFProtector.Predefined` 中定义的枚举的名称.
 
 默认值: `HMAC`
 
-Other options in `act.security.CSRFProtector.Predefined`: `RANDOM`
+`act.security.CSRFProtector.Predefined` 中的其他选项: `RANDOM`
 
-For differences between `HMAC` and `RANDOM` please checkout http://security.stackexchange.com/questions/52224/csrf-random-value-or-hmac
+对于 `HMAC` 和 `RANDOM` 之间的区别, 请查阅 http://security.stackexchange.com/questions/52224/csrf-random-value-or-hmac
 
 #### [db_seq_gen_impl]db.seq_gen.impl
 
@@ -328,7 +328,7 @@ For differences between `HMAC` and `RANDOM` please checkout http://security.stac
 * **act.db.seq_gen**
 * **act.db.seq_gen.impl**
 
-Specify database sequence generator. Which must be class name of the  implementation of `act.db.util._SequenceNumberGenerator`. If not specified then it will return the first `act.db.util._SequenceNumberGenerator` implementation scanned by ActFramework.
+指定数据库序列生成器. 它必须是 `act.db.util._SequenceNumberGenerator` 的实现类. 如果没有指定，那么它将返回 ActFramework 扫描的第一个 `act.db.util._SequenceNumberGenerator` 实现.
 
 #### [encoding]encoding
 
@@ -336,7 +336,7 @@ Specify database sequence generator. Which must be class name of the  implementa
 
 * **act.encoding**
 
-Specify application default encoding. Default value is `UTF-8`. It is highly recommended not to change the default setting.
+指定应用程序默认编码. 默认值为 `UTF-8`. 强烈建议不要更改默认设置.
 
 #### [fmt_date]fmt.date
 
@@ -344,9 +344,9 @@ Specify application default encoding. Default value is `UTF-8`. It is highly rec
 
 * **act.fmt.date**
 
-Specifies the default date format used to parse/output date string. 
+指定用于解析/输出日期字符串的默认日期格式.
 
-默认值: the pattern of `java.text.DateFormat.getDateInstance()`
+默认值: `java.text.DateFormat.getDateInstance()` 的格式
 
 #### [fmt_date_time]fmt.date_time
 
@@ -354,9 +354,9 @@ Specifies the default date format used to parse/output date string.
 
 * **act.fmt.date_time**
 
-Specifies the default date and time format used to parse/output date time string
+指定用于解析/输出日期和时间字符串的默认日期和时间格式.
 
-默认值: the pattern of `java.text.DateFormat.getDateTimeInstance()`
+默认值: `java.text.DateFormat.getDateTimeInstance()` 的格式
 
 #### [fmt_time]fmt.time
 
@@ -364,9 +364,9 @@ Specifies the default date and time format used to parse/output date time string
 
 * **act.fmt.time**
 
-Specifies the default time format used to parse/output time string
+指定用于解析/输出时间字符串的默认时间格式.
 
-默认值: the pattern of `java.text.DateFormat.getTimeInstance()`
+默认值: `java.text.DateFormat.getTimeInstance()` 的格式
 
 #### [handler_missing_authentication_impl]handler.missing_authentication.impl
 
@@ -376,11 +376,11 @@ Specifies the default time format used to parse/output time string
 * **act.handler.missing_authentication**
 * **act.handler.missing_authentication.impl**
 
-Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified.
+通过类名指定 `act.util.MissingAuthenticationHandler` 接口的实现。 当 [CSRF token](csrf) 无法验证时调用实现.
 
-默认值: `act.util.RedirectToLoginUrl` which redirect the user to [login URL](url_login)
+默认值: `act.util.RedirectToLoginUrl` 它将重定向到用户的 [login URL](url_login)
 
-其它选项: `act.util.ReturnUnauthorized` which respond with `401 Unauthorised`
+其它选项: `act.util.ReturnUnauthorized` 它将返回 `401 Unauthorised` 响应
 
 #### [handler_missing_authentication_ajax_impl]handler.missing_authentication.ajax.impl
 
@@ -390,9 +390,9 @@ Specifies implementation of `act.util.MissingAuthenticationHandler` interface by
 * **act.handler.missing_authentication.ajax**
 * **act.handler.missing_authentication.ajax.impl**
 
-Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified on ajax request
+通过类名指定 `act.util.MissingAuthenticationHandler` 接口的实现. 当无法对 ajax 请求验证 [CSRF token](csrf) 时调用实现.
 
-默认值: the setting of [handler.missing_authentication.impl](handler_missing_authentication_ajax_impl)
+默认值: [handler.missing_authentication.impl](handler_missing_authentication_ajax_impl) 的配置
 
 #### [host]host
 
@@ -400,7 +400,7 @@ Specifies implementation of `act.util.MissingAuthenticationHandler` interface by
 
 * **act.host**
 
-Specifies the hostname the application listen to
+指定应用程序侦听的主机名.
 
 默认值: `localhost`
 
@@ -412,11 +412,11 @@ Specifies the hostname the application listen to
 * **act.http.external_server**
 * **act.http.external_server.enabled**
 
-Specify if the app is running behind a front end http server, e.g. nginx
+指定应用程序是否在运行在前端 http 服务器, 例如 nginx.
 
-默认值: `true` when running in `PROD` mode; `false` when running in `DEV` mode
+默认值: 当运行在 `PROD` 模式下默认是 `true`; 当运行在 `DEV` 模式下默认是 `false`.
 
-Note act does not listen to external port directly. The recommended pattern is to have a front end HTTP server (e.g. nginx) to handle the external request and forward to act
+注意 ACT 不会直接侦听外部端口. 推荐的模式是使用前端 HTTP 服务器（例如 nginx）来处理外部请求并转发到 ACT.
 
 #### [http.port.external]http.port.external
 
@@ -424,13 +424,13 @@ Note act does not listen to external port directly. The recommended pattern is t
 
 * **act.http.port.external**
 
-Specifies the external port which is used to construct the full URL
+指定用于构造完整 URL 的外部端口.
 
 默认值: `80`
 
 #### [http.port.external.secure]http.port.external.secure
 
-Specifies the external secure port which is used to construct the full URL when app is running on secure channel
+指定外部加密端口, 用于应用在安全通道上运行时构造完整的 URL.
 
 #### [http_params_max]http.params.max
 
@@ -438,7 +438,7 @@ Specifies the external secure port which is used to construct the full URL when 
 
 * **act.http.params.max**
 
-Specifies the maximum number of http parameters. This can be used to prevent the hash collision DOS attack. If this configuration is set to any value larger than 0, ActFramework will check the request parameter number, if the number is larger than the setting, then a `413 Request Entity Too Large` response is returned immediately
+指定 http 参数的最大值. 这可以用来防止哈希冲突的 DOS 攻击. 如果此配置设置为任何大于 0 的值, ActFramework 将检查请求参数数目, 如果该数量大于该设置, 则立即返回 `413 Request Entity Too Large` 响应.
 
 默认值: `1000`
 
@@ -448,7 +448,7 @@ Specifies the maximum number of http parameters. This can be used to prevent the
 
 * **act.http.port**
 
-Specifies the default http port the application listen to.
+指定应用程序侦听的默认 http 端口.
 
 默认值: `5460`
 
@@ -460,9 +460,9 @@ Specifies the default http port the application listen to.
 * **act.http.secure**
 * **act.http.secure.enabled**
 
-Specifies whether the default http port is listening on secure channel or not.
+指定默认 http 端口是否正在侦听加密通道.
 
-Default value: `false` when app is running in `DEV` mode, `true` if app is running in `RPOD` mode
+默认值: 当应用运行在 `DEV` 模式下默认为 `false`, 当应用运行在 `RPOD` 模式下默认为 `true`.
 
 #### [i18n_enabled]i18n.enabled
 
@@ -472,7 +472,7 @@ Default value: `false` when app is running in `DEV` mode, `true` if app is runni
 * **act.i18n**
 * **act.i18n.enabled**
 
-Turn on/off i18n support in ActFramework application
+在 ActFramework 应用程序中打开/关闭 i18n 支持.
 
 默认值: `false`
 
@@ -482,7 +482,7 @@ Turn on/off i18n support in ActFramework application
 
 * **act.i18n.locale.param_name**
 
-Specify the param name to set client locale in http request
+指定参数名称以在 http 请求中设置客户端区域设置.
 
 默认值: `act_locale`
 
@@ -492,7 +492,7 @@ Specify the param name to set client locale in http request
 
 * **act.i18n.locale.cookie_name**
 
-Specify the name for the locale cookie
+指定本地保存的 cookie 名称.
 
 默认值: `act_locale`
 
@@ -702,7 +702,7 @@ then the session cookie name will be ｀my_app_session｀
 
 Note this setting also impact the ｀AppConfig#flashCookieName()｀
 
-默认值: ｀act`
+默认值: `act`
 
 #### [session_ttl]session.ttl
 
