@@ -5,6 +5,10 @@
 
 ActFramework is created to make programming MVC application in Java easy and fun. In comparing with other Java MVC frameworks like Spring MVC, Struts etc, Act focus more on expressiveness and simplicity.
 
+## FAQ
+
+1. [FAQ](faq.md)
+
 ## Getting Started
 
 1. [Prerequisites](get_start.md#prerequisites)
