@@ -1,6 +1,6 @@
 # FAQ
 
-## 我启动示例应用看到"App not found"报错是怎么回事
+#### 我启动示例应用看到"App not found"报错是怎么回事
 
 我使用Intellij IDEA加载了示例项目然后我运行"HelloWorld"程序的时候得到下面的错误堆栈:
 
@@ -22,13 +22,13 @@ Exception in thread "main" org.osgl.exception.UnexpectedException: App not found
 	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
 ```
 
-### 解决办法
+##### 解决办法
 
 你需要在IDEA的Run配置里面正确地设置"工作目录(working directory)":
 
 ![image](https://cloud.githubusercontent.com/assets/216930/23855130/a2136556-0848-11e7-8184-2433004b123b.png)
 
-## 我不能构建示例程序, 下载依赖的时候提示出错
+#### 我不能构建示例程序, 下载依赖的时候提示出错
 
 我在控制台上发现类似下面的警告信息
 
