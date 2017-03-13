@@ -25,6 +25,6 @@ Exception in thread "main" org.osgl.exception.UnexpectedException: App not found
 ### Answer
 
 You need to update the Run configuration and set the correct working directory:
+![image](https://cloud.githubusercontent.com/assets/216930/23855130/a2136556-0848-11e7-8184-2433004b123b.png)
 
-![image](https://cloud.githubusercontent.com/assets/216930/23855020/32a9712e-0848-11e7-88dd-74f879dc73fd.png)
 
