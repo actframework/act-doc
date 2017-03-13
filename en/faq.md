@@ -1,6 +1,6 @@
 # FAQ
 
-## Why I see "App not found" issue
+## Why do I see the "App not found" issue
 
 I am using Intellij IDEA and when I start the "HelloWorld" sample application in the IDE, I got the following error stack:
 
@@ -24,7 +24,7 @@ Exception in thread "main" org.osgl.exception.UnexpectedException: App not found
 
 ### Answer
 
-You need to update the Run configuration and set the correct working directory:
+You need to update the Run configuration and make sure working directory is set correctly:
 ![image](https://cloud.githubusercontent.com/assets/216930/23855130/a2136556-0848-11e7-8184-2433004b123b.png)
 
 
