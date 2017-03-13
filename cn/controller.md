@@ -248,7 +248,7 @@ public void createOrder(Order order) {
     }
     ```
 
-你甚至可以将`Result`隐式抛出:
+    你甚至可以将`Result`隐式抛出:
 
     ```java
     @PostAction("/order")
