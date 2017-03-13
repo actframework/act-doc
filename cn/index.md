@@ -5,6 +5,10 @@
 
 ActFramework可以让开发人员以更加简洁有趣的方式开发MVC应用程序。和其他Web框架相比，ActFramework侧重于表达力和简洁易用。
 
+## FAQ
+
+1. [FAQ](faq.md)
+
 ## 了解ActFramework
 
 1. [准备工作](get_start.md#prerequisites)
