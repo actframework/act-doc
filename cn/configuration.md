@@ -542,7 +542,7 @@
 
 * **act.idgen.start_id.file**
 
-Specifies the start id persistent file for start ID counter.
+指定开始 ID 计数器的持久性文件.
 
 默认值: `.act.id-app`
 
@@ -554,7 +554,7 @@ Specifies the start id persistent file for start ID counter.
 * **act.idgen.seq_id.provider**
 * **act.idgen.seq_id.provider.impl**
 
-Specifies the impelementation of `act.util.IdGenerator.SequenceProvider` by class name, which will be used to generate the sequence part of CUID.
+通过类名指定 `act.util.IdGenerator.Sequence Provider` 的实现, 它将用于生成 CUID 的序列部分.
 
 默认值: `act.util.IdGenerator.SequenceProvider.AtomicLongSeq`
 
@@ -566,7 +566,7 @@ Specifies the impelementation of `act.util.IdGenerator.SequenceProvider` by clas
 * **act.idgen.encoder**
 * **act.idgen.encoder.impl**
 
-Specifies an implementation of `act.util.IdGenerator.LongEncoder` interface by class name. The instance will be used to encode long value (the three parts of CUID generated) into a String.
+按类名指定  `act.util.IdGenerator.LongEncoder `接口的实现. 该实例将用于将 long 值（生成的 CUID 的三个部分）编码为 String.
 
 Available options:
 
@@ -581,7 +581,7 @@ Available options:
 
 * **act.locale**
 
-Specifies the application default locale.
+指定应用程序默认语言.
 
 默认值: `java.util.Locale#getDefault`
 
@@ -593,7 +593,7 @@ Specifies the application default locale.
 * **act.job.pool**
 * **act.job.pool.size**
 
-Specifies the maximum number of threads can exists in the application's job manager's thread pool
+指定应用程序的 Job 管理器的线程池中可以存在的最大线程数.
 
 默认值: `10`
 
@@ -603,7 +603,7 @@ Specifies the maximum number of threads can exists in the application's job mana
 
 * **act.modules**
 
-Declare additional app base (for maven modules)
+声明其他应用程序库（用于Maven模块）.
 
 默认值: `null`
 
@@ -613,9 +613,9 @@ Declare additional app base (for maven modules)
 
 * **act.namedPorts**
 
-specifies a list of port names this application listen to. These are additional ports other than the default [http.port](#http_port)
+指定此应用程序侦听的端口名称列表. 这些是除默认 [http.port](#http_port) 之外的其他端口.
 
-The list is specified as
+该列表格式为
 
 ```
 act.namedPorts=admin:8888;ipc:8899
@@ -623,7 +623,7 @@ act.namedPorts=admin:8888;ipc:8899
 
 默认值: `null`
 
-Note, the default port that specified in [http.port](#http_port) configuration and shall not be specified in this namedPorts configuration
+注意，在 [http.port](#http_port) 配置中指定的默认端口, 并且不应在此 namedPort s配置中指定.
 
 #### [ping_path]ping.path
 
@@ -631,7 +631,7 @@ Note, the default port that specified in [http.port](#http_port) configuration a
 
 * **act.ping.path**
 
-Specify the ping path. If this setting is specified, then when session resolving, system will check if the current URL matches the setting. If matched then session cookie expiration time will not be changed. Otherwise the expiration time will refresh
+指定 ping 路径. 如果指定了此设置, 则在会话解析时, 系统将检查当前URL是否与设置匹配. 如果匹配, 则会话 cookie 的过期时间不会更改. 否则, 将刷新到期时间.
 
 默认值: `null`
 
@@ -641,11 +641,11 @@ Specify the ping path. If this setting is specified, then when session resolving
 
 * **act.profile**
 
-Specifies the profile to load configuration If this setting is specified, and there is a folder named as the `profile` setting sit under `/resource/conf` folder, then the properties files will be loaded from that folder.
+指定要加载的配置文件. 如果指定了此设置, 并且在 `/resource/conf` 文件夹下有一个名为  `profile`  设置的文件夹, 那么将从该文件夹加载配置文件.
 
 默认值: the value of the {@link Act#mode()}
 
-Note, unlike other configuration items which is usually specified in the configuration file. `profile` setting is load by `System#getProperty(String)`, thus it is usually specified with JVM argument `Dprofile=<profile>`
+注意, 不同于通常在配置文件中指定的其他配置项. `profile` 设置是通过 `System#getProperty(String)` 加载, 因此通常使用 JVM 参数 `Dprofile=<profile>`
 
 #### [resolver_error_template_path_impl]resolver.error_template_path.impl
 
@@ -667,7 +667,7 @@ Specifies error page (template) path resolver implementation by class name
 * **act.resolver.template_path**
 * **resolver.template_path.impl**
 
-specifies the class that is type of `act.view.TemplatePathResolver`. Application developer could use this configuration to add some flexibility to template path resolving logic, e.g. different home for different locale or different home for different device type etc.
+指定类是 `act.view.TemplatePathResolver` 的类. 应用开发者可以使用这种配置来灵活配置模板路径解析逻辑. 不同的 home 指定不同的地区或不同的 home 指定不同的设备类型等.
 
 默认值: `act.view.TemplatePathResolver`
 
@@ -677,7 +677,7 @@ specifies the class that is type of `act.view.TemplatePathResolver`. Application
 
 * **act.scan_package**
 
-Specify the app package in which all classes is subject to bytecode processing, e.g enhancement and injection. This setting should be specified when application loaded. Otherwise Act will try to process all classes found in application's lib and classes folder, which might cause performance issue on startup 
+指定应用程序包, 其中所有类都受字节码处理, 例如增强和注入. 应在加载应用程序时指定此设置. 否则 Act 将尝试处理应用程序的 lib 和 classes 文件夹中找到的所有类, 这可能会在启动时导致性能问题.
 
 #### [secret]secret
 
@@ -685,11 +685,11 @@ Specify the app package in which all classes is subject to bytecode processing, 
 
 * **act.secret**
 
-Specifies the secret key the application used to do general encrypt/decrypt/sign etc
+指定应用程序用于执行常规加密/解密/签名等的密钥.
 
 默认值: `myawesomeapp`
 
-Note, make sure you set this value on PROD mode
+注意, 确保在 PROD 模式下设置此值.
 
 #### [session_prefix]session.prefix
 
@@ -697,10 +697,9 @@ Note, make sure you set this value on PROD mode
 
 * **act.session.prefix**
 
-Specifies the prefix to be prepended to the session cookie name. Let's say the default cookie name is ｀act_session｀, and user specifies the prefix ｀my_app｀
-then the session cookie name will be ｀my_app_session｀
+指定要添加到会话 Cookie 名称的前缀. 假设默认 cookie 名称是 `act_session`, 用户指定前缀 `my_app`, 那么会话 cookie 名称将是 `my_app_session`.
 
-Note this setting also impact the ｀AppConfig#flashCookieName()｀
+注意, 这个设置也会影响 `AppConfig＃flashCookieName（）`.
 
 默认值: `act`
 
@@ -710,9 +709,9 @@ Note this setting also impact the ｀AppConfig#flashCookieName()｀
 
 * **act.session.ttl**
 
-specifies the session duration in seconds. If user failed to interact with server for amount of time that exceeds the setting then the session will be destroyed
+指定会话持续时间（以秒为单位）, 如果用户无法与服务器交互超过设置的时间, 则会话将被销毁.
 
-默认值: `60 * 30` i.e half an hour
+默认值: `60 * 30` 即半小时
 
 #### [session_persistent_enabled]session.persistent.enabled
 
@@ -722,7 +721,7 @@ specifies the session duration in seconds. If user failed to interact with serve
 * **act.session.persistent**
 * **act.session.persistent.enabled**
 
-Specify whether the system should treat session cookie as [persistent cookie](http://en.wikipedia.org/wiki/HTTP_cookie#Persistent_cookie). If this setting is enabled, then the user's session will not be destroyed after browser closed. 
+指定系统是否应将会话 cookie 视为 [persistent cookie](http://en.wikipedia.org/wiki/HTTP_cookie#Persistent_cookie). 如果启用此设置, 则在浏览器关闭后, 用户的会话不会被销毁.
 
 默认值: `false`
 
@@ -734,7 +733,7 @@ Specify whether the system should treat session cookie as [persistent cookie](ht
 * **act.session.encrypt**
 * **act.session.encrypt.enabled**
 
-{@code session.encrypted.enabled} specify whether the system should encrypt the key/value pairs in the session cookie. Enable session encryption will greatly improve the security but with the cost of additional CPU usage and a little bit longer time on request processing. 
+{@code session.encrypted.enabled} 指定系统是否应该加密会话 cookie 中的键/值对. 启用会话加密将大大提高安全性, 但带来额外的 CPU 使用成本和请求处理的时间稍长.
 
 默认值: `false`
 
@@ -744,7 +743,7 @@ Specify whether the system should treat session cookie as [persistent cookie](ht
 
 * **act.session.key.username**
 
-Specifies the session key for username of the login user. Authentication plugin shall use the session key configured to access the username.
+指定登录用户的用户名的会话密钥. 验证插件应使用配置为访问用户名的会话密钥.
 
 默认值: `username`
 
@@ -756,7 +755,7 @@ Specifies the session key for username of the login user. Authentication plugin 
 * **act.session.mapper**
 * **act.session.mapper.impl**
 
-Specify the implementation of `act.util.SessionMapper` by class name. A session mapper can be used to serialize session/flash to response or on the flippering side, deserialize session/flash info from request.
+通过类名指定 `act.util.SessionMapper` 的实现. 会话映射器可以用于将会话/闪存串行化以响应或在翻转侧上, 反序列化来自请求的会话/闪存信息.
 
 #### [session_secure_enabled]session.secure.enabled
 
@@ -766,11 +765,11 @@ Specify the implementation of `act.util.SessionMapper` by class name. A session 
 * **act.session.secure**
 * **act.session.secure.enabled**
 
-specifies whether the session cookie should be set as secure. Enable secure session will cause session cookie only effective in https connection. Literally this will enforce the web site to run default by https.
+指定会话Cookie是否应设置为安全. 启用安全会话将导致会话 cookie 仅在 https 连接中有效. 这将强制网站默认由 https 运行.
 
 默认值: the setting of [http.secure](http_secure_enabled)
 
-**Note** when Act server is running in DEV mode session http only will be disabled without regarding to the `session.secure.enabled` setting
+**注意** 当 Act 服务器在 DEV 模式中运行时, http 只会被禁用, 而不涉及 `session.secure.enabled` 设置.
 
 #### [source_version]source.version
 
@@ -778,23 +777,11 @@ specifies whether the session cookie should be set as secure. Enable secure sess
 
 * **act.source.version**
 
-Specifies the Java source version. This configuration has impact only when app is running in DEV mode
+指定源代码 Java 版本. 此配置仅当应用程序在 DEV 模式下运行时才起效.
 
 默认值: `1.7`
 
-Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below here.
-
-#### [source_version]source.version
-
-别名
-
-* **act.source.version**
-
-Specifies the Java source version. This configuration has impact only when app is running in DEV mode
-
-默认值: `1.7`
-
-Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below here.
+注意 ActFramework 支持 Java 1.7+. 确保这里不填入 `1.6` 或以下.
 
 #### [target_version]target.version
 
@@ -802,11 +789,11 @@ Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below 
 
 * **act.target.version**
 
-Specifies the Java target version. This configuration has impact only when app is running in DEV mode
+指定 Java 编译版本. 此配置仅当应用程序在 DEV 模式下运行时才生效.
 
 默认值: `1.7`
 
-Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below here.
+注意 ActFramework 支持 Java 1.7+. 确保这里不填入 `1.6` 或以下.
 
 #### [template_home]template.home
 
@@ -814,9 +801,9 @@ Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below 
 
 * **act.template.home**
 
-Specifies where the view templates resides. If not specified then will use the view engine name (in lowercase) as the template home.
+指定视图模板所在的位置. 如果未指定, 则将使用视图引擎名称（小写）作为模板 home.
 
-**Note** it is highly recommended NOT to set this configuration item
+**注意** 强烈建议不要设置此配置项.
 
 #### [unknown_http_method_handler_impl]unknown_http_method_handler.impl
 
@@ -826,7 +813,7 @@ Specifies where the view templates resides. If not specified then will use the v
 * **act.unknown_http_method_handler**
 * **act.unknown_http_method_handler.impl**
 
-Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcessor` that process the HTTP methods that are not recognized by `act.route.Router`, e.g. "OPTION", "PATCH" etc
+指定实现 `act.handler.UnknownHttpMethodProcessor` 的类/实例, 它被用来处理 `act.route.Router` 不能识别的 HTTP 方法. 例如, "OPTION", "PATCH"等.
 
 #### [url_login]url.login
 
@@ -834,8 +821,7 @@ Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcess
 
 * **act.url.login**
 
-Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the default implementation of `MissingAuthenticationHandler`, see [handler.missing_authentication.impl]
-(handler_missing_authentication_impl)
+指定由 `act.util.RedirectToLoginUrl` 使用的登录 URL, 作为 `MissingAuthenticationHandler` 的默认实现，请参阅 handler.missing_authentication.impl](handler_missing_authentication_impl)
 
 默认值: `/login`
 
@@ -845,7 +831,7 @@ Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the defa
 
 * **act.url.login.ajax**
 
-Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the default implementation of `MissingAuthenticationHandler` when answering ajax request. See [handler.missing_authentication.ajax.impl](handler_missing_authentication_ajax_impl)
+指定 `act.util.RedirectToLoginUrl` 使用的登录 URL, 在响应 ajax 请求时, 它是 `MissingAuthenticationHandler` 的默认实现. 参见[handler.missing_authentication.ajax.impl](handler_missing_authentication_ajax_impl)
 
 #### [view_default]view.default
 
@@ -853,14 +839,14 @@ Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the defa
 
 * **act.view.default**
 
-Specifies the default view engine name. If there are multiple views registered and default view are available, then it will be used at priority when loading the templates
+指定默认视图引擎名称. 如果有多个视图注册并其中包含默认视图, 那么在加载模板时将优先使用默认视图.
 
 默认值: `rythm` see [Rythm Engine](http://rythmengine.org)
 
 Other options:
 
-* `freemarker` - need [act-freemarker](https://github.com/actframework/act-freemarker) plugin
-* `velocity` - need [act-velocity](https://github.com/actframework/act-velocity) plugin
-* `mustache` - need [act-mustache](https://github.com/actframework/act-mustache) plugin
-* `thymeleaf` - need [act-thymeleaf](https://github.com/actframework/act-thymeleaf) plugin
-* `beetl` - need [act-beetl](https://github.com/actframework/act-beetl) plugin
+* `freemarker` - 需要 [act-freemarker](https://github.com/actframework/act-freemarker) 插件
+* `velocity` - 需要 [act-velocity](https://github.com/actframework/act-velocity) 插件
+* `mustache` - 需要 [act-mustache](https://github.com/actframework/act-mustache) 插件
+* `thymeleaf` - 需要 [act-thymeleaf](https://github.com/actframework/act-thymeleaf) 插件
+* `beetl` - 需要 [act-beetl](https://github.com/actframework/act-beetl) 插件
