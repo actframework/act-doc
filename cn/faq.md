@@ -28,4 +28,16 @@ Exception in thread "main" org.osgl.exception.UnexpectedException: App not found
 
 ![image](https://cloud.githubusercontent.com/assets/216930/23855130/a2136556-0848-11e7-8184-2433004b123b.png)
 
+## 我不能构建示例程序, 下载依赖的时候提示出错
 
+我在控制台上发现类似下面的警告信息
+
+```
+[WARN] The POM for io.undertow:undertow-core:jar:1.4.11.Final is invalid, transitive dependencies (if any) will not be available
+```
+
+可能是你的网络的问题. 也许切换到阿里云的maven服务器可以解决这个问题. 另外你可能需要删除本地maven repository缓存的相关的库,再重新运行`mvn clean compile`一次, 就上面的错误警告来讲,你需要删除和undertow还有jboss xnio相关的本地缓存:
+
+```
+rm -rf ~/.m2/repository/io/undertow/ && rm -rf ~/.m2/repository/org/jboss/xnio
+```
