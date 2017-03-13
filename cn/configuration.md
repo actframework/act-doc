@@ -504,7 +504,7 @@
 * **act.idgen.node_id.provider**
 * **act.idgen.node_id.provider.impl**
 
-Specify the `act.util.IdGenerator.NodeIdProvider` implementation by class name. The node id provider is responsible to generate the node id for a CUID (Cluster Unique Identifer). When not specified, then Act will use the `IdGenerator.NodeIdProvider.IpProvider` that return the node id calculated from the node's ip address based on [effective ip bytes](#idgen_node_id_effective_ip_bytes_size) configuration
+按类名指定 `act.util.IdGenerator.NodeIdProvider` 实现. 节点 id 提供者负责生成 CUID (簇唯一标识符) 的节点 id. 当没有指定时，Act将使用 `IdGenerator.NodeIdProvider.IpProvider` 返回根据节点的 IP 地址  [effective ip bytes](#idgen_node_id_effective_ip_bytes_size) 配置计算出的节点 id.
 
 默认值: `null`
 
@@ -516,9 +516,9 @@ Specify the `act.util.IdGenerator.NodeIdProvider` implementation by class name. 
 * **act.idgen.node_id.effective_ip_bytes**
 * **act.idgen.node_id.effective_ip_bytes.size**
 
-Specifies how many bytes in the ip address will be used to calculate node ID. Usually in a cluster environment, the ip address will be different at only (last) one byte or (last) two bytes, in which case it could set this configuration to `1` or `2`. When the configuration is set to `4` then it means all 4 IP bytes will be used to calculate the node ID.
+指定 IP 地址中将使用多少字节来计算节点 ID. 通常在群集环境中, IP 地址将仅在（最后）一个字节段或（最后）两个字节段不同，在这种情况下，它可以将此配置设置为 `1` 或 `2`. 当配置设置为 `4` 时，表示所有 4 个 IP 字节段将用于计算节点 ID.
 
-Note the bigger this number is, the longer the CUID will be. However it should be enough to distinct the application nodes inside a cluster.
+注意, 这个数字越大, CUID 就越长. 但是, 应该足以区分集群中的应用程序节点. 
 
 默认值: `4`
 
@@ -530,11 +530,11 @@ Note the bigger this number is, the longer the CUID will be. However it should b
 * **act.idgen.start_id.provider**
 * **act.idgen.start_id.provider.impl**
 
-Specifies the `act.util.IdGenerator.StartIdProvider` implementation by class name. This provider generate the start ID part of a CUID.
+通过类名指定 `act.util.IdGenerator.StartIdProvider` 实现。 此提供程序生成 CUID 的开始 I D部分.
 
 默认值: `act.util.IdGenerator.StartIdProvider.DefaultStartIdProvider`
 
-The default provider will get the ID from [predefined file](#idgen_start_id_file), or if file IO is not allowed, it will use the timestamp.
+默认提供程序将从 [predefined file](#idgen_start_id_file) 获取ID, 或者如果不允许文件 IO, 它将使用时间戳.
 
 #### [idgen_start_id_file]idgen.start_id.file
 
