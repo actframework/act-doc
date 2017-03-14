@@ -52,6 +52,19 @@ Specify the name of session cache used in Act application
 
 Default value: the value set in [cache.name](#cache_name) configuration
 
+#### [cli]cli
+
+Aliases
+
+* **act.cli**
+* **act.cli.enabled**
+* **cli.enabled**
+
+Turn on/off CLI support. When this feature is turned on admin can telent to 
+[cli.port](#cli_port) to access CLI commands
+
+Default value: `true`
+
 #### [cli_page_size_json]cli.page.size.json
 
 Aliases
@@ -103,11 +116,11 @@ Specifies the maximum number of cli session threads can exists concurrently
 
 Default value: `3`
 
-#### [cli_over_http_enabled]cli_over_http.enabled
+#### [cli_over_http]cli_over_http
 
 Aliases
 
-* **cli_over_http**
+* **cli_over_http.enabled**
 * **act.cli_over_http**
 * **act.cli_over_http.enabled**
 
@@ -149,11 +162,11 @@ Specify the title to be displayed on the CLI Over Http page
 
 Default value: `Cli Over Http`
 
-#### [cli_over_http_syscmd_enabled]cli_over_http.syscmd.enabled
+#### [cli_over_http_syscmd]cli_over_http.syscmd
 
 Aliases
 
-* **cli_over_http.syscmd**
+* **cli_over_http.syscmd.enabled**
 * **act.cli_over_http.syscmd**
 * **act.cli_over_http.syscmd.enabled**
 
@@ -165,7 +178,9 @@ Default value: `true`
 
 Aliases
 
+* **cookie.domain_provider.impl**
 * **act.cookie.domain_provider**
+* **act.cookie.domain_provider.impl**
 
 Specify the provider that returns the domain name. When not specified then it returns a provider that always return the value configured in [host](#host) configuration.
 
@@ -177,11 +192,37 @@ Valid configuration values:
 
 Default value: `null`
 
-#### [cors]cors.enabled
+
+#### [cookie_prefix]cookie.prefix
 
 Aliases
 
-* **cors**
+* **act.cookie.prefix**
+
+Specifies the prefix to be prepended to name of the cookies used in ActFramework, e.g. session, flash, xsrf etc. Let's say the default cookie name is ｀act_session｀, and user specifies the prefix ｀my_app｀then the session cookie name will be ｀my_app_session｀
+
+Note this setting also impact the ｀AppConfig#flashCookieName()｀
+
+Default value: calculated based on the following logic:
+
+1. find the app's name, if not found, then use `act` as app name
+2. split the app name by spaces
+3. check the length of splited string array
+   1 if there is only one string in the array, then return the first 3 chars of the string, or the string if string len is leass than 3
+   2 if there are two strings in the array, then pick up the first 2 chars of each string and concatenate by dash `-`
+   3 pick up the first char of the first 3 strings in the array
+
+E.g.
+
+* When app name is `HelloWorld`, the cookie prefix is `hel-`
+* When app name is `Hello World`, the cookie prefix is `he-wo-`
+* When app name is `Hello My World`, the cookie prefix is `hmw-`
+
+#### [cors]cors
+
+Aliases
+
+* **cors.enabled**
 * **act.cors**
 * **act.cors.enabled**
 
@@ -191,11 +232,11 @@ Default value: `false`
 
 Once `cors` is enabled, ActFramework will add CORS specific headers (listed below) into the HTTP response by default. ActFramework will also create HTTP Option request handler when this configuration is turned on.
 
-#### [cors_option_check]cors.option.check.enabled
+#### [cors_option_check]cors.option.check
 
 Aliases
 
-* **cors.option.check**
+* **cors.option.check.enabled**
 * **act.cors.option.check**
 * **act.cors.option.check.enabled**
 
@@ -259,23 +300,25 @@ Default value: 30*60 (seconds)
 
 This configuration specifies the default value for `Access-Control-Max-Age` header when [cors](#cors) is enabled
 
-#### [content_suffix_aware_enabled]content_suffix.aware.enabled
+#### [content_suffix_aware]content_suffix.aware
 
 Aliases
 
-* **content_suffix.aware**
+* **content_suffix.aware.enabled**
 * **act.content_suffix.aware**
 * **act.content_suffix.aware.enabled**
 
-Once enabled then the framework automatically recognize request with content suffix, e.g. `/customer/123/json` or `/customer/123.json` will match the route `/customer/123` and set the request `Accept` header value to `application/json`
+Once enabled then the framework automatically recognize request with content suffix, e.g. `/customer/123/json` or `/customer/123.json` will match the route `/customer/123` and set the request `Accept` header value to `application/json`. 
+
+**Note** Suffix is separated with real URL path `/`
 
 Default value: `false`
 
-#### [csrf]csrf.enabled
+#### [csrf]csrf
 
 Aliases
 
-* **csrf**
+* **csrf.enabled**
 * **act.csrf**
 * **act.csrf.enabled**
 
@@ -284,6 +327,16 @@ Turn on/off global [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_For
 Default value: `false`
 
 Once this configuration is turned on the framework will check all POST/PUT/DELETE request for CSRF token. If it doesn't match then the request will get rejected with 403 Forbidden response
+
+#### [csrf_cookie_name]csrf.cookie_name
+
+Aliases
+
+* **act.csrf.cookie_name**
+
+Specify the name of the cookie used to convey the csrf token generated on the server for the first request coming from a client
+
+Default value: `XSRF-TOKEN`, the name used by AngularJs
 
 #### [csrf_param_name]csrf.param_name
 
@@ -305,11 +358,11 @@ Set the response header name for CSRF token generated from server
 
 Default value: `XSRF-TOKEN`
 
-#### [csrf_protector]csrf.protector.impl
+#### [csrf_protector]csrf.protector
 
 Aliases
 
-* **csrf.protector**
+* **csrf.protector.impl**
 * **act.csrf.protector**
 * **act.csrf.protector.impl**
 
@@ -321,15 +374,25 @@ Other options in `act.security.CSRFProtector.Predefined`: `RANDOM`
 
 For differences between `HMAC` and `RANDOM` please checkout http://security.stackexchange.com/questions/52224/csrf-random-value-or-hmac
 
-#### [db_seq_gen_impl]db.seq_gen.impl
+#### [db_seq_gen]db.seq_gen
 
 Aliases
 
-* **db.seq_gen**
+* **db.seq_gen.impl**
 * **act.db.seq_gen**
 * **act.db.seq_gen.impl**
 
-Specify database sequence generator. Which must be class name of the  implementation of `act.db.util._SequenceNumberGenerator`. If not specified then it will return the first `act.db.util._SequenceNumberGenerator` implementation scanned by ActFramework.
+Specify database sequence generator. Which must be class name of the implementation of `act.db.util._SequenceNumberGenerator`. If not specified then it will return the first `act.db.util._SequenceNumberGenerator` implementation scanned by ActFramework.
+
+#### [dsp_token]dsp.token
+
+Aliases
+
+* **act.dsp.token**
+
+Specify the name of "double submission protect token"
+
+Default value: `act_dsp_token`
 
 #### [encoding]encoding
 
@@ -338,6 +401,16 @@ Aliases
 * **act.encoding**
 
 Specify application default encoding. Default value is `UTF-8`. It is highly recommended not to change the default setting.
+
+#### [enum_resolving_case_sensitive]enum.resolving.case_sensitive
+
+Aliases
+
+* **act.enum.resolving.case_sensitive**
+
+Specifies whether it allow enum resolving for request parameters to ignore case
+
+Default value: `false` meaning enum resolving is case insensitive
 
 #### [fmt_date]fmt.date
 
@@ -369,11 +442,35 @@ Specifies the default time format used to parse/output time string
 
 Default value: the pattern of `java.text.DateFormat.getTimeInstance()`
 
-#### [handler_missing_authentication_impl]handler.missing_authentication.impl
+#### [handler_csrf_check_failure]handler.csrf_check_failure
 
 Aliases
 
-* **handler.missing_authentication**
+* **handler.csrf_check_failure.impl**
+* **act.handler.csrf_check_failure**
+* **act.handler.csrf_check_failure.impl**
+
+Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified.
+
+Default value: the setting of [handler.missing_authentication](#handler_missing_authentication)
+
+#### [handler_csrf_check_failure_ajax]handler.csrf_check_failure.ajax
+
+Aliases
+
+* **handler.csrf_check_failure.ajax.impl**
+* **act.handler.csrf_check_failure.ajax**
+* **act.handler.csrf_check_failure.ajax.impl**
+
+Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified on an ajax request
+
+Default value: the setting of [handler.csrf_check_failure](handler_csrf_check_failure)
+
+#### [handler_missing_authentication]handler.missing_authentication
+
+Aliases
+
+* **handler.missing_authentication.impl**
 * **act.handler.missing_authentication**
 * **act.handler.missing_authentication.impl**
 
@@ -383,17 +480,28 @@ Default value: `act.util.RedirectToLoginUrl` which redirect the user to [login U
 
 Other options: `act.util.ReturnUnauthorized` which respond with `401 Unauthorised`
 
-#### [handler_missing_authentication_ajax_impl]handler.missing_authentication.ajax.impl
+#### [handler_missing_authentication_ajax]handler.missing_authentication.ajax
 
 Aliases
 
-* **handler.missing_authentication.ajax**
+* **handler.missing_authentication.ajax.impl**
 * **act.handler.missing_authentication.ajax**
 * **act.handler.missing_authentication.ajax.impl**
 
 Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified on ajax request
 
-Default value: the setting of [handler.missing_authentication.impl](handler_missing_authentication_ajax_impl)
+Default value: the setting of [handler.missing_authentication](handler_missing_authentication_ajax)
+
+#### [handler_unknown_http_method]handler.unknown_http_method
+
+Aliases
+
+* **handler.unknown_http_method.impl**
+* **act.handler.unknown_http_method**
+* **act.handler.unknown_http_method.impl**
+
+Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcessor` that process the HTTP methods that are not recognized by `act.route.Router`, e.g. "OPTION", "HEAD" etc
+
 
 #### [host]host
 
@@ -405,11 +513,11 @@ Specifies the hostname the application listen to
 
 Default value: `localhost`
 
-#### [http.external_server.enabled]http.external_server.enabled
+#### [http_external_server]http.external_server
 
 Aliases
 
-* **http.external_server**
+* **http.external_server.enabled**
 * **act.http.external_server**
 * **act.http.external_server.enabled**
 
@@ -418,6 +526,27 @@ Specify if the app is running behind a front end http server, e.g. nginx
 Default value: `true` when running in `PROD` mode; `false` when running in `DEV` mode
 
 Note act does not listen to external port directly. The recommended pattern is to have a front end HTTP server (e.g. nginx) to handle the external request and forward to act
+
+
+#### [http_params_max]http.params.max
+
+Aliases
+
+* **act.http.params.max**
+
+Specifies the maximum number of http parameters. This can be used to prevent the hash collision DOS attack. If this configuration is set to any value larger than 0, ActFramework will check the request parameter number, if the number is larger than the setting, then a `413 Request Entity Too Large` response is returned immediately
+
+Default value: `128`
+
+#### [http_port]http.port
+
+Aliases
+
+* **act.http.port**
+
+Specifies the default http port the application listen to.
+
+Default value: `5460`
 
 #### [http.port.external]http.port.external
 
@@ -433,25 +562,7 @@ Default value: `80`
 
 Specifies the external secure port which is used to construct the full URL when app is running on secure channel
 
-#### [http_params_max]http.params.max
-
-Aliases
-
-* **act.http.params.max**
-
-Specifies the maximum number of http parameters. This can be used to prevent the hash collision DOS attack. If this configuration is set to any value larger than 0, ActFramework will check the request parameter number, if the number is larger than the setting, then a `413 Request Entity Too Large` response is returned immediately
-
-Default value: `1000`
-
-#### [http_port]http.port
-
-Aliases
-
-* **act.http.port**
-
-Specifies the default http port the application listen to.
-
-Default value: `5460`
+Default value: 443
 
 #### [http_secure_enabled]http.secure.enabled
 
@@ -465,11 +576,11 @@ Specifies whether the default http port is listening on secure channel or not.
 
 Default value: `false` when app is running in `DEV` mode, `true` if app is running in `RPOD` mode
 
-#### [i18n_enabled]i18n.enabled
+#### [i18n]i18n
 
 Aliases
 
-* **i18n**
+* **i18n.enabled**
 * **act.i18n**
 * **act.i18n.enabled**
 
@@ -497,17 +608,17 @@ Specify the name for the locale cookie
 
 Default value: `act_locale`
 
-#### [idgen_node_id_provider_impl]idgen.node_id.provider.impl
+#### [idgen_node_id_provider]idgen.node_id.provider
 
 Aliases
 
-* **idgen.node_id.provider**
+* **idgen.node_id.provider.impl**
 * **act.idgen.node_id.provider**
 * **act.idgen.node_id.provider.impl**
 
 Specify the `act.util.IdGenerator.NodeIdProvider` implementation by class name. The node id provider is responsible to generate the node id for a CUID (Cluster Unique Identifer). When not specified, then Act will use the `IdGenerator.NodeIdProvider.IpProvider` that return the node id calculated from the node's ip address based on [effective ip bytes](#idgen_node_id_effective_ip_bytes_size) configuration
 
-Default value: `null`
+Default value: `act.util.IdGenerator.NodeIdProvider.IpProvider`
 
 #### [idgen_node_id_effective_ip_bytes_size]idgen.node_id.effective_ip_bytes.size
 
@@ -523,11 +634,11 @@ Note the bigger this number is, the longer the CUID will be. However it should b
 
 Default value: `4`
 
-#### [idgen_start_id_provider_impl]idgen.start_id.provider.impl
+#### [idgen_start_id_provider]idgen.start_id.provider
 
 Aliases
 
-* **idgen.start_id.provider**
+* **idgen.start_id.provider.impl**
 * **act.idgen.start_id.provider**
 * **act.idgen.start_id.provider.impl**
 
@@ -547,11 +658,11 @@ Specifies the start id persistent file for start ID counter.
 
 Default value: `.act.id-app`
 
-#### [idgen_seq_id_provider_impl]idgen.seq_id.provider.impl
+#### [idgen_seq_id_provider]idgen.seq_id.provider
 
 Aliases
 
-* **idgen.seq_id.provider**
+* **idgen.seq_id.provider.impl**
 * **act.idgen.seq_id.provider**
 * **act.idgen.seq_id.provider.impl**
 
@@ -559,11 +670,11 @@ Specifies the impelementation of `act.util.IdGenerator.SequenceProvider` by clas
 
 Default value: `act.util.IdGenerator.SequenceProvider.AtomicLongSeq`
 
-#### [idgen_encoder_impl]idgen.encoder.impl
+#### [idgen_encoder]idgen.encoder
 
 Aliases
 
-* **idgen.encoder**
+* **idgen.encoder.impl**
 * **act.idgen.encoder**
 * **act.idgen.encoder.impl**
 
@@ -576,16 +687,6 @@ Available options:
 
 Default value: `act.util.IdGenerator.SafeLongEncoder`
 
-#### [locale]locale
-
-Aliases
-
-* **act.locale**
-
-Specifies the application default locale.
-
-Default value: `java.util.Locale#getDefault`
-
 #### [job_pool_size]job.pool.size
 
 Aliases
@@ -597,6 +698,28 @@ Aliases
 Specifies the maximum number of threads can exists in the application's job manager's thread pool
 
 Default value: `10`
+
+#### [locale]locale
+
+Aliases
+
+* **act.locale**
+
+Specifies the application default locale.
+
+Default value: `java.util.Locale#getDefault`
+
+#### [metric]metric
+
+Aliases
+
+* **metric.enabled**
+* **act.metric**
+* **act.metric.enabled**
+
+Turn on/off metric in Act application
+
+Default value: `true`
 
 #### [modules]modules
 
@@ -672,6 +795,16 @@ specifies the class that is type of `act.view.TemplatePathResolver`. Application
 
 Default value: `act.view.TemplatePathResolver`
 
+#### [resource_preload_size_limit]resource.preload.size.limit
+
+Aliases
+
+* **act.resource.preload.size.limit**
+
+Specifies the maximum number of bytes of a resource that can be preload into memory. Specifies `0` or negative number to disable resource preload feature
+
+Default value: `1024 * 10`, i.e. 10KB
+
 #### [scan_package]scan_package
 
 Aliases
@@ -692,18 +825,15 @@ Default value: `myawesomeapp`
 
 Note, make sure you set this value on PROD mode
 
-#### [session_prefix]session.prefix
+#### [server_header]server.header
 
 Aliases
 
-* **act.session.prefix**
+* **act.server.header**
 
-Specifies the prefix to be prepended to the session cookie name. Let's say the default cookie name is ｀act_session｀, and user specifies the prefix ｀my_app｀
-then the session cookie name will be ｀my_app_session｀
+Specifies the server header to be output to the response
 
-Note this setting also impact the ｀AppConfig#flashCookieName()｀
-
-Default value: ｀act`
+Default value: `act`
 
 #### [session_ttl]session.ttl
 
@@ -715,11 +845,11 @@ specifies the session duration in seconds. If user failed to interact with serve
 
 Default value: `60 * 30` i.e half an hour
 
-#### [session_persistent_enabled]session.persistent.enabled
+#### [session_persistent]session.persistent
 
 Aliases
 
-* **session.persistent**
+* **session.persistent.enabled**
 * **act.session.persistent**
 * **act.session.persistent.enabled**
 
@@ -727,11 +857,11 @@ Specify whether the system should treat session cookie as [persistent cookie](ht
 
 Default value: `false`
 
-#### [session_encrypt_enabled]session.encrypt.enabled
+#### [session_encrypt]session.encrypt
 
 Aliases
 
-* **session.encrypt**
+* **session.encrypt.enabled**
 * **act.session.encrypt**
 * **act.session.encrypt.enabled**
 
@@ -759,11 +889,13 @@ Aliases
 
 Specify the implementation of `act.util.SessionMapper` by class name. A session mapper can be used to serialize session/flash to response or on the flippering side, deserialize session/flash info from request.
 
-#### [session_secure_enabled]session.secure.enabled
+Default value: `act.util.SessionMapper.DefaultSessionMapper`, use cookie to serialize/deserizalize session
+
+#### [session_secure]session.secure
 
 Aliases
 
-* **session.secure**
+* **session.secure.enabled**
 * **act.session.secure**
 * **act.session.secure.enabled**
 
@@ -819,15 +951,6 @@ Specifies where the view templates resides. If not specified then will use the v
 
 **Note** it is highly recommended NOT to set this configuration item
 
-#### [unknown_http_method_handler_impl]unknown_http_method_handler.impl
-
-Aliases
-
-* **unknown_http_method_handler**
-* **act.unknown_http_method_handler**
-* **act.unknown_http_method_handler.impl**
-
-Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcessor` that process the HTTP methods that are not recognized by `act.route.Router`, e.g. "OPTION", "PATCH" etc
 
 #### [url_login]url.login
 
@@ -865,3 +988,5 @@ Other options:
 * `mustache` - need [act-mustache](https://github.com/actframework/act-mustache) plugin
 * `thymeleaf` - need [act-thymeleaf](https://github.com/actframework/act-thymeleaf) plugin
 * `beetl` - need [act-beetl](https://github.com/actframework/act-beetl) plugin
+
+

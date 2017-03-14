@@ -453,7 +453,30 @@ ActFramework will pickup the propery template file based on the `Accept` header
 
 ## Session and Flash
 
-TBD...
+If you have to keep data across multiple HTTP Requests, you can save them in the Session or the Flash scope. Data stored in the Session are available during the whole user session, and data stored in the flash scope are available to the next request only.
+
+It’s important to understand that Session and Flash data are not stored in the server but are added to each subsequent HTTP Request, using the Cookie mechanism. So the data size is very limited (up to 4 KB) and you can only store String values.
+
+Of course, cookies are signed with a secret key so the client can’t modify the cookie data (or it will be invalidated). The ActFramework session is not aimed to be used as a cache. If you need to cache some data related to a specific session, you can use the `Session.cache()` APIs to keep them related to a specific user session.
+
+Example:
+
+```java
+@GetAction
+public void index(H.Session session, Message.Dao dao) {
+    List<String> messages = session.cached("messages");
+    if (null == messages) {
+        // Cache miss
+        messages = dao.findByUser(me);
+        session.cacheFor30Min("messages", messages);
+    }
+    render(messages);
+}
+```
+
+The session expires when you close your web browser, unless you enabled [session.persistent](configuration#session_persistent)
+
+The cache has different semantics to the classic Servlet HTTP session object. You can’t assume that these objects will be always in the cache. So it forces you to handle the cache miss cases, and keeps your application fully stateless.
 
 ## Wrap up
 

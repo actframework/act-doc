@@ -1,38 +1,76 @@
-# Templating
+# Templating 
 
-ActFramework can plugin different templating solutions. At the moment [Rythm](http://rythmengine.org) is fully supported. Freemarker and Velocity is limited supported.
+At the moment ActFramework support the following template engines:
 
-**Note** to use freemarker and velcoity templating you need to add the dependencies into your pom.xml file respectively:
+* **[Rythm](http://rythmengine.org)** (built-in) - engine ID: rythm
+* [Beetl](http://www.ibeetl.com) - engine ID: beetl
+* [FreeMarker](http://freemarker.apache.org) - engine ID: freemarker
+* [Mustache](https://github.com/spullara/mustache.java) - engine ID: mustache
+* [Thymeleaf](http://www.thymeleaf.org/) - engine ID: thymeleaf
+* [Velocity](http://velocity.apache.org) - engine ID: velocity
 
-Freemarker templating dependency:
+**Note** If app needs to use template engine other than the built-in rythm, it has to add the corresponding dependency into `pom.xml` file:
+
+For Beelt:
+
+```xml
+<dependency>
+    <groupId>org.actframework</groupId>
+    <artifactId>act-beelt</artifactId>
+    <version>0.6.0-SNAPSHOT</version>
+</dependency>
+```
+
+For Freemarker:
 
 ```xml
 <dependency>
     <groupId>org.actframework</groupId>
     <artifactId>act-freemarker</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.6.0-SNAPSHOT</version>
 </dependency>
 ```
 
-Velocity templating dependency:
+For Mustache:
+
+```xml
+<dependency>
+    <groupId>org.actframework</groupId>
+    <artifactId>act-mustache</artifactId>
+    <version>0.6.0-SNAPSHOT</version>
+</dependency>
+```
+
+For Thymeleaf:
+
+```xml
+<dependency>
+    <groupId>org.actframework</groupId>
+    <artifactId>act-thymeleaf</artifactId>
+    <version>0.6.0-SNAPSHOT</version>
+</dependency>
+```
+
+
+For Velocity:
 
 ```xml
 <dependency>
     <groupId>org.actframework</groupId>
     <artifactId>act-velocity</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.6.0-SNAPSHOT</version>
 </dependency>
 ```
 
-## <a name="location"></a>template file location
+## <a name="location"></a>Location of template file
 
-The convention of locating a template file is:
+ActFramework use the following pattern to look for template file:
 
 ```
 /src/main/resources/{template-plugin-id}/{controller-class}/{action-method}.{fmt-suffix}
 ```
 
-For example, if you have a controller class defined as:
+Suppose your controller class is
 
 ```java
 package com.mycom.myprj;
@@ -50,20 +88,23 @@ public class MyController {
 }
 ``` 
 
-You can create two template files corresponding to the `home()` and `getFoo()` action methods:
+The template file correspondign to `home()` and `getFoo()` methods are:
 
 1. `/src/main/resources/rythm/com/mycom/myprj/MyController/home.html`
 1. `/src/main/resources/rythm/com/mycom/myprj/MyController/getFoo.html`
 
-When the request to `/foo` endpoints accept `application/json` content, then you can create a json template at 
+If the app needs to send request to `/foo` using `application/json` content type, then you can
+create JSON template file like:
 
 ```
 /src/main/resources/rythm/com/mycom/myprj/MyController/getFoo.json
 ``` 
 
-## Passing parameter to template
+## Passing render arguments to template
 
-ActFramework use ASM to enhance your controller method so that you don't need to manually put template arguments into a Map type context, like what you did in Spring MVC:
+ActFramework use ASM to enhance the action handler method, thus you don't need to explicitly specify render args 
+as what you did in SpringMVC:
+
 
 ```java
 public String foo(String a, String b, int c, ModelMap modelMap) {
@@ -75,7 +116,7 @@ public String foo(String a, String b, int c, ModelMap modelMap) {
 }
 ```
 
-In Act, your code could much more clean:
+The same method written in ActFramework app:
 
 ```java
 public Result foo(String a, String b, int c) {
@@ -84,7 +125,7 @@ public Result foo(String a, String b, int c) {
 }
 ```
 
-And in your rythm template you declare your template argument and use them as follows:
+You must declare template arguments in Rythm template:
 
 ```
 @args String a, String b, int c
@@ -95,9 +136,11 @@ c = @c
 </pre>
 ```
 
-## Passing return result to template
+**Note** If you are using other template engine, then you don't need to declare template arguments
 
-If your action method just need to pass one parameter into the template, you can choose to return it:
+## Passing return value to template
+
+If the action handler return an object like
 
 ```java
 public Foo getFoo() {
@@ -105,17 +148,30 @@ public Foo getFoo() {
 }
 ```
 
-In your template you use name `result` to refer to the return instance:
+You can reference the returned value using argument name `result`:
 
 ```
 @args Foo result
-Foo is @result
+Foo is @foo
 ```
 
 ## Reference
 
-* Please visit [Rythm official website](http://rythmengine.org) to get detail information on how to use Rythm
-* Please visit [Velocity official website](http://velocity.apache.org) to get detail information on how to use Velocity
-* Please visit [Freemarker official website](http://freemarker.incubator.apache.org/) to get detail information on how to use Freemarker
+* [Beetl](http://www.ibeetl.com)
+* [Freemarker](http://freemarker.incubator.apache.org/)
+* [Velocity](http://velocity.apache.org)
+* [Mustache](https://github.com/spullara/mustache.java)
+* [Rythm](http://rythmengine.org)
+* [Thymeleaf](http://www.thymeleaf.org/)
+* [Velocity](http://velocity.apache.org)
 
-[Back to index](index.md)
+### Demo project
+
+You can checkout the view demo project at [github](https://github.com/actframework/act-demo-apps/tree/master/views) or [码云](https://git.oschina.net/actframework/demo-apps/tree/master/views?dir=1&filepath=views)
+
+The demo project shows:
+
+* Integrate multiple template engines in your project
+* How different template engines present error info in dev mode
+
+[Back](index.md)

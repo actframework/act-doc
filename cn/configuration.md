@@ -1,10 +1,11 @@
 <h1 data-book="configuration">配置</h1>
 
-本章节文档包含 ActFramework 各配置项的详细描述
+详细定义 ActFramework 使用到的各种配置
 
 #### [basic_authentication]basic_authentication.enabled
 
 别名
+
 
 * **basic_authentication**
 * **act.basic_authentication**
@@ -14,7 +15,7 @@
 
 默认值: `false`
 
-**注意** 在 ActFramework 核心模块中并不包含该配置的具体逻辑. 由安全插件，如 `act-aaa-plugin` 使用此配置项的值.
+**注意** ActFramework 本身不会使用这个参数. 但像 [act-aaa-plugin](https://github.com/actframework/act-aaa-plugin) 这样的安全插件会使用这个配置项
 
 #### [cache_impl]cache.impl
 
@@ -24,13 +25,13 @@
 * **act.cache**
 * **act.cache.impl**
 
-指定缓存服务的实现. 配置必须是名称为 `org.osgl.cache.CacheServiceProvider` 的实现类.
+指定缓存服务的具体实现类. 指定的实现类必须实现 `org.osgl.cache.CacheServiceProvider` 接口
 
-默认值: `Auto`, i.e. `org.osgl.cache.CacheServiceProvider.Impl.Auto`. 该实现将根据缓存的提供者使用以下顺序自动选择:
+默认值: `Auto`, i.e. `org.osgl.cache.CacheServiceProvider.Impl.Auto`. 该实现会顺序依据以下条件选择具体的实现
 
-1. 检查是否 `MemcachedServiceProvider` 能够被实例化, 如果不能则继续
-2. 检查是否 `EhCacheServiceProvider` 能够被实例化, 如果不能则继续
-3. 载入 `SimpleCacheServiceProvider` 实例，这将使用内存来实现缓存服务
+1. 如果 `MemcachedServiceProvider` 存在则用之, 否则
+2. 如果 `EhCacheServiceProvider` 存在则用之, 否则
+3. 加载 `SimpleCacheServiceProvider` 实例. 该实现依赖于 ConcurrentMap
 
 #### [cache_name]cache.name
 
@@ -38,7 +39,7 @@
 
 * **act.cache.name**
 
-指定默认用于应用程序的缓存名称.
+指定框架使用的缓存名字
 
 默认值: `_act_app_`
 
@@ -48,9 +49,21 @@
 
 * **act.cache.name.session**
 
-指定用于的应用程序的缓存会话的名称.
+指定会话缓存名字.
 
 默认值: 配置项 [cache.name](#cache_name) 的值
+
+#### [cli]cli
+
+别名
+
+* **act.cli**
+* **act.cli.enabled**
+* **cli.enabled**
+
+开关CLI支持. 当CLI特性被允许是管理员可以通过telnet到[CLI端口](#cli_port)来访问CLI命令集
+
+默认值: `true`
 
 #### [cli_page_size_json]cli.page.size.json
 
@@ -58,7 +71,7 @@
 
 * **act.cli.page.size.json**
 
-指定 CLI 命令行模式下 JSON 格式一页能显示的最大数据条目.
+指定一个 CLI 命令 JSON 输出格式每页最大记录数
 
 默认值: 10
 
@@ -68,7 +81,7 @@
 
 * **act.cli.page.size.table**
 
-指定 CLI 命令行模式下 Table 布局一页能显示的最大数据条目.
+指定 CLI 命令表输出格式每页最大记录数.
 
 默认值: 22
 
@@ -79,7 +92,7 @@
 
 * **act.cli.port**
 
-设置 CLI telnet 端口.
+设置 CLI 端口.
 
 默认值: `5461`
 
@@ -89,9 +102,9 @@
 
 * **act.cli.session.expiration**
 
-指定 CLI 会话的在最后一次用户交互后的保持时间，单位: 秒.
+指定CLI会话过期等待时间
 
-默认值: `300`, i.e. 5 minutes
+默认值: `300`, 即: 5分钟
 
 ### [cli_session_max]cli.session.max
 
@@ -99,11 +112,11 @@
 
 * **act.cli.session.max**
 
-指定 CLI 会话线程可以同时存在的最大数量.
+指定能同时进行的 CLI 会话数量.
 
 默认值: `3`
 
-#### [cli_over_http_enabled]cli_over_http
+#### [cli_over_http]cli_over_http
 
 别名
 
@@ -115,7 +128,7 @@
 
 默认值: `false`
 
-一旦启用 CLI 的 HTTP 支持, 它将允许管理员通过 HTTP 的 [configured port](#cli_over_http.port) 端口来执行 CLI 命令.
+当该功能被允许时, 管理员可以通过 HTTP 的 [configured port](#cli_over_http.port) 端口来执行 CLI 命令.
 
 #### [cli_over_http_authority_impl]cli_over_http.authority.impl
 
@@ -125,9 +138,9 @@
 * **act.cli_over_http.authority**
 * **act.cli_over_http.authority.impl**
 
-为 CL I配置通过 http 访问的授权提供者. 指定的值应该是一个类名为 `act.cli.CliOverHttpAuthority` 的实现.
+配置CLI over http的授权机制. 指定值必须是 `act.cli.CliOverHttpAuthority` 接口的某个实现类的名字.
 
-默认值: `CliOverHttpAuthority.AllowAll` 默认允许发送任何请求.
+默认值: `CliOverHttpAuthority.AllowAll` - 运行所有人在指定端口使用CLI命令.
 
 #### [cli_over_http_port]cli_over_http.port
 
@@ -135,7 +148,7 @@
 
 * **act.cli_over_http.port**
 
-设置 CLI 通过 HTTP 服务的访问的端口.
+指定CLI Over HTTP服务端口
 
 默认值: `5462`
 
@@ -145,11 +158,11 @@
 
 * **act.cli_over_http.title**
 
-指定要显示在 CLI 访问的 Http 页面的标题.
+指定CLI Over HTTP的页面标题
 
 默认值: `Cli Over Http`
 
-#### [cli_over_http_syscmd_enabled]cli_over_http.syscmd
+#### [cli_over_http_syscmd]cli_over_http.syscmd
 
 别名
 
@@ -157,7 +170,7 @@
 * **act.cli_over_http.syscmd**
 * **act.cli_over_http.syscmd.enabled**
 
-开启或关闭通过 HTTP 的 CLI 访问系统命令.
+允许/禁止通过 CLI Over Http 访问系统命令
 
 默认值: `true`
 
@@ -165,15 +178,17 @@
 
 别名
 
+* **cookie.domain_provider.impl**
 * **act.cookie.domain_provider**
+* **act.cookie.domain_provider.impl**
 
 指定返回的域名的提供者. 当没有指定时, 它将总是返回配置在 [host](#host) 的值.
 
-合法的配置参数:
+有效设置:
 
-1. `javax.inject.Provider` 类的实现类的类名，将返回一个 `String` 类型的值.
+1. 一个 `javax.inject.Provider` 实现的类名, 给实现必须返回 `String` 类型
 
-2. `dynamic` 或 `flexible` 或 `contextual`, 均表示域名将从当前域请求中取值.
+2. `dynamic` 或 `flexible` 或 `contextual`, 这三个设置均表示 cookie 域名是当前 HTTP 请求的域名
 
 默认值: `null`
 
@@ -210,17 +225,17 @@
 * **act.cors**
 * **act.cors.enabled**
 
-开启或关闭 ActFramework 应用的 [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) 支持.
+打开/关闭 ActFramework 应用的 [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) 支持.
 
 默认值: `false`
 
-一旦 `cors`被开启, ActFramework 将默认在响应中自动添加下面列表指定的 HTTP 头. 当此配置开启, ActFramework 同时也将在请求中创建 HTTP OPTION.
+当 `cors` 被启用, ActFramework 将默认在响应中自动添加下面列表指定的 HTTP 头. 当此配置开启, ActFramework 同时也将在请求中创建 OPTION 请求.
 
-#### [cors_option_check]cors.option.check.enabled
+#### [cors_option_check]cors.option.check
 
 别名
 
-* **cors.option.check**
+* **cors.option.check.enabled**
 * **act.cors.option.check**
 * **act.cors.option.check.enabled**
 
@@ -232,7 +247,7 @@
 * access-control-expose-headers
 * access-control-max-age
 
-当启用 [cors](#cors) 配置时, 无论 HTTP 请求的方法，总是会添加 `access-control-allow-origin` 到 HTTP 头.
+**注意**HTTP头 `access-control-allow-origin` 在任何HTTP请求的响应中都会添加
 
 #### [cors_origin]cors.origin
 
@@ -322,6 +337,16 @@
 
 默认值: `XSRF-TOKEN`, AngularJs 使用的名称
 
+#### [csrf_cookie_name]csrf.cookie_name
+
+别名
+
+* **act.csrf.cookie_name**
+
+Specify the name of the cookie used to convey the csrf token generated on the server for the first request coming from a client
+
+Default value: `XSRF-TOKEN`, the name used by AngularJs
+
 #### [csrf_param_name]csrf.param_name
 
 别名
@@ -364,12 +389,22 @@
 
 * **act.dsp.token**
 
-指定 “双提交保护令牌” 的名称
+默认值: `HMAC`
 
 默认值: `act_dsp_token`
 
 
-#### [db_seq_gen_impl]db.seq_gen
+#### [dsp_token]dsp.token
+
+别名
+
+* **act.dsp.token**
+
+Specify the name of "double submission protect token"
+
+Default value: `act_dsp_token`
+
+#### [db_seq_gen]db.seq_gen
 
 别名
 
@@ -451,7 +486,7 @@
 
 默认值: [handler.csrf_check_failure](handler_csrf_check_failure) 的配置
 
-#### [handler_missing_authentication_impl]handler.missing_authentication
+#### [handler_missing_authentication]handler.missing_authentication
 
 别名
 
@@ -465,7 +500,7 @@
 
 其它选项: `act.util.ReturnUnauthorized` 它将返回 `401 Unauthorised` 响应
 
-#### [handler_missing_authentication_ajax_impl]handler.missing_authentication.ajax
+#### [handler_missing_authentication_ajax]handler.missing_authentication.ajax
 
 别名
 
@@ -487,6 +522,16 @@
 
 指定实现 `act.handler.UnknownHttpMethodProcessor` 的类/实例，它处理 `act.route.Router` 不能识别的HTTP方法. 例如: "OPTION", "HEAD" 等.
 
+#### [handler_unknown_http_method]handler.unknown_http_method
+
+别名
+
+* **handler.unknown_http_method.impl**
+* **act.handler.unknown_http_method**
+* **act.handler.unknown_http_method.impl**
+
+Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcessor` that process the HTTP methods that are not recognized by `act.route.Router`, e.g. "OPTION", "HEAD" etc
+
 #### [host]host
 
 别名
@@ -497,7 +542,7 @@
 
 默认值: `localhost`
 
-#### [http.external_server.enabled]http.external_server
+#### [http_external_server]http.external_server
 
 别名
 
@@ -541,6 +586,12 @@
 
 默认值: `80`
 
+#### [http.port.external.secure]http.port.external.secure
+
+指定外部安全端口, 用于在应用在安全通道上运行时构造完整的 URL.
+
+默认值: 443
+
 #### [http_secure_enabled]http.secure.enabled
 
 别名 
@@ -553,7 +604,7 @@
 
 默认值: 当应用运行在 `DEV` 模式下默认为 `false`, 当应用运行在 `RPOD` 模式下默认为 `true`.
 
-#### [i18n_enabled]i18n
+#### [i18n]i18n
 
 别名
 
@@ -585,7 +636,7 @@
 
 默认值: `act_locale`
 
-#### [idgen_node_id_provider_impl]idgen.node_id.provider
+#### [idgen_node_id_provider]idgen.node_id.provider
 
 别名
 
@@ -611,7 +662,7 @@
 
 默认值: `4`
 
-#### [idgen_start_id_provider_impl]idgen.start_id.provider
+#### [idgen_start_id_provider]idgen.start_id.provider
 
 别名
 
@@ -635,7 +686,7 @@
 
 默认值: `.act.id-app`
 
-#### [idgen_seq_id_provider_impl]idgen.seq_id.provider
+#### [idgen_seq_id_provider]idgen.seq_id.provider
 
 别名
 
@@ -647,7 +698,7 @@
 
 默认值: `act.util.IdGenerator.SequenceProvider.AtomicLongSeq`
 
-#### [idgen_encoder_impl]idgen.encoder
+#### [idgen_encoder]idgen.encoder
 
 别名
 
@@ -780,8 +831,17 @@ Specifies error page (template) path resolver implementation by class name
 
 指定可以预加载到内存中的资源的最大字节数. 指定 `0` 或负数以禁用资源预加载功能.
 
-
 默认值: `1024 * 10`, 表示 10KB
+
+#### [resource_preload_size_limit]resource.preload.size.limit
+
+别名
+
+* **act.resource.preload.size.limit**
+
+Specifies the maximum number of bytes of a resource that can be preload into memory. Specifies `0` or negative number to disable resource preload feature
+
+Default value: `1024 * 10`, i.e. 10KB
 
 #### [scan_package]scan_package
 
@@ -823,7 +883,7 @@ Specifies error page (template) path resolver implementation by class name
 
 默认值: `60 * 30` 即半小时
 
-#### [session_persistent_enabled]session.persistent
+#### [session_persistent]session.persistent
 
 别名
 
@@ -835,7 +895,7 @@ Specifies error page (template) path resolver implementation by class name
 
 默认值: `false`
 
-#### [session_encrypt_enabled]session.encrypt
+#### [session_encrypt]session.encrypt
 
 别名
 
@@ -867,7 +927,7 @@ Specifies error page (template) path resolver implementation by class name
 
 通过类名指定 `act.util.SessionMapper` 的实现. 会话映射器可以用于将会话/闪存串行化以响应或在翻转侧上, 反序列化来自请求的会话/闪存信息.
 
-#### [session_secure_enabled]session.secure
+#### [session_secure]session.secure
 
 别名
 
