@@ -177,13 +177,39 @@
 
 默认值: `null`
 
-#### [cors]cors.enabled
+#### [cookie_prefix]cookie.prefix
 
 别名
 
-* **cors**
+* **act.cookie.prefix**
+
+指定要添加到 ActFramework 中使用的 cookie 名称的前缀, 例如 session, flash, xsrf 等等. 假设默认 cookie 名称是 `act_session`, 用户指定前缀 `my_app`, 会话 cookie 名称将是 `my_app_session`
+
+注意, 这个设置也会影响 `AppConfig＃flashCookieName()`
+
+默认值: 根据以下逻辑计算:
+
+1. 找到应用程序的名称，如果没有找到，然后使用 `act` 作为应用程序名称
+2. 用空格分割应用程序名称
+3. 检查分割字符串数组的长度
+3.1 如果数组中只有一个字符串, 则返回字符串的前 3 个字符, 如果字符串长度超过 3, 则返回字符串
+3.2 如果数组中有两个字符串，则拾取每个字符串的前 2 个字符, 并通过破折号 `-`
+3.3 拾取数组中前 3 个字符串的第一个字符
+
+例如
+
+当应用程序名称是 `HelloWorld` 时, cookie 前缀是 `hel-`
+当应用程序名称是 `HelloWorld` 时, cookie 前缀是 `he-wo-`
+当应用程序名称是 `HelloWorld` 时, cookie 前缀是 `hmw-`
+
+#### [cors]cors
+
+别名
+
+* **cors.enabled**
 * **act.cors**
 * **act.cors.enabled**
+
 开启或关闭 ActFramework 应用的 [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) 支持.
 
 默认值: `false`
@@ -789,18 +815,6 @@ Specifies error page (template) path resolver implementation by class name
 * **act.server.header**
 
 指定要输出到响应的服务器头
-
-默认值: `act`
-
-#### [session_prefix]session.prefix
-
-别名
-
-* **act.session.prefix**
-
-指定要添加到会话 Cookie 名称的前缀. 假设默认 cookie 名称是 `act_session`, 用户指定前缀 `my_app`, 那么会话 cookie 名称将是 `my_app_session`.
-
-注意, 这个设置也会影响 `AppConfig＃flashCookieName（）`.
 
 默认值: `act`
 
