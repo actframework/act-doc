@@ -258,11 +258,11 @@
 
 当启用 [cors](#cors) 时, 此配置指定 `Access-Control-Max-Age` 标头的默认值.
 
-#### [content_suffix_aware_enabled]content_suffix.aware.enabled
+#### [content_suffix_aware]content_suffix.aware
 
 别名
 
-* **content_suffix.aware**
+* **content_suffix.aware.enabled**
 * **act.content_suffix.aware**
 * **act.content_suffix.aware.enabled**
 
@@ -270,11 +270,13 @@
 
 默认值: `false`
 
+**注意** 后缀和有效URL路径之间用`/`分隔
+
 #### [csrf]csrf.enabled
 
 别名
 
-* **csrf**
+* **csrf.enabled**
 * **act.csrf**
 * **act.csrf.enabled**
 
@@ -283,6 +285,17 @@
 默认值: `false`
 
 此配置开启，框架将检查所有 POST/PUT/DELETE 请求的 CSRF 令牌. 如果它不匹配, 则该请求将返回 403 Forbidden 的响应.
+
+#### [csrf_cookie_name]csrf.cookie_name
+
+别名
+
+* **act.csrf.cookie_name**
+
+指定 cookie 的名称, 用于服务端为来自客户端的首次请求生成的 csrf 令牌.
+Specify the name of the cookie used to convey the csrf token generated on the server for the first request coming from a client
+
+默认值: `XSRF-TOKEN`, AngularJs 使用的名称
 
 #### [csrf_param_name]csrf.param_name
 
@@ -304,11 +317,11 @@
 
 默认值: `XSRF-TOKEN`
 
-#### [csrf_protector]csrf.protector.impl
+#### [csrf_protector]csrf.protector
 
 别名
 
-* **csrf.protector**
+* **csrf.protector.impl**
 * **act.csrf.protector**
 * **act.csrf.protector.impl**
 
@@ -320,11 +333,22 @@
 
 对于 `HMAC` 和 `RANDOM` 之间的区别, 请查阅 http://security.stackexchange.com/questions/52224/csrf-random-value-or-hmac
 
-#### [db_seq_gen_impl]db.seq_gen.impl
+#### [dsp_token]dsp.token
 
 别名
 
-* **db.seq_gen**
+* **act.dsp.token**
+
+指定 “双提交保护令牌” 的名称
+
+默认值: `act_dsp_token`
+
+
+#### [db_seq_gen_impl]db.seq_gen
+
+别名
+
+* **db.seq_gen.impl**
 * **act.db.seq_gen**
 * **act.db.seq_gen.impl**
 
@@ -337,6 +361,16 @@
 * **act.encoding**
 
 指定应用程序默认编码. 默认值为 `UTF-8`. 强烈建议不要更改默认设置.
+
+#### [enum_resolving_case_sensitive]enum.resolving.case_sensitive
+
+别名
+
+* **act.enum.resolving.case_sensitive**
+
+指定它是否允许枚举解析请求参数忽略大小写.
+
+默认值: `false` 意味着枚举解析是不区分大小写的.
 
 #### [fmt_date]fmt.date
 
@@ -368,11 +402,35 @@
 
 默认值: `java.text.DateFormat.getTimeInstance()` 的格式
 
-#### [handler_missing_authentication_impl]handler.missing_authentication.impl
+#### [handler_csrf_check_failure]handler.csrf_check_failure
+
+别名
+ 
+* **handler.csrf_check_failure.impl**
+* **act.handler.csrf_check_failure**
+* **act.handler.csrf_check_failure.impl**
+ 
+通过类名指定 `act.util.MissingAuthenticationHandler` 接口的实现. 当 [CSRF token](csrf) 无法验证时调用实现.
+
+默认值: [handler.missing_authentication](#handler_missing_authentication) 的配置
+
+#### [handler_csrf_check_failure_ajax]handler.csrf_check_failure.ajax
 
 别名
 
-* **handler.missing_authentication**
+* **handler.csrf_check_failure.ajax.impl**
+* **act.handler.csrf_check_failure.ajax**
+* **act.handler.csrf_check_failure.ajax.impl**
+
+通过类名指定 `act.util.MissingAuthenticationHandler `接口的实现. 当无法在 ajax 请求上验证 [CSRF token](csrf) 时调用实现.
+
+默认值: [handler.csrf_check_failure](handler_csrf_check_failure) 的配置
+
+#### [handler_missing_authentication_impl]handler.missing_authentication
+
+别名
+
+* **handler.missing_authentication.impl**
 * **act.handler.missing_authentication**
 * **act.handler.missing_authentication.impl**
 
@@ -382,17 +440,27 @@
 
 其它选项: `act.util.ReturnUnauthorized` 它将返回 `401 Unauthorised` 响应
 
-#### [handler_missing_authentication_ajax_impl]handler.missing_authentication.ajax.impl
+#### [handler_missing_authentication_ajax_impl]handler.missing_authentication.ajax
 
 别名
 
-* **handler.missing_authentication.ajax**
+* **handler.missing_authentication.ajax.impl**
 * **act.handler.missing_authentication.ajax**
 * **act.handler.missing_authentication.ajax.impl**
 
 通过类名指定 `act.util.MissingAuthenticationHandler` 接口的实现. 当无法对 ajax 请求验证 [CSRF token](csrf) 时调用实现.
 
 默认值: [handler.missing_authentication.impl](handler_missing_authentication_ajax_impl) 的配置
+
+#### [handler_unknown_http_method]handler.unknown_http_method
+
+别名
+
+* **handler.unknown_http_method.impl**
+* **act.handler.unknown_http_method**
+* **act.handler.unknown_http_method.impl**
+
+指定实现 `act.handler.UnknownHttpMethodProcessor` 的类/实例，它处理 `act.route.Router` 不能识别的HTTP方法. 例如: "OPTION", "HEAD" 等.
 
 #### [host]host
 
@@ -404,11 +472,11 @@
 
 默认值: `localhost`
 
-#### [http.external_server.enabled]http.external_server.enabled
+#### [http.external_server.enabled]http.external_server
 
 别名
 
-* **http.external_server**
+* **http.external_server.enabled**
 * **act.http.external_server**
 * **act.http.external_server.enabled**
 
@@ -417,16 +485,6 @@
 默认值: 当运行在 `PROD` 模式下默认是 `true`; 当运行在 `DEV` 模式下默认是 `false`.
 
 注意 ACT 不会直接侦听外部端口. 推荐的模式是使用前端 HTTP 服务器（例如 nginx）来处理外部请求并转发到 ACT.
-
-#### [http.port.external]http.port.external
-
-别名
-
-* **act.http.port.external**
-
-指定用于构造完整 URL 的外部端口.
-
-默认值: `80`
 
 #### [http.port.external.secure]http.port.external.secure
 
@@ -440,7 +498,7 @@
 
 指定 http 参数的最大值. 这可以用来防止哈希冲突的 DOS 攻击. 如果此配置设置为任何大于 0 的值, ActFramework 将检查请求参数数目, 如果该数量大于该设置, 则立即返回 `413 Request Entity Too Large` 响应.
 
-默认值: `1000`
+默认值: `128`
 
 #### [http_port]http.port
 
@@ -451,6 +509,16 @@
 指定应用程序侦听的默认 http 端口.
 
 默认值: `5460`
+
+#### [http.port.external]http.port.external
+
+别名
+
+* **act.http.port.external**
+
+指定用于构造完整 URL 的外部端口.
+
+默认值: `80`
 
 #### [http_secure_enabled]http.secure.enabled
 
@@ -464,11 +532,11 @@
 
 默认值: 当应用运行在 `DEV` 模式下默认为 `false`, 当应用运行在 `RPOD` 模式下默认为 `true`.
 
-#### [i18n_enabled]i18n.enabled
+#### [i18n_enabled]i18n
 
 别名
 
-* **i18n**
+* **i18n.enabled**
 * **act.i18n**
 * **act.i18n.enabled**
 
@@ -496,17 +564,17 @@
 
 默认值: `act_locale`
 
-#### [idgen_node_id_provider_impl]idgen.node_id.provider.impl
+#### [idgen_node_id_provider_impl]idgen.node_id.provider
 
 别名
 
-* **idgen.node_id.provider**
+* **idgen.node_id.provider.impl**
 * **act.idgen.node_id.provider**
 * **act.idgen.node_id.provider.impl**
 
 按类名指定 `act.util.IdGenerator.NodeIdProvider` 实现. 节点 id 提供者负责生成 CUID (簇唯一标识符) 的节点 id. 当没有指定时，Act将使用 `IdGenerator.NodeIdProvider.IpProvider` 返回根据节点的 IP 地址  [effective ip bytes](#idgen_node_id_effective_ip_bytes_size) 配置计算出的节点 id.
 
-默认值: `null`
+默认值: `act.util.IdGenerator.NodeIdProvider.IpProvider`
 
 #### [idgen_node_id_effective_ip_bytes_size]idgen.node_id.effective_ip_bytes.size
 
@@ -522,11 +590,11 @@
 
 默认值: `4`
 
-#### [idgen_start_id_provider_impl]idgen.start_id.provider.impl
+#### [idgen_start_id_provider_impl]idgen.start_id.provider
 
 别名
 
-* **idgen.start_id.provider**
+* **idgen.start_id.provider.impl**
 * **act.idgen.start_id.provider**
 * **act.idgen.start_id.provider.impl**
 
@@ -546,11 +614,11 @@
 
 默认值: `.act.id-app`
 
-#### [idgen_seq_id_provider_impl]idgen.seq_id.provider.impl
+#### [idgen_seq_id_provider_impl]idgen.seq_id.provider
 
 别名
 
-* **idgen.seq_id.provider**
+* **idgen.seq_id.provider.impl**
 * **act.idgen.seq_id.provider**
 * **act.idgen.seq_id.provider.impl**
 
@@ -558,11 +626,11 @@
 
 默认值: `act.util.IdGenerator.SequenceProvider.AtomicLongSeq`
 
-#### [idgen_encoder_impl]idgen.encoder.impl
+#### [idgen_encoder_impl]idgen.encoder
 
 别名
 
-* **idgen.encoder**
+* **idgen.encoder.impl**
 * **act.idgen.encoder**
 * **act.idgen.encoder.impl**
 
@@ -575,16 +643,6 @@ Available options:
 
 默认值: `act.util.IdGenerator.SafeLongEncoder`
 
-#### [locale]locale
-
-别名
-
-* **act.locale**
-
-指定应用程序默认语言.
-
-默认值: `java.util.Locale#getDefault`
-
 #### [job_pool_size]job.pool.size
 
 别名
@@ -596,6 +654,28 @@ Available options:
 指定应用程序的 Job 管理器的线程池中可以存在的最大线程数.
 
 默认值: `10`
+
+#### [locale]locale
+
+别名
+
+* **act.locale**
+
+指定应用程序默认语言.
+
+默认值: `java.util.Locale#getDefault`
+
+#### [metric]metric
+  		  
+别名
+  		  
+* **metric.enabled**
+* **act.metric**
+* **act.metric.enabled**
+  		  
+在Act应用程序中打开/关闭统计功能.
+  		 
+默认值: `true`
 
 #### [modules]modules
 
@@ -671,6 +751,17 @@ Specifies error page (template) path resolver implementation by class name
 
 默认值: `act.view.TemplatePathResolver`
 
+#### [resource_preload_size_limit]resource.preload.size.limit
+
+别名
+
+* **act.resource.preload.size.limit**
+
+指定可以预加载到内存中的资源的最大字节数. 指定 `0` 或负数以禁用资源预加载功能.
+
+
+默认值: `1024 * 10`, 表示 10KB
+
 #### [scan_package]scan_package
 
 别名
@@ -690,6 +781,16 @@ Specifies error page (template) path resolver implementation by class name
 默认值: `myawesomeapp`
 
 注意, 确保在 PROD 模式下设置此值.
+
+#### [server_header]server.header
+
+别名
+
+* **act.server.header**
+
+指定要输出到响应的服务器头
+
+默认值: `act`
 
 #### [session_prefix]session.prefix
 
@@ -713,11 +814,11 @@ Specifies error page (template) path resolver implementation by class name
 
 默认值: `60 * 30` 即半小时
 
-#### [session_persistent_enabled]session.persistent.enabled
+#### [session_persistent_enabled]session.persistent
 
 别名
 
-* **session.persistent**
+* **session.persistent.enabled**
 * **act.session.persistent**
 * **act.session.persistent.enabled**
 
@@ -725,11 +826,11 @@ Specifies error page (template) path resolver implementation by class name
 
 默认值: `false`
 
-#### [session_encrypt_enabled]session.encrypt.enabled
+#### [session_encrypt_enabled]session.encrypt
 
 别名
 
-* **session.encrypt**
+* **session.encrypt.enabled**
 * **act.session.encrypt**
 * **act.session.encrypt.enabled**
 
@@ -757,11 +858,11 @@ Specifies error page (template) path resolver implementation by class name
 
 通过类名指定 `act.util.SessionMapper` 的实现. 会话映射器可以用于将会话/闪存串行化以响应或在翻转侧上, 反序列化来自请求的会话/闪存信息.
 
-#### [session_secure_enabled]session.secure.enabled
+#### [session_secure_enabled]session.secure
 
 别名
 
-* **session.secure**
+* **session.secure.enabled**
 * **act.session.secure**
 * **act.session.secure.enabled**
 
@@ -804,16 +905,6 @@ Specifies error page (template) path resolver implementation by class name
 指定视图模板所在的位置. 如果未指定, 则将使用视图引擎名称（小写）作为模板 home.
 
 **注意** 强烈建议不要设置此配置项.
-
-#### [unknown_http_method_handler_impl]unknown_http_method_handler.impl
-
-别名
-
-* **unknown_http_method_handler**
-* **act.unknown_http_method_handler**
-* **act.unknown_http_method_handler.impl**
-
-指定实现 `act.handler.UnknownHttpMethodProcessor` 的类/实例, 它被用来处理 `act.route.Router` 不能识别的 HTTP 方法. 例如, "OPTION", "PATCH"等.
 
 #### [url_login]url.login
 
