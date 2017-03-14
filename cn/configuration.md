@@ -103,11 +103,11 @@
 
 默认值: `3`
 
-#### [cli_over_http_enabled]cli_over_http.enabled
+#### [cli_over_http_enabled]cli_over_http
 
 别名
 
-* **cli_over_http**
+* **cli_over_http.enabled**
 * **act.cli_over_http**
 * **act.cli_over_http.enabled**
 
@@ -149,11 +149,11 @@
 
 默认值: `Cli Over Http`
 
-#### [cli_over_http_syscmd_enabled]cli_over_http.syscmd.enabled
+#### [cli_over_http_syscmd_enabled]cli_over_http.syscmd
 
 别名
 
-* **cli_over_http.syscmd**
+* **cli_over_http.syscmd.enabled**
 * **act.cli_over_http.syscmd**
 * **act.cli_over_http.syscmd.enabled**
 
@@ -187,7 +187,7 @@
 
 注意, 这个设置也会影响 `AppConfig＃flashCookieName()`
 
-默认值: 根据以下逻辑计算:
+默认值: 根据以下逻辑计算
 
 1. 找到应用程序的名称，如果没有找到，然后使用 `act` 作为应用程序名称
 2. 用空格分割应用程序名称
@@ -298,7 +298,7 @@
 
 **注意** 后缀和有效URL路径之间用`/`分隔
 
-#### [csrf]csrf.enabled
+#### [csrf]csrf
 
 别名
 
@@ -319,7 +319,6 @@
 * **act.csrf.cookie_name**
 
 指定 cookie 的名称, 用于服务端为来自客户端的首次请求生成的 csrf 令牌.
-Specify the name of the cookie used to convey the csrf token generated on the server for the first request coming from a client
 
 默认值: `XSRF-TOKEN`, AngularJs 使用的名称
 
@@ -511,10 +510,6 @@ Specify the name of the cookie used to convey the csrf token generated on the se
 默认值: 当运行在 `PROD` 模式下默认是 `true`; 当运行在 `DEV` 模式下默认是 `false`.
 
 注意 ACT 不会直接侦听外部端口. 推荐的模式是使用前端 HTTP 服务器（例如 nginx）来处理外部请求并转发到 ACT.
-
-#### [http.port.external.secure]http.port.external.secure
-
-指定外部加密端口, 用于应用在安全通道上运行时构造完整的 URL.
 
 #### [http_params_max]http.params.max
 
