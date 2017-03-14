@@ -1,20 +1,21 @@
-<h1 data-book="configuration">配置手册</h1>
+<h1 data-book="configuration">配置</h1>
 
-详细定义ActFramework使用到的各种配置
+详细定义 ActFramework 使用到的各种配置
 
 #### [basic_authentication]basic_authentication.enabled
 
-别名:
+别名
+
 
 * **basic_authentication**
 * **act.basic_authentication**
 * **act.basic_authentication.enabled**
 
-开关[Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication).
+在 ActFramework 应用中开启或关闭 [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) 功能.
 
 默认值: `false`
 
-**注意** ActFramework本身不会使用这个参数. 但像[act-aaa-plugin](https://github.com/actframework/act-aaa-plugin)这样的安全插件会使用这个配置项
+**注意** ActFramework 本身不会使用这个参数. 但像 [act-aaa-plugin](https://github.com/actframework/act-aaa-plugin) 这样的安全插件会使用这个配置项
 
 #### [cache_impl]cache.impl
 
@@ -24,13 +25,13 @@
 * **act.cache**
 * **act.cache.impl**
 
-指定缓存服务的具体实现类. 指定的实现类必须实现`org.osgl.cache.CacheServiceProvider`接口
+指定缓存服务的具体实现类. 指定的实现类必须实现 `org.osgl.cache.CacheServiceProvider` 接口
 
-默认值: `Auto`, 即: `org.osgl.cache.CacheServiceProvider.Impl.Auto`. 该实现会顺序依据以下条件选择具体的实现
+默认值: `Auto`, i.e. `org.osgl.cache.CacheServiceProvider.Impl.Auto`. 该实现会顺序依据以下条件选择具体的实现
 
-1. 如果`MemcachedServiceProvider`存在则用之, 否则
-2. 如果`EhCacheServiceProvider`存在则用之, 否则
-3. 加载`SimpleCacheServiceProvider`实例. 该实现依赖于ConcurrentMap
+1. 如果 `MemcachedServiceProvider` 存在则用之, 否则
+2. 如果 `EhCacheServiceProvider` 存在则用之, 否则
+3. 加载 `SimpleCacheServiceProvider` 实例. 该实现依赖于 ConcurrentMap
 
 #### [cache_name]cache.name
 
@@ -48,9 +49,9 @@
 
 * **act.cache.name.session**
 
-指定会话缓存名字
+指定会话缓存名字.
 
-默认值: [cache.name](#cache_name)的设置
+默认值: 配置项 [cache.name](#cache_name) 的值
 
 #### [cli]cli
 
@@ -70,7 +71,7 @@
 
 * **act.cli.page.size.json**
 
-指定一个CLI命令JSON输出格式每页最大记录数
+指定一个 CLI 命令 JSON 输出格式每页最大记录数
 
 默认值: 10
 
@@ -80,7 +81,7 @@
 
 * **act.cli.page.size.table**
 
-指定CLI命令表输出格式每页最大记录数
+指定 CLI 命令表输出格式每页最大记录数.
 
 默认值: 22
 
@@ -91,7 +92,7 @@
 
 * **act.cli.port**
 
-指定CLI端口
+设置 CLI 端口.
 
 默认值: `5461`
 
@@ -111,7 +112,7 @@
 
 * **act.cli.session.max**
 
-指定能同时进行的CLI会话数量
+指定能同时进行的 CLI 会话数量.
 
 默认值: `3`
 
@@ -123,11 +124,11 @@
 * **act.cli_over_http**
 * **act.cli_over_http.enabled**
 
-开关CLI over http功能
+启用或关闭 CLI 的 HTTP 支持.
 
 默认值: `false`
 
-当该功能被允许时, 管理员可以通过HTTP[服务端口](#cli_over_http.port)使用CLI命令
+当该功能被允许时, 管理员可以通过 HTTP 的 [configured port](#cli_over_http.port) 端口来执行 CLI 命令.
 
 #### [cli_over_http_authority_impl]cli_over_http.authority.impl
 
@@ -137,7 +138,7 @@
 * **act.cli_over_http.authority**
 * **act.cli_over_http.authority.impl**
 
-配置CLI over http的授权机制. 指定值必须是`act.cli.CliOverHttpAuthority`接口的某个实现类的名字
+配置CLI over http的授权机制. 指定值必须是 `act.cli.CliOverHttpAuthority` 接口的某个实现类的名字.
 
 默认值: `CliOverHttpAuthority.AllowAll` - 运行所有人在指定端口使用CLI命令.
 
@@ -169,7 +170,7 @@
 * **act.cli_over_http.syscmd**
 * **act.cli_over_http.syscmd.enabled**
 
-允许/禁止通过CLI Over Http访问系统命令
+允许/禁止通过 CLI Over Http 访问系统命令
 
 默认值: `true`
 
@@ -181,16 +182,15 @@
 * **act.cookie.domain_provider**
 * **act.cookie.domain_provider.impl**
 
-指定一个返回cookie域名的Provider实现类. 如果未指定该项, 系统默认返回[host](#host)配置
+指定返回的域名的提供者. 当没有指定时, 它将总是返回配置在 [host](#host) 的值.
 
 有效设置:
 
-1. 一个`javax.inject.Provider`实现的类名, 给实现必须返回`String`类型
+1. 一个 `javax.inject.Provider` 实现的类名, 给实现必须返回 `String` 类型
 
-2. `dynamic`或`flexible`或`contextual`, 这三个设置均表示cookie域名是当前HTTP请求的域名
+2. `dynamic` 或 `flexible` 或 `contextual`, 这三个设置均表示 cookie 域名是当前 HTTP 请求的域名
 
 默认值: `null`
-
 
 #### [cookie_prefix]cookie.prefix
 
@@ -198,24 +198,24 @@
 
 * **act.cookie.prefix**
 
-Specifies the prefix to be prepended to name of the cookies used in ActFramework, e.g. session, flash, xsrf etc. Let's say the default cookie name is ｀act_session｀, and user specifies the prefix ｀my_app｀then the session cookie name will be ｀my_app_session｀
+指定要添加到 ActFramework 中使用的 cookie 名称的前缀, 例如 session, flash, xsrf 等等. 假设默认 cookie 名称是 `act_session`, 用户指定前缀 `my_app`, 会话 cookie 名称将是 `my_app_session`
 
-Note this setting also impact the ｀AppConfig#flashCookieName()｀
+注意, 这个设置也会影响 `AppConfig＃flashCookieName()`
 
-默认值: calculated based on the following logic:
+默认值: 根据以下逻辑计算
 
-1. find the app's name, if not found, then use `act` as app name
-2. split the app name by spaces
-3. check the length of splited string array
-3.1 if there is only one string in the array, then return the first 3 chars of the string, or the string if string len is leass than 3
-3.2 if there are two strings in the array, then pick up the first 2 chars of each string and concatenate by dash `-`
-3.3 pick up the first char of the first 3 strings in the array
+1. 找到应用程序的名称，如果没有找到，然后使用 `act` 作为应用程序名称
+2. 用空格分割应用程序名称
+3. 检查分割字符串数组的长度
+3.1 如果数组中只有一个字符串, 则返回字符串的前 3 个字符, 如果字符串长度超过 3, 则返回字符串
+3.2 如果数组中有两个字符串，则拾取每个字符串的前 2 个字符, 并通过破折号 `-`
+3.3 拾取数组中前 3 个字符串的第一个字符
 
-例子
+例如
 
-* When app name is `HelloWorld`, the cookie prefix is `hel-`
-* When app name is `Hello World`, the cookie prefix is `he-wo-`
-* When app name is `Hello My World`, the cookie prefix is `hmw-`
+当应用程序名称是 `HelloWorld` 时, cookie 前缀是 `hel-`
+当应用程序名称是 `HelloWorld` 时, cookie 前缀是 `he-wo-`
+当应用程序名称是 `HelloWorld` 时, cookie 前缀是 `hmw-`
 
 #### [cors]cors
 
@@ -225,11 +225,11 @@ Note this setting also impact the ｀AppConfig#flashCookieName()｀
 * **act.cors**
 * **act.cors.enabled**
 
-打开/关闭对[CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)的支持
+打开/关闭 ActFramework 应用的 [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) 支持.
 
 默认值: `false`
 
-当`cors`打开是, ActFramework将向HTTP响应添加CORS相关的头
+当 `cors` 被启用, ActFramework 将默认在响应中自动添加下面列表指定的 HTTP 头. 当此配置开启, ActFramework 同时也将在请求中创建 OPTION 请求.
 
 #### [cors_option_check]cors.option.check
 
@@ -241,13 +241,13 @@ Note this setting also impact the ｀AppConfig#flashCookieName()｀
 
 默认值: `true`
 
-当该项配置打开是, ActFramework响应HTTP Option请求并在回应中添加下面的HTTP头:
+启用此配置时, ActFramework 将仅向 HTTP OPTION 请求添加以下 CORS 相关标头:
 
 * access-control-allow-headers
 * access-control-expose-headers
 * access-control-max-age
 
-**注意**HTTP头`access-control-allow-origin`在任何HTTP请求的响应中都会添加
+**注意**HTTP头 `access-control-allow-origin` 在任何HTTP请求的响应中都会添加
 
 #### [cors_origin]cors.origin
 
@@ -257,7 +257,7 @@ Note this setting also impact the ｀AppConfig#flashCookieName()｀
 
 默认值: `*`
 
-This configuration specifies the default `Access-Control-Allow-Origin` header value
+此配置指定默认的 `Access-Control-Allow-Origin` 标头值.
 
 #### [cors_headers]cors.headers
 
@@ -267,7 +267,7 @@ This configuration specifies the default `Access-Control-Allow-Origin` header va
 
 默认值: `Content-Type, X-HTTP-Method-Override`
 
-This configuration specifies the 默认值 for `Access-Control-Allow-Headers` and `Access-Control-Expose-Headers` headers
+此配置指定 `Access-Control-Allow-Headers` 和 `Access-Control-Expose-Headers` 标头的默认值.
 
 #### [cors_headers_expose]cors.headers.expose
 
@@ -277,7 +277,7 @@ This configuration specifies the 默认值 for `Access-Control-Allow-Headers` an
 
 默认值: `null`
 
-This configuration specifies the 默认值 for `Access-Control-Expose-Headers` header value. If not provided then system will use the value provided by [cors.headers](#cors_headers)
+此配置指定 `Access-Control-Expose-Headers` 标头的默认值。 如果没有提供，那么系统将使用 [cors.headers](#cors_headers) 提供的值.
 
 #### [cors_headers_allowed]cors.headers.allowed
 
@@ -287,7 +287,7 @@ This configuration specifies the 默认值 for `Access-Control-Expose-Headers` h
 
 默认值: `null`
 
-This configuration specifies the 默认值 for `Access-Control-Allow-Headers` header value. If not provided then system will use the value provided by [cors.headers](#cors_headers)
+此配置指定 `Access-Control-Allow-Headers` 标头的默认值。 如果没有提供，那么系统将使用 [cors.headers](#cors_headers) 提供的值.
 
 #### [cors_max_age]cors.max_age
 
@@ -297,7 +297,7 @@ This configuration specifies the 默认值 for `Access-Control-Allow-Headers` he
 
 默认值: 30*60 (seconds)
 
-This configuration specifies the 默认值 for `Access-Control-Max-Age` header when [cors](#cors) is enabled
+当启用 [cors](#cors) 时, 此配置指定 `Access-Control-Max-Age` 标头的默认值.
 
 #### [content_suffix_aware]content_suffix.aware
 
@@ -307,11 +307,11 @@ This configuration specifies the 默认值 for `Access-Control-Max-Age` header w
 * **act.content_suffix.aware**
 * **act.content_suffix.aware.enabled**
 
-Once enabled then the framework automatically recognize request with content suffix, e.g. `/customer/123/json` or `/customer/123.json` will match the route `/customer/123` and set the request `Accept` header value to `application/json`
-
-**注意** 后缀和有效URL路径之间用`/`分隔
+启用此配置项，框架将自动识别具有内容后缀的请求，例如 `/customer/123/json` 或 `/customer/123.json`, 将匹配路径 `/customer/123`, 并将请求 `Accept` 头的值设置为 `application/json`.
 
 默认值: `false`
+
+**注意** 后缀和有效URL路径之间用`/`分隔
 
 #### [csrf]csrf
 
@@ -321,15 +321,25 @@ Once enabled then the framework automatically recognize request with content suf
 * **act.csrf**
 * **act.csrf.enabled**
 
-Turn on/off global [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet) protect
+开启/关闭全局 [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet) 保护.
 
 默认值: `false`
 
-Once this configuration is turned on the framework will check all POST/PUT/DELETE request for CSRF token. If it doesn't match then the request will get rejected with 403 Forbidden response
+此配置开启，框架将检查所有 POST/PUT/DELETE 请求的 CSRF 令牌. 如果它不匹配, 则该请求将返回 403 Forbidden 的响应.
 
 #### [csrf_cookie_name]csrf.cookie_name
 
-Aliases
+别名
+
+* **act.csrf.cookie_name**
+
+指定 cookie 的名称, 用于服务端为来自客户端的首次请求生成的 csrf 令牌.
+
+默认值: `XSRF-TOKEN`, AngularJs 使用的名称
+
+#### [csrf_cookie_name]csrf.cookie_name
+
+别名
 
 * **act.csrf.cookie_name**
 
@@ -343,7 +353,7 @@ Default value: `XSRF-TOKEN`, the name used by AngularJs
 
 * **act.csrf.param_name**
 
-Set the request parameter name for CSRF token
+设置 CSRF 令牌的请求参数名称.
 
 默认值: `__csrf__`
 
@@ -353,7 +363,7 @@ Set the request parameter name for CSRF token
 
 * **act.csrf.param_name**
 
-Set the response header name for CSRF token generated from server
+设置从服务端生成的 CSRF 令牌的响应头的名称. 
 
 默认值: `XSRF-TOKEN`
 
@@ -365,17 +375,28 @@ Set the response header name for CSRF token generated from server
 * **act.csrf.protector**
 * **act.csrf.protector.impl**
 
-Set the implementation of `act.security.CSRFProtector`. The value of this configuration could be either a name of the class that implements `act.security.CSRFProtector` interface or the name of the enum defined in `act.security.CSRFProtector.Predefined`.
+设置 `act.security.CSRFProtector` 的实现. 此配置的值可以是 `act.security.CSRFProtector` 接口的类的实现, 也可以是 `act.security.CSRFProtector.Predefined` 中定义的枚举的名称.
 
 默认值: `HMAC`
 
-Other options in `act.security.CSRFProtector.Predefined`: `RANDOM`
+`act.security.CSRFProtector.Predefined` 中的其他选项: `RANDOM`
 
-For differences between `HMAC` and `RANDOM` please checkout http://security.stackexchange.com/questions/52224/csrf-random-value-or-hmac
+对于 `HMAC` 和 `RANDOM` 之间的区别, 请查阅 http://security.stackexchange.com/questions/52224/csrf-random-value-or-hmac
 
 #### [dsp_token]dsp.token
 
-Aliases
+别名
+
+* **act.dsp.token**
+
+默认值: `HMAC`
+
+默认值: `act_dsp_token`
+
+
+#### [dsp_token]dsp.token
+
+别名
 
 * **act.dsp.token**
 
@@ -391,7 +412,7 @@ Default value: `act_dsp_token`
 * **act.db.seq_gen**
 * **act.db.seq_gen.impl**
 
-Specify database sequence generator. Which must be class name of the  implementation of `act.db.util._SequenceNumberGenerator`. If not specified then it will return the first `act.db.util._SequenceNumberGenerator` implementation scanned by ActFramework.
+指定数据库序列生成器. 它必须是 `act.db.util._SequenceNumberGenerator` 的实现类. 如果没有指定，那么它将返回 ActFramework 扫描的第一个 `act.db.util._SequenceNumberGenerator` 实现.
 
 #### [encoding]encoding
 
@@ -399,7 +420,7 @@ Specify database sequence generator. Which must be class name of the  implementa
 
 * **act.encoding**
 
-Specify application default encoding. 默认值 is `UTF-8`. It is highly recommended not to change the default setting.
+指定应用程序默认编码. 默认值为 `UTF-8`. 强烈建议不要更改默认设置.
 
 #### [enum_resolving_case_sensitive]enum.resolving.case_sensitive
 
@@ -407,9 +428,9 @@ Specify application default encoding. 默认值 is `UTF-8`. It is highly recomme
 
 * **act.enum.resolving.case_sensitive**
 
-Specifies whether it allow enum resolving for request parameters to ignore case
+指定它是否允许枚举解析请求参数忽略大小写.
 
-Default value: `false` meaning enum resolving is case insensitive
+默认值: `false` 意味着枚举解析是不区分大小写的.
 
 #### [fmt_date]fmt.date
 
@@ -417,9 +438,9 @@ Default value: `false` meaning enum resolving is case insensitive
 
 * **act.fmt.date**
 
-Specifies the default date format used to parse/output date string. 
+指定用于解析/输出日期字符串的默认日期格式.
 
-默认值: the pattern of `java.text.DateFormat.getDateInstance()`
+默认值: `java.text.DateFormat.getDateInstance()` 的格式
 
 #### [fmt_date_time]fmt.date_time
 
@@ -427,9 +448,9 @@ Specifies the default date format used to parse/output date string.
 
 * **act.fmt.date_time**
 
-Specifies the default date and time format used to parse/output date time string
+指定用于解析/输出日期和时间字符串的默认日期和时间格式.
 
-默认值: the pattern of `java.text.DateFormat.getDateTimeInstance()`
+默认值: `java.text.DateFormat.getDateTimeInstance()` 的格式
 
 #### [fmt_time]fmt.time
 
@@ -437,33 +458,33 @@ Specifies the default date and time format used to parse/output date time string
 
 * **act.fmt.time**
 
-Specifies the default time format used to parse/output time string
+指定用于解析/输出时间字符串的默认时间格式.
 
-默认值: the pattern of `java.text.DateFormat.getTimeInstance()`
+默认值: `java.text.DateFormat.getTimeInstance()` 的格式
 
 #### [handler_csrf_check_failure]handler.csrf_check_failure
 
-Aliases
-
+别名
+ 
 * **handler.csrf_check_failure.impl**
 * **act.handler.csrf_check_failure**
 * **act.handler.csrf_check_failure.impl**
+ 
+通过类名指定 `act.util.MissingAuthenticationHandler` 接口的实现. 当 [CSRF token](csrf) 无法验证时调用实现.
 
-Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified.
-
-Default value: the setting of [handler.missing_authentication](#handler_missing_authentication)
+默认值: [handler.missing_authentication](#handler_missing_authentication) 的配置
 
 #### [handler_csrf_check_failure_ajax]handler.csrf_check_failure.ajax
 
-Aliases
+别名
 
 * **handler.csrf_check_failure.ajax.impl**
 * **act.handler.csrf_check_failure.ajax**
 * **act.handler.csrf_check_failure.ajax.impl**
 
-Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified on an ajax request
+通过类名指定 `act.util.MissingAuthenticationHandler `接口的实现. 当无法在 ajax 请求上验证 [CSRF token](csrf) 时调用实现.
 
-Default value: the setting of [handler.csrf_check_failure](handler_csrf_check_failure)
+默认值: [handler.csrf_check_failure](handler_csrf_check_failure) 的配置
 
 #### [handler_missing_authentication]handler.missing_authentication
 
@@ -473,11 +494,11 @@ Default value: the setting of [handler.csrf_check_failure](handler_csrf_check_fa
 * **act.handler.missing_authentication**
 * **act.handler.missing_authentication.impl**
 
-Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified.
+通过类名指定 `act.util.MissingAuthenticationHandler` 接口的实现。 当 [CSRF token](csrf) 无法验证时调用实现.
 
-默认值: `act.util.RedirectToLoginUrl` which redirect the user to [login URL](url_login)
+默认值: `act.util.RedirectToLoginUrl` 它将重定向到用户的 [login URL](url_login)
 
-Other options: `act.util.ReturnUnauthorized` which respond with `401 Unauthorised`
+其它选项: `act.util.ReturnUnauthorized` 它将返回 `401 Unauthorised` 响应
 
 #### [handler_missing_authentication_ajax]handler.missing_authentication.ajax
 
@@ -487,13 +508,23 @@ Other options: `act.util.ReturnUnauthorized` which respond with `401 Unauthorise
 * **act.handler.missing_authentication.ajax**
 * **act.handler.missing_authentication.ajax.impl**
 
-Specifies implementation of `act.util.MissingAuthenticationHandler` interface by class name. The implementation is called when [CSRF token](csrf) cannot be verified on ajax request
+通过类名指定 `act.util.MissingAuthenticationHandler` 接口的实现. 当无法对 ajax 请求验证 [CSRF token](csrf) 时调用实现.
 
-默认值: the setting of [handler.missing_authentication](handler_missing_authentication_ajax)
+默认值: [handler.missing_authentication.impl](handler_missing_authentication_ajax_impl) 的配置
 
 #### [handler_unknown_http_method]handler.unknown_http_method
 
-Aliases
+别名
+
+* **handler.unknown_http_method.impl**
+* **act.handler.unknown_http_method**
+* **act.handler.unknown_http_method.impl**
+
+指定实现 `act.handler.UnknownHttpMethodProcessor` 的类/实例，它处理 `act.route.Router` 不能识别的HTTP方法. 例如: "OPTION", "HEAD" 等.
+
+#### [handler_unknown_http_method]handler.unknown_http_method
+
+别名
 
 * **handler.unknown_http_method.impl**
 * **act.handler.unknown_http_method**
@@ -507,7 +538,7 @@ Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcess
 
 * **act.host**
 
-Specifies the hostname the application listen to
+指定应用程序侦听的主机名.
 
 默认值: `localhost`
 
@@ -519,11 +550,11 @@ Specifies the hostname the application listen to
 * **act.http.external_server**
 * **act.http.external_server.enabled**
 
-Specify if the app is running behind a front end http server, e.g. nginx
+指定应用程序是否在运行在前端 http 服务器, 例如 nginx.
 
-默认值: `true` when running in `PROD` mode; `false` when running in `DEV` mode
+默认值: 当运行在 `PROD` 模式下默认是 `true`; 当运行在 `DEV` 模式下默认是 `false`.
 
-Note act does not listen to external port directly. The recommended pattern is to have a front end HTTP server (e.g. nginx) to handle the external request and forward to act
+注意 ACT 不会直接侦听外部端口. 推荐的模式是使用前端 HTTP 服务器（例如 nginx）来处理外部请求并转发到 ACT.
 
 #### [http_params_max]http.params.max
 
@@ -531,7 +562,7 @@ Note act does not listen to external port directly. The recommended pattern is t
 
 * **act.http.params.max**
 
-Specifies the maximum number of http parameters. This can be used to prevent the hash collision DOS attack. If this configuration is set to any value larger than 0, ActFramework will check the request parameter number, if the number is larger than the setting, then a `413 Request Entity Too Large` response is returned immediately
+指定 http 参数的最大值. 这可以用来防止哈希冲突的 DOS 攻击. 如果此配置设置为任何大于 0 的值, ActFramework 将检查请求参数数目, 如果该数量大于该设置, 则立即返回 `413 Request Entity Too Large` 响应.
 
 默认值: `128`
 
@@ -541,7 +572,7 @@ Specifies the maximum number of http parameters. This can be used to prevent the
 
 * **act.http.port**
 
-Specifies the default http port the application listen to.
+指定应用程序侦听的默认 http 端口.
 
 默认值: `5460`
 
@@ -551,15 +582,15 @@ Specifies the default http port the application listen to.
 
 * **act.http.port.external**
 
-Specifies the external port which is used to construct the full URL
+指定用于构造完整 URL 的外部端口.
 
 默认值: `80`
 
 #### [http.port.external.secure]http.port.external.secure
 
-Specifies the external secure port which is used to construct the full URL when app is running on secure channel
+指定外部安全端口, 用于在应用在安全通道上运行时构造完整的 URL.
 
-Default value: 443
+默认值: 443
 
 #### [http_secure_enabled]http.secure.enabled
 
@@ -569,9 +600,9 @@ Default value: 443
 * **act.http.secure**
 * **act.http.secure.enabled**
 
-Specifies whether the default http port is listening on secure channel or not.
+指定默认 http 端口是否正在侦听加密通道.
 
-默认值: `false` when app is running in `DEV` mode, `true` if app is running in `RPOD` mode
+默认值: 当应用运行在 `DEV` 模式下默认为 `false`, 当应用运行在 `RPOD` 模式下默认为 `true`.
 
 #### [i18n]i18n
 
@@ -581,7 +612,7 @@ Specifies whether the default http port is listening on secure channel or not.
 * **act.i18n**
 * **act.i18n.enabled**
 
-Turn on/off i18n support in ActFramework application
+在 ActFramework 应用程序中打开/关闭 i18n 支持.
 
 默认值: `false`
 
@@ -591,7 +622,7 @@ Turn on/off i18n support in ActFramework application
 
 * **act.i18n.locale.param_name**
 
-Specify the param name to set client locale in http request
+指定参数名称以在 http 请求中设置客户端区域设置.
 
 默认值: `act_locale`
 
@@ -601,7 +632,7 @@ Specify the param name to set client locale in http request
 
 * **act.i18n.locale.cookie_name**
 
-Specify the name for the locale cookie
+指定本地保存的 cookie 名称.
 
 默认值: `act_locale`
 
@@ -613,7 +644,7 @@ Specify the name for the locale cookie
 * **act.idgen.node_id.provider**
 * **act.idgen.node_id.provider.impl**
 
-Specify the `act.util.IdGenerator.NodeIdProvider` implementation by class name. The node id provider is responsible to generate the node id for a CUID (Cluster Unique Identifer). When not specified, then Act will use the `IdGenerator.NodeIdProvider.IpProvider` that return the node id calculated from the node's ip address based on [effective ip bytes](#idgen_node_id_effective_ip_bytes_size) configuration
+按类名指定 `act.util.IdGenerator.NodeIdProvider` 实现. 节点 id 提供者负责生成 CUID (簇唯一标识符) 的节点 id. 当没有指定时，Act将使用 `IdGenerator.NodeIdProvider.IpProvider` 返回根据节点的 IP 地址  [effective ip bytes](#idgen_node_id_effective_ip_bytes_size) 配置计算出的节点 id.
 
 默认值: `act.util.IdGenerator.NodeIdProvider.IpProvider`
 
@@ -625,9 +656,9 @@ Specify the `act.util.IdGenerator.NodeIdProvider` implementation by class name. 
 * **act.idgen.node_id.effective_ip_bytes**
 * **act.idgen.node_id.effective_ip_bytes.size**
 
-Specifies how many bytes in the ip address will be used to calculate node ID. Usually in a cluster environment, the ip address will be different at only (last) one byte or (last) two bytes, in which case it could set this configuration to `1` or `2`. When the configuration is set to `4` then it means all 4 IP bytes will be used to calculate the node ID.
+指定 IP 地址中将使用多少字节来计算节点 ID. 通常在群集环境中, IP 地址将仅在（最后）一个字节段或（最后）两个字节段不同，在这种情况下，它可以将此配置设置为 `1` 或 `2`. 当配置设置为 `4` 时，表示所有 4 个 IP 字节段将用于计算节点 ID.
 
-Note the bigger this number is, the longer the CUID will be. However it should be enough to distinct the application nodes inside a cluster.
+注意, 这个数字越大, CUID 就越长. 但是, 应该足以区分集群中的应用程序节点. 
 
 默认值: `4`
 
@@ -639,11 +670,11 @@ Note the bigger this number is, the longer the CUID will be. However it should b
 * **act.idgen.start_id.provider**
 * **act.idgen.start_id.provider.impl**
 
-Specifies the `act.util.IdGenerator.StartIdProvider` implementation by class name. This provider generate the start ID part of a CUID.
+通过类名指定 `act.util.IdGenerator.StartIdProvider` 实现。 此提供程序生成 CUID 的开始 I D部分.
 
 默认值: `act.util.IdGenerator.StartIdProvider.DefaultStartIdProvider`
 
-The default provider will get the ID from [predefined file](#idgen_start_id_file), or if file IO is not allowed, it will use the timestamp.
+默认提供程序将从 [predefined file](#idgen_start_id_file) 获取ID, 或者如果不允许文件 IO, 它将使用时间戳.
 
 #### [idgen_start_id_file]idgen.start_id.file
 
@@ -651,7 +682,7 @@ The default provider will get the ID from [predefined file](#idgen_start_id_file
 
 * **act.idgen.start_id.file**
 
-Specifies the start id persistent file for start ID counter.
+指定开始 ID 计数器的持久性文件.
 
 默认值: `.act.id-app`
 
@@ -663,7 +694,7 @@ Specifies the start id persistent file for start ID counter.
 * **act.idgen.seq_id.provider**
 * **act.idgen.seq_id.provider.impl**
 
-Specifies the impelementation of `act.util.IdGenerator.SequenceProvider` by class name, which will be used to generate the sequence part of CUID.
+通过类名指定 `act.util.IdGenerator.Sequence Provider` 的实现, 它将用于生成 CUID 的序列部分.
 
 默认值: `act.util.IdGenerator.SequenceProvider.AtomicLongSeq`
 
@@ -675,7 +706,7 @@ Specifies the impelementation of `act.util.IdGenerator.SequenceProvider` by clas
 * **act.idgen.encoder**
 * **act.idgen.encoder.impl**
 
-Specifies an implementation of `act.util.IdGenerator.LongEncoder` interface by class name. The instance will be used to encode long value (the three parts of CUID generated) into a String.
+按类名指定  `act.util.IdGenerator.LongEncoder `接口的实现. 该实例将用于将 long 值（生成的 CUID 的三个部分）编码为 String.
 
 Available options:
 
@@ -692,7 +723,7 @@ Available options:
 * **act.job.pool**
 * **act.job.pool.size**
 
-Specifies the maximum number of threads can exists in the application's job manager's thread pool
+指定应用程序的 Job 管理器的线程池中可以存在的最大线程数.
 
 默认值: `10`
 
@@ -702,21 +733,21 @@ Specifies the maximum number of threads can exists in the application's job mana
 
 * **act.locale**
 
-Specifies the application default locale.
+指定应用程序默认语言.
 
 默认值: `java.util.Locale#getDefault`
 
 #### [metric]metric
-
-Aliases
-
+  		  
+别名
+  		  
 * **metric.enabled**
 * **act.metric**
 * **act.metric.enabled**
-
-Turn on/off metric in Act application
-
-Default value: `true`
+  		  
+在Act应用程序中打开/关闭统计功能.
+  		 
+默认值: `true`
 
 #### [modules]modules
 
@@ -724,7 +755,7 @@ Default value: `true`
 
 * **act.modules**
 
-Declare additional app base (for maven modules)
+声明其他应用程序库（用于Maven模块）.
 
 默认值: `null`
 
@@ -734,9 +765,9 @@ Declare additional app base (for maven modules)
 
 * **act.namedPorts**
 
-specifies a list of port names this application listen to. These are additional ports other than the default [http.port](#http_port)
+指定此应用程序侦听的端口名称列表. 这些是除默认 [http.port](#http_port) 之外的其他端口.
 
-The list is specified as
+该列表格式为
 
 ```
 act.namedPorts=admin:8888;ipc:8899
@@ -744,7 +775,7 @@ act.namedPorts=admin:8888;ipc:8899
 
 默认值: `null`
 
-Note, the default port that specified in [http.port](#http_port) configuration and shall not be specified in this namedPorts configuration
+注意，在 [http.port](#http_port) 配置中指定的默认端口, 并且不应在此 namedPort s配置中指定.
 
 #### [ping_path]ping.path
 
@@ -752,7 +783,7 @@ Note, the default port that specified in [http.port](#http_port) configuration a
 
 * **act.ping.path**
 
-Specify the ping path. If this setting is specified, then when session resolving, system will check if the current URL matches the setting. If matched then session cookie expiration time will not be changed. Otherwise the expiration time will refresh
+指定 ping 路径. 如果指定了此设置, 则在会话解析时, 系统将检查当前URL是否与设置匹配. 如果匹配, 则会话 cookie 的过期时间不会更改. 否则, 将刷新到期时间.
 
 默认值: `null`
 
@@ -762,11 +793,11 @@ Specify the ping path. If this setting is specified, then when session resolving
 
 * **act.profile**
 
-Specifies the profile to load configuration If this setting is specified, and there is a folder named as the `profile` setting sit under `/resource/conf` folder, then the properties files will be loaded from that folder.
+指定要加载的配置文件. 如果指定了此设置, 并且在 `/resource/conf` 文件夹下有一个名为  `profile`  设置的文件夹, 那么将从该文件夹加载配置文件.
 
 默认值: the value of the {@link Act#mode()}
 
-Note, unlike other configuration items which is usually specified in the configuration file. `profile` setting is load by `System#getProperty(String)`, thus it is usually specified with JVM argument `Dprofile=<profile>`
+注意, 不同于通常在配置文件中指定的其他配置项. `profile` 设置是通过 `System#getProperty(String)` 加载, 因此通常使用 JVM 参数 `Dprofile=<profile>`
 
 #### [resolver_error_template_path_impl]resolver.error_template_path.impl
 
@@ -788,13 +819,23 @@ Specifies error page (template) path resolver implementation by class name
 * **act.resolver.template_path**
 * **resolver.template_path.impl**
 
-specifies the class that is type of `act.view.TemplatePathResolver`. Application developer could use this configuration to add some flexibility to template path resolving logic, e.g. different home for different locale or different home for different device type etc.
+指定类是 `act.view.TemplatePathResolver` 的类. 应用开发者可以使用这种配置来灵活配置模板路径解析逻辑. 不同的 home 指定不同的地区或不同的 home 指定不同的设备类型等.
 
 默认值: `act.view.TemplatePathResolver`
 
 #### [resource_preload_size_limit]resource.preload.size.limit
 
-Aliases
+别名
+
+* **act.resource.preload.size.limit**
+
+指定可以预加载到内存中的资源的最大字节数. 指定 `0` 或负数以禁用资源预加载功能.
+
+默认值: `1024 * 10`, 表示 10KB
+
+#### [resource_preload_size_limit]resource.preload.size.limit
+
+别名
 
 * **act.resource.preload.size.limit**
 
@@ -808,7 +849,7 @@ Default value: `1024 * 10`, i.e. 10KB
 
 * **act.scan_package**
 
-Specify the app package in which all classes is subject to bytecode processing, e.g enhancement and injection. This setting should be specified when application loaded. Otherwise Act will try to process all classes found in application's lib and classes folder, which might cause performance issue on startup 
+指定应用程序包, 其中所有类都受字节码处理, 例如增强和注入. 应在加载应用程序时指定此设置. 否则 Act 将尝试处理应用程序的 lib 和 classes 文件夹中找到的所有类, 这可能会在启动时导致性能问题.
 
 #### [secret]secret
 
@@ -816,21 +857,21 @@ Specify the app package in which all classes is subject to bytecode processing, 
 
 * **act.secret**
 
-Specifies the secret key the application used to do general encrypt/decrypt/sign etc
+指定应用程序用于执行常规加密/解密/签名等的密钥.
 
 默认值: `myawesomeapp`
 
-Note, make sure you set this value on PROD mode
+注意, 确保在 PROD 模式下设置此值.
 
 #### [server_header]server.header
 
-Aliases
+别名
 
 * **act.server.header**
 
-Specifies the server header to be output to the response
+指定要输出到响应的服务器头
 
-Default value: `act`
+默认值: `act`
 
 #### [session_ttl]session.ttl
 
@@ -838,9 +879,9 @@ Default value: `act`
 
 * **act.session.ttl**
 
-specifies the session duration in seconds. If user failed to interact with server for amount of time that exceeds the setting then the session will be destroyed
+指定会话持续时间（以秒为单位）, 如果用户无法与服务器交互超过设置的时间, 则会话将被销毁.
 
-默认值: `60 * 30` i.e half an hour
+默认值: `60 * 30` 即半小时
 
 #### [session_persistent]session.persistent
 
@@ -850,7 +891,7 @@ specifies the session duration in seconds. If user failed to interact with serve
 * **act.session.persistent**
 * **act.session.persistent.enabled**
 
-Specify whether the system should treat session cookie as [persistent cookie](http://en.wikipedia.org/wiki/HTTP_cookie#Persistent_cookie). If this setting is enabled, then the user's session will not be destroyed after browser closed. 
+指定系统是否应将会话 cookie 视为 [persistent cookie](http://en.wikipedia.org/wiki/HTTP_cookie#Persistent_cookie). 如果启用此设置, 则在浏览器关闭后, 用户的会话不会被销毁.
 
 默认值: `false`
 
@@ -862,7 +903,7 @@ Specify whether the system should treat session cookie as [persistent cookie](ht
 * **act.session.encrypt**
 * **act.session.encrypt.enabled**
 
-{@code session.encrypted.enabled} specify whether the system should encrypt the key/value pairs in the session cookie. Enable session encryption will greatly improve the security but with the cost of additional CPU usage and a little bit longer time on request processing. 
+{@code session.encrypted.enabled} 指定系统是否应该加密会话 cookie 中的键/值对. 启用会话加密将大大提高安全性, 但带来额外的 CPU 使用成本和请求处理的时间稍长.
 
 默认值: `false`
 
@@ -872,7 +913,7 @@ Specify whether the system should treat session cookie as [persistent cookie](ht
 
 * **act.session.key.username**
 
-Specifies the session key for username of the login user. Authentication plugin shall use the session key configured to access the username.
+指定登录用户的用户名的会话密钥. 验证插件应使用配置为访问用户名的会话密钥.
 
 默认值: `username`
 
@@ -884,9 +925,7 @@ Specifies the session key for username of the login user. Authentication plugin 
 * **act.session.mapper**
 * **act.session.mapper.impl**
 
-Specify the implementation of `act.util.SessionMapper` by class name. A session mapper can be used to serialize session/flash to response or on the flippering side, deserialize session/flash info from request.
-
-Default value: `act.util.SessionMapper.DefaultSessionMapper`, use cookie to serialize/deserizalize session
+通过类名指定 `act.util.SessionMapper` 的实现. 会话映射器可以用于将会话/闪存串行化以响应或在翻转侧上, 反序列化来自请求的会话/闪存信息.
 
 #### [session_secure]session.secure
 
@@ -896,11 +935,11 @@ Default value: `act.util.SessionMapper.DefaultSessionMapper`, use cookie to seri
 * **act.session.secure**
 * **act.session.secure.enabled**
 
-specifies whether the session cookie should be set as secure. Enable secure session will cause session cookie only effective in https connection. Literally this will enforce the web site to run default by https.
+指定会话Cookie是否应设置为安全. 启用安全会话将导致会话 cookie 仅在 https 连接中有效. 这将强制网站默认由 https 运行.
 
 默认值: the setting of [http.secure](http_secure_enabled)
 
-**注意** when Act server is running in DEV mode session http only will be disabled without regarding to the `session.secure.enabled` setting
+**注意** 当 Act 服务器在 DEV 模式中运行时, http 只会被禁用, 而不涉及 `session.secure.enabled` 设置.
 
 #### [source_version]source.version
 
@@ -908,23 +947,11 @@ specifies whether the session cookie should be set as secure. Enable secure sess
 
 * **act.source.version**
 
-Specifies the Java source version. This configuration has impact only when app is running in DEV mode
+指定源代码 Java 版本. 此配置仅当应用程序在 DEV 模式下运行时才起效.
 
 默认值: `1.7`
 
-Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below here.
-
-#### [source_version]source.version
-
-别名
-
-* **act.source.version**
-
-Specifies the Java source version. This configuration has impact only when app is running in DEV mode
-
-默认值: `1.7`
-
-Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below here.
+注意 ActFramework 支持 Java 1.7+. 确保这里不填入 `1.6` 或以下.
 
 #### [target_version]target.version
 
@@ -932,11 +959,11 @@ Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below 
 
 * **act.target.version**
 
-Specifies the Java target version. This configuration has impact only when app is running in DEV mode
+指定 Java 编译版本. 此配置仅当应用程序在 DEV 模式下运行时才生效.
 
 默认值: `1.7`
 
-Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below here.
+注意 ActFramework 支持 Java 1.7+. 确保这里不填入 `1.6` 或以下.
 
 #### [template_home]template.home
 
@@ -944,9 +971,9 @@ Note ActFramework support Java 1.7+. Make sure you do NOT put in `1.6` or below 
 
 * **act.template.home**
 
-Specifies where the view templates resides. If not specified then will use the view engine name (in lowercase) as the template home.
+指定视图模板所在的位置. 如果未指定, 则将使用视图引擎名称（小写）作为模板 home.
 
-**注意** it is highly recommended NOT to set this configuration item
+**注意** 强烈建议不要设置此配置项.
 
 #### [url_login]url.login
 
@@ -954,8 +981,7 @@ Specifies where the view templates resides. If not specified then will use the v
 
 * **act.url.login**
 
-Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the default implementation of `MissingAuthenticationHandler`, see [handler.missing_authentication.impl]
-(handler_missing_authentication_impl)
+指定由 `act.util.RedirectToLoginUrl` 使用的登录 URL, 作为 `MissingAuthenticationHandler` 的默认实现，请参阅 handler.missing_authentication.impl](handler_missing_authentication_impl)
 
 默认值: `/login`
 
@@ -965,7 +991,7 @@ Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the defa
 
 * **act.url.login.ajax**
 
-Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the default implementation of `MissingAuthenticationHandler` when answering ajax request. See [handler.missing_authentication.ajax.impl](handler_missing_authentication_ajax_impl)
+指定 `act.util.RedirectToLoginUrl` 使用的登录 URL, 在响应 ajax 请求时, 它是 `MissingAuthenticationHandler` 的默认实现. 参见[handler.missing_authentication.ajax.impl](handler_missing_authentication_ajax_impl)
 
 #### [view_default]view.default
 
@@ -973,14 +999,14 @@ Specifies the login URL which is used by `act.util.RedirectToLoginUrl`, the defa
 
 * **act.view.default**
 
-Specifies the default view engine name. If there are multiple views registered and default view are available, then it will be used at priority when loading the templates
+指定默认视图引擎名称. 如果有多个视图注册并其中包含默认视图, 那么在加载模板时将优先使用默认视图.
 
 默认值: `rythm` see [Rythm Engine](http://rythmengine.org)
 
 Other options:
 
-* `freemarker` - need [act-freemarker](https://github.com/actframework/act-freemarker) plugin
-* `velocity` - need [act-velocity](https://github.com/actframework/act-velocity) plugin
-* `mustache` - need [act-mustache](https://github.com/actframework/act-mustache) plugin
-* `thymeleaf` - need [act-thymeleaf](https://github.com/actframework/act-thymeleaf) plugin
-* `beetl` - need [act-beetl](https://github.com/actframework/act-beetl) plugin
+* `freemarker` - 需要 [act-freemarker](https://github.com/actframework/act-freemarker) 插件
+* `velocity` - 需要 [act-velocity](https://github.com/actframework/act-velocity) 插件
+* `mustache` - 需要 [act-mustache](https://github.com/actframework/act-mustache) 插件
+* `thymeleaf` - 需要 [act-thymeleaf](https://github.com/actframework/act-thymeleaf) 插件
+* `beetl` - 需要 [act-beetl](https://github.com/actframework/act-beetl) 插件
