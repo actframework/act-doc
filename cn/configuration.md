@@ -307,7 +307,7 @@
 * **act.content_suffix.aware**
 * **act.content_suffix.aware.enabled**
 
-启用此配置项，框架将自动识别具有内容后缀的请求，例如 `/customer/123/json` 或 `/customer/123.json`, 将匹配路径 `/customer/123`, 并将请求 `Accept` 头的值设置为 `application/json`.
+启用此配置项，框架将自动识别具有内容后缀的请求，例如 `/customer/123/json` ~~或 `/customer/123.json`~~, 将匹配路径 `/customer/123`, 并将请求 `Accept` 头的值设置为 `application/json`.
 
 默认值: `false`
 
