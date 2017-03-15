@@ -308,7 +308,7 @@ Aliases
 * **act.content_suffix.aware**
 * **act.content_suffix.aware.enabled**
 
-Once enabled then the framework automatically recognize request with content suffix, e.g. `/customer/123/json` or `/customer/123.json` will match the route `/customer/123` and set the request `Accept` header value to `application/json`. 
+Once enabled then the framework automatically recognize request with content suffix, e.g. `/customer/123/json` ~~or `/customer/123.json`~~ will match the route `/customer/123` and set the request `Accept` header value to `application/json`. 
 
 **Note** Suffix is separated with real URL path `/`
 
