@@ -4,7 +4,7 @@
 
 You need JDK and Maven to create Act application. An internet connection should be ready for downloading libraries from maven central repository
 
-1. JDK (Java Development Kit), version 1.6 and above
+1. JDK (Java Development Kit), version 1.7 and above
 1. Maven (Project Management Tool), version 3.3 and above
 
 If you already have the JDK and Maven installed you can safely skip the following sections.
@@ -74,7 +74,7 @@ Update your `App.java`
 ```java
 package com.mycom.helloworld;
 
-import act.boot.app.RunApp;
+import act.Act;
 import org.osgl.mvc.annotation.GetAction;
 
 /**
@@ -88,7 +88,7 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        RunApp.start(App.class);
+        Act.start("Hello World Demo");
     }
 }
 ```
