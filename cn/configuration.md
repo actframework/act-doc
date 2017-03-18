@@ -799,6 +799,28 @@ act.namedPorts=admin:8888;ipc:8899
 
 注意, 不同于通常在配置文件中指定的其他配置项. `profile` 设置是通过 `System#getProperty(String)` 加载, 因此通常使用 JVM 参数 `Dprofile=<profile>`
 
+#### [render_json_content_type_ie]render.json.content_type.ie
+
+别名
+
+* **act.render.json.content_type.ie**
+
+指定当请求来自IE浏览器切响应格式为JSON的时候用来输出到`Content-Type`头的字串. 当此配置设置后, 如果输出格式为JSON, 框架将检查请求的`useragent`, 如果发现是来自IE浏览器, 则用此配置来替代`application/json`输出JSON格式的`Content-Type`响应头.
+
+默认值: `null` - 即框架不会检查浏览器的类型, 总是用 `application/json` 来输出JSON格式的`Content-Type` 响应头
+
+#### [render_json_output_charset]render.json.output_charset
+
+别名
+
+* **render.json.output_charset.enabled**
+* **act.render.json.output_charset**
+* **act.render.json.output_charset.enabled**
+
+指定是否在输出 `Content-Type` 响应头的时候将 `;charset=UTF-8` 添加到 `applicatin/json` 
+
+默认值: `false`
+
 #### [resolver_error_template_path_impl]resolver.error_template_path.impl
 
 别名
