@@ -771,6 +771,29 @@ Default value: the value of the {@link Act#mode()}
 
 Note, unlike other configuration items which is usually specified in the configuration file. `profile` setting is load by `System#getProperty(String)`, thus it is usually specified with JVM argument `Dprofile=<profile>`
 
+
+#### [render_json_content_type_ie]render.json.content_type.ie
+
+Aliases
+
+* **act.render.json.content_type.ie**
+
+Specifies the JSON content type that should be used when request is sent from IE browser. Once this configuration is set, then the framework will check the useragent string for each incomding request. If the request is coming from IE and the response is JSON format, then it will use the value set in this configuration instead of `application/json`.
+
+Default value: `null` - meaning the framework will not check useragent string when response type is JSON. And it will always output `application/json` for JSON response
+
+#### [render_json_output_charset]render.json.output_charset
+
+Aliases
+
+* **render.json.output_charset.enabled**
+* **act.render.json.output_charset**
+* **act.render.json.output_charset.enabled**
+
+Specifies whether it shall append `;charset=UTF-8` to `applicatin/json` when output the response `Content-Type` header.
+
+Default value: `false`
+
 #### [resolver_error_template_path_impl]resolver.error_template_path.impl
 
 Aliases
