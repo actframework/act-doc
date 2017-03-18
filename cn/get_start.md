@@ -72,7 +72,7 @@ mvn archetype:generate -DgroupId=com.mycom.helloworld -DartifactId=helloworld -D
 ```java
 package com.mycom.helloworld;
 
-import act.boot.app.RunApp;
+import act.Act;
 import org.osgl.mvc.annotation.GetAction;
 
 /**
@@ -86,7 +86,7 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        RunApp.start(App.class);
+        Act.start("Hello World Demo");
     }
 }
 ```
