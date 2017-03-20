@@ -1,5 +1,20 @@
 # Release Notes
 
+#### act-1.0.3
+
+* [#68  Error enhancing render arguments when break the statement into multiple lines](https://github.com/actframework/actframework/issues/68)
+* [#84 @fullUrl and @url tag doesn't work when there is no GET request mapping to the action handler method](https://github.com/actframework/actframework/issues/84)
+* [#89 session.ttl setting prevent app from start up](https://github.com/actframework/actframework/issues/89)
+* [#94 Invalid encoded characters in Error page](https://github.com/actframework/actframework/issues/94)
+* [#97 Act controller not return correct @version "v" for save method when MorphiaDao return the value bug](https://github.com/actframework/actframework/issues/97)
+* [#99  Update FastJson version to 1.2.29](https://github.com/actframework/actframework/issues/99)
+* [#100 when the browser get a json request, Chinese characters are not displayed properly](https://github.com/actframework/actframework/issues/100)
+* [#101 IE doesn't support "application/json" content type](https://github.com/actframework/actframework/issues/101)
+* [#104 Incorrectly configured routes should not crash hot-reload](https://github.com/actframework/actframework/issues/104)
+* [#106 Reloading View manager might break the hot reload process](https://github.com/actframework/actframework/issues/106)
+* [#107 Simplify the use of reverse routing API](https://github.com/actframework/actframework/issues/107)
+* [#108 Simplify the use of `@url` and `@fullUrl` tag](https://github.com/actframework/actframework/issues/108)
+
 #### act-1.0.2
 
 * Fix [# 88 Controller context break with intermediate non-controller class in the hierarchies](https://github.com/actframework/actframework/issues/88)
