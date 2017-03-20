@@ -15,6 +15,14 @@
 * [#107 Simplify the use of reverse routing API](https://github.com/actframework/actframework/issues/107)
 * [#108 Simplify the use of `@url` and `@fullUrl` tag](https://github.com/actframework/actframework/issues/108)
 
+#### act-morphia-1.0.2
+
+* [#5 Act controller not return correct @version "v" for save method when MorphiaDao return the value](https://github.com/actframework/act-morphia/issues/5)
+
+#### act-freemarker
+
+* [#1 Allow user to use `.ftl` or configured suffix in template name](https://github.com/actframework/act-freemarker/issues/1)
+
 #### act-1.0.2
 
 * Fix [# 88 Controller context break with intermediate non-controller class in the hierarchies](https://github.com/actframework/actframework/issues/88)
