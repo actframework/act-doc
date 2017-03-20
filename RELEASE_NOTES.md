@@ -19,7 +19,7 @@
 
 * [#5 Act controller not return correct @version "v" for save method when MorphiaDao return the value](https://github.com/actframework/act-morphia/issues/5)
 
-#### act-freemarker
+#### act-freemarker-1.0.1
 
 * [#1 Allow user to use `.ftl` or configured suffix in template name](https://github.com/actframework/act-freemarker/issues/1)
 
