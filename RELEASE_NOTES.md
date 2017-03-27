@@ -6,7 +6,7 @@
 
 #### act-1.0.4
 
-* [#109 It shall display the exception stack trace tab on template exception page enhancement fixed](https://github.com/actframework/actframework/issues/109)
+* [#109 It shall display the exception stack trace tab on template exception page](https://github.com/actframework/actframework/issues/109)
 * [#110 Using simplified action path in @fullUrl and @url doesn't work in an free template](https://github.com/actframework/actframework/issues/110)
 * [#111 Routing failure on `/{path1}/{path2}/{path3}/{id}.html` style URL path](https://github.com/actframework/actframework/issues/111)
 * [#112 Missing embedded object content when PropertySpec is specified](https://github.com/actframework/actframework/issues/112)
