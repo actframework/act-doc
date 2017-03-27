@@ -1,10 +1,10 @@
 # Release Notes
 
-### act-1.0.5
+#### act-1.0.5
 
 * [#118 Version range doesn't work as expected](https://github.com/actframework/actframework/issues/118)
 
-### act-1.0.4
+#### act-1.0.4
 
 * [#109 It shall display the exception stack trace tab on template exception page enhancement fixed](https://github.com/actframework/actframework/issues/109)
 * [#110 Using simplified action path in @fullUrl and @url doesn't work in an free template](https://github.com/actframework/actframework/issues/110)
@@ -12,17 +12,17 @@
 * [#112 Missing embedded object content when PropertySpec is specified](https://github.com/actframework/actframework/issues/112)
 * [#115 Router: support inner variables inside URL path](https://github.com/actframework/actframework/issues/115)
 
-### act-ebean-1.0.5
+#### act-ebean-1.0.5
 
 * [#5 Make it easy to do low level JDBC logic](https://github.com/actframework/act-ebean/issues/5)
 * [#4 Use HikariCP as datasource connection pool](https://github.com/actframework/act-ebean/issues/4)
 
-### rythmengine-1.2.0
+#### rythmengine-1.2.0
 
 * [#362 Remove `__sep` and `__util` iterable variables](https://github.com/rythmengine/rythmengine/issues/362)
 * [#361 Replace `Stack` with `Deque` in `TemplateBase`](https://github.com/rythmengine/rythmengine/issues/361)
 
-### osgl-http-1.0.2
+#### osgl-http-1.0.2
 
 * [#1 H.Rquest.fullUrl() shall not output `80` when sending to port `80`](https://github.com/osglworks/java-http/issues/1)
 
