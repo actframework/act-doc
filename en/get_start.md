@@ -240,10 +240,6 @@ Act use the standard maven layout to organize the project with a few specific ru
 ├── pom.xml
 ├── src
 │   ├── main
-│   │   ├── asset                               -> public assets, can be accessed via "/asset"
-│   │   │   ├── css                             -> CSS files
-│   │   │   ├── img                             -> Image files
-│   │   │   └── js                              -> Javascript files
 │   │   ├── java                                -> Java sources
 │   │   │   └── com
 │   │   │       └── mycom
@@ -257,6 +253,10 @@ Act use the standard maven layout to organize the project with a few specific ru
 │   │   │               ├── sys                 -> system level utilities
 │   │   │               └── util                -> general utilities
 │   │   └── resources                           -> resource files
+│   │       ├── asset                           -> public assets, can be accessed via "/asset"
+│   │       │   ├── css                         -> CSS files
+│   │       │   ├── img                         -> Image files
+│   │       │   └── js                          -> Javascript files
 │   │       ├── conf                            -> configuration file root
 │   │       │   ├── common                      -> common configurations applied to all profiles
 │   │       │   ├── sit                         -> "sit" profile configurations that overwrite commond configurations
