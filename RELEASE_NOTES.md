@@ -1,6 +1,6 @@
 # Release Notes
 
-### act-1.0.7
+#### act-1.0.7
 
 * [#70 Make it able to configure the number of network io threads and work threads](https://github.com/actframework/actframework/issues/70)
 * [#120 configuration `render.json.output_charset.enabled` default value shall be `false`](https://github.com/actframework/actframework/issues/120)
@@ -11,14 +11,14 @@
 * [#133 It uses undertow deprecated API to construct HttpOpenListener](https://github.com/actframework/actframework/issues/133)
 * [#134 Fine tune undertow configurations](https://github.com/actframework/actframework/issues/134)
 
-### act-ebean-1.1.0
+#### act-ebean-1.1.0
 
 * [#9 Support plugin different datasource solution](https://github.com/actframework/act-ebean/issues/9)
 * [#8 change mysql jdbc driver class name](https://github.com/actframework/act-ebean/issues/8)
 * [#6 Support Druid database connection pool](https://github.com/actframework/act-ebean/issues/6)
 
 
-### act-1.0.6
+#### act-1.0.6
 
 * [#121 #115 caused issue that failed to add route mapping in certain case](https://github.com/actframework/actframework/issues/121)
 
