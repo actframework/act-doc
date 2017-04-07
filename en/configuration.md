@@ -974,6 +974,17 @@ Specifies where the view templates resides. If not specified then will use the v
 
 **Note** it is highly recommended NOT to set this configuration item
 
+#### [url_context]url.context
+
+Alias
+
+* **act.url.context**
+When migrating a legacy system (especially the system running inside a servlet container) to ActFramework, it ofter need to process the URL context. This configuration is provided to handle this case. Once the application configured a `url.context`, ActFramework will automatically take out the url context from incoming request URL path before doing routing.
+
+Default value： `null`
+
+Effective version: 1.1+
+
 
 #### [url_login]url.login
 
