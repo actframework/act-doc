@@ -997,6 +997,17 @@ Default value: `1024 * 10`, i.e. 10KB
 
 **注意** 强烈建议不要设置此配置项.
 
+#### [url_context]url.context
+
+别名
+
+* **act.url.context**
+当迁移旧系统（特别是在 Ｓervlet 容器上运行的系统）到 ActFramework 的时候会遇到处理 URL Context 的问题。这个配置可以帮助处理这种情况。一旦设置了 `url.context`，ActFramework 会自动将请求的 URL 路径上的 context 部分去掉，然后匹配路由。
+
+默认值： `null`
+
+启用版本： 1.1
+
 #### [url_login]url.login
 
 别名
