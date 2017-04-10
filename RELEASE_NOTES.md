@@ -13,6 +13,10 @@
 
 * [An new ActFramework module for all DB plugins that needs to play with SQL database](https://github.com/actframework/act-sql-common)
 
+#### act-beetlsql
+
+* [BeetlSQL plugin for ActFramework](https://github.com/actframework/act-beetlsql)
+
 #### act-ebean2-1.0.1
 
 * [New ebean plugin that uses the latest ebean library](https://github.com/actframework/act-ebean2) - Require JDK 8+
