@@ -8,19 +8,18 @@
 * [#139 allow SimpleEventHandler to be used to handle event happening before app started](https://github.com/actframework/actframework/issues/139)
 * [#138 Update FastJson to 1.2.31](https://github.com/actframework/actframework/issues/138)
 * [#137 DbService update](https://github.com/actframework/actframework/issues/137)
-* [](https://github.com/actframework/actframework/issues/)
 
 #### act-sql-common-1.0.0
 
-* An new ActFramework module for all DB plugins that needs to play with SQL database
+* [An new ActFramework module for all DB plugins that needs to play with SQL database](https://github.com/actframework/act-sql-common)
 
 #### act-ebean2-1.0.1
 
-* New ebean plugin that uses the latest ebean library - Require JDK 8+
+* [New ebean plugin that uses the latest ebean library](https://github.com/actframework/act-ebean2) - Require JDK 8+
 
 #### act-ebean-1.1.2
 
-* Migrate ebean plugin to new DB plugin architecture - extends from act-sql-common-1.0.0
+* [#12 Migrate ebean plugin to new DB plugin architecture - extends from act-sql-common-1.0.0](https://github.com/actframework/act-ebean/issues/12)
 
 #### act-1.0.7
 
