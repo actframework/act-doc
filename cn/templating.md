@@ -16,8 +16,8 @@ Beelt依赖:
 ```xml
 <dependency>
     <groupId>org.actframework</groupId>
-    <artifactId>act-beelt</artifactId>
-    <version>0.6.0-SNAPSHOT</version>
+    <artifactId>act-beetl</artifactId>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -27,7 +27,7 @@ Freemarker依赖:
 <dependency>
     <groupId>org.actframework</groupId>
     <artifactId>act-freemarker</artifactId>
-    <version>0.6.0-SNAPSHOT</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -37,7 +37,7 @@ Mustache依赖:
 <dependency>
     <groupId>org.actframework</groupId>
     <artifactId>act-mustache</artifactId>
-    <version>0.6.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -47,7 +47,7 @@ Thymeleaf依赖:
 <dependency>
     <groupId>org.actframework</groupId>
     <artifactId>act-thymeleaf</artifactId>
-    <version>0.6.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -58,7 +58,7 @@ Velocity依赖:
 <dependency>
     <groupId>org.actframework</groupId>
     <artifactId>act-velocity</artifactId>
-    <version>0.6.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
