@@ -50,8 +50,6 @@
 * [#148 Support get process ID on non-unix environment](https://github.com/actframework/actframework/issues/148)
 * [#147 Unnecessary synchronization ReflectedHandlerInvoker.checkTemplate](https://github.com/actframework/actframework/issues/147)
 * [#146 When db plugin is configured, it uses empty string as service ID](https://github.com/actframework/actframework/issues/146)
-* [#144 `EventBus.bind(Object, SimpleEventListener)` shall check if the object type is `EventObject`](https://github.com/actframework/actframework/issues/144)
-
 
 #### act-1.1.0
 
