@@ -1,5 +1,58 @@
 # Release Notes
 
+#### act-1.1.2
+
+* [#151 Update version of osgl and other dependencies](https://github.com/actframework/actframework/issues/151)
+* [#150 Deadlock while app boot up](https://github.com/actframework/actframework/issues/150)
+
+#### act-storage-0.9.0
+
+* [#10 NPE triggered when loading storage object without attr file](https://github.com/osglworks/java-storage/issues/10)
+* [#9 Allow plugin key name provider and key generator](https://github.com/osglworks/java-storage/issues/9)
+* [#8 Allow store sobject with suffix attached to the key](https://github.com/osglworks/java-storage/issues/8)
+
+#### act-aaa-1.1.0
+
+* [#1 Rework on AAA facade, added a lot of convenient APIs](https://github.com/osglworks/java-aaa/issues/1)
+* [#2 AAA and AAAPersistenceService now has APIs to return all roles, permissions and privileges](https://github.com/osglworks/java-aaa/issues/2)
+
+#### act-ebean-1.1.5
+
+* [#16 NPE when no third party datasource configured](https://github.com/actframework/act-ebean/issues/16)
+
+#### act-ebean2-1.0.4
+
+* [#6 NPE when no third party datasource configured](https://github.com/actframework/act-ebean2/issues/6)
+
+#### act-sql-common-1.0.2
+
+* [#3 Allow specific implementation to initialize in different logic when dataSourceProvider available or not](https://github.com/actframework/act-sql-common/issues/3)
+
+#### act-ebean-1.1.4
+
+* [#14 Ebean Agent loaded twice if there are two ebean db services](https://github.com/actframework/act-ebean/issues/14)
+* [#15 The datasource created in sql-common not used when creating ebean server](https://github.com/actframework/act-ebean/issues/15)
+
+#### act-ebean2-1.0.3
+
+* [#3 It doesn't start with MySQL jdbc driver 5.x](https://github.com/actframework/act-ebean2/issues/3)
+* [#4 Ebean Agent loaded twice if there are two ebean2 db services](https://github.com/actframework/act-ebean2/issues/4)
+* [#5 The datasource created in sql-common not used when creating ebean server](https://github.com/actframework/act-ebean2/issues/5)
+
+
+#### act-sql-common-1.0.1
+
+* [#2 The default jdbc driver doesn't work with mysql jdbc driver 5.x](https://github.com/actframework/act-sql-common/issues/2)
+* [#1 When it uses h2 with db on filesystem, it shall ignore the `ddl.create` if that file exists](https://github.com/actframework/act-sql-common/issues/1)
+
+#### act-1.1.1
+
+* [#148 Support get process ID on non-unix environment](https://github.com/actframework/actframework/issues/148)
+* [#147 Unnecessary synchronization ReflectedHandlerInvoker.checkTemplate](https://github.com/actframework/actframework/issues/147)
+* [#146 When db plugin is configured, it uses empty string as service ID](https://github.com/actframework/actframework/issues/146)
+* [#144 `EventBus.bind(Object, SimpleEventListener)` shall check if the object type is `EventObject`](https://github.com/actframework/actframework/issues/144)
+
+
 #### act-1.1.0
 
 * [#142 Always generate pid file when app start in prod mode](https://github.com/actframework/actframework/issues/142)
