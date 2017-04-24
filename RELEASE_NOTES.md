@@ -2,7 +2,7 @@
 
 #### act-1.2.0
 
-24/Apr/2017
+24/Apr/2017 - [What's New](http://actframework.org/doc/releases/r1.2.0.md)
 
 * [#161 Add an annotation that indicate an injected field is stateless](https://github.com/actframework/actframework/issues/161)
 * [#160 Make `ActionContext` an injectable field in `Controller.Util`](https://github.com/actframework/actframework/issues/160)
