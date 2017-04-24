@@ -1,17 +1,44 @@
 # Release Notes
 
+#### act-1.2.0
+
+24/Apr/2017
+
+* [#161 Add an annotation that indicate an injected field is stateless](https://github.com/actframework/actframework/issues/161)
+* [#160 Make `ActionContext` an injectable field in `Controller.Util`](https://github.com/actframework/actframework/issues/160)
+* [#159 generated pid file not get deleted when app process is killed](https://github.com/actframework/actframework/issues/159)
+* [#157 SEO support on routing](https://github.com/actframework/actframework/issues/157)
+* [#156 Compile error is not displayed at dev mode](https://github.com/actframework/actframework/issues/156)
+* [#153 When `@NotNull` used along with `@DbBind` it shall return 404 if binding failed](https://github.com/actframework/actframework/issues/153)_
+* [#152 Allow annotation based interceptor class to be registered as global interceptor](https://github.com/actframework/actframework/issues/152)
+* [#136 Allow `@With` annotation to be used on specific handler method](https://github.com/actframework/actframework/issues/136)
+* [#124 Improve error reporting on "Unknown accept content type"](https://github.com/actframework/actframework/issues/124)
+
+#### act-storage-0.10.0
+
+24/Apr/2017
+
+* [#11 Enable user defined `KeyGenerator`](https://github.com/osglworks/java-storage/issues/11)
+
+
 #### act-1.1.2
+
+17/Apr/2017
 
 * [#151 Update version of osgl and other dependencies](https://github.com/actframework/actframework/issues/151)
 * [#150 Deadlock while app boot up](https://github.com/actframework/actframework/issues/150)
 
 #### act-storage-0.9.0
 
+17/Apr/2017
+
 * [#10 NPE triggered when loading storage object without attr file](https://github.com/osglworks/java-storage/issues/10)
 * [#9 Allow plugin key name provider and key generator](https://github.com/osglworks/java-storage/issues/9)
 * [#8 Allow store sobject with suffix attached to the key](https://github.com/osglworks/java-storage/issues/8)
 
 #### act-aaa-1.1.0
+
+17/Apr/2017
 
 * [#1 Rework on AAA facade, added a lot of convenient APIs](https://github.com/osglworks/java-aaa/issues/1)
 * [#2 AAA and AAAPersistenceService now has APIs to return all roles, permissions and privileges](https://github.com/osglworks/java-aaa/issues/2)
