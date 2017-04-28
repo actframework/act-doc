@@ -119,7 +119,7 @@ public class MySingletonConsumer {
 
 ```java
 @GetAction("/foo")
-public String sayFoo(@act.di.Context MySingleton mySingleton) {
+public String sayFoo(MySingleton mySingleton) {
     return mySingleton.foo();
 }
 ```
