@@ -119,7 +119,7 @@ or into your [action handler](../controller.md#term)
 
 ```java
 @GetAction("/foo")
-public String sayFoo(@act.di.Context MySingleton mySingleton) {
+public String sayFoo(MySingleton mySingleton) {
     return mySingleton.foo();
 }
 ```
