@@ -102,8 +102,8 @@ String s = singleton.foo();
 // you can also use the App.singleton(Class) way to fetch your singleton:
 MySingleton singleton2 = act.app.App.instance().singleton(MySingleton.class);
 
-// or you can just ask App to give you an new instance:
-MySingleton singleton3 = act.app.App.instance().newInstance(MySingleton.class);
+// or you can just ask App to give you an instance:
+MySingleton singleton3 = act.app.App.instance().getInstance(MySingleton.class);
 ```
 
 ActFramework makes sure `singleton`, `singleton2` and `singleton3` is the same instance. You can also inject your singleton class into another class:
