@@ -103,7 +103,7 @@ String s = singleton.foo();
 MySingleton singleton2 = act.app.App.instance().singleton(MySingleton.class);
 
 // or you can just ask App to give you an new instance:
-MySingleton singleton3 = act.app.App.instance().newInstance(MySingleton.class);
+MySingleton singleton3 = act.app.App.instance().getInstance(MySingleton.class);
 ```
 
 上面的代码中，ActFramework确保`singleton`, `singleton2` 和 `singleton3` 都指向同一个实例。你还可以把单例注入到其他类中：
