@@ -2,7 +2,7 @@
 
 Creating singleton class in Java is a [complicated topic](http://www.javaworld.com/article/2073352/core-java/simply-singleton.html) and deserve [long thread of discussion](http://stackoverflow.com/questions/70689/what-is-an-efficient-way-to-implement-a-singleton-pattern-in-java). 
 
-## Standard Java approach
+#### Standard Java approach
 
 Fortunately since Java5 you got a very neat way to create singleton:
 
@@ -64,7 +64,7 @@ public class MySingleton extends MyBaseClass {
 
 **Tips** Make sure you have the `volatile` keyword in the `INSTANCE` declaration, otherwise you will get into the [trouble](http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html)
 
-## ActFramework specific approach
+#### ActFramework specific approach
 
 ActFramework provides you another approach to create singleton class: just add `javax.inject.Singleton` annotation to your class:
 
