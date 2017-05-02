@@ -1,5 +1,25 @@
 # Release Notes
 
+#### act-1.3.0
+
+* [#128 Create a mechanism to cache the GET request result](https://github.com/actframework/actframework/issues/128)
+* [#163 Introduce `@TemplateContext` annotation](https://github.com/actframework/actframework/issues/163)
+* [#164 Split `@Controller` annotation into `@UrlContext` and `@Port` annotation](https://github.com/actframework/actframework/issues/164)
+* [#167 `@Global` doesn't work when put behind the interceptor annotation](https://github.com/actframework/actframework/issues/167)
+* [#168 Make all scanner favor the setting of `@Env` annotations](https://github.com/actframework/actframework/issues/168)
+* [#169 Regex in route not working](https://github.com/actframework/actframework/issues/169)
+* [#170 Make it easy to create global template variable](https://github.com/actframework/actframework/issues/170)
+* [#171 Add helper javascript library that extends jQuery](https://github.com/actframework/actframework/issues/171)
+* [#174 Support profile specific route configuration](https://github.com/actframework/actframework/issues/174)
+* [#175 Create better error message when there are error enhancing classes](https://github.com/actframework/actframework/issues/175)
+* [#177 Better error reporting when multiple controller action/interceptor methods have the same name](https://github.com/actframework/actframework/issues/177)
+* [#178 When handler returns a primitive type the result is not JSON result when `Accept` header require JSON](https://github.com/actframework/actframework/issues/178)
+* [#179 Provide an annotation to mark a field or parameter as template variable](https://github.com/actframework/actframework/issues/179)
+* [#180 Setting character encoding in response doesn't effect correctly](https://github.com/actframework/actframework/issues/180)
+* [#181 Make redirect favor Controller URL context](https://github.com/actframework/actframework/issues/181)
+* [#182 Make app able to run `prod` mode from within IDE](https://github.com/actframework/actframework/issues/182)
+
+
 #### act-1.2.0
 
 24/Apr/2017 - [What's New](http://actframework.org/doc/releases/r1.2.0.md)
