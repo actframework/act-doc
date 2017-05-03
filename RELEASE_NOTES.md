@@ -5,6 +5,7 @@
 02/May/2017 - [What' New](http://actframework.org/doc/releases/r1.3.0.md)
 
 * [#128 Create a mechanism to cache the GET request result](https://github.com/actframework/actframework/issues/128)
+* [#154 Support multiple `handler.missing_authentication` configurations](https://github.com/actframework/actframework/issues/154)
 * [#163 Introduce `@TemplateContext` annotation](https://github.com/actframework/actframework/issues/163)
 * [#164 Split `@Controller` annotation into `@UrlContext` and `@Port` annotation](https://github.com/actframework/actframework/issues/164)
 * [#167 `@Global` doesn't work when put behind the interceptor annotation](https://github.com/actframework/actframework/issues/167)
