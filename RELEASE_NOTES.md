@@ -22,6 +22,15 @@
 * [#181 Make redirect favor Controller URL context](https://github.com/actframework/actframework/issues/181)
 * [#182 Make app able to run `prod` mode from within IDE](https://github.com/actframework/actframework/issues/182)
 
+#### act-aaa-1.2.0
+
+02/May/2017
+
+* [#7 updated acl.yaml not reloaded in dev mode bug](https://github.com/actframework/act-aaa-plugin/issues/7)
+* [#6 Allow profile specified `acl.yaml` configuration](https://github.com/actframework/act-aaa-plugin/issues/6)
+* [#5 New AAAObject name matching logic](https://github.com/actframework/act-aaa-plugin/issues/5)
+* [#4 It waived authentication for a controller method when before handler has no requirement on authentication](https://github.com/actframework/act-aaa-plugin/issues/4)
+
 
 #### act-1.2.0
 
