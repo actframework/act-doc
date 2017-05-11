@@ -1,6 +1,10 @@
 # FAQ
 
-## Why do I see the "App not found" issue
+#### How is the performance of ActFramework
+
+[TechEmpower Benchmark](https://www.techempower.com/benchmarks/#section=data-r14&hw=ph&test=fortune) is well known performance benchmark project for web tech stacks. Click [here](techempower/r14.md) to see how ActFramework performs in comparing to most JVM fullstack frameworks.
+
+#### Why do I see the "App not found" issue
 
 I am using Intellij IDEA and when I start the "HelloWorld" sample application in the IDE, I got the following error stack:
 
@@ -22,12 +26,12 @@ Exception in thread "main" org.osgl.exception.UnexpectedException: App not found
 	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
 ```
 
-### Answer
+##### Answer
 
 You need to update the Run configuration and make sure working directory is set correctly:
 ![image](https://cloud.githubusercontent.com/assets/216930/23855130/a2136556-0848-11e7-8184-2433004b123b.png)
 
-## I got `java.security.InvalidKeyException: Illegal key size`, what's that
+#### I got `java.security.InvalidKeyException: Illegal key size`, what's that
 
 ```
 13:01:06.851 [XNIO-1 task-17] ERROR a.a.u.AppCrypto - Cannot encrypt/decrypt! Please download Java Crypto Extension pack from Oracle: http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136007.html
@@ -60,7 +64,7 @@ Caused by: java.security.InvalidKeyException: Illegal key size
 	... 15 common frames omitted
 ```
 
-### Answer
+##### Answer
 
 You need to install JCE (Java Cryptography Extension). Please google `jce java` and find the link to oracle website. Follow the instruction to download and install
 
