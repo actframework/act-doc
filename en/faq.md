@@ -2,7 +2,7 @@
 
 #### How is the performance of ActFramework
 
-[TechEmpower Benchmark](https://www.techempower.com/benchmarks/#section=data-r14&hw=ph&test=fortune) is well known performance benchmark project for web tech stacks. Click [here](techempower/r14.md) to see how ActFramework performs in comparing to most JVM fullstack frameworks.
+[TechEmpower Benchmark](https://www.techempower.com/benchmarks/#section=data-r14&hw=ph&test=fortune) is well known performance benchmark project for web tech stacks. Click [here](techempower/r14.md) to see how ActFramework performs in comparing to most JVM fullstack frameworks in TechEmpower Benchmark tests
 
 #### Why do I see the "App not found" issue
 
