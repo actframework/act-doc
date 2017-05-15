@@ -737,6 +737,29 @@ Available options:
 
 默认值: `java.util.Locale#getDefault`
 
+#### [log_level]log.level.(pkg.cls.id)
+
+别名
+
+* **act.log.level.(pkg.cls.id)**
+
+指定 `pkg.cls.id` 的 log 级别. 有效配置选项:
+
+* FATAL
+* ERROR
+* WARN
+* INFO
+* DEBUG
+* TRACE
+
+例子: 
+
+* `log.level.com.my.app=INFO`
+* `log.level.java=FATAL`
+
+默认值: N/A
+
+
 #### [metric]metric
   		  
 别名
