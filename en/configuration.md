@@ -709,6 +709,28 @@ Specifies the application default locale.
 
 Default value: `java.util.Locale#getDefault`
 
+#### [log_level]log.level.(pkg.cls.id)
+
+Aliases
+
+* **act.log.level.(pkg.cls.id)**
+
+Specifies the app log level for `pkg.cls.id`. Available options:
+
+* FATAL
+* ERROR
+* WARN
+* INFO
+* DEBUG
+* TRACE
+
+Examples: 
+
+* `log.level.com.my.app=INFO`
+* `log.level.java=FATAL`
+
+Default value: `null`
+
 #### [metric]metric
 
 Aliases
