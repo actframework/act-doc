@@ -30,6 +30,7 @@ ActFramework可以让开发人员以更加简洁有趣的方式开发MVC应用�
 1. [事件绑定与分发](event.md)
 1. [发送邮件](email.md)
 1. [创建命令行程序](cli.md)
+1. [WebSocket支持](websocket.md)
 1. Using CLI to inspect and manage your application
 1. Using act-aaa to implement security
 1. Using act-storage to implement file persistence
