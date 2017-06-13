@@ -30,29 +30,29 @@ public class ChatApp {
 Here is the code for html page to handle websocket communication:
 
 ```html
-  <script>
-      var socket;
-      if (window.WebSocket) {
-          socket = new WebSocket("ws://localhost:5460/msg");
-          socket.onmessage = function (event) {
-              var home = document.getElementById('chat');
-              home.innerHTML = home.innerHTML + event.data + "<br />";
-          };
-      } else {
-          alert("Your browser does not support Websockets. (Use Chrome)");
-      }
-      function send(message) {
-          if (!window.WebSocket) {
-              return false;
-          }
-          if (socket.readyState == WebSocket.OPEN) {
-              socket.send(message);
-          } else {
-              alert("The socket is not open.");
-          }
+<script>
+  var socket;
+  if (window.WebSocket) {
+      socket = new WebSocket("ws://localhost:5460/msg");
+      socket.onmessage = function (event) {
+          var home = document.getElementById('chat');
+          home.innerHTML = home.innerHTML + event.data + "<br />";
+      };
+  } else {
+      alert("Your browser does not support Websockets. (Use Chrome)");
+  }
+  function send(message) {
+      if (!window.WebSocket) {
           return false;
       }
-  </script>
+      if (socket.readyState == WebSocket.OPEN) {
+          socket.send(message);
+      } else {
+          alert("The socket is not open.");
+      }
+      return false;
+  }
+</script>
 ```
 
 ## Introduction 2 - an echo server
@@ -113,9 +113,8 @@ Then we can declare our message handler as:
 
 ```java
 @WsAction("/chat")
-public void handleMessage(Message message, WebSocketContext context) {
-    String roomName = message.room;
-    context.sendJsonToTagged(message, message.room);
+public void handlePojoMessage(Message pojo, WebSocketContext context) {
+    context.sendJsonToTagged(pojo, pojo.room);
 }
 ```
 
