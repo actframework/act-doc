@@ -227,34 +227,34 @@ For developer who really want to make everything be explicity, here are two ways
 
 1. Return result
 
-    ```java
-    @PostAction("/order")
-    public Result createOrder(Order order) {
-        orderService.save(order);
-        return ok();
-        // or return new Ok();
-    }
-    ```
+```java
+@PostAction("/order")
+public Result createOrder(Order order) {
+    orderService.save(order);
+    return ok();
+    // or return new Ok();
+}
+```
 
-1. Throw out result
+2. Throw out result
 
-    ```java
-    @PostAction("/order")
-    public void createOrder(Order order) {
-        orderService.save(order);
-        throw ok();
-        // or throw new Ok();
-    }
-    ```
+```java
+@PostAction("/order")
+public void createOrder(Order order) {
+    orderService.save(order);
+    throw ok();
+    // or throw new Ok();
+}
+```
 You can even throw out the result implicitly
 
-    ```java
-    @PostAction("/order")
-    public void createOrder(Order order) {
-        orderService.save(order);
-        ok();
-    }
-    ```
+```java
+@PostAction("/order")
+public void createOrder(Order order) {
+    orderService.save(order);
+    ok();
+}
+```
 **Note** ActFramework will enhance your controller action method, so that if a `Result` type exception has been returned in the source code be thrown out automatically.
 
 ### <a name="return-404"></a>Return 404 Not Found
