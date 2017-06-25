@@ -1,19 +1,34 @@
 # Release Notes
 
-#### act-1.4.0
+#### act-1.4.2 25/Jun/2017
+
+Checkout issues resolved in act-1.3.5 at https://github.com/actframework/actframework/milestone/12?closed=1
+
+#### act-1.3.5 25/Jun/2017
+
+Checkout issues resolved in act-1.3.5 at https://github.com/actframework/actframework/milestone/13?closed=1
+
+#### act-1.4.2 14/Jun/2017
+
+Checkout issues resolved in act-1.4.1 at https://github.com/actframework/actframework/milestone/11?closed=1
+
+#### act-1.4.0 12/Jun/2017
 
 Checkout issues resolved in act-1.4.0 at https://github.com/actframework/actframework/milestone/7?closed=1
 
-#### act-1.3.4
+#### act-1.3.4 12/Jun/2017
 
 Check out issues resolved in act-1.3.4 at https://github.com/actframework/actframework/milestone/9?closed=1
 
-#### act-1.3.3
+#### act-1.3.3 10/May/2017
 
 Check out issues resolved in act-1.3.3 at https://github.com/actframework/actframework/milestone/8?closed=1
 
+#### act-1.3.2 5/May/2017
+#### act-1.3.1 4/May/2017
+#### act-1.3.0 2/May/2017
 
-#### act-1.3.0
+Checkj out issues resolved on act-1.3.x at https://github.com/actframework/actframework/milestone/6?closed=1
 
 02/May/2017 - [What' New](http://actframework.org/doc/releases/r1.3.0.md)
 
