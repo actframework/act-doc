@@ -1,8 +1,18 @@
 # Release Notes
 
+#### act-1.4.3 29/Jun/2017
+
+Checkout issues resolved in act-1.4.3 at https://github.com/actframework/actframework/milestone/14?closed=1
+Plus all issues resolved in act-1.3.6 at https://github.com/actframework/actframework/milestone/15?closed=1
+
+#### act-1.3.6 29/Jun/2017
+
+Checkout issues resolved in act-1.3.6 at https://github.com/actframework/actframework/milestone/15?closed=1
+
 #### act-1.4.2 25/Jun/2017
 
-Checkout issues resolved in act-1.3.5 at https://github.com/actframework/actframework/milestone/12?closed=1
+Checkout issues resolved in act-1.4.2 at https://github.com/actframework/actframework/milestone/12?closed=1
+Plus all issues resolved in act-1.3.5 at https://github.com/actframework/actframework/milestone/13?closed=1
 
 #### act-1.3.5 25/Jun/2017
 
