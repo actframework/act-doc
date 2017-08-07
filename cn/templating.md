@@ -88,7 +88,7 @@ public class MyController {
 }
 ``` 
 
-对应与`home()`和`getFoo()`响应方法的连个模板文件分别为:
+对应与`home()`和`getFoo()`响应方法的两个模板文件分别为:
 
 1. `/src/main/resources/rythm/com/mycom/myprj/MyController/home.html`
 1. `/src/main/resources/rythm/com/mycom/myprj/MyController/getFoo.html`
