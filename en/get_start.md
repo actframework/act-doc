@@ -186,7 +186,7 @@ Here is the changed `sayHello` method:
 ```java
     @GetAction
     public Result sayHello(String who) {
-        if ("".equals(who)) {
+        if (who == null || "".equals(who)) {
             who = "World";
         }
         return Controller.Util.render(who);
