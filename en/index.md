@@ -44,6 +44,7 @@ ActFramework is created to make programming MVC application in Java easy and fun
 1. [Dependency Injection II - inject object types](recipe/di-inject-type.md)
 1. [Secure user password in ActFramework app](recipe/user-password-hash.md)
 1. [Dependency Injection III - defining bindins](recipe/di-binding.md)
+1. [Deploy and run your application](deploy.md)
 
 ## References
 
