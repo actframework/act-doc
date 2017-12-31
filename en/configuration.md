@@ -2,33 +2,22 @@
 
 **Note** this chapter is about general processing of configuration in ActFramework. For built-in configuration items, please refer to [configuration reference](reference/configuration.md).
 
-Table of Contents
-=================
-
-   * [Configuration](#configuration)
-      * [<a name="user-content-define"></a>Define configuration](#define-configuration)
-         * [<a name="user-content-key_name"></a>Secrets in configuration key name](#secrets-in-configuration-key-name)
-            * [<a name="user-content-key_name-type_indicator"></a>1. value type indicator](#1-value-type-indicator)
-            * [2. configuration key aliases](#2-configuration-key-aliases)
-            * [3. a little bit intelligence about .enabled and <code>.disabled</code>](#3-a-little-bit-intelligence-about-enabled-and-disabled)
-      * [<a name="user-content-profile"></a>Profile based configuration](#profile-based-configuration)
-      * [<a name="user-content-consume"></a>Consume configuration](#consume-configuration)
-         * [<a name="user-content-consume_pull"></a>Pull configuration from AppConfig](#pull-configuration-from-appconfig)
-         * [<a name="user-content-consume_inject"></a>Inject configuration value](#inject-configuration-value)
-         * [<a name="user-content-consume_autoconf"></a>Inject into static fields with AutoConf](#inject-into-static-fields-with-autoconf)
-         * [<a name="user-content-consume_complex_type"></a>Inject complex type](#inject-complex-type)
-         * [<a name="user-content-consume_map"></a>Inject Map](#inject-map)
-         * [<a name="user-content-consume_list"></a>Inject List](#inject-list)
-         * [<a name="user-content-consume_impl"></a>Inject implementation](#inject-implementation)
-
 ActFramework provides sophisticated support to make application developers easily specifify and consume configurations.
 
 * [Define configuration](#define)
   - [secret in configuration key name](#key_name)
+    + [value type indicator](#key_name-type_indicator)
+    + [key alias](#key_name-key_aliases)
+    + [enabled and disabled](#key_name-enabled_disabled)
   - [profile based configuration](#profile)
-* Consume configuration
-  - Inject configuration value with `@AutoConfig` annotation
-  - Inject configuration value with `@Configuration` annotation
+* [Consume configuration](#consume)
+  - [pull configuration from `AppConfig`](#pull-configuration-from-appconfig)
+  - [inject configuration](#inject-configuration-value)
+  - [inject into static fields](#inject-into-static-fields-with-autoconf)
+  - [inject complex types](#inject-complex-type)
+    + [map](#inject-map)
+    + [list](#inject-list)
+    + [service implementation](#inject-implementation)
 
 ## <a name="define"></a>Define configuration
 
@@ -76,7 +65,7 @@ Developer can use suffixes to specify the configuration item type:
 * `.float` indicates a `float` type configuration
 * `.double` indicates a `double` type configuration
 
-#### 2. configuration key aliases
+#### <a name="key_name-key_aliases"></a>2. configuration key aliases
 
 **Note** this only applies to actframework build-in configurations (not including plugin configurations)
 
@@ -103,7 +92,7 @@ act.metric=false
 
 Thus, for example `act.session.ttl=60*5` cannot be simplied as `session=60*5`, however `session.ttl=60*6` is okay.
 
-#### 3. a little bit intelligence about `.enabled` and `.disabled`
+#### <a name="key_name-enabled_disabled"></a>3. a little bit intelligence about `.enabled` and `.disabled`
 
 for any configuration named by `.enabled` it can be specified by `.disabled` with reversed value. For example the following configurations have the same means:
 
@@ -216,7 +205,7 @@ public class ConfTest {
 }
 ```
 
-There are few thins about this approach worth attentions:
+There are few things about this approach worth attentions:
 
 1. The class must be annotated with `AutoConfig` annotation with a parameter indicate the namespace of the configuration item. In our example it is `myconf` which is the namespace of `myconf.foo.bar`. If the namespace is not specified, it default to `app`.
 
