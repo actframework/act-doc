@@ -21,6 +21,7 @@ ActFramework is created to make programming MVC application in Java easy and fun
 1. [Routing](routing.md)
 1. [Model and DAO](model.md)
 1. [Templating](templating.md)
+1. [Configuration](configuration.md)
 
 ## Advanced Topics
 
@@ -48,4 +49,4 @@ ActFramework is created to make programming MVC application in Java easy and fun
 
 ## References
 
-1. [Configuration](configuration.md)
+1. [Configuration](reference/configuration.md)
