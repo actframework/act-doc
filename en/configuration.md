@@ -2,6 +2,25 @@
 
 **Note** this chapter is about general processing of configuration in ActFramework. For built-in configuration items, please refer to [configuration reference](reference/configuration.md).
 
+Table of Contents
+=================
+
+   * [Configuration](#configuration)
+      * [<a name="user-content-define"></a>Define configuration](#define-configuration)
+         * [<a name="user-content-key_name"></a>Secrets in configuration key name](#secrets-in-configuration-key-name)
+            * [<a name="user-content-key_name-type_indicator"></a>1. value type indicator](#1-value-type-indicator)
+            * [2. configuration key aliases](#2-configuration-key-aliases)
+            * [3. a little bit intelligence about .enabled and <code>.disabled</code>](#3-a-little-bit-intelligence-about-enabled-and-disabled)
+      * [<a name="user-content-profile"></a>Profile based configuration](#profile-based-configuration)
+      * [<a name="user-content-consume"></a>Consume configuration](#consume-configuration)
+         * [<a name="user-content-consume_pull"></a>Pull configuration from AppConfig](#pull-configuration-from-appconfig)
+         * [<a name="user-content-consume_inject"></a>Inject configuration value](#inject-configuration-value)
+         * [<a name="user-content-consume_autoconf"></a>Inject into static fields with AutoConf](#inject-into-static-fields-with-autoconf)
+         * [<a name="user-content-consume_complex_type"></a>Inject complex type](#inject-complex-type)
+         * [<a name="user-content-consume_map"></a>Inject Map](#inject-map)
+         * [<a name="user-content-consume_list"></a>Inject List](#inject-list)
+         * [<a name="user-content-consume_impl"></a>Inject implementation](#inject-implementation)
+
 ActFramework provides sophisticated support to make application developers easily specifify and consume configurations.
 
 * [Define configuration](#define)
