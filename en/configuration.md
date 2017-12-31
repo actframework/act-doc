@@ -139,7 +139,7 @@ To start the app in a specific profile, launch the Java process with JVM paramet
 
 **Note** this is about how to consume configuration defined in application code. Framework or plugins has their internal logic to process configurations.
 
-ActFramework provides varieties of way for application to consume it's configuration settings. Suppose we have the following configuration properties defined:
+ActFramework provides different ways for application to consume it's configuration settings. Suppose we have the following configuration properties defined:
 
 ```
 myconf.foo.bar=60*30
