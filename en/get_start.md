@@ -5,7 +5,7 @@
 You need JDK and Maven to create Act application. An internet connection should be ready for downloading libraries from maven central repository
 
 1. JDK (Java Development Kit), version 1.7 and above
-1. Maven (Project Management Tool), version 3.3 and above
+1. Maven (Project Management Tool), version 3.5 and above
 
 If you already have the JDK and Maven installed you can safely skip the following sections.
 
@@ -48,7 +48,11 @@ After running the above command, your project directory should look like:
                             └── AppTest.java
 ```
 
-Now get a copy of [the sample pom file](https://gist.github.com/greenlaw110/5d06ebd848c87c46302d) and replace the `pom.xml` file generated.
+Now get a copy of [the sample pom file](https://github.com/actframework/act-demo-apps/blob/master/helloworld/pom.xml) and replace the `pom.xml` file generated.
+
+Then create a resources dir `src/main/resources` and put the [logback.xml](https://github.com/actframework/act-demo-apps/blob/master/helloworld/src/main/resources/logback.xml) file into the folder.
+
+**Note** you need to update the `pom.xml` file and the `logback.xml` file and ensure the package name inside both file corresponding to your project.
 
 ### 2. Import the maven project into your IDE
 
@@ -88,16 +92,18 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        Act.start("Hello World Demo");
+        Act.start();
     }
 }
 ```
+
+**Tips** to avoid name collision with `act.app.App`, it's better to refactory your `App` class and name it to `AppEntry`. In IDEA, you can press `shift-F6` when your cursor in on the `App` class name to triger the rename refactory process.
 
 ### 4. Run the application
 
 Now press `ctrl-shift-F10` to run `App` in intelliJ IDEA:
 
-![idea-run-app](../img/getting_start/idea_run_app.png)
+![idea-run-app](https://user-images.githubusercontent.com/216930/35080460-d76eb26a-fc61-11e7-9e5f-eca5436dbc0b.png)
 
 Go to your browser and open <a href="http://localhost:5460"><code>http://localhost:5460</code></a>
 
@@ -185,11 +191,8 @@ Here is the changed `sayHello` method:
 
 ```java
     @GetAction
-    public Result sayHello(String who) {
-        if ("".equals(who)) {
-            who = "World";
-        }
-        return Controller.Util.render(who);
+    public void sayHello(@DefaultValue("World") String who) {
+        Controller.Util.render(who);
     }
 ```
 
@@ -223,11 +226,37 @@ If you were a minimalist like me, you might feel things like `Controller.Util.re
 
 1. Make your controller extends `act.controller.Controller.Util` class, which is my favorite way to get things done:
 
-    ![simplify_controller_util_1](../img/getting_start/simplify_controller_util_1.png)
+    ```java
+    import act.controller.Controller;
+    ...
+    public class AppEntry extends Controller.Util {
+        @GetAction
+        public void sayHello(@DefaultValue("World") String who) {
+            render(who);
+        }
+
+        public static void main(String[] args) throws Exception {
+            Act.start("Hello World");
+        }
+    }
+    ```
     
 2. In some rare case that your controller has already extended from other class, then [static import](https://docs.oracle.com/javase/1.5.0/docs/guide/language/static-import.html) is your friend:
 
-    ![simplify_controller_util_2](../img/getting_start/simplify_controller_util_2.png)
+    ```java
+    import static act.controller.Controller.Util.*;
+    ...
+    public class AppEntry {
+        @GetAction
+        public void sayHello(@DefaultValue("World") String who) {
+            render(who);
+        }
+
+        public static void main(String[] args) throws Exception {
+            Act.start("Hello World");
+        }
+    }
+    ```
 
 In either case, you can write in a more expressive way to render the result.
 
