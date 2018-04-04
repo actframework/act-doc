@@ -110,9 +110,106 @@ base dir: /tmp/helloworld
 ![image](https://user-images.githubusercontent.com/216930/38247205-b2e735b4-3787-11e8-8cd3-a47f30713a1f.png)
 
 
-### 4. 加入更多的请求响应器
+**小贴士** 使用ActFramework开发不需要重启应用，改完代码后直接刷F5即可看到效果
 
-没有哪个Web应用只能响应一个请求. 现在加入另一个响应器到`App.java`文件中，该响应器处理发送到`/bye`的请求.
+### 4. 理解 AppEntry 类
+
+打开 AppEntry.java 文件我们看到下面两个方法：
+
+```java
+    @GetAction
+    public void home(@DefaultValue("World") @Output String who) {
+    }
+
+    public static void main(String[] args) throws Exception {
+        Act.start();
+    }
+```
+
+#### 4.1 启动应用
+
+`main` 方法中调用 `Act.start()` 启动整个应用, 因此我们可以在 `pom.xml` 文件中将 AppEntry 类定义为 `<app.entry>`:
+
+```xml
+<app.entry>com.mycom.helloworld.AppEntry</app.entry>
+```
+
+#### 4.2 主页响应方法
+
+`home` 方法上有个 `@GetAction` 注解, 未带有任何参数, 其含义为 `@GetAction("/")` , 表示任何发送到 `/` 的请求都将被路由到该方法. 方法有一个参数:
+
+```java
+@DefaultValue("World") @Output String who
+```
+
+这个参数告诉 ActFramework 从 HTTP GET 请求中找到名为 `who` 的参数, 并将其注入到 `String who` 方法参数中. `@DefaultValue("World")` 的意思是如果没有 `who` 请求参数, 则使用 `World` 作为 `String who` 方法参数的默认值; `@Output` 告诉框架将 `String who` 放进模板输出变量中,对应的模板变量名字为 `who`. 如果不使用 `@DefaultValue("World")` 和 `@Output` 注解, 整个 `home` 方法应该这样表达:
+
+```java
+@GetAction("/")
+public void home(String who) {
+   if (null == who) who = "World";
+   renderTemplate(who); // render template and add `who` into template argument list
+}
+```
+
+下面是 home 方法更加冗长的表达方式:
+
+```java
+@GetAction("/")
+public Result home(ActionContext context) {
+    String who = context.req().paramVal("who");
+   if (null == who) who = "World";
+   context.renderArg("who", who);
+   return RenderTemplate.get();
+}
+```
+
+这里可以看出 ActFramework 支持不同的表达方式, 我们推荐使用更加简洁的方式让编码和阅读都更简单.
+
+##### 4.3.1 模板的路径
+
+`homne` 方法中我们并没有看到指定模板文件路径的地方, ActFramework 在程序没有指定模板路径的时候按照下面的规则来寻找模板文件:
+
+```
+/src/main/resources/rythm/com/mycom/helloworld/AppEntry/home.html
+-------------------
+  资源文件根目录
+                   rythm
+                   ------
+                   模板 
+                   引擎 
+                   id
+                         com/mycom/helloworld/AppEntry
+                         -----------------------------
+                         控制器类的全名
+                                                       /home.html
+                                                       -----------
+                                                       方法名.内容格式后缀
+```
+
+下面是模板文件内容:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+@args String who
+<head>
+  <title>Hello World - ActFramework</title>
+</head>
+<body>
+  <h1>Hello @who</h1>
+  <p>
+    Powered by ActFramework @act.Act.VERSION.getVersion()
+  </p>
+</body>
+</html>
+``` 
+
+其中 @args String who 声明该模板用到的模板变量, 该变量可以使用 `@` 引用: `@who` 在模板输出变量 `who` 的值. `@` 还可以引入任何其它变量或者方法, 比如 `@act.Act.VERSION.getVersion()` 在模板上输出 `act.Act.VERSION` 静态变量的 `getVersion()` 静态方法的返回值.
+
+### 5. 加入更多的请求响应器
+
+没有哪个Web应用只能响应一个请求. 现在加入另一个响应器到`AppEntry.java`文件中，该响应器处理发送到`/bye`的请求.
 
 ```java
     @GetAction("/bye")
@@ -125,121 +222,6 @@ base dir: /tmp/helloworld
 
 ![image](https://user-images.githubusercontent.com/216930/38310207-573d6908-385f-11e8-9e06-2a2d28be87cc.png)
 
-
-**小贴士** 使用ActFramework开发不需要重启应用，改完代码后直接刷F5即可看到效果
-
-### 5. 使用模板
-
-真正的项目不会只是返回字串那么简单，通常都需要使用模板来定义返回内容. ActFramework内置了[Rythm](http://rythmengine.org)模板引擎.　现在开始增强应用程序使用模板来定义输出
-
-首先更新`App.java`将`sayHello`方法改变为:
-
-```java
-    @GetAction
-    public void sayHello() {
-    }
-```
-
-在`/src/main/resources/rythm/com/mycom/helloworld/App`目录下添加一个`sayHello.html`文件
-
-![idea-rythm-sayhello](../img/getting_start/idea_rythm_sayhello.png)
-
-**小贴士** 模板文件定位规则是:
-
-```
-/src/main/resources/rythm/com/mycom/helloworld/App
--------------------
-  资源文件根目录
-                   rythm
-                   ------
-                   模板 
-                   引擎 
-                   id
-                         com/mycom/helloworld/App
-                         ---------------------------
-                         控制器类的全名
-                         
-```
-
-文件名`sayHello.html`则对应请求响应方法和响应内容格式，在我们的例子中`sayHello`对应了方法名，而后缀`.html`则对应响应内容格式
-
-下面是模板文件内容:
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-<title>Hello World App</title>
-</head>
-<body>
-<h1>Hello World!</h1>
-</body>
-</html>
-``` 
-
-创建好模板文件之后, 切换回浏览器并打开<a href="http://localhost:5460"><code>http://localhost:5460</code></a>你应该看到如下效果:
-
-![browser-hellowrold-2](../img/getting_start/helloworld2_in_browser.png)
-
-留一道家庭作业：将`sayBye`方法改造为使用模板返回响应结果
-
-### 6. 处理请求参数
-
-现在让我们给 hello world 应用增加一些动态特性，让程序能够对任何人说hello。假设请求发送方式允许增加一个参数`who`:　`GET /?who=anyone`
-
-`sayHello`响应方法需要做相应的更改:
-
-```java
-    @GetAction
-    public Result sayHello(String who) {
-        if ("".equals(who)) {
-            who = "World";
-        }
-        return Controller.Util.render(who);
-    }
-```
-
-**注意** `Result` and `Controller`是两个新的类，需要使用下面的语句导入
-
-```java
-import act.controller.Controller;
-import org.osgl.mvc.result.Result;
-```
- 
-下面是修改后的`sayHello.html`模板文件:
-
-```html
-<!DOCTYPE html>
-@args String who
-<html>
-<head>
-<title>Hello World App</title>
-</head>
-<body>
-<h1>Hello @who!</h1>
-</body>
-</html>
-``` 
-
-完成修改后，切换到浏览器并打开<a href="http://localhost:5460?who=Act"><code>http://localhost:5460?who=Act</code></a>, 你应该能看到如下结果：
-
-![browser-hellowrold-3](../img/getting_start/helloworld3_in_browser.png)
-
-上面的代码有用到`Controller.Util.render`方法，写起来比较冗长，简化这种写法有两种途径:
-
-1. 让控制器继承`act.controller.Controller.Util`类, 这也是我比较喜欢的一种方式:
-
-    ![simplify_controller_util_1](../img/getting_start/simplify_controller_util_1.png)
-    
-2. 如果你的控制器已经继承了其他类，这时候你可以使用[静态引用](https://docs.oracle.com/javase/1.5.0/docs/guide/language/static-import.html):
-
-    ![simplify_controller_util_2](../img/getting_start/simplify_controller_util_2.png)
-
-不管那种方式你都可以用一种更简洁的方式来调用｀Controller.Util｀类`render`方法：
-
-```java
-    render(who);
-```
 
 ## <a name="anatomy"></a>ActFramework应用项目剖析
 
