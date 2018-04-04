@@ -5,7 +5,7 @@
 你需要JDK和Maven来使用ActFramework创建应用程序. 因为需要Maven通过网络从中央库下载依赖包，一个良好的互联网链接也是必须的
 
 1. JDK (Java Development Kit), version 1.7或以上
-1. Maven (Project Management Tool), version 3.3或以上
+1. Maven (Project Management Tool), version 3.5或以上
 
 ### 安装JDK
 
@@ -17,93 +17,100 @@
 
 ## <a name="create_hello_world_app"></a>创建一个"Hello world"应用程序
 
-ActFramework使用maven构建项目. 目前最简单的办法是拷贝[pom实例文件](https://gist.github.com/greenlaw110/5d06ebd848c87c46302d)到你的项目中
+ActFramework使用maven构建项目. 
 
 ### 1. 使用maven生成应用框架:
 
 ```
-mvn archetype:generate -DgroupId=com.mycom.helloworld -DartifactId=helloworld -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+mvn archetype:generate -DarchetypeGroupId=org.actframework -DarchetypeArtifactId=archetype-quickstart -DarchetypeVersion=1.8.6.1 -B -DgroupId=com.mycom.helloworld -DartifactId=helloworld -DappName=helloworld
 ``` 
 
 运行上述命令之后你的项目目录应该是下面的样子: 
 
 ```
-.
-└── helloworld
-    ├── pom.xml
-    └── src
-        ├── main
-        │   └── java
-        │       └── com
-        │           └── mycom
-        │               └── helloworld
-        │                   └── App.java
-        └── test
-            └── java
-                └── com
-                    └── mycom
-                        └── helloworld
-                            └── AppTest.java
+helloworld/
+├── .gitignore
+├── pom.xml
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── mycom
+    │   │           └── helloworld
+    │   │               └── AppEntry.java
+    │   └── resources
+    │       ├── com
+    │       │   └── mycom
+    │       │       └── helloworld
+    │       │           └── .version
+    │       ├── logback.xml
+    │       └── rythm
+    │           └── com
+    │               └── mycom
+    │                   └── helloworld
+    │                       └── AppEntry
+    │                           └── home.html
+    └── test
+        └── java
+            └── com
+                └── mycom
+                    └── helloworld
 ```
 
-下面拷贝[pom示例文件](https://gist.github.com/greenlaw110/5d06ebd848c87c46302d)并替换自动生成的`pom.xml`文件.
+### 2. 启动应用
 
-### 2. 导入项目到你的IDE
+进入 `helloworld` 项目目录，键入 `mvn compile act:run` 启动应用，应该能看到类似下面的信息：
+
+```
+       _           _            _    _        _  
+ |_|  |_  |   |   / \  \    /  / \  |_)  |   | \ 
+ | |  |_  |_  |_  \_/   \/\/   \_/  | \  |_  |_/ 
+                                                 
+              powered by ActFramework r1.8.6-6acf
+
+ version: v1.0-SNAPSHOT-180404_2248
+scan pkg: com.mycom.helloworld
+base dir: /tmp/helloworld
+     pid: 2026
+ profile: dev
+    mode: DEV
+
+     zen: Simple is better than complex.
+
+2018-04-04 22:48:10,013 INFO  a.Act@[main] - loading application(s) ...
+2018-04-04 22:48:10,019 INFO  a.a.App@[main] - App starting ....
+2018-04-04 22:48:10,096 WARN  a.c.AppConfig@[main] - Application secret key not set! You are in the dangerous zone!!!
+2018-04-04 22:48:10,189 WARN  a.h.b.ResourceGetter@[main] - URL base not exists: META-INF/resources/webjars
+2018-04-04 22:48:10,200 WARN  a.a.DbServiceManager@[main] - DB service not initialized: No DB plugin found
+2018-04-04 22:48:10,968 INFO  a.a.App@[main] - App[helloworld] loaded in 949ms
+2018-04-04 22:48:10,971 INFO  a.a.ApiManager@[jobs-thread-3] - start compiling API book
+2018-04-04 22:48:10,989 INFO  o.xnio@[main] - XNIO version 3.3.8.Final
+2018-04-04 22:48:11,012 INFO  o.x.nio@[main] - XNIO NIO Implementation Version 3.3.8.Final
+2018-04-04 22:48:11,142 INFO  a.Act@[main] - network client hooked on port: 5460
+2018-04-04 22:48:11,142 INFO  a.Act@[main] - CLI server started on port: 5461
+2018-04-04 22:48:11,144 INFO  a.Act@[main] - app is ready at: http://192.168.1.5:5460
+2018-04-04 22:48:11,144 INFO  a.Act@[main] - it takes 2614ms to start the app
+```
+
+启动浏览器并打开<a href="http://localhost:5460"><code>http://localhost:5460</code></a> 能看到默认的主页:
+
+![image](https://user-images.githubusercontent.com/216930/38310001-cbc749a2-385e-11e8-8a87-f505ccee767c.png)
+
+
+### 3. 导入项目到你的IDE
 
 基本上所有的IDE都支持maven项目. 下面使用IntelliJ IDEA做演示.
 
-选择`File/New/Project from Existing Sources...`启动导入向导:
+选择`File/Open...` 并导航到生成的项目目录:
 
-![idea-import-wizard](../img/getting_start/idea_import_step1.png)
+![image](https://user-images.githubusercontent.com/216930/38247063-4b1967d6-3787-11e8-9257-d5971ea86acf.png)
 
-在文件选择框中选定`pom.xml`文件并点击`OK`按钮, 然后一直按"Next"按钮直到结束.
+点击 Okay 之后打开项目:
 
-导入后在Intelli IDEA中打开项目:
+![image](https://user-images.githubusercontent.com/216930/38247205-b2e735b4-3787-11e8-8cd3-a47f30713a1f.png)
 
-![idea-helloworld-prj](../img/getting_start/idea_prj_first_view.png) 
 
-### 3. 加入请求响应器
-
-更新`App.java`文件 
-
-1. 加入一个返回"Hello World!"的响应器
-2. 更新`main`方法让ActFramework运行程序 
-
-```java
-package com.mycom.helloworld;
-
-import act.Act;
-import org.osgl.mvc.annotation.GetAction;
-
-/**
- * Hello world!
- */
-public class App {
-
-    @GetAction
-    public String sayHello() {
-        return "Hello World!";
-    }
-
-    public static void main(String[] args) throws Exception {
-        Act.start("Hello World Demo");
-    }
-}
-```
-
-### 4. 启动应用
-
-现在按`ctrl-shift-F10`来启动`App`
-
-![idea-run-app](../img/getting_start/idea_run_app.png)
-
-启动浏览器并打开<a href="http://localhost:5460"><code>http://localhost:5460</code></a>
-
-![browser-hellowrold](../img/getting_start/helloworld_in_browser.png)
-
-Duang! 你的第一个Actframework程序启动起来了. 很简单，不是吗？坐稳了，旅程才刚刚开始……
-
-### 5. 加入更多的请求响应器
+### 4. 加入更多的请求响应器
 
 没有哪个Web应用只能响应一个请求. 现在加入另一个响应器到`App.java`文件中，该响应器处理发送到`/bye`的请求.
 
@@ -116,11 +123,12 @@ Duang! 你的第一个Actframework程序启动起来了. 很简单，不是吗�
 
 加完方法后, 切换到你的浏览器打开<a href="http://localhost:5460/bye"><code>http://localhost:5460/bye</code></a>, 你应该能看到如下效果:
 
-![browser-hellowrold](../img/getting_start/bye_in_browser.png)
+![image](https://user-images.githubusercontent.com/216930/38310207-573d6908-385f-11e8-9e06-2a2d28be87cc.png)
+
 
 **小贴士** 使用ActFramework开发不需要重启应用，改完代码后直接刷F5即可看到效果
 
-### 6. 使用模板
+### 5. 使用模板
 
 真正的项目不会只是返回字串那么简单，通常都需要使用模板来定义返回内容. ActFramework内置了[Rythm](http://rythmengine.org)模板引擎.　现在开始增强应用程序使用模板来定义输出
 
@@ -175,9 +183,9 @@ Duang! 你的第一个Actframework程序启动起来了. 很简单，不是吗�
 
 留一道家庭作业：将`sayBye`方法改造为使用模板返回响应结果
 
-### 7. 处理请求参数
+### 6. 处理请求参数
 
-现在让我们给hello world应用增加一些动态特性，让程序能够对任何人说hello。假设请求发送方式允许增加一个参数`who`:　`GET /?who=anyone`
+现在让我们给 hello world 应用增加一些动态特性，让程序能够对任何人说hello。假设请求发送方式允许增加一个参数`who`:　`GET /?who=anyone`
 
 `sayHello`响应方法需要做相应的更改:
 
