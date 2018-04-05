@@ -225,7 +225,7 @@ public Result home(ActionContext context) {
 
 ## <a name="anatomy"></a>ActFramework应用项目剖析
 
-ActFramework使用标准的maven项目布局来组织文件. 第一次编译后的项目看起来是这样的:
+ActFramework使用标准的maven项目布局来组织文件. 下面是一种常见 Act 应用的目录结构:
 
 ```
 .
@@ -236,7 +236,7 @@ ActFramework使用标准的maven项目布局来组织文件. 第一次编译后�
 │   │   │   └── com
 │   │   │       └── mycom
 │   │   │           └── myprj
-│   │   │               ├── Application.java    -> 应用程序入口(提供main()方法)
+│   │   │               ├── AppEntry.java       -> 应用程序入口(提供main()方法)
 │   │   │               ├── controller          -> 控制器目录
 │   │   │               ├── event               -> 事件和事件响应器目录
 │   │   │               ├── mail                -> 邮件发送器目录
@@ -248,9 +248,9 @@ ActFramework使用标准的maven项目布局来组织文件. 第一次编译后�
 │   │       │   ├── img                         -> 图片文件
 │   │       │   └── js                          -> Javascript 文件
 │   │       ├── conf                            -> 配置根目录
-│   │       │   ├── common                      -> 存放缺省配置
-│   │       │   ├── sit                         -> "sit" 配置
-│   │       │   └── dev                         -> "dev" 配置
+│   │       │   ├── prod                        -> `prod` 产品环境配置
+│   │       │   ├── sit                         -> `sit` 系统集成测试环境配置
+│   │       │   └── uat                         -> "uat" 用户接受测试环境配置
 │   │       ├── messages.properties             -> 国际化资源文件
 │   │       ├── routes                          -> 路由表
 │   │       └── rythm                           -> Rythm模板根目录
@@ -284,7 +284,7 @@ ActFramework使用标准的maven项目布局来组织文件. 第一次编译后�
 本单元说明了以下内容
 
 1. 准备工作
-1. 通过maven生成项目文件，如何拷贝示例`pom.xml`文件覆盖生成的`pom.xml`文件
+1. 通过maven生成项目
 1. 在`main`方法调用`RunApp.start`方法来启动ActFramework应用程序
 1. 添加请求响应方法
 1. 使用模板来生成复杂响应
