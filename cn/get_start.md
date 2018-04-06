@@ -252,7 +252,7 @@ ActFramework使用标准的maven项目布局来组织文件. 下面是一种常�
 │   │       │   ├── sit                         -> `sit` 系统集成测试环境配置
 │   │       │   └── uat                         -> "uat" 用户接受测试环境配置
 │   │       ├── messages.properties             -> 国际化资源文件
-│   │       ├── routes                          -> 路由表
+│   │       ├── routes.conf                     -> 路由表
 │   │       └── rythm                           -> Rythm模板根目录
 │   │           ├── com
 │   │           │   └── mycomp
