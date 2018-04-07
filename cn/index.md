@@ -17,6 +17,7 @@ ActFramework可以让开发人员以更加简洁有趣的方式开发MVC应用�
 
 ## 基本概念
 
+1. [配置][configuration.md]
 1. [控制器](controller.md)
 1. [路由](routing.md)
 1. [域模型和数据访问](model.md)

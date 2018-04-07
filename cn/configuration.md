@@ -1,1068 +1,607 @@
-<h1 data-book="configuration">配置</h1>
-
-详细定义 ActFramework 使用到的各种配置
-
-#### [basic_authentication]basic_authentication.enabled
-
-别名
-
-
-* **basic_authentication**
-* **act.basic_authentication**
-* **act.basic_authentication.enabled**
-
-在 ActFramework 应用中开启或关闭 [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) 功能.
-
-默认值: `false`
-
-**注意** ActFramework 本身不会使用这个参数. 但像 [act-aaa-plugin](https://github.com/actframework/act-aaa-plugin) 这样的安全插件会使用这个配置项
-
-#### [cache_impl]cache.impl
-
-别名
-
-* **cache**
-* **act.cache**
-* **act.cache.impl**
-
-指定缓存服务的具体实现类. 指定的实现类必须实现 `org.osgl.cache.CacheServiceProvider` 接口
-
-默认值: `Auto`, i.e. `org.osgl.cache.CacheServiceProvider.Impl.Auto`. 该实现会顺序依据以下条件选择具体的实现
-
-1. 如果 `MemcachedServiceProvider` 存在则用之, 否则
-2. 如果 `EhCacheServiceProvider` 存在则用之, 否则
-3. 加载 `SimpleCacheServiceProvider` 实例. 该实现依赖于 ConcurrentMap
-
-#### [cache_name]cache.name
-
-别名
-
-* **act.cache.name**
-
-指定框架使用的缓存名字
-
-默认值: `_act_app_`
-
-#### [cache_name_session]cache.name.session
-
-别名
-
-* **act.cache.name.session**
-
-指定会话缓存名字.
-
-默认值: 配置项 [cache.name](#cache_name) 的值
-
-#### [cli]cli
-
-别名
-
-* **act.cli**
-* **act.cli.enabled**
-* **cli.enabled**
-
-开关CLI支持. 当CLI特性被允许是管理员可以通过telnet到[CLI端口](#cli_port)来访问CLI命令集
-
-默认值: `true`
-
-#### [cli_page_size_json]cli.page.size.json
-
-别名
-
-* **act.cli.page.size.json**
-
-指定一个 CLI 命令 JSON 输出格式每页最大记录数
-
-默认值: 10
-
-#### [cli_page_size_table]cli.page.size.table
-
-别名
-
-* **act.cli.page.size.table**
-
-指定 CLI 命令表输出格式每页最大记录数.
-
-默认值: 22
-
-
-#### [cli_port]cli.port
-
-别名
-
-* **act.cli.port**
-
-设置 CLI 端口.
-
-默认值: `5461`
-
-#### [cli_session_expiration]cli.session.expiration
-
-别名
-
-* **act.cli.session.expiration**
-
-指定CLI会话过期等待时间
-
-默认值: `300`, 即: 5分钟
-
-### [cli_session_max]cli.session.max
-
-别名
-
-* **act.cli.session.max**
-
-指定能同时进行的 CLI 会话数量.
-
-默认值: `3`
-
-#### [cli_over_http]cli_over_http
-
-别名
-
-* **cli_over_http.enabled**
-* **act.cli_over_http**
-* **act.cli_over_http.enabled**
-
-启用或关闭 CLI 的 HTTP 支持.
-
-默认值: `false`
-
-当该功能被允许时, 管理员可以通过 HTTP 的 [configured port](#cli_over_http.port) 端口来执行 CLI 命令.
-
-#### [cli_over_http_authority_impl]cli_over_http.authority.impl
-
-别名
-
-* **cli_over_http.authority**
-* **act.cli_over_http.authority**
-* **act.cli_over_http.authority.impl**
-
-配置CLI over http的授权机制. 指定值必须是 `act.cli.CliOverHttpAuthority` 接口的某个实现类的名字.
-
-默认值: `CliOverHttpAuthority.AllowAll` - 运行所有人在指定端口使用CLI命令.
-
-#### [cli_over_http_port]cli_over_http.port
-
-别名
-
-* **act.cli_over_http.port**
-
-指定CLI Over HTTP服务端口
-
-默认值: `5462`
-
-#### [cli_over_http_title]cli_over_http.title
-
-别名
-
-* **act.cli_over_http.title**
-
-指定CLI Over HTTP的页面标题
-
-默认值: `Cli Over Http`
-
-#### [cli_over_http_syscmd]cli_over_http.syscmd
-
-别名
-
-* **cli_over_http.syscmd.enabled**
-* **act.cli_over_http.syscmd**
-* **act.cli_over_http.syscmd.enabled**
-
-允许/禁止通过 CLI Over Http 访问系统命令
-
-默认值: `true`
-
-#### [cookie_domain_provider]cookie.domain_provider
-
-别名
-
-* **cookie.domain_provider.impl**
-* **act.cookie.domain_provider**
-* **act.cookie.domain_provider.impl**
-
-指定返回的域名的提供者. 当没有指定时, 它将总是返回配置在 [host](#host) 的值.
-
-有效设置:
-
-1. 一个 `javax.inject.Provider` 实现的类名, 给实现必须返回 `String` 类型
-
-2. `dynamic` 或 `flexible` 或 `contextual`, 这三个设置均表示 cookie 域名是当前 HTTP 请求的域名
-
-默认值: `null`
-
-#### [cookie_prefix]cookie.prefix
-
-别名
-
-* **act.cookie.prefix**
-
-指定要添加到 ActFramework 中使用的 cookie 名称的前缀, 例如 session, flash, xsrf 等等. 假设默认 cookie 名称是 `act_session`, 用户指定前缀 `my_app`, 会话 cookie 名称将是 `my_app_session`
-
-注意, 这个设置也会影响 `AppConfig＃flashCookieName()`
-
-默认值: 根据以下逻辑计算
-
-1. 找到应用程序的名称，如果没有找到，然后使用 `act` 作为应用程序名称
-2. 用空格分割应用程序名称
-3. 检查分割字符串数组的长度
-3.1 如果数组中只有一个字符串, 则返回字符串的前 3 个字符, 如果字符串长度超过 3, 则返回字符串
-3.2 如果数组中有两个字符串，则拾取每个字符串的前 2 个字符, 并通过破折号 `-`
-3.3 拾取数组中前 3 个字符串的第一个字符
-
-例如
-
-当应用程序名称是 `HelloWorld` 时, cookie 前缀是 `hel-`
-当应用程序名称是 `HelloWorld` 时, cookie 前缀是 `he-wo-`
-当应用程序名称是 `HelloWorld` 时, cookie 前缀是 `hmw-`
-
-#### [cors]cors
-
-别名
-
-* **cors.enabled**
-* **act.cors**
-* **act.cors.enabled**
-
-打开/关闭 ActFramework 应用的 [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) 支持.
-
-默认值: `false`
-
-当 `cors` 被启用, ActFramework 将默认在响应中自动添加下面列表指定的 HTTP 头. 当此配置开启, ActFramework 同时也将在请求中创建 OPTION 请求.
-
-#### [cors_option_check]cors.option.check
-
-别名
-
-* **cors.option.check.enabled**
-* **act.cors.option.check**
-* **act.cors.option.check.enabled**
-
-默认值: `true`
-
-启用此配置时, ActFramework 将仅向 HTTP OPTION 请求添加以下 CORS 相关标头:
-
-* access-control-allow-headers
-* access-control-expose-headers
-* access-control-max-age
-
-**注意**HTTP头 `access-control-allow-origin` 在任何HTTP请求的响应中都会添加
-
-#### [cors_origin]cors.origin
-
-别名
-
-* **act.cors.origin**
-
-默认值: `*`
-
-此配置指定默认的 `Access-Control-Allow-Origin` 标头值.
-
-#### [cors_headers]cors.headers
-
-别名
-
-* **act.cors.headers**
-
-默认值: `Content-Type, X-HTTP-Method-Override`
-
-此配置指定 `Access-Control-Allow-Headers` 和 `Access-Control-Expose-Headers` 标头的默认值.
-
-#### [cors_headers_expose]cors.headers.expose
-
-别名
-
-* **act.cors.headers.expose**
-
-默认值: `null`
-
-此配置指定 `Access-Control-Expose-Headers` 标头的默认值。 如果没有提供，那么系统将使用 [cors.headers](#cors_headers) 提供的值.
-
-#### [cors_headers_allowed]cors.headers.allowed
-
-别名
-
-* **act.cors.headers.allowed**
-
-默认值: `null`
-
-此配置指定 `Access-Control-Allow-Headers` 标头的默认值。 如果没有提供，那么系统将使用 [cors.headers](#cors_headers) 提供的值.
-
-#### [cors_max_age]cors.max_age
-
-别名
-
-* **act.cors.max_age**
-
-默认值: 30*60 (seconds)
-
-当启用 [cors](#cors) 时, 此配置指定 `Access-Control-Max-Age` 标头的默认值.
-
-#### [content_suffix_aware]content_suffix.aware
-
-别名
-
-* **content_suffix.aware.enabled**
-* **act.content_suffix.aware**
-* **act.content_suffix.aware.enabled**
-
-启用此配置项，框架将自动识别具有内容后缀的请求，例如 `/customer/123/json` ~~或 `/customer/123.json`~~, 将匹配路径 `/customer/123`, 并将请求 `Accept` 头的值设置为 `application/json`.
-
-默认值: `false`
-
-**注意** 后缀和有效URL路径之间用`/`分隔
-
-#### [csrf]csrf
-
-别名
-
-* **csrf.enabled**
-* **act.csrf**
-* **act.csrf.enabled**
-
-开启/关闭全局 [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet) 保护.
-
-默认值: `false`
-
-此配置开启，框架将检查所有 POST/PUT/DELETE 请求的 CSRF 令牌. 如果它不匹配, 则该请求将返回 403 Forbidden 的响应.
-
-#### [csrf_cookie_name]csrf.cookie_name
-
-别名
-
-* **act.csrf.cookie_name**
-
-指定 cookie 的名称, 用于服务端为来自客户端的首次请求生成的 csrf 令牌.
-
-默认值: `XSRF-TOKEN`, AngularJs 使用的名称
-
-#### [csrf_cookie_name]csrf.cookie_name
-
-别名
-
-* **act.csrf.cookie_name**
-
-Specify the name of the cookie used to convey the csrf token generated on the server for the first request coming from a client
-
-Default value: `XSRF-TOKEN`, the name used by AngularJs
-
-#### [csrf_param_name]csrf.param_name
-
-别名
-
-* **act.csrf.param_name**
-
-设置 CSRF 令牌的请求参数名称.
-
-默认值: `__csrf__`
-
-#### [csrf_header_name]csrf.header_name
-
-别名
-
-* **act.csrf.param_name**
-
-设置从服务端生成的 CSRF 令牌的响应头的名称. 
-
-默认值: `XSRF-TOKEN`
-
-#### [csrf_protector]csrf.protector
-
-别名
-
-* **csrf.protector.impl**
-* **act.csrf.protector**
-* **act.csrf.protector.impl**
-
-设置 `act.security.CSRFProtector` 的实现. 此配置的值可以是 `act.security.CSRFProtector` 接口的类的实现, 也可以是 `act.security.CSRFProtector.Predefined` 中定义的枚举的名称.
-
-默认值: `HMAC`
-
-`act.security.CSRFProtector.Predefined` 中的其他选项: `RANDOM`
-
-对于 `HMAC` 和 `RANDOM` 之间的区别, 请查阅 http://security.stackexchange.com/questions/52224/csrf-random-value-or-hmac
-
-#### [dsp_token]dsp.token
-
-别名
-
-* **act.dsp.token**
-
-默认值: `HMAC`
-
-默认值: `act_dsp_token`
-
-
-#### [dsp_token]dsp.token
-
-别名
-
-* **act.dsp.token**
-
-Specify the name of "double submission protect token"
-
-Default value: `act_dsp_token`
-
-#### [db_seq_gen]db.seq_gen
-
-别名
-
-* **db.seq_gen.impl**
-* **act.db.seq_gen**
-* **act.db.seq_gen.impl**
-
-指定数据库序列生成器. 它必须是 `act.db.util._SequenceNumberGenerator` 的实现类. 如果没有指定，那么它将返回 ActFramework 扫描的第一个 `act.db.util._SequenceNumberGenerator` 实现.
-
-#### [encoding]encoding
-
-别名
-
-* **act.encoding**
-
-指定应用程序默认编码. 默认值为 `UTF-8`. 强烈建议不要更改默认设置.
-
-#### [enum_resolving_case_sensitive]enum.resolving.case_sensitive
-
-别名
-
-* **act.enum.resolving.case_sensitive**
-
-指定它是否允许枚举解析请求参数忽略大小写.
-
-默认值: `false` 意味着枚举解析是不区分大小写的.
-
-#### [fmt_date]fmt.date
-
-别名
-
-* **act.fmt.date**
-
-指定用于解析/输出日期字符串的默认日期格式.
-
-默认值: `java.text.DateFormat.getDateInstance()` 的格式
-
-#### [fmt_date_time]fmt.date_time
-
-别名
-
-* **act.fmt.date_time**
-
-指定用于解析/输出日期和时间字符串的默认日期和时间格式.
-
-默认值: `java.text.DateFormat.getDateTimeInstance()` 的格式
-
-#### [fmt_time]fmt.time
-
-别名
-
-* **act.fmt.time**
-
-指定用于解析/输出时间字符串的默认时间格式.
-
-默认值: `java.text.DateFormat.getTimeInstance()` 的格式
-
-#### [handler_csrf_check_failure]handler.csrf_check_failure
-
-别名
- 
-* **handler.csrf_check_failure.impl**
-* **act.handler.csrf_check_failure**
-* **act.handler.csrf_check_failure.impl**
- 
-通过类名指定 `act.util.MissingAuthenticationHandler` 接口的实现. 当 [CSRF token](csrf) 无法验证时调用实现.
-
-默认值: [handler.missing_authentication](#handler_missing_authentication) 的配置
-
-#### [handler_csrf_check_failure_ajax]handler.csrf_check_failure.ajax
-
-别名
-
-* **handler.csrf_check_failure.ajax.impl**
-* **act.handler.csrf_check_failure.ajax**
-* **act.handler.csrf_check_failure.ajax.impl**
-
-通过类名指定 `act.util.MissingAuthenticationHandler `接口的实现. 当无法在 ajax 请求上验证 [CSRF token](csrf) 时调用实现.
-
-默认值: [handler.csrf_check_failure](handler_csrf_check_failure) 的配置
-
-#### [handler_missing_authentication]handler.missing_authentication
-
-别名
-
-* **handler.missing_authentication.impl**
-* **act.handler.missing_authentication**
-* **act.handler.missing_authentication.impl**
-
-通过类名指定 `act.util.MissingAuthenticationHandler` 接口的实现。 当 [CSRF token](csrf) 无法验证时调用实现.
-
-默认值: `act.util.RedirectToLoginUrl` 它将重定向到用户的 [login URL](url_login)
-
-其它选项: `act.util.ReturnUnauthorized` 它将返回 `401 Unauthorised` 响应
-
-#### [handler_missing_authentication_ajax]handler.missing_authentication.ajax
-
-别名
-
-* **handler.missing_authentication.ajax.impl**
-* **act.handler.missing_authentication.ajax**
-* **act.handler.missing_authentication.ajax.impl**
-
-通过类名指定 `act.util.MissingAuthenticationHandler` 接口的实现. 当无法对 ajax 请求验证 [CSRF token](csrf) 时调用实现.
-
-默认值: [handler.missing_authentication.impl](handler_missing_authentication_ajax_impl) 的配置
-
-#### [handler_unknown_http_method]handler.unknown_http_method
-
-别名
-
-* **handler.unknown_http_method.impl**
-* **act.handler.unknown_http_method**
-* **act.handler.unknown_http_method.impl**
-
-指定实现 `act.handler.UnknownHttpMethodProcessor` 的类/实例，它处理 `act.route.Router` 不能识别的HTTP方法. 例如: "OPTION", "HEAD" 等.
-
-#### [handler_unknown_http_method]handler.unknown_http_method
-
-别名
-
-* **handler.unknown_http_method.impl**
-* **act.handler.unknown_http_method**
-* **act.handler.unknown_http_method.impl**
-
-Specifies a class/instance that implements `act.handler.UnknownHttpMethodProcessor` that process the HTTP methods that are not recognized by `act.route.Router`, e.g. "OPTION", "HEAD" etc
-
-#### [host]host
-
-别名
-
-* **act.host**
-
-指定应用程序侦听的主机名.
-
-默认值: `localhost`
-
-#### [http_external_server]http.external_server
-
-别名
-
-* **http.external_server.enabled**
-* **act.http.external_server**
-* **act.http.external_server.enabled**
-
-指定应用程序是否在运行在前端 http 服务器, 例如 nginx.
-
-默认值: 当运行在 `PROD` 模式下默认是 `true`; 当运行在 `DEV` 模式下默认是 `false`.
-
-注意 ACT 不会直接侦听外部端口. 推荐的模式是使用前端 HTTP 服务器（例如 nginx）来处理外部请求并转发到 ACT.
-
-#### [http_params_max]http.params.max
-
-别名
-
-* **act.http.params.max**
-
-指定 http 参数的最大值. 这可以用来防止哈希冲突的 DOS 攻击. 如果此配置设置为任何大于 0 的值, ActFramework 将检查请求参数数目, 如果该数量大于该设置, 则立即返回 `413 Request Entity Too Large` 响应.
-
-默认值: `128`
-
-#### [http_port]http.port
-
-别名
-
-* **act.http.port**
-
-指定应用程序侦听的默认 http 端口.
-
-默认值: `5460`
-
-#### [http.port.external]http.port.external
-
-别名
-
-* **act.http.port.external**
-
-指定用于构造完整 URL 的外部端口.
-
-默认值: `80`
-
-#### [http.port.external.secure]http.port.external.secure
-
-指定外部安全端口, 用于在应用在安全通道上运行时构造完整的 URL.
-
-默认值: 443
-
-#### [http_secure_enabled]http.secure.enabled
-
-别名 
-
-* **http.secure**
-* **act.http.secure**
-* **act.http.secure.enabled**
-
-指定默认 http 端口是否正在侦听加密通道.
-
-默认值: 当应用运行在 `DEV` 模式下默认为 `false`, 当应用运行在 `RPOD` 模式下默认为 `true`.
-
-#### [i18n]i18n
-
-别名
-
-* **i18n.enabled**
-* **act.i18n**
-* **act.i18n.enabled**
-
-在 ActFramework 应用程序中打开/关闭 i18n 支持.
-
-默认值: `false`
-
-#### [i18n_locale_param_name]i18n.locale.param_name
-
-别名
-
-* **act.i18n.locale.param_name**
-
-指定参数名称以在 http 请求中设置客户端区域设置.
-
-默认值: `act_locale`
-
-#### [i18n_locale_cookie_name]i18n.locale.cookie_name
-
-别名
-
-* **act.i18n.locale.cookie_name**
-
-指定本地保存的 cookie 名称.
-
-默认值: `act_locale`
-
-#### [idgen_node_id_provider]idgen.node_id.provider
-
-别名
-
-* **idgen.node_id.provider.impl**
-* **act.idgen.node_id.provider**
-* **act.idgen.node_id.provider.impl**
-
-按类名指定 `act.util.IdGenerator.NodeIdProvider` 实现. 节点 id 提供者负责生成 CUID (簇唯一标识符) 的节点 id. 当没有指定时，Act将使用 `IdGenerator.NodeIdProvider.IpProvider` 返回根据节点的 IP 地址  [effective ip bytes](#idgen_node_id_effective_ip_bytes_size) 配置计算出的节点 id.
-
-默认值: `act.util.IdGenerator.NodeIdProvider.IpProvider`
-
-#### [idgen_node_id_effective_ip_bytes_size]idgen.node_id.effective_ip_bytes.size
-
-别名
-
-* **idgen.node_id.effective_ip_bytes**
-* **act.idgen.node_id.effective_ip_bytes**
-* **act.idgen.node_id.effective_ip_bytes.size**
-
-指定 IP 地址中将使用多少字节来计算节点 ID. 通常在群集环境中, IP 地址将仅在（最后）一个字节段或（最后）两个字节段不同，在这种情况下，它可以将此配置设置为 `1` 或 `2`. 当配置设置为 `4` 时，表示所有 4 个 IP 字节段将用于计算节点 ID.
-
-注意, 这个数字越大, CUID 就越长. 但是, 应该足以区分集群中的应用程序节点. 
-
-默认值: `4`
-
-#### [idgen_start_id_provider]idgen.start_id.provider
-
-别名
-
-* **idgen.start_id.provider.impl**
-* **act.idgen.start_id.provider**
-* **act.idgen.start_id.provider.impl**
-
-通过类名指定 `act.util.IdGenerator.StartIdProvider` 实现。 此提供程序生成 CUID 的开始 I D部分.
-
-默认值: `act.util.IdGenerator.StartIdProvider.DefaultStartIdProvider`
-
-默认提供程序将从 [predefined file](#idgen_start_id_file) 获取ID, 或者如果不允许文件 IO, 它将使用时间戳.
-
-#### [idgen_start_id_file]idgen.start_id.file
-
-别名
-
-* **act.idgen.start_id.file**
-
-指定开始 ID 计数器的持久性文件.
-
-默认值: `.act.id-app`
-
-#### [idgen_seq_id_provider]idgen.seq_id.provider
-
-别名
-
-* **idgen.seq_id.provider.impl**
-* **act.idgen.seq_id.provider**
-* **act.idgen.seq_id.provider.impl**
-
-通过类名指定 `act.util.IdGenerator.Sequence Provider` 的实现, 它将用于生成 CUID 的序列部分.
-
-默认值: `act.util.IdGenerator.SequenceProvider.AtomicLongSeq`
-
-#### [idgen_encoder]idgen.encoder
-
-别名
-
-* **idgen.encoder.impl**
-* **act.idgen.encoder**
-* **act.idgen.encoder.impl**
-
-按类名指定  `act.util.IdGenerator.LongEncoder `接口的实现. 该实例将用于将 long 值（生成的 CUID 的三个部分）编码为 String.
-
-Available options:
-
-* `act.util.IdGenerator.UnsafeLongEncoder` - maximum compression ratio, might generate URL unsafe characters
-* `act.util.IdGenerator.SafeLongEncoder` - relevant good compression ratio without URL unsafe characters
-
-默认值: `act.util.IdGenerator.SafeLongEncoder`
-
-#### [job_pool_size]job.pool.size
-
-别名
-
-* **job.pool**
-* **act.job.pool**
-* **act.job.pool.size**
-
-指定应用程序的 Job 管理器的线程池中可以存在的最大线程数.
-
-默认值: `10`
-
-#### [locale]locale
-
-别名
-
-* **act.locale**
-
-指定应用程序默认语言.
-
-默认值: `java.util.Locale#getDefault`
-
-#### [log_level]log.level.(pkg.cls.id)
-
-别名
-
-* **act.log.level.(pkg.cls.id)**
-
-指定 `pkg.cls.id` 的 log 级别. 有效配置选项:
-
-* FATAL
-* ERROR
-* WARN
-* INFO
-* DEBUG
-* TRACE
-
-例子: 
-
-* `log.level.com.my.app=INFO`
-* `log.level.java=FATAL`
-
-默认值: N/A
-
-
-#### [metric]metric
-  		  
-别名
-  		  
-* **metric.enabled**
-* **act.metric**
-* **act.metric.enabled**
-  		  
-在Act应用程序中打开/关闭统计功能.
-  		 
-默认值: `true`
-
-#### [modules]modules
-
-别名
-
-* **act.modules**
-
-声明其他应用程序库（用于Maven模块）.
-
-默认值: `null`
-
-#### [namedPorts]namedPorts
-
-别名
-
-* **act.namedPorts**
-
-指定此应用程序侦听的端口名称列表. 这些是除默认 [http.port](#http_port) 之外的其他端口.
-
-该列表格式为
+# 配置
+
+**注意** 本章讲述 ActFramework 的配置处理以及使用方式，关于具体配置项的说明，请参见 [配置模板](https://github.com/actframework/act-maven-archetypes/blob/master/maven-archetype-quickstart/src/main/resources/archetype-resources/src/main/resources/conf/app.properties).
+
+ActFramework 为应用程序开发人员提供了丰富的配置管理支持：
+
+* [定义配置](#define)
+  - [配置项名字中的秘密](#key_name)
+    + [值类型指示器](#key_name-type_indicator)
+    + [启用与禁用](#key_name-enabled_disabled)
+  - [基于环境(profile)的配置](#profile)
+    + [应用运行环境设定](#specify_profile)
+* [使用配置](#consume)
+  - [从 `AppConfig` 中获取配置](#pull-configuration-from-appconfig)
+  - [注入配置 - 方式一](#inject-configuration-value)
+  - [注入配置 - 方式二](#inject-into-static-fields-with-autoconf)
+  - [注入复杂类型](#inject-complex-type)
+    + [Map](#inject-map)
+    + [List](#inject-list)
+    + [接口实现](#inject-implementation)
+* [加载三方配置文件](#third_part_conf)
+
+## <a name="define"></a>定义配置
+
+ActFramework 读取 `resources/` 或 `resources/conf/` 下面的任何 `.properties` 文件来获得配置数据。这里是一个应用配置的例子：
 
 ```
-act.namedPorts=admin:8888;ipc:8899
+resources
+  ├── conf
+  │   ├── app.properties         # 一般配置
+  │   ├── db.properties          # 数据源配置
+  │   ├── social.properties      # 社交网 （Oauth2) 配置
+  │   ├── mail.properties        # SMTP 帐号配置
+  │   └── cron.properties        # 作业调度配置
+  ...
 ```
 
-默认值: `null`
+注意，配置文件的名字和个数没有限制，可以把所有的配置放到一个文件里面，虽然这样做会导致可读性降低
 
-注意，在 [http.port](#http_port) 配置中指定的默认端口, 并且不应在此 namedPort s配置中指定.
+在配置文件中使用标准的 Java properties 方式来定义配置数据, 例如：
 
-#### [ping_path]ping.path
+```
+jwt=true
 
-别名
+session.ttl=60*30
 
-* **act.ping.path**
+cors=true
+cors.origin=*
+cors.headers=Content-Type, X-HTTP-Method-Override, X-Act-Session, X-Requested-With, Location
+cors.option.check=false
 
-指定 ping 路径. 如果指定了此设置, 则在会话解析时, 系统将检查当前URL是否与设置匹配. 如果匹配, 则会话 cookie 的过期时间不会更改. 否则, 将刷新到期时间.
+cron.withdraw-job.db-load=0 30 13 * * ?
+```
 
-默认值: `null`
+### <a name="key_name"></a>配置项名字中的秘密
 
-#### [profile]profile
+#### <a name="key_name-type_indicator"></a>1. 值类型指示器
 
-别名
+ActFramework 通过后缀来辨识配置项的值类型：
 
-* **act.profile**
+* `.bool`, `.boolean`, `.enabled` 或者 `.disabled` 表示 `boolean` 类型配置项. 例如: `secure.enabled`
+* `.impl` 表示配置项为某种实现，可以为实例，也可以为类型名称. 例如: `cache.impl`
+* `.dir`, `.home`, `.path` 表示配置项为某种路径配置. 例如 `ping.path` - URL 路径; `template.home` - 文件系统/资源路径
+* `.int`, `.ttl`, `.len`, `.count`, `.times`, `.size`, `.port` 表示整型配置. 例如: `cli.session.ttl`, `cli.session.max.int`
 
-指定要加载的配置文件. 如果指定了此设置, 并且在 `/resource/conf` 文件夹下有一个名为  `profile`  设置的文件夹, 那么将从该文件夹加载配置文件.
+这些类型指示器当中有些是纯粹的修饰, 包括: 
+* `.enabled` 以及其他所有 `boolean` 类型的指示器, 
+* `.int`
+* `.impl`
 
-默认值: the value of the {@link Act#mode()}
+对于纯粹的修饰类型指示器, 开发人员在配置的时候可以忽略, 比如下面两套配置的作用是完全一样的:
+
+```
+jwt=true
+session.secure=false
+cache=com.mycache.MyCacheServiceProvider
+req.throttle=5
+```
+
+```
+jwt.enabled=true
+session.secure.enabled=false
+cache.impl=com.mycache.MyCacheServiceProvider
+req.throttle.int=5
+```
 
-注意, 不同于通常在配置文件中指定的其他配置项. `profile` 设置是通过 `System#getProperty(String)` 加载, 因此通常使用 JVM 参数 `Dprofile=<profile>`
+**注意** 修饰类型指示器仅对 ActFramework 内置配置有效, 不能在应用自己的配置中使用.
 
-#### [render_json_content_type_ie]render.json.content_type.ie
+另一些则是实际配置项名字的一部分, 只是起到了拥有类型指示器的作用, 包括:
+* `.dir`
+* `.home`
+* `.path`
+* `.ttl`
+* `.port`
+* `.len`
+* `.count`
+* `.size`
+* `.times`
 
-别名
+对于这种指示器则不可忽略, 例如下面的配置就是无效的:
 
-* **act.render.json.content_type.ie**
+```
+ping=/ping
+template=/templates
+job.pool=10
+```
 
-指定当请求来自IE浏览器切响应格式为JSON的时候用来输出到`Content-Type`头的字串. 当此配置设置后, 如果输出格式为JSON, 框架将检查请求的`useragent`, 如果发现是来自IE浏览器, 则用此配置来替代`application/json`输出JSON格式的`Content-Type`响应头.
+正确的配置为:
 
-默认值: `null` - 即框架不会检查浏览器的类型, 总是用 `application/json` 来输出JSON格式的`Content-Type` 响应头
+```
+ping.path=/ping
+template.home=/templates
+job.pool.size=10
+```
 
-#### [render_json_output_charset]render.json.output_charset
+#### <a name="key_name-enabled_disabled"></a>3. 启用与禁用
 
-别名
+对于 `.enabled` 型的类型指示器, ActFramework 
+可以灵活处理 `.enabled` 与 `.disabled` 之间的互换, 下面的配置方式效果都是一样的:
 
-* **render.json.output_charset.enabled**
-* **act.render.json.output_charset**
-* **act.render.json.output_charset.enabled**
+方式一:
 
-指定是否在输出 `Content-Type` 响应头的时候将 `;charset=UTF-8` 添加到 `applicatin/json` 
+```
+act.api_doc.enabled=true
+```
 
-默认值: `false`
+方式二:
 
-#### [resolver_error_template_path_impl]resolver.error_template_path.impl
+```
+act.api_doc.disabled=false
+```
 
-别名
+方式三:
 
-* **resolver.error_template_path**
-* **act.resolver.error_template_path**
-* **act.resolver.error_template_path.impl**
+```
+act.api_doc=true
+```
 
-Specifies error page (template) path resolver implementation by class name
+### <a name="profile"></a>基于环境(profile)的配置
 
-默认值: `act.util.ErrorTemplatePathResolver.DefaultErrorTemplatePathResolver`
+通常来讲一个正式的项目都有多个环境的配置, 
+比如数据库的 URL 
+对与本地环境和产品环境的配置不太可能是一样的. 
+ActFramework 提供了基于环境的配置支持. 下面假设项目会在三种不同的环境当中部署运行:
 
-#### [resolver_template_path_impl]resolver.template_path.impl
+* sit - 系统集成测试环境
+* uat - 用户测试环境
+* prod - 产品环境
 
-别名
+针对以上三种环境, 项目的配置目录结构为:
 
-* **resolver.template_path**
-* **act.resolver.template_path**
-* **resolver.template_path.impl**
+```
+resources
+  ├── conf
+  │   ├── prod
+  │   │   ├── app.properties   - prod 应用特定配置
+  │   │   └── db.properties    - prod 数据库特定配置
+  │   ├── sit
+  │   │   ├── app.properties   - sit 应用特定配置
+  │   │   └── db.properties    - sit 数据库特定配置
+  │   ├── uat
+  │   │   ├── app.properties   - uat 应用特定配置
+  │   │   └── db.properties    - uat 数据库特定配置
+  │   ├── app.properties       - 公共应用配置文件
+  │   ├── db.properties        - 公共数据库配置文件
+  │   └── cron.properties      - 公共作业调度配置文件
+  ...
+```
 
-指定类是 `act.view.TemplatePathResolver` 的类. 应用开发者可以使用这种配置来灵活配置模板路径解析逻辑. 不同的 home 指定不同的地区或不同的 home 指定不同的设备类型等.
+对于上面的配置结构, ActFramework 
+首先加载公共配置文件, 
+然后依照当前的环境设定加载环境特定配置文件. 
+如果环境配置文件中有配置项和公共配置文件中的配置项冲突, 则使用环境配置文件的配置设定来覆盖公共配置文件中的设定.
 
-默认值: `act.view.TemplatePathResolver`
+#### <a name="specify_profile"></a>应用运行环境设定
 
-#### [resource_preload_size_limit]resource.preload.size.limit
+上面我们讲到 ActFramework 
+根据当前运行环境加载配置文件, 带出来一个问题, 如何设定运行环境. 答案是在启动应用的时候通过 JVM 参数设定应用的运行环境:
 
-别名
+```
+java ... -Dprofilie=uat ...
+```
 
-* **act.resource.preload.size.limit**
+其中 `-Dprofile=uat` 设定应用的运行环境为 `uat`.
 
-指定可以预加载到内存中的资源的最大字节数. 指定 `0` 或负数以禁用资源预加载功能.
+如果采用 ActFramework 推荐的项目结构, 应用部署的时候会生成 `run` 脚本, 可以通过下面的方式来设定运行环境:
 
-默认值: `1024 * 10`, 表示 10KB
+```
+./run -p uat
+```
 
-#### [resource_preload_size_limit]resource.preload.size.limit
+或者
 
-别名
+```
+./run --profile uat
+```
 
-* **act.resource.preload.size.limit**
+## <a name="consume"></a>使用配置
 
-Specifies the maximum number of bytes of a resource that can be preload into memory. Specifies `0` or negative number to disable resource preload feature
+在 ActFramework 应用中可以通过多种方式来使用配置. 假设我们定义了如下配置:
 
-Default value: `1024 * 10`, i.e. 10KB
+```
+myconf.foo.bar=100
+```
 
-#### [scan_package]scan_package
+下面我们会介绍如何在应用中使用 `myconf.foo.bar` 的配置:
 
-别名
+### <a name="consume_pull"></a>从 `AppConfig` 实例获取配置
 
-* **act.scan_package**
+ActFramework 使用 `AppConfig` 实例来管理所有的配置项, 
+`AppConfig` 实例可以通过 `Act.appConfig()` 来获得:
 
-指定应用程序包, 其中所有类都受字节码处理, 例如增强和注入. 应在加载应用程序时指定此设置. 否则 Act 将尝试处理应用程序的 lib 和 classes 文件夹中找到的所有类, 这可能会在启动时导致性能问题.
+```java
+@UrlContext("/conf")
+public class ConfTest1 {
+    @GetAction("pull")
+    public int pull() {
+		AppConfig conf = Act.appConfig();
+		return $.convert(conf.get("myconf.foo.bar")).toInt();
+    }
+}
+```
 
-#### [secret]secret
+**小贴士** 上面的例子中我们用到了 OSGL 
+工具库的类型转换将 `conf.get("myconf.foo.bar")` 
+的值从字串转换为整型. 更多关于 OSGL 类型转换的信息可以参考 TBD 
 
-别名
+### <a name="consume_inject"></a>注入配置 - 方式一
 
-* **act.secret**
+通过 ActFramework 的依赖注入框架, 应用程序可以直接将配置注入到字段中:
 
-指定应用程序用于执行常规加密/解密/签名等的密钥.
+```java
+@UrlContext("/conf")
+public class ConfTest2 {
 
-默认值: `myawesomeapp`
+    @Configuration("myconf.foo.bar")
+    private int fooBar;
 
-注意, 确保在 PROD 模式下设置此值.
+    @GetAction("inject")
+    public int inject() {
+        return this.fooBar;
+    }
 
-#### [server_header]server.header
+}
+```
 
-别名
+对于请求响应方法, 也可以直接注入到方法参数列表:
 
-* **act.server.header**
+```java
+@UrlContext("/conf")
+public class ConfTest3 {
 
-指定要输出到响应的服务器头
+    @GetAction("inject_param")
+    public int injectParam(@Configuration("myconf.foo.bar") int fooBar) {
+        return fooBar;
+    }
 
-默认值: `act`
+}
+```
 
-#### [session_ttl]session.ttl
+### <a name="consume_autoconf"></a>注入配置 - 方式二
 
-别名
+除了通过标准依赖注入框架对字段和方法参数注入, ActFramework 还支持使用 `@AutoConfig` 注解将配置注入到静态字段中:
 
-* **act.session.ttl**
+```
+@UrlContext("/conf")
+@AutoConfig("myconf") // 注意: 这里 `myconf` 指定配置的前缀, 如果没有则默认为 `app`
+public class ConfTest4 {
 
-指定会话持续时间（以秒为单位）, 如果用户无法与服务器交互超过设置的时间, 则会话将被销毁.
+    private static final Const<Integer> FOO_BAR = $.constant();
 
-默认值: `60 * 30` 即半小时
+    @GetAction("auto_conf")
+    public int autoConf() {
+        return FOO_BAR.get();
+    }
 
-#### [session_persistent]session.persistent
+}
+```
 
-别名
+关于 AutoConfig 的注入方式, 有几点值得注意:
 
-* **session.persistent.enabled**
-* **act.session.persistent**
-* **act.session.persistent.enabled**
+1. 待静态字段的类必须有 `@AutoConfig` 注解. `@AutoConfig` 
+注解可以指定配置前缀, 在上面的例子中, 配置前缀为 
+`myconf`, 如果不指定, 则配置前缀默认为 `app`. ActFramework 
+使用配置前缀在配置中寻找和静态字段名对应的配置项, 在我们的例子中, FOO_BAR 对应了 myconf.foo.bar.
 
-指定系统是否应将会话 cookie 视为 [persistent cookie](http://en.wikipedia.org/wiki/HTTP_cookie#Persistent_cookie). 如果启用此设置, 则在浏览器关闭后, 用户的会话不会被销毁.
+2. 待注入配置的字段必须是静态的, 无需 public, 也无需加载任何注解.
 
-默认值: `false`
+3. 待注入字段的名字通过以下规则匹配配置项:
+	* 所有的下划线被替换为 `.`: FOO_BAR -> FOO.BAR
+	* 所有的大写转换为小写: FOO.BAR -> foo.bar
+	* 用 `.` 和前缀相连: foo.bar -> myconf.foo.bar
+	
+4. 如果静态字段需要标注为 final, 则应该使用 
+`org.osgl.util.Const` 来包裹注入配置类型, 这样 ActFramework 
+(通过反射) 将配置值注入到 Const 常量中, 
+而应用则通过 `Const.get()` 来获得配置值, 
+如同我们上面的例子. 这样的方式可以在保持 final 语义的前提下最大程度地简化开发
 
-#### [session_encrypt]session.encrypt
+### <a name="consume_complex_type"></a>注入复杂类型
 
-别名
+ActFramework 支持复杂类型的注入,包括 Map, List 和服务实现
 
-* **session.encrypt.enabled**
-* **act.session.encrypt**
-* **act.session.encrypt.enabled**
+#### <a name="consume_map"></a>注入 Map
 
-{@code session.encrypted.enabled} 指定系统是否应该加密会话 cookie 中的键/值对. 启用会话加密将大大提高安全性, 但带来额外的 CPU 使用成本和请求处理的时间稍长.
+假设有下面的配置:
 
-默认值: `false`
+```
+myconf.map.demo.one=1
+myconf.map.demo.two=2
+```
 
-#### [session_key_username]session.key.username
+应用可以这样来注入一个 Map 类型的配置变量:
 
-别名
+```java
+@GetAction("map")
+@ResponseContentType(H.MediaType.JSON)
+public Object barMap(@Configuration("myconf.map.demo") Map<String, Integer> barMap) {
+    return barMap;
+}
+```
 
-* **act.session.key.username**
+**注意** 本文中所有方法参数的配置注入均可以用于字段, 以下不再赘述
 
-指定登录用户的用户名的会话密钥. 验证插件应使用配置为访问用户名的会话密钥.
+发送请求到 `/conf/map` 可以得到下面的响应:
 
-默认值: `username`
+```json
+{
+  "one": 1,
+  "two": 2,
+}
+```
 
-#### [session_mapper_impl]session.mapper.impl
+如果按照下面的方式来注入:
 
-别名
+```java
+@GetAction("map2")
+@ResponseContentType(H.MediaType.JSON)
+public Object barMap2(@Configuration("myconf.map") Map<String, Integer> fooMap) {
+    return fooMap;
+}
+```
 
-* **session.mapper**
-* **act.session.mapper**
-* **act.session.mapper.impl**
+发送请求到 `/conf/map2` 得到的响应变为:
 
-通过类名指定 `act.util.SessionMapper` 的实现. 会话映射器可以用于将会话/闪存串行化以响应或在翻转侧上, 反序列化来自请求的会话/闪存信息.
+```json
+{
+  "demo.one": 1,
+  "demo.two": 2,
+}
+```
 
-#### [session_secure]session.secure
+### <a name="consume_list"></a>注入 List
 
-别名
+假设有下面的配置:
 
-* **session.secure.enabled**
-* **act.session.secure**
-* **act.session.secure.enabled**
+```
+myconf.list.demo=1,2,3
+```
 
-指定会话Cookie是否应设置为安全. 启用安全会话将导致会话 cookie 仅在 https 连接中有效. 这将强制网站默认由 https 运行.
+应用可以注入一个整型数组:
 
-默认值: the setting of [http.secure](http_secure_enabled)
+```java
+@GetAction("list")
+@ResponseContentType(H.MediaType.JSON)
+public int[] listDemo(@Configuration("myconf.list.demo") int[] list) {
+    return list;
+}
+```
 
-**注意** 当 Act 服务器在 DEV 模式中运行时, http 只会被禁用, 而不涉及 `session.secure.enabled` 设置.
+或者一个整形 List
 
-#### [source_version]source.version
+```java
+@GetAction("list2")
+@ResponseContentType(H.MediaType.JSON)
+public List<Integer> listDemo2(@Configuration("myconf.list.demo") List<Integer> list) {
+    return list;
+}
+```
 
-别名
+发送请求到 `/conf/list` 和 `/conf/list2` 获得相同的响应:
 
-* **act.source.version**
+```json
+[
+    1, 
+    2, 
+    3
+]
+```
 
-指定源代码 Java 版本. 此配置仅当应用程序在 DEV 模式下运行时才起效.
+如果注入字串数组或者列表, 响应会改变:
 
-默认值: `1.7`
+```java
+@GetAction("list3")
+@ResponseContentType(H.MediaType.JSON)
+public List<String> list3(@Configuration("myconf.list.demo") List<String> list) {
+    return list;
+}
+```
 
-注意 ActFramework 支持 Java 1.7+. 确保这里不填入 `1.6` 或以下.
+响应:
 
-#### [target_version]target.version
+```json
+[
+    "1", 
+    "2", 
+    "3"
+]
+```
 
-别名
+### <a name="consume_impl"></a>注入接口实现
 
-* **act.target.version**
+假设我们定义了一下接口:
 
-指定 Java 编译版本. 此配置仅当应用程序在 DEV 模式下运行时才生效.
-
-默认值: `1.7`
-
-注意 ActFramework 支持 Java 1.7+. 确保这里不填入 `1.6` 或以下.
-
-#### [template_home]template.home
-
-别名
-
-* **act.template.home**
-
-指定视图模板所在的位置. 如果未指定, 则将使用视图引擎名称（小写）作为模板 home.
-
-**注意** 强烈建议不要设置此配置项.
-
-#### [url_context]url.context
-
-别名
-
-* **act.url.context**
-当迁移旧系统（特别是在 Ｓervlet 容器上运行的系统）到 ActFramework 的时候会遇到处理 URL Context 的问题。这个配置可以帮助处理这种情况。一旦设置了 `url.context`，ActFramework 会自动将请求的 URL 路径上的 context 部分去掉，然后匹配路由。
-
-默认值： `null`
-
-启用版本： 1.1
-
-#### [url_login]url.login
-
-别名
-
-* **act.url.login**
-
-指定由 `act.util.RedirectToLoginUrl` 使用的登录 URL, 作为 `MissingAuthenticationHandler` 的默认实现，请参阅 handler.missing_authentication.impl](handler_missing_authentication_impl)
-
-默认值: `/login`
-
-#### [url_login_ajax]url.login.ajax
-
-别名
-
-* **act.url.login.ajax**
-
-指定 `act.util.RedirectToLoginUrl` 使用的登录 URL, 在响应 ajax 请求时, 它是 `MissingAuthenticationHandler` 的默认实现. 参见[handler.missing_authentication.ajax.impl](handler_missing_authentication_ajax_impl)
-
-#### [view_default]view.default
-
-别名
-
-* **act.view.default**
-
-指定默认视图引擎名称. 如果有多个视图注册并其中包含默认视图, 那么在加载模板时将优先使用默认视图.
-
-默认值: `rythm` see [Rythm Engine](http://rythmengine.org)
-
-Other options:
-
-* `freemarker` - 需要 [act-freemarker](https://github.com/actframework/act-freemarker) 插件
-* `velocity` - 需要 [act-velocity](https://github.com/actframework/act-velocity) 插件
-* `mustache` - 需要 [act-mustache](https://github.com/actframework/act-mustache) 插件
-* `thymeleaf` - 需要 [act-thymeleaf](https://github.com/actframework/act-thymeleaf) 插件
-* `beetl` - 需要 [act-beetl](https://github.com/actframework/act-beetl) 插件
+```java
+public interface GreetingService {
+    String greet();
+
+    default String getName() {
+        return greet() + " service";
+    }
+}
+```
+
+以及若干接口的实现类:
+
+```java
+public class HelloService implements GreetingService {
+    @Override
+    public String greet() {
+        return "Hello";
+    }
+}
+```
+
+和
+
+```java
+public class NiHaoService implements GreetingService {
+    @Override
+    public String greet() {
+        return "NiHao";
+    }
+}
+```
+
+应用可以为不同的场景配置不同的接口实现:
+
+```
+greet.default=demo.HelloService
+greet.west=demo.HelloService
+greet.east=demo.NiHaoService
+```
+
+下面演示如何在应用代码中使用接口实现配置:
+
+```java
+@UrlContext("/conf")
+public class ConfTest {
+
+    @Configuration("greet.default")
+    private GreetingService defaultService;
+    
+    @Configuration("greet.west")
+    private GreetingService westService;
+
+    @Configuration("greet.east")
+    private GreetingService eastService;
+
+    @GetAction("greet")
+    public String greetDefault() {
+        return defaultService.greet();
+    }
+
+    @GetAction("greet/west")
+    public String greetWest() {
+        return westService.greet();
+    }
+
+    @GetAction("greet/east")
+    public String greetEast() {
+        return eastService.greet();
+    }
+}
+```
+
+发送请求到 `/conf/greet` 和 `/conf/greet/west` 都获得 `Hello` 
+的响应. 而发送请求到 `/conf/greet/east` 则获得 `NiHao` 的响应.
+
+应用也可以注入接口实现到一个 Map 中:
+
+
+```java
+@UrlContext("/conf")
+public class ConfTest {
+
+    @Configuration("greet")
+    private Map<String, GreetingService> greetingServiceMap;
+
+    @GetAction("greet/all")
+    public Object allGreetings() {
+        return greetingServiceMap;
+    }
+}
+```
+
+发送请求到 `/conf/greet/all` 获得下面的响应:
+
+```JSON
+{
+  "default": {
+    "name": "Hello service"
+  },
+  "scenario2": {
+    "name": "NiHao service"
+  },
+  "scenario1": {
+    "name": "Hello service"
+  }
+}
+```
+
+注入接口实现到一个 List 的情况:
+
+配置:
+
+```
+greets=act.HelloService,demo.NiHaoService
+```
+
+Java 代码:
+
+```java
+@UrlContext("/conf")
+@ResponseContentType(H.MediaType.JSON)
+public class ConfTest {
+    
+    @Configuration("greets")
+    private List<GreetingService> greetingServices;
+
+    @GetAction("greet/list")
+    public Object greetingList() {
+        return greetingServices;
+    }
+
+}
+```
+
+发送请求到 `/conf/greet/list` 会得到一下响应:
+
+```JSON
+[
+  {
+    "name": "Hello service"
+  },
+  {
+    "name": "NiHao service"
+  }
+]
+```
+
+## <a name="third_party_conf"></a> 加载三方配置文件
+
+如果应用引入的第三方库需要特殊的配置, 
+往往需要提供配置文件或者 InputStream 给三方库, 
+这些配置有时候并不是 `.properties` 
+文件,而是采用其他格式, 比如 `.json`, `.yaml` 等等, 
+对于这种情况, ActFramework 为应用提供了 `@act.inject.util.LoadConfig` 注解:
+
+假设应用需要一个 `libx.json` 的配置文件, 下面是获得这个配置文件的办法:
+
+```java
+public class ConfTest {
+	@LoadConfig("libx.json")
+	private String libxContent;
+	
+    @LoadConfig("libx.json")
+    private File libxFile;
+
+    @LoadConfig("libx.json")
+    private URL libxUrl;
+
+    @LoadConfig("libx.json")
+    private InputStream libxInputStream;
+}
+```
+
+使用 `@LoadConfig` 和应用自行采用 `Class.getResource` 来加载的区别在于:
+
+1. `@LoadConfig` 更加简单, 而且可以加载配置文件到不同类型的字段,如上例所示.
+2. `@LoadConfig` 在不同的运行环境(profile)下可以加载环境目录下的配置文件
+
+## 总结
+
+本篇详细讲述了如何在 ActFramework 应用中使用 ActFramework 提供的配置管理工具, 包括
+
+* 配置值类型指示器
+* 基于环境的配置
+* 使用 `AppConfig` 来获取配置
+* 注入配置到字段和请求处理方法参数
+* 注入配置到静态字段
+* 处理配置中的复杂类型
+* 加载三方配置文件
+
+本文中的代码可以从下面的代码库中获得:
+
+https://github.com/greenlaw110/act-doc-configuration
