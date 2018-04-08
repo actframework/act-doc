@@ -1,26 +1,26 @@
 # 配置
 
-**注意** 本章讲述 ActFramework 的配置处理以及使用方式，关于具体配置项的说明，请参见 [配置模板](https://github.com/actframework/act-maven-archetypes/blob/master/maven-archetype-quickstart/src/main/resources/archetype-resources/src/main/resources/conf/app.properties).
+**注意** 本章讲述 ActFramework 的配置处理以及使用方式，关于具体配置项的说明，请参见 [配置模板](https://github.com/actframework/archetype-support/blob/act-archetype-support-1.8.7.0/src/main/resources/archetype-resources/src/main/resources/conf/app.properties).
 
 ActFramework 为应用程序开发人员提供了丰富的配置管理支持：
 
-* [定义配置](#define)
-  - [配置项名字中的秘密](#key_name)
-    + [值类型指示器](#key_name-type_indicator)
-    + [启用与禁用](#key_name-enabled_disabled)
-  - [基于环境(profile)的配置](#profile)
-    + [应用运行环境设定](#specify_profile)
-* [使用配置](#consume)
-  - [从 `AppConfig` 中获取配置](#pull-configuration-from-appconfig)
-  - [注入配置 - 方式一](#inject-configuration-value)
-  - [注入配置 - 方式二](#inject-into-static-fields-with-autoconf)
-  - [注入复杂类型](#inject-complex-type)
-    + [Map](#inject-map)
-    + [List](#inject-list)
-    + [接口实现](#inject-implementation)
-* [加载三方配置文件](#third_part_conf)
+* 1. [定义配置](#define)
+  - 1.1[配置项名字中的秘密](#key_name)
+    + 1.1.1 [值类型指示器](#key_name-type_indicator)
+    + 1.1.2 [启用与禁用](#key_name-enabled_disabled)
+  - 1.2 [基于环境(profile)的配置](#profile)
+    + 1.2.1 [应用运行环境设定](#specify_profile)
+* 2. [使用配置](#consume)
+  - 2.1 [从 `AppConfig` 中获取配置](#pull-configuration-from-appconfig)
+  - 2.2 [注入配置 - 方式一](#inject-configuration-value)
+  - 2.3 [注入配置 - 方式二](#inject-into-static-fields-with-autoconf)
+  - 2.4 [注入复杂类型](#inject-complex-type)
+    + 2.4.1 [Map](#inject-map)
+    + 2.4.2 [List](#inject-list)
+    + 2.4.3 [接口实现](#inject-implementation)
+* 3. [加载三方配置文件](#third_part_conf)
 
-## <a name="define"></a>定义配置
+## <a name="define"></a>1. 定义配置
 
 ActFramework 读取 `resources/` 或 `resources/conf/` 下面的任何 `.properties` 文件来获得配置数据。这里是一个应用配置的例子：
 
@@ -52,9 +52,9 @@ cors.option.check=false
 cron.withdraw-job.db-load=0 30 13 * * ?
 ```
 
-### <a name="key_name"></a>配置项名字中的秘密
+### <a name="key_name"></a>1.1 配置项名字中的秘密
 
-#### <a name="key_name-type_indicator"></a>1. 值类型指示器
+#### <a name="key_name-type_indicator"></a>1.1.1  值类型指示器
 
 ActFramework 通过后缀来辨识配置项的值类型：
 
@@ -113,7 +113,7 @@ template.home=/templates
 job.pool.size=10
 ```
 
-#### <a name="key_name-enabled_disabled"></a>3. 启用与禁用
+#### <a name="key_name-enabled_disabled"></a>1.1.2 启用与禁用
 
 对于 `.enabled` 型的类型指示器, ActFramework 
 可以灵活处理 `.enabled` 与 `.disabled` 之间的互换, 下面的配置方式效果都是一样的:
@@ -136,7 +136,7 @@ act.api_doc.disabled=false
 act.api_doc=true
 ```
 
-### <a name="profile"></a>基于环境(profile)的配置
+### <a name="profile"></a>1.2 基于环境(profile)的配置
 
 通常来讲一个正式的项目都有多个环境的配置, 
 比如数据库的 URL 
@@ -172,7 +172,7 @@ resources
 然后依照当前的环境设定加载环境特定配置文件. 
 如果环境配置文件中有配置项和公共配置文件中的配置项冲突, 则使用环境配置文件的配置设定来覆盖公共配置文件中的设定.
 
-#### <a name="specify_profile"></a>应用运行环境设定
+#### <a name="specify_profile"></a>1.2.1 应用运行环境设定
 
 上面我们讲到 ActFramework 
 根据当前运行环境加载配置文件, 带出来一个问题, 如何设定运行环境. 答案是在启动应用的时候通过 JVM 参数设定应用的运行环境:
@@ -195,7 +195,7 @@ java ... -Dprofilie=uat ...
 ./run --profile uat
 ```
 
-## <a name="consume"></a>使用配置
+## <a name="consume"></a>2. 使用配置
 
 在 ActFramework 应用中可以通过多种方式来使用配置. 假设我们定义了如下配置:
 
@@ -205,7 +205,7 @@ myconf.foo.bar=100
 
 下面我们会介绍如何在应用中使用 `myconf.foo.bar` 的配置:
 
-### <a name="consume_pull"></a>从 `AppConfig` 实例获取配置
+### <a name="consume_pull"></a>2.1 从 `AppConfig` 实例获取配置
 
 ActFramework 使用 `AppConfig` 实例来管理所有的配置项, 
 `AppConfig` 实例可以通过 `Act.appConfig()` 来获得:
@@ -225,7 +225,7 @@ public class ConfTest1 {
 工具库的类型转换将 `conf.get("myconf.foo.bar")` 
 的值从字串转换为整型. 更多关于 OSGL 类型转换的信息可以参考 TBD 
 
-### <a name="consume_inject"></a>注入配置 - 方式一
+### <a name="consume_inject"></a>2.2 注入配置 - 方式一
 
 通过 ActFramework 的依赖注入框架, 应用程序可以直接将配置注入到字段中:
 
@@ -258,7 +258,7 @@ public class ConfTest3 {
 }
 ```
 
-### <a name="consume_autoconf"></a>注入配置 - 方式二
+### <a name="consume_autoconf"></a>2.3 注入配置 - 方式二
 
 除了通过标准依赖注入框架对字段和方法参数注入, ActFramework 还支持使用 `@AutoConfig` 注解将配置注入到静态字段中:
 
@@ -297,11 +297,11 @@ public class ConfTest4 {
 而应用则通过 `Const.get()` 来获得配置值, 
 如同我们上面的例子. 这样的方式可以在保持 final 语义的前提下最大程度地简化开发
 
-### <a name="consume_complex_type"></a>注入复杂类型
+### <a name="consume_complex_type"></a>2.4 注入复杂类型
 
 ActFramework 支持复杂类型的注入,包括 Map, List 和服务实现
 
-#### <a name="consume_map"></a>注入 Map
+#### <a name="consume_map"></a>2.4.1 注入 Map
 
 假设有下面的配置:
 
@@ -350,7 +350,7 @@ public Object barMap2(@Configuration("myconf.map") Map<String, Integer> fooMap) 
 }
 ```
 
-### <a name="consume_list"></a>注入 List
+### <a name="consume_list"></a>2.4.2 注入 List
 
 假设有下面的配置:
 
@@ -408,7 +408,7 @@ public List<String> list3(@Configuration("myconf.list.demo") List<String> list) 
 ]
 ```
 
-### <a name="consume_impl"></a>注入接口实现
+### <a name="consume_impl"></a>2.4.3 注入接口实现
 
 假设我们定义了一下接口:
 
@@ -559,7 +559,7 @@ public class ConfTest {
 ]
 ```
 
-## <a name="third_party_conf"></a> 加载三方配置文件
+## <a name="third_party_conf"></a>3. 加载三方配置文件
 
 如果应用引入的第三方库需要特殊的配置, 
 往往需要提供配置文件或者 InputStream 给三方库, 
