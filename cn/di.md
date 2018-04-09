@@ -1,5 +1,7 @@
 # 依赖注入
 
+1. []
+
 ActFramework支持基于[JSR330](https://jcp.org/en/jsr/detail?id=330)的依赖注入. 
 
 ## 申明需要注入的对象
@@ -42,9 +44,8 @@ public class Foo {
 ## 获取有依赖申明的对象
 
 ```java
-App app = App.instance();
 // this ensure Bar has been injected into Foo
-Foo foo = app.getInstance(Foo.class);
+Foo foo = Act.getInstance(Foo.class);
 ```
 
 ## 方法参数的依赖注入

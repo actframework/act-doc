@@ -606,7 +606,7 @@ GET http://localhost:9999/hello
 
 ## <a name="jax-rs"></a>4. JAX-RS 路由
 
-ActFramework 通过 act-jax-rs 插件提供对 JAX-RS 路由的支持
+ActFramework 通过 [act-jax-rs](https://github.com/actframework/act-jax-rs) 插件提供对 JAX-RS 路由的支持
 
 TBD
 

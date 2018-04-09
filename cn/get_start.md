@@ -168,7 +168,7 @@ public Result home(ActionContext context) {
 
 ##### 4.3.1 模板的路径
 
-`homne` 方法中我们并没有看到指定模板文件路径的地方, ActFramework 在程序没有指定模板路径的时候按照下面的规则来寻找模板文件:
+`home` 方法中我们并没有看到指定模板文件路径的地方, ActFramework 在程序没有指定模板路径的时候按照下面的规则来寻找模板文件:
 
 ```
 /src/main/resources/rythm/com/mycom/helloworld/AppEntry/home.html
