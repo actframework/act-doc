@@ -225,7 +225,7 @@ public class ConfTest1 {
 工具库的类型转换将 `conf.get("myconf.foo.bar")` 
 的值从字串转换为整型. 更多关于 OSGL 类型转换的信息可以参考 TBD 
 
-### <a name="consume_inject"></a>2.2 注入配置 - 方式一
+### <a name="inject-configuration-value"></a>2.2 注入配置 - 方式一
 
 通过 ActFramework 的依赖注入框架, 应用程序可以直接将配置注入到字段中:
 
@@ -258,7 +258,7 @@ public class ConfTest3 {
 }
 ```
 
-### <a name="consume_autoconf"></a>2.3 注入配置 - 方式二
+### <a name="inject-into-static-fields-with-autoconf"></a>2.3 注入配置 - 方式二
 
 除了通过标准依赖注入框架对字段和方法参数注入, ActFramework 还支持使用 `@AutoConfig` 注解将配置注入到静态字段中:
 
