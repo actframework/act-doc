@@ -1,4 +1,4 @@
-# 配置
+# Chapter 2. 配置
 
 **注意** 本章讲述 ActFramework 的配置处理以及使用方式，关于具体配置项的说明，请参见 [配置模板](https://github.com/actframework/archetype-support/blob/act-archetype-support-1.8.7.0/src/main/resources/archetype-resources/src/main/resources/conf/app.properties).
 
@@ -605,3 +605,5 @@ public class ConfTest {
 本文中的代码可以从下面的代码库中获得:
 
 https://github.com/greenlaw110/act-doc-configuration
+
+\newpage

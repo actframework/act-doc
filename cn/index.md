@@ -1,5 +1,14 @@
-# ActFramework 文档
+---
+header-includes:
+  - \usepackage{draftwatermark}
+output: 
+  pdf_document: 
+    keep_tex: yes
+---
 
+\SetWatermarkText{WIP}
+
+# ActFramework 文档
 
 ## 综述
 
@@ -50,3 +59,5 @@ ActFramework可以让开发人员以更加简洁有趣的方式开发MVC应用�
 ## 参考手册
 
 1. [配置](configuration.md)
+
+\newpage

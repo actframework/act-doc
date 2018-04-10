@@ -1,4 +1,4 @@
-# ActFramework简介
+# Chapter 1. ActFramework简介
 
 ## <a name="prerequisites"></a>准备工作
 
@@ -223,6 +223,7 @@ public Result home(ActionContext context) {
 ![image](https://user-images.githubusercontent.com/216930/38310207-573d6908-385f-11e8-9e06-2a2d28be87cc.png)
 
 
+\newpage
 ## <a name="anatomy"></a>ActFramework应用项目剖析
 
 ActFramework使用标准的maven项目布局来组织文件. 下面是一种常见 Act 应用的目录结构:
@@ -292,3 +293,5 @@ ActFramework使用标准的maven项目布局来组织文件. 下面是一种常�
 1. ActFramework程序结构解析
 
 [返回目录](index.md)
+
+\newpage

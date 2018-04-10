@@ -1,4 +1,4 @@
-# 依赖注入
+# Chapter 3. 依赖注入
 
 1. []
 
@@ -82,4 +82,4 @@ public class GreetingModule extends org.osgl.inject.Module {
 **小贴士** 在ActFramework中你不必使用Module类来创建`Injector`对象实例。框架会自动寻找所有申明的Module类并在
 内部创建`Injector`实例
 
-[返回目录](index.md)
+\newpage
