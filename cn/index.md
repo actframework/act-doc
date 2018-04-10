@@ -1,3 +1,7 @@
+# ActFramework 文档 - r1.8.7
+
+ActFramework 是一款[高性能 Java 全栈框架](https://www.techempower.com/benchmarks/#section=data-r15&hw=cl&test=fortune&l=hra0e7&c=4&o=4)，用于开发传统的 MVC 应用或 RESTful 服务。和其他现有 MVC/RESTful 框架相比，ActFramework 的优势在于表达力和简洁易用。
+
 ---
 header-includes:
   - \usepackage{draftwatermark}
@@ -7,16 +11,6 @@ output:
 ---
 
 \SetWatermarkText{WIP}
-
-# ActFramework 文档
-
-## 综述
-
-ActFramework可以让开发人员以更加简洁有趣的方式开发MVC应用程序。和其他Web框架相比，ActFramework侧重于表达力和简洁易用。
-
-## FAQ
-
-1. [FAQ](faq.md)
 
 ## 了解ActFramework
 

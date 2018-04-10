@@ -262,7 +262,7 @@ public class ConfTest3 {
 
 除了通过标准依赖注入框架对字段和方法参数注入, ActFramework 还支持使用 `@AutoConfig` 注解将配置注入到静态字段中:
 
-```
+```java
 @UrlContext("/conf")
 @AutoConfig("myconf") // 注意: 这里 `myconf` 指定配置的前缀, 如果没有则默认为 `app`
 public class ConfTest4 {
