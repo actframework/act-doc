@@ -2,13 +2,13 @@
 
 ActFramework支持基于[JSR330](https://jcp.org/en/jsr/detail?id=330)的依赖注入. 
 
-* 1 [申明需要注入的对象](#declare_inject_target)
-	* 1.1 [字段(field)注入](#field_injection)
-	* 1.2 [构造器(constructor)注入](#constructor_injection)
-	* 1.3 [设置器(setter)注入](#setter_injection)
-	* 1.4 [方法参数注入](#param_injection)
-* 2 [手动获取对象实例](#get_instance)
-* 3 [通过 Module 类声明绑定](#module)
+* [1 申明需要注入的对象](#declare_inject_target)
+	* [1.1 字段(field)注入](#field_injection)
+	* [1.2 构造器(constructor)注入](#constructor_injection)
+	* [1.3 设置器(setter)注入](#setter_injection)
+	* [1.4 方法参数注入](#param_injection)
+* [2 手动获取对象实例](#get_instance)
+* [3 通过 Module 类声明绑定](#module)
 
 
 ## <a name="declare_inject_target"></a>1. 申明需要注入的对象

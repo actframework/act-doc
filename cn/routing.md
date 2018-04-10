@@ -2,9 +2,9 @@
 
 本篇介绍 ActFramework 的路由表以及路径变量的处理规则.
 
-* 1. [路由表](#route_mapping)
-  - 1.1 [路由注解](#annotation)
-    - 1.1.1 [URL context](#urlcontext)
+* [1 路由表](#route_mapping)
+  - [1.1 路由注解](#annotation)
+    - [1.1.1 URL context](#urlcontext)
 		- 1.1.1.1 [绝对路径和相对路径](#absolute_vs_relative)
 		- 1.1.1.2 [URL context 的继承](#urlcontext_inheritance)
   - 1.2 [路由表文件](#route_table)

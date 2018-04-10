@@ -4,21 +4,21 @@
 
 ActFramework 为应用程序开发人员提供了丰富的配置管理支持：
 
-* 1. [定义配置](#define)
-  - 1.1[配置项名字中的秘密](#key_name)
-    + 1.1.1 [值类型指示器](#key_name-type_indicator)
-    + 1.1.2 [启用与禁用](#key_name-enabled_disabled)
-  - 1.2 [基于环境(profile)的配置](#profile)
-    + 1.2.1 [应用运行环境设定](#specify_profile)
-* 2. [使用配置](#consume)
-  - 2.1 [从 `AppConfig` 中获取配置](#pull-configuration-from-appconfig)
-  - 2.2 [注入配置 - 方式一](#inject-configuration-value)
-  - 2.3 [注入配置 - 方式二](#inject-into-static-fields-with-autoconf)
-  - 2.4 [注入复杂类型](#inject-complex-type)
-    + 2.4.1 [Map](#inject-map)
-    + 2.4.2 [List](#inject-list)
-    + 2.4.3 [接口实现](#inject-implementation)
-* 3. [加载三方配置文件](#third_part_conf)
+* [1 定义配置](#define)
+  * [1.1 配置项名字中的秘密](#key_name)
+    * [1.1.1 值类型指示器](#key_name-type_indicator)
+    * [1.1.2 启用与禁用](#key_name-enabled_disabled)
+  * [1.2 基于环境(profile)的配置](#profile)
+    * [1.2.1 应用运行环境设定](#specify_profile)
+* [2. 使用配置](#consume)
+  - [2.1 从 `AppConfig` 中获取配置](#pull-configuration-from-appconfig)
+  - [2.2 注入配置 - 方式一](#inject-configuration-value)
+  - [2.3 注入配置 - 方式二](#inject-into-static-fields-with-autoconf)
+  - [2.4 注入复杂类型](#inject-complex-type)
+    + [2.4.1 Map](#inject-map)
+    + [2.4.2 List](#inject-list)
+    + [2.4.3 接口实现](#inject-implementation)
+* [3. 加载三方配置文件](#third_part_conf)
 
 ## <a name="define"></a>1. 定义配置
 
