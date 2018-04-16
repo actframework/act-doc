@@ -14,7 +14,7 @@
 
 `Act.start()` 是 ActFramework 应用启动的入口函数, 调用该方法之后会触发一系列操作:
 
-1. 通过调用栈活动调用类名字, 比如 `com.mycom.myproj.AppEntry`
+1. 通过调用栈获得调用类名字, 比如 `com.mycom.myproj.AppEntry`
 2. 获得该类的 `AppDescriptor`
 3. 从 `AppDescriptor` 获得包名并将其设定在 `scan_package` 系统属性 (System.properties) 上面备用
 4. 通过以下规则推断应用启动模式:

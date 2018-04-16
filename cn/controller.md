@@ -234,12 +234,15 @@ ActFramework 对 Session/Flash 的处理流程如下图所示:
 
 #### <a name="header_session_mapper"></a>3.1.1 `HeaderSessionMapper`
 
+`HeaderSessionMapper` 将 session 字串写入某个 HTTP 响应头. Session 头的名字为 `X-Act-Session`, Flash 头的名字为 `X-Act-Flash`
+
+### <a name="">
 
 ### <a name="context"></a>1.2 ActionContext
 
 在 `H.Request` 和 `H.Response` 之外 ActFramework 还提供了一个更加方便的封装: ActionContext
 
-### <a name=""></a>1.2 控制器与请求处理方法
+### <a name="session_codec"></a>1.2 控制器与请求处理方法
 
 **小贴士** 尽管控制器不需要继承任何类，ActFramework推荐你的控制器继承`act.controller.Controll.Util`类，这样你可以在你的控制器中方便的使用各种工具方法。当你的控制器已经继承了其他类的时候，你可以使用`import static`来实现相同的功能：
 
