@@ -18,12 +18,12 @@
 2. 获得该类的 `AppDescriptor`
 3. 从 `AppDescriptor` 获得包名并将其设定在 `scan_package` 系统属性 (System.properties) 上面备用
 4. 通过以下规则推断应用启动模式:
-	4.1 如果发现 `app.mode` 系统设定, 则使用该设定
-	4.2 如果发现应用从 jar 文件启动, 则直接设定 `app.mode` 为 `prod`
-	4.3 如果发现应用从 classes 目录下启动则依据 `profile` 设定推断:
-		4.3.1 如果发现 `profile` 系统设定为 `prod`, 则设定模式为 `prod`
-		4.3.2 如果发现 `profile` 系统设定为 `dev`, 则设定模式为 `dev`
-		4.3.3 所以其他情况均推断 `app.mode` 为 `dev`
+	- 4.1 如果发现 `app.mode` 系统设定, 则使用该设定
+	- 4.2 如果发现应用从 jar 文件启动, 则直接设定 `app.mode` 为 `prod`
+	- 4.3 如果发现应用从 classes 目录下启动则依据 `profile` 设定推断:
+		* 4.3.1 如果发现 `profile` 系统设定为 `prod`, 则设定模式为 `prod`
+		* 4.3.2 如果发现 `profile` 系统设定为 `dev`, 则设定模式为 `dev`
+		* 4.3.3 所以其他情况均推断 `app.mode` 为 `dev`
 5. 在控制台上打印 Banner
 6. 初始化各种基础服务,包括
 	* 性能统计
