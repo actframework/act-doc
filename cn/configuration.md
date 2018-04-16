@@ -1,4 +1,4 @@
-# 第二章 配置
+# <a name="chapter_configuration">第二章 配置
 
 **注意** 本章讲述 ActFramework 的配置处理以及使用方式，关于具体配置项的说明，请参见 [配置模板](https://github.com/actframework/archetype-support/blob/act-archetype-support-1.8.7.0/src/main/resources/archetype-resources/src/main/resources/conf/app.properties).
 
@@ -19,6 +19,7 @@ ActFramework 为应用程序开发人员提供了丰富的配置管理支持：
     + [2.4.2 List](#inject-list)
     + [2.4.3 接口实现](#inject-implementation)
 * [3. 加载三方配置文件](#third_part_conf)
+* [4. pom 文件的配置](#pom_conf)
 
 ## <a name="define"></a>1. 定义配置
 
@@ -350,7 +351,7 @@ public Object barMap2(@Configuration("myconf.map") Map<String, Integer> fooMap) 
 }
 ```
 
-### <a name="consume_list"></a>2.4.2 注入 List
+#### <a name="consume_list"></a>2.4.2 注入 List
 
 假设有下面的配置:
 
@@ -590,6 +591,10 @@ public class ConfTest {
 1. `@LoadConfig` 更加简单, 而且可以加载配置文件到不同类型的字段,如上例所示.
 2. `@LoadConfig` 在不同的运行环境(profile)下可以加载环境目录下的配置文件
 
+## <a name="pom_conf"></a>4. pom 文件的配置
+
+TBD
+
 ## 总结
 
 本篇详细讲述了如何在 ActFramework 应用中使用 ActFramework 提供的配置管理工具, 包括
@@ -601,6 +606,7 @@ public class ConfTest {
 * 注入配置到静态字段
 * 处理配置中的复杂类型
 * 加载三方配置文件
+* pom 文件配置
 
 本文中的代码可以从下面的代码库中获得:
 

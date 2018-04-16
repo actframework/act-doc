@@ -22,8 +22,8 @@ output:
 
 1. [配置](configuration.md)
 1. [依赖注入](di.md)
-1. [控制器](controller.md)
 1. [路由](routing.md)
+1. [控制器](controller.md)
 1. [控制器](controller.md)
 1. [域模型和数据访问](model.md)
 1. [模板](templating.md)

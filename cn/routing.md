@@ -1,4 +1,4 @@
-# 第四章 路由
+# <a name="chapter_routing">第四章 路由
 
 本篇介绍 ActFramework 的路由表以及路径变量的处理规则.
 
@@ -17,6 +17,7 @@
 	* [2.1 正则表达式](#regex)
 		* [2.1.1 正则表达式宏](#regex-macro)
 	* [2.2 动态变量](#dyna_var)
+	* [2.3 可变长路径](#dyna_path)
 * [3 命名端口](#named_port)
 	* [3.1 配置命名端口](#config_named_port)
 	* [3.2 使用命名端口](#use_named_port)
@@ -523,7 +524,7 @@ public void service(int accessCode) {
 
 **注意** 路由使用的正则表达式宏名字必须是以 `__` 开头并结尾.
 
-### <a name="dyna_var"></a> 动态变量
+### <a name="dyna_var"></a> 2.2 动态变量
 
 对于下面的请求, 没有办法使用上面讲到的任何方式来映射到一个处理器:
 
@@ -541,6 +542,18 @@ public void handleData(Map<String, String> data) {}
 ```
 
 这里 `{data}` 是动态变量, 可以将 `k1=v1,k2=v2,...` 这样的部分放进一个 `Map` 结构中.
+
+### <a name="dyan_path"></a>2.3 可变长路径
+
+在 URL path 的最后部分如果是 `/...` 则创建了一条可变长路径. 有两项功能
+
+#### <a name="soe_path"></a>2.3.1 用于生成 SOE 路径
+
+TBD
+
+#### <a name="soe_path"></a>2.3.2 用于创建需要处理请求路径的处理器
+
+TBD
 
 ## <a name="named_port"></a>3. 命名端口
 

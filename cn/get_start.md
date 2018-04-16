@@ -15,6 +15,8 @@
 		* [4.2.2 模板文件内容](#template_content)
 	* [4.3 加入请求处理方法](#add_req_handler)
 * [5 ActFramework应用项目剖析](#anatomy)
+* [6 打包发布](#deploy)
+	* [6.1 配置前端 http 服务器](#frontend-http-server)
 
 ## <a name="prerequisites"></a>1. 准备工作
 
@@ -335,5 +337,92 @@ ActFramework使用标准的maven项目布局来组织文件. 下面是一种常�
 1. 包组织方式完全由项目决定。你的项目中可能使用了`service`包而不是`controller`来存放所有的RESTful控制器类。 而你的业务层也许不是一个`model`包, 而是分布在多个不同的包里. ActFramework在项目文件组织上没有任何限制
 1. ActFramework使用`common`配置目录来获取缺省的配置信息。而上例所示的`sit`和`dev`目录则完全由项目决定，你可以使用其他任何名字，你也可以增加另一种配置组，比如`uat`。如果项目不需要多个配置组，使用`common`即可。
 1. 如果路由都通过注解方式指定，`routes`文件可以不用提供. 一旦`routes`文件被检测到，其中的条目可以覆盖注解指定路由
+
+## <a name="deploy"></a>6. 打包发布你的应用
+
+使用 maven archetype 生成的项目有完整的 ActFramework maven 工具链支持, 打包发布应用非常简单:
+
+```
+mvn clean package
+```
+
+运行上面的命令后, maven 会在 `target/dist` 目录下生成发布包:
+
+```
+-rw-rw-r-- 1 luog luog 20M Apr 11 16:21 helloworld-1.0-SNAPSHOT-b180411_1621.zip
+```
+
+将生成的 zip 文件通过 scp 或其他途径上传到产品服务器, 解包之后可以看到下面的文件结构:
+
+```
+drwxr-xr-x 4 luog luog 4.0K Apr 11 16:21 classes/
+drwxr-xr-x 2 luog luog 4.0K Apr 11 16:21 lib/
+-rw-rw-r-- 1 luog luog  20M Apr 11 16:21 helloworld-1.0-SNAPSHOT-b180411_1621.zip
+-rwxrwxrwx 1 luog luog 2.2K Apr 11 16:21 run*
+-rwxrwxrwx 1 luog luog  315 Apr 11 16:21 run.bat*
+-rwxrwxrwx 1 luog luog   22 Apr 11 16:21 start*
+-rwxrwxrwx 1 luog luog  316 Apr 11 16:21 start.bat*
+```
+
+执行 `./run` 启动应用, 默认配置环境为 `prod`. 如需在其他配置环境下运行应用使用 `-p` 参数, 例如:
+
+```
+./run -p uat
+```
+
+上面的命令会在 `uat` 配置环境下启动应用.
+
+**小贴士** 执行 `./run --help` 能看到下面的帮助信息
+
+```
+./run start the app
+
+     -d --debug           enable remote debugging
+     --debug-port <port>  specify debug port (if not specified then debug port is 5005)
+     -p --profile         specify the profile to start the app
+     -g --group           specify the node group
+     -Dprop=val           specify any JVM system properties
+     -h --help            display this help message
+```
+
+`start` 和 `run` 命令基本相同, 不同点在于 `start` 在后台启动应用.
+
+如果是在 windows 环境下, 可以是用 `run.bat` 或者 `start.bat` 命令. 当然如果是线上服务器, 还是推荐使用 Linux 系统.
+
+*** <a name="frontend-http-server"></a>6.1 配置前端 http 服务器
+
+通常来讲, 线上服务应该配置前端 HTTP 服务器, 并反向代理到 ActFramework 应用. 这样做的优势在与:
+
+1. 可以帮助处理 https 请求
+2. 可以在一个 80 端口通过域名分派到多个 ActFramework 应用上
+
+用 nginx 为例来看看如何设置到 ActFramework 应用的反向代理. 假设应用 A 的 http 端口为 11000, 其对应的 nginx 配置文件内容大概为:
+
+```
+# 设置 443 到应用的反向代理
+server {
+  listen          443;
+  client_max_body_size 8m;
+  server_name     www.myawesomeproduct.com myawesomeproduct.com;
+
+  ssl on;
+  ssl_certificate     /home/ubuntu/cert/www_myawesomeproduct_com.crt;
+  ssl_certificate_key /home/ubuntu/cert/www_myawesomeproduct_com.key;
+
+  location / {
+    proxy_pass        http://localhost:11000;
+    proxy_set_header  X-Real-IP $remote_addr;
+    proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header  Host $http_host;
+  }
+}
+
+# 设置 80 到 443 的自动跳转
+server {
+        listen 80;
+        server_name www.myawesomeproduct.com myawesomeproduct;
+        return 301 https://$server_name$request_uri;
+}
+```
 
 \newpage

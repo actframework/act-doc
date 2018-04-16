@@ -1,4 +1,4 @@
-# 第三章 依赖注入
+# <a name="chapter_di">第三章 依赖注入
 
 ActFramework支持基于[JSR330](https://jcp.org/en/jsr/detail?id=330)的依赖注入. 
 
@@ -9,7 +9,7 @@ ActFramework支持基于[JSR330](https://jcp.org/en/jsr/detail?id=330)的依赖�
 	* [1.4 方法参数注入](#param_injection)
 * [2 手动获取对象实例](#get_instance)
 * [3 通过 Module 类声明绑定](#module)
-
+* [4 Provider](#provider)
 
 ## <a name="declare_inject_target"></a>1. 申明需要注入的对象
 
@@ -94,6 +94,7 @@ public class GreetingModule extends org.osgl.inject.Module {
 
 **小贴士** 在ActFramework中你不必使用Module类来创建`Injector`对象实例。框架会自动寻找所有申明的Module类并在
 内部创建`Injector`实例
+
 
 
 
