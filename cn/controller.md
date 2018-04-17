@@ -2,12 +2,16 @@
 
 * [1 介绍](#intro)
 * [2 请求与响应](#req_resp)
-	* [2.1 请求](#req)
-	* [2.2 响应](#resp)
+	* [2.1 使用请求与响应](#req_resp_usage)
+	* [2.2 请求](#req)
+	* [2.3 响应](#resp)
 * [3 Session 和 Flash](#session_flash)
-	* [3.1 SessionMapper](#session_mapper)
-	* [3.2 SessionCodec](#session_codec)
+	* [3.1 Session 应用技巧](#session_best_practice)
+	* [3.2 Session 和 Flash 的区别](#session_flash_diff)
+	* [3.3 Session/Flash 应用例子](#session_flash_usage)
+	* [3.4 Session 配置](#session_config)
 * [4 ActionContext](#context)
+	* [4.1 使用 ActionContext](#context_usage)
 * [5 控制器与请求处理方法](#controller_request-handler)
 	* [5.1 请求方法参数]
 	* [5.2 控制器的依赖注入]
@@ -44,11 +48,9 @@
 		* [7.3.2 设定其他 HTTP Header]
 * [8 异步返回]
 
-## <a name="intro"></a>介绍
+## <a name="intro"></a>1. 介绍
 
-控制器 (Controller) 和响应返回是 MVC 中的 "C" 和 "V" 部分, 也是整个框架的核心. ActFramework 在方面提供了完善的支持和一些独到的设计
-
-下面是一个简单的控制器代码:
+控制器 (Controller) 和响应返回是 MVC 中的 "C" 和 "V" 部分, 也是整个框架的核心. 下面是一个简单的控制器代码:
 
 ```java
 package com.proj;
@@ -66,11 +68,19 @@ public class ControllerDemo {
 1. 如果能找到 resources/rythm/com/proj/ControllerDemo/home.html 则用这个模板文件生成响应内容并返回. 否则
 2. 返回一个没有内容的 200 Okay 状态响应
 
-1. **控制器**. 控制器是指一个包括了若干请求请求处理方法的Java类
-    
-    **注意** ActFramework并不要求控制器集成某个特定的类，也不要求控制器加上某个特定注解
+下面是 actFramework 对控制器和请求处理方法的定义:
 
-1. **请求处理方法** 指某个方法提供了一定的逻辑代码响应发送到特定路径的请求。简单的说如果在应用运行的时候有路由条目配置到某个方法，该方法即为请求处理方法。**注意** 请求处理方法可以是静态方法也可以是虚方法
+1. **控制器**. 
+
+	一个包括了若干请求请求处理方法的Java类. 上面的例子中 `ControllerDemo` 类是一个控制器
+		
+		- ActFramework并不要求控制器继承某个特定的类，也不要求控制器加上某个特定注解
+
+1. **请求处理方法** 
+
+	指某个方法提供了一定的逻辑代码响应发送到特定路径的请求。简单的说如果在应用运行的时候有路由条目配置到某个方法，该方法即为请求处理方法。上面的例子中 `home()` 是一个请求处理方法
+		
+		- 请求处理方法可以是静态方法也可以是虚方法
 
 ## <a name="req_resp"></a>2. 请求与响应
 
@@ -80,7 +90,50 @@ Servlet 架构使用 `HttpServletRequest` 和 `HttpServletResponse` 两个类来
 
 虽然提供了各种高层封装手段, 在少数情况下, 开发人员可能还是需要直接对请求和输出进行操作. ActFramework 使用 [osgl-http](https://github.com/osglworks/java-http) 提供的 `H.Request` 类来封装 HTTP 请求, `H.Response` 则封装了 HTTP 响应对象。
 
-### <a name="req"></a>2.1 H.Request 请求对象
+### <a name="req_resp_usage"></a>2.1 使用请求与响应
+
+在应用中使用请求与响应的示例代码:
+
+```java
+@GetAction("/echo")
+public void foo(H.Request req, H.Response resp) {
+    String message = req.paramVal("message");
+    resp.header("Content-Type", "text/plain").output().append(message).close();
+}
+```
+
+**小贴士** ActFramework 对于输出响应有更多的表达方式, 上面的代码可以简化为:
+
+```java
+@GetAction("/echo")
+public void foo(H.Request req, H.Response resp) {
+    String message = req.paramVal("message");
+    resp.writeText(message);
+}
+```
+
+而更简单的方式则是完全不使用 Request 和 Response 对象:
+
+```java
+import static Controller.Util.renderText;
+...
+
+@GetAction("/echo")
+public void foo(String message) {
+    renderText(message);
+}
+```
+
+甚至可以这样:
+
+```java
+@GetAction("/echo")
+public String foo(String message) {
+    return message;
+}
+```
+
+### <a name="req"></a>2.2 `H.Request` 请求对象
 
 ActFramework 使用 `H.Request` 来封装 HTTP 请求，提供应用开发访问 HTTP 请求所需的方法：
 
@@ -140,7 +193,7 @@ ActFramework 使用 `H.Request` 来封装 HTTP 请求，提供应用开发访问
 
 **小贴士** 在 ActFramework 中大部分情况应用都不需要直接调用 `H.Request` 对象的方法.
 
-### <a name="resp"></a>2.2 H.Response 响应对象
+### <a name="resp"></a>2.3 `H.Response` 响应对象
 
 ActFramework 使用 `H.Response` 来封装 HTTP 请求，提供应用开发访问 HTTP 响应所需的方法：
 
@@ -189,7 +242,7 @@ ActFramework 使用 `H.Response` 来封装 HTTP 请求，提供应用开发访�
 
 ## <a name="session_flash"></a>3. Session 与 Flash
 
-因为 HTTP 是无状态服务, 如果需要在多次请求中跟踪用户与服务的交互信息, 需要提供某种形式的状态存储. ActFramework 使用 `H.Session` 和 `H.Flash` Scope 提供请求状态存取服务. `H.Session` 和 `H.Flash` 均为应用提供一下方法:
+因为 HTTP 是无状态服务, 如果要在多次请求中跟踪用户与服务的交互信息, 需要某种形式的状态存储. ActFramework 使用 `H.Session` 和 `H.Flash` 两种 Scope 类型提供请求状态存取服务. `H.Session` 和 `H.Flash` 均为应用提供一下方法:
 
 * `put(String key, Object val)` - 将对象 `val` 用 `key` 存放在 scope 中
 	- 对象 `val` 将会被转换为字串存放
@@ -202,47 +255,326 @@ ActFramework 使用 `H.Response` 来封装 HTTP 请求，提供应用开发访�
 * `remove(String key)` - 从 scope 中删除 key
 * `clear()` - 从 scope 中删除所有存放的数据
 
-和 Servlet 架构的 `HttpSession` 不同, `H.Session` 对象没有存放在服务器端, 而是以 cookie 或者 header 的方式存放在客户端. ActFramework 依据此特性实现了无状态的应用服务器架构, 支持线性增长的横向扩展. 
+和 Servlet 架构的 `HttpSession` 不同, `H.Session` 对象没有存放在服务器端, 而是以 cookie 或者 header 的方式存放在客户端. ActFramework 依据此特性实现了无状态的应用服务器架构, 支持线性增长的横向扩展. 当然这种设计对存放在 session 中的数据有一定的要求:
 
-ActFramework 对 Session/Flash 的处理流程如下图所示:
+1. 整个 session 和 flash 的数据加起来不能超过 4k
+2. 存放的数据最终会转换为字符串. 取出来的时候也只能是字符串
 
-![session-flow-chart](https://user-images.githubusercontent.com/216930/38778305-5bf285e2-40fb-11e8-8f65-98a433dd039e.png)
+### <a name="session_best_practice"></a>3.1 Session 应用技巧
 
-1. 处理请求
-	1.1 ActFramework 使用 `SessionMapper` 将请求中的某个特定 Cookie 或者 Header 映射为一个字串
-	1.2 然后使用 `SessionCodec` 将字串解析为 `H.Session` 或者 `H.Flash` Scope 对象
-2. 处理响应
-	2.1 ActFramework 使用 `SessionCodec` 将 `H.Session` 或者 `H.Flash` Scope 对象打包进一个字串
-	2.2 然后使用 SessionMapper 将该字串映射到响应特定 Cookie 或者 Header 上
+鉴于 Session 的特点与使用限制, 下面是一些使用 Session 的一些技巧:
 
-### <a name="session_mapper"></a>3.1 `SessionMapper`
+* 只存放简单的数据, 例如 username, userId 等
+	- 复杂数据应该存放进数据库, 或者类似 redis 这样的 KV 存储
+* 尽量不要存放敏感数据, 比如密码, 电话号码, 身份证号码之类的, 因为 session cookie 虽然不能篡改但可读.
+	- 如果一定要存放敏感数据, 应该打开 session 加密配置. 当然这样会带来性能上的损耗
 
-`SessionMapper` 负责将序列化之后的 session/flash 字串映射到响应上, 以及从请求中获取 session/flash 字串. 具体来说 ActFramework 内置两大类型的 SessionMapper:
 
-#### <a name="cookie_session_mapper"></a>3.1.1 `CookieSessionMapper`
+### <a name="session_flash_diff"></a>3.2 `H.Flash` 与 `H.Session` 的区别
 
-`CookieSessionMapper` 将 session 字串写入特定名字的 cookie 之中:
+`H.Flash` 与 `H.Session` 的区别在于 flash 中存入的信息只保存到下一次请求处理完毕. 另外 flash 提供了几个快捷方法:
 
-1. session cookie 名字为 ${app-short-id}-session; flash cookie 名字为 ${app-short-id}-flash
-	* 关于 `app-short-id` 的详细内容,参见[启动手册](reference/bootstrap.md#short_id)
-2. cookie path: `/`
-3. cookie domain: 当 localhost 为 host 时, 为空值, 否则为 host 配置
-4. httpOnly: true
-5. secure: `http.secure` 的配置值
-6. value: 序列化之后的 session 或者 flash 字串
-7. ttl: `session.ttl` 配置, 默认为 60 * 30, 即半小时
+* `error(String message)` - 相当于调用 `put("error", message)`
+* `String error()` - 相当于调用 `get("error")`
+* `success(String message)` - 相当于调用 `put("success", message)`
+* `String success()` - 相当于调用 `get("success")`
 
-#### <a name="header_session_mapper"></a>3.1.1 `HeaderSessionMapper`
+**注意** Flash 通常之用于后端模板生成的系统架构. 对于前后端分离的应用一般都没有使用 Flash 的理由. 
 
-`HeaderSessionMapper` 将 session 字串写入某个 HTTP 响应头. Session 头的名字为 `X-Act-Session`, Flash 头的名字为 `X-Act-Flash`
+### <a name="session_flash_usage"></a>3.3 Session/Flash 使用例子
 
-### <a name="">
+在应用中使用 session:
 
-### <a name="context"></a>1.2 ActionContext
+```java
+@PutAction("/my/preference/theme")
+public void setTheme(String theme, H.Session session) {
+	session.put("theme", theme);
+}
 
-在 `H.Request` 和 `H.Response` 之外 ActFramework 还提供了一个更加方便的封装: ActionContext
+@GetAction("/my/preference/theme")
+public String getTheme(H.Session session) {
+	return session.get("theme");
+}
+```
 
-### <a name="session_codec"></a>1.2 控制器与请求处理方法
+在应用中使用 flash:
+
+请求处理器代码
+
+```java
+@PostAction("/login")
+public void login(String username, String password, ActionContext context) {
+	if (!(authenticate(username, password)) {
+		context.flash().error("authentication failed");
+		redirect("/login");
+	}
+	context.login(username);
+	redirect("/");
+}
+```
+
+模板文件代码
+
+```html
+<h1>Login form</h1>
+@if(_flash.error()) {
+<div class="alert alert-error">@_flash.error()</div>
+}
+<form action="/login" method="post">
+	<input name="username">
+	<input type="password" name="password">
+	<button>Login</button>
+</form>
+```
+### <a name="session_config"></a>3.4 Session 配置
+
+* `session.secure` - 指定 session cookie 的 secure 选项. 默认值: 开发模式下为 `false`; 产品模式下为 `true`
+	- **注意** 仅对给予 Cookie 的 session 存储有效. 对基于 Header 的 session 存储没有意义.
+* `session.ttl` - 指定 session 无活动过期时间. 默认值: `60 * 30`, 即半小时
+	- **注意** 每次请求都会刷新 session 的时间戳. `session.ttl` 的意思是当用户在这段时间里和应用没有任何交互会导致 session 过期
+* `session.persistent` - 是否将 session cookie 定义为长效 cookie (persistent cookie). 如果激活这个选项, 即使用户关闭浏览器, 在 `session.ttl` 到来之前 session 都不会过期. 默认值: `false`
+	- **注意** 仅对给予 Cookie 的 session 存储有效. 对基于 Header 的 session 存储没有意义.
+* `session.encrypt` - 是否加密 session 字串. 默认值: `false`
+	- **注意** 对 JWT 输出无效
+	
+关于 Session/Flash 在框架实现方面更详尽的信息, 参考 [Session 与 Flash 的处理详解](reference/session_flash.md)
+	
+## <a name="context"></a>4. `ActionContext`
+
+`ActionContext` 是 ActFramework 为应用提供的一个封装类, 封装了处理 HTTP 请求需要用到的数据, 包括:
+
+* `H.Request req()` - 返回当前请求
+* `H.Response resp()` - 返回当前响应
+* `H.Session session()` - 返回当前 Session
+* `H.Flash flash()` - 返回当前 Flash
+
+还有一些工具方法:
+
+* `String paramVal(String name)` - 获取请求 URL 路径参数, 查询参数, 或者 POST 表单字段. 
+	- **注意** `H.Request.paramVal(String)` 调用只能返回查询参数, 不能返回 URL 路径参数和 POST 表单字段
+* `String session(String key)` - 相当于调用 `session().get(key)`
+* `session(String key, String value)` - 相当于调用 `session().put(key, value)`
+* `String sessionId()` - 相当于调用 `session().id()`
+* `String flash(String key)` - 相当于调用 `flash().get(key)`
+* `flash(String key, String value)` - 相当于调用 `flash().put(key, value)`
+* `H.Cookie cookie(String name)` - 相当于调用 `req().cookie(name)`
+* `renderArg(String name, Object val)` - 设置模板参数
+* `templatePath(String templatePath)` - 设置模板路径
+* ｀accept(H.Format fmt)｀ - 更改请求　`Accept` 头
+* `UserAgent userAgent()` - 返回 UserAgent 对象, 由请求的 `User-Agent` 头解析得出
+* `String username()` - 返回 session 中的 username 数据. 
+	- 拿到 username 的 key 由 `session.key.username` 配置设定, 默认为 `username`
+* `boolean isLoggedIn()` - 检查是否 session 中有 username 数据
+* `String body()` - 返回请求 body 内容
+* `ISObject upload(String name)` - 返回指定名字的上传文件
+* `forceResponseStatus(H.Status status)` - 指定响应状态码
+* `login(String username)` - 将指定用户名存入 session.
+* `loginAndRedirect(String username, String url)` - 将指定用户名存入 session 然后重定向到指定 URL
+* `loginAndRedirectBack(String username)` - 将指定用户名存入 session 然后重定向到 login 之前的 URL
+* `loginAndRedirectBack(String username, String defaultLandingUrl)` - 将指定用户名存入 session 然后重定向到 login 之前的 URL, 如果没有找到之前 URL 则重定向到 `defaultLandingUrl`
+* `logout()` - 清空当前 session
+* `Locale locale(boolean required)` - 返回当前请求的 Locale, 当 `required` 是 `true` 的时候, 如果当前请求没有指定 locale, 则返回系统 Locale
+
+### <a name="context_usage"></a>4.1 使用 `ActionContext`
+
+下面的代码演示了 `ActionContext` 在用户登陆逻辑上的应用:
+
+```java
+@PostAction("/login")
+public void login(String username, String password, ActionContext context) {
+	if (!authenticate(username, password)) {
+		context.flash().error("authentication failed")
+		redirect("/login");
+	}
+	context.loginAndRedirect(username, "/");
+}
+```
+
+## <a name="controller_request-handler"></a>5. 控制器与请求处理方法
+
+在[1. 介绍](#intro)中我们引入了控制器与请求处理方法的概念并提供了一段简单的代码演示如何使用控制器和请求处理方法来处理请求并返回响应. 本节我们会详细讨论下面几点:
+
+1. 请求处理方法参数
+2. 控制器的依赖注入
+3. 单例还是多例
+
+### <a name="request-handler_params"></a>5.1 请求处理方法参数
+
+请求处理方法可以有 0 到多个参数, 参数数目不受限制. 通常来讲请求处理方法的参数分为两种:
+
+1. 来自请求的数据, 包括
+	* URL 路径参数
+	* Query 参数
+	* Form 字段
+	* 上传文件
+2. 系统注入对象, 包括
+	* `ActionContext`
+	* `H.Request`
+	* `H.Response`
+	* `H.Session`
+	* `H.Flash`
+	* `App`
+	* `EventBus`
+	* `JobManager`
+	* 其他 App 服务
+	* 数据访问对象 (DAO)
+	* 各种单例 (继承 `SingletonBase`, 或者有 `@Singleton` 注解的类)
+	* 所有其他在框架 IOC 容器中注册了 Provider 的类
+
+不管哪种参数, ActFramework 不要求特别的注解, 这样可以让代码读写都更加简洁.
+
+#### 案例 1
+
+在 SpringMVC 代码中需要不同的注解来区分 URL 路径参数和请求 Query 参数, 如下例所示:
+
+```java
+    @RequestMapping("{id}/messages")
+    public String handleRequest(
+        @PathVariable("id") String employeeId,
+        @RequestParam("months") int previousMonths,
+        Model model
+    ) {
+        model.addAttribute("employee request by id for paystub for previous months : "+
+                            employeeId + ", " + previousMonths);
+        return "my-page";
+    }
+```
+
+上面的代码在 ActFramework 的表达简洁很多:
+
+```java
+    @Action("{id}/messages")
+    public String handleRequest(String id, int months) {
+        String msg = "employee request by id for paystub for previous months : " +
+                  employeeId + ", "+ months);
+        render("my-page", msg);
+    }
+```
+
+#### 案例 2
+
+Jersey 使用 `@Context` 在请求处理方法中注入系统对象:
+
+```java
+@GET
+@PATH("/foo")
+public String foo(@Context HttpServletRequest req) {
+    return req.getParameter("foo");
+}
+```
+
+ActFramework 无需注解, 直接在参数列表中声明即可:
+
+```java
+@GetAction("/foo")
+public String foo(H.Request req) {
+    return req.paramVal("foo");
+}
+```
+
+#### 案例 3
+
+ActFramework 在参数列表中混合不同的参数类型:
+
+```java
+@PostAction("/login")
+public void login(String username, String password, ActionContext context) {
+	if (!authenticate(username, password)) {
+		context.flash().error("authentication failed")
+		redirect("/login");
+	}
+	context.loginAndRedirect(username, "/");
+}
+```
+
+上面代码中的 `username` 和 `password` 来自 POST 请求的表单字段, 而 `context` 则是由框架注入当前运算的 `ActionContext` 实例. ActFramework 有足够的能力分辨那些参数应该从请求中获得, 那些参数需要由 IOC 容器注入. 另外参数的位置不会影响参数注入过程.
+
+### <a name="controller-di"></a>5.2 控制器的依赖注入
+
+在上面的例子中我们都是将依赖对象注入到方法中. 这样做的问题是如果某个控制器有很多方法, 都需要某个依赖对象, 方法的参数就会变得复杂, 依照 DRY 原则, 我们不希望每个方法上面都重复同样的参数声明. 解决的办法是将依赖注入控制器类. 例如
+
+```java
+@UrlContext("users")
+public class UserService {
+    @Inject
+    private User.Dao userDao;
+    
+    @GetAction("{id}")
+    public User findOne(String id) {
+        return userDao.findById(id);
+    }
+    
+    @PostAction
+    public User create(User user) {
+        return userDao.save(user);
+    }
+}
+```
+
+在上面的例子中 `userDao` 是一个数据访问对象, `UserService` 控制器中的每个方法中都需要使用这个对象, 因此上面的代码选择将 `userDao` 作为 `UserService` 控制器类的字段来注入, 而不是在每个方法中注入. 和方法参数注入不一样的地方是, 字段注入需要使用 `@javax.inject.Inject` 注解. `@Inject` 注解也可以放在构造函数上面:
+
+```java
+@UrlContext("users")
+public class UserService {
+    
+    private User.Dao userDao;
+
+    @Inject
+    public UserService(User.Dao userDao) {
+	    this.userDao = $.requireNotNull(userDao);
+    }
+    ...   
+}
+```
+
+在控制器中可以注入的对象包括: 
+
+* `ActionContext`
+* `H.Request`
+* `H.Response`
+* `H.Session`
+* `H.Flash`
+* `App`
+* `EventBus`
+* `JobManager`
+* 其他 App 服务
+* 数据访问对象 (DAO)
+* 各种单例 (继承 `SingletonBase`, 或者有 `@Singleton` 注解的类)
+* 所有其他在框架 IOC 容器中注册了 Provider 的类
+
+### <a name="single-multi"></a>5.3 单例还是多例
+
+当我们将依赖对象注入一个控制器类带来的一个问题是: 这个控制器是否是线程安全的, 是否单例, 还是多例. 对此 ActFramework 的回答是: 依情况而定.
+
+* 如果注入对象本身是有状态的, 比如 `ActionContext`, `H.Request` 等等, ActFramework 会就每个请求生成一个新的控制器实例
+* 如果注入对象本身是无状态的, 或者说状态不影响当前计算,比如 `EventBus`, `JobManager`, `App` 等等, ActFramework 使用控制器的单例来响应新请求.
+
+总的来说 ActFramework 会审查控制器类的每个实例字段, 如果有任何一个字段类是有状态的,就不会使用单例来启动该控制器. 这个审查过程也包含控制器的所有父类.
+
+下面是 ActFramework 判断一个类是否有状态的过程:
+
+1. 如果一个类被标注为 `@Singelton` 或 `@Stateless`, 或继承自 `SingletonBase`, 则该类无状态
+	* 大部分 Act App 服务类都注册为 Singleton, 包括 `EventBus`, `JobManager` 等等
+2. 如果一个类没有实例字段, 或者实例字段的类本身是无状态的, 则该类无状态.
+
+最后需要解决的问题是如何将来自第三方库的类标注为无状态. 假如某个三方库提供了线程安全的微信接口类 WeixinIntf,这个类本身没有标注为 `@Singleton`, 但作为开发我们知道这是线程安全的, 所以不希望因为这个类的注入导致控制器退出单例状态. 下面是解决办法:
+
+```java
+public class MyController {
+    @Inject @Stateless
+    private WeixinIntf weixin;
+    
+    ...
+}
+```
+
+我们在注入 `weixin` 字段的同时加上 `@Stateless` 注解, 这样 ActFramework 就知道这个字段不会影响到 `MyController` 的状态.
+
+上面是重写的部分
+
+---------------------- 分割线 -------------------------
+
+下面的内容需要重写
 
 **小贴士** 尽管控制器不需要继承任何类，ActFramework推荐你的控制器继承`act.controller.Controll.Util`类，这样你可以在你的控制器中方便的使用各种工具方法。当你的控制器已经继承了其他类的时候，你可以使用`import static`来实现相同的功能：
 

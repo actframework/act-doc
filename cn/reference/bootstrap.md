@@ -1,4 +1,4 @@
-# 启动 ActFramework
+#<a name="bootstrap-act"></a>附录 1 启动 ActFramework
 
 本文讲述应用如何通过调用 `Act.start()` 接口启动 ActFramework 并设置应用的名字, 版本以及扫描包
 

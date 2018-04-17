@@ -1,4 +1,4 @@
-# ActFramework 内置服务
+# <a name="builtin-handler">附录 3 ActFramework 内置服务
 
 ActFramework 提供了一些内置服务, 方便应用开发和使用. 所有的系统内置服务均被映射到以 `/~/` 开头的 URL 路径上.
 

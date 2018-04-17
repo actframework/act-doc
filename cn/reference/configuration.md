@@ -1,3 +1,4 @@
+--- Obsolete ---
 <h1 data-book="configuration">配置</h1>
 
 详细定义 ActFramework 使用到的各种配置
