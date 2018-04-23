@@ -17,7 +17,7 @@
     * [5.2 控制器的依赖注入](#controller-di)
     * [5.3 单例还是多例](#single-multi)
 * [6 参数绑定](#param-binding)
-    * [6.1 绑定与解析](#)binding-resolving)
+    * [6.1 绑定与解析](#binding-resolving)
     * [6.2 数据来源](#data-source)
         * [6.2.1 Cookie 数据绑定](#cookie-data-binding)
         * [6.2.2 Header 数据绑定](#header-data-binding)
