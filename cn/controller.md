@@ -775,7 +775,7 @@ public Iterable<Order> searchOrder(@Named("date_start") DateTime start, @Named("
 1. 请求头数据
 2. Session 数据
 
-#### <a name="cookied-data-binding"></a>6.2.1 Cookie 数据绑定
+#### <a name="cookie-data-binding"></a>6.2.1 Cookie 数据绑定
 
 对于直接绑定数据来源列表中的 URL 路径变量和 Query 参数绑定在前面的例 6.1 和例 6.2 中已有介绍. Form 表单绑定和上传文件我们会在后面详细介绍. 这里先讲一下 `Cookie` 的绑定, 看下面的例子:
 
