@@ -737,7 +737,7 @@ public String testBinder(@Bind(EmailBinder.class) String email) {
 
 **在本文中, 术语 "绑定" 泛指从请求参数中取值并转换为目标方法参数, 而不加区分单对单类型的解析还是多对单类型的绑定**
 
-### <a name="data-source"></a>6.2 数据来源
+### <a name="data-source"></a>6.7 数据来源
 
 **无需注解即可直接绑定的数据**
 
@@ -1160,7 +1160,7 @@ enum.resolving.exact_match=false
 
 ActFramework 支持数组与集合类型的数据绑定. 对于数组, 列表(List) 和集合(Set), 请求数据的形式是一致的；对于 Map 类型的数据绑定, 请求参数的编码形式会有所变化. 这里我们介绍简单类型的数组与集合类型绑定, 对于复杂类型, 比如 POJO 的数组和集合类型在后面[POJO 绑定](#pojo-binding)会谈及
 
-### <a name="primitive-array-binding"></a>6.5.1 基本类型数组绑定
+#### <a name="primitive-array-binding"></a>6.5.1 基本类型数组绑定
 
 ActFramework 支持除 char 以外所有的基本类型数组绑定. char 数组绑定不被支持因为和字串绑定冲突. 我们以 int[] 类型来说明 ActFramework 对基本数据类型数组绑定的支持. 假设我们有下面的请求处理方法:
 
@@ -1235,7 +1235,7 @@ public int[] test(int[] n) {
 
 这种方式通常都是前端采用 AJAX 请求向服务端发送 JSON 数据, 需要请求的 `Content-Type` 头置为 `application/json` 才能正确解析
 
-### <a name="wrap-array-binding"></a>6.5.2 包装类型数组绑定
+##### <a name="wrap-array-binding"></a>6.5.2 包装类型数组绑定
 
 下面是使用包装数据类型绑定的请求处理方法演示代码:
 
@@ -1252,7 +1252,7 @@ public Integer[] test(Integer[] n) {
 
 字串和枚举数组和包装类型数组的处理类似, 无需多言.
 
-### <a name="list-set-binding"></a>6.5.3 List 和 Set 绑定
+#### <a name="list-set-binding"></a>6.5.3 List 和 Set 绑定
 
 List 和 Set 绑定和包装类型数组绑定的处理与编码方式完全一样. 下面是使用 List/Set 类型的处理方法演示代码:
 
@@ -1283,7 +1283,7 @@ public void test(List<Integer> intList, Set<String> stringSet) {
 
 [6.5.1 节](#primitive-array-binding) 中提到的其他编码方式也都可以使用
 
-### <a name="map-binding"></a>6.5.4 Map 绑定
+#### <a name="map-binding"></a>6.5.4 Map 绑定
 
 ActFramework 支持 Map 类型的绑定. Map 的 key 必须能从字串直接解析 (能找到对应的 `StringValueResolver`), Map 的 value 可以是任何类型. 我们这里先讨论 value 为基本类型的情况. 对于 value 为任何类型的讨论, 放到[6.7 POJO 绑定]详细讲述.
 
@@ -1361,7 +1361,7 @@ public Map<Integer, String> test(Map<Integer, String> map) {
 
 **ActFramework 推荐在系统中优先使用 `joda` 包的时期时间类型**
 
-### <a name="date-format"></a>6.6.1 日期格式
+#### <a name="date-format"></a>6.6.1 日期格式
 
 ActFramework 支持三种日期格式的配置:
 
@@ -1400,7 +1400,7 @@ public LocalDate testLocalDate(LocalDate date) {
 
 如果应用在中国大陆, 发送的 GET 请求应该是 `/test/661/local-date?date=2018-4-23`, POST 请求的表单字段值也应类似.
 
-## <a name="date-format-localization"></a>6.6.2 日期格式本地化
+#### <a name="date-format-localization"></a>6.6.2 日期格式本地化
 
 当设置了 `i18n=true` 打开 ActFramework 的国际化支持后, 日期和时间的格式处理会更加复杂. 首先系统会从请求的 `Accept-Language` 解析用户端的 `Locale` 并存储在 `ActionContext` 中. 
 
@@ -1415,7 +1415,7 @@ fmt.zh-tw.date=yyyy/M/d
 
 在没有设置本地日期格式的情况下, 框架默认使用 `DateFormat.MEDIUM` 来获取相应的日期时间格式
 
-## <a name="date-format-specified"></a>6.6.3 在绑定参数上指定日期格式
+#### <a name="date-format-specified"></a>6.6.3 在绑定参数上指定日期格式
 
 有的时候对于特定的请求处理方法需要使用和全局设定不同的日期/时间模式, 这时候可以使用 `@act.data.annotation.DateTimeFormat` 注解, 如下例所示:
 
@@ -1597,7 +1597,7 @@ public void upload(ISObject upload) {
 	- `BlobStorage`: Azure Blob 存储
 3. 当上传文件长度小于某个特定阀值 (默认 10K) 时, 不会在服务器上产生临时文件触发 IO 操作
 
-### <a name="upload-in-memory-cache"> 6.8.1 上传文件内存缓存
+#### <a name="upload-in-memory-cache"> 6.8.1 上传文件内存缓存
 
 通常来讲框架在将上传文件传递给用户应用的时候会事先生成临时文件, 方便应用对文件的各种处理, 比如存入某个永久存储, 或者进行图片剪裁等操作. 因为有了 osgl-storage 库, ActFramework 在此基础上提供了内存缓存的概念. 刚才讲到使用 `ISObject` 的好处第 3 项, 当上传文件长度小于某个阀值时, ActFramework 将生成内部实现为 `byte[]` 的 `ISObject` 实现, 这样无需因为临时文件而产生 IO 操作.
 
@@ -1610,7 +1610,7 @@ upload.in_memory.threshold=1024 * 100
 
 上面将阀值配置为 `100k`, 即所有长度小于 100k 的上传文件都不会因为临时文件产生 IO 操作. 前提是应用使用了 `ISObject` 来声明上传文件, 而不是 `File`.
 
-### <a name="upload-base64"> 6.8.2 上传 BASE 64 编码
+#### <a name="upload-base64"> 6.8.2 上传 BASE 64 编码
 
 TBD
 
@@ -1618,7 +1618,7 @@ TBD
 
 ActFramework 提供了强大的请求参数绑定支持, 应用几乎没有定义自己的 `StringValueResolver` 或 `Binder` 的需要. 
 
-### <a name="customize-resolver"></a>6.9.1 自定义 `StringValueResolver`
+#### <a name="customize-resolver"></a>6.9.1 自定义 `StringValueResolver`
 
 假设应用对某种类型特殊编码方式, 可以采用自定义 `StringValueResolver`
 
@@ -1671,11 +1671,13 @@ public Foo testFooResolver(Foo foo) {
 }
 ```
 
-### <a name="customize-binder"></a>6.9.2 自定义 Binder
+#### <a name="customize-binder"></a>6.9.2 自定义 Binder
 
 自定义 Binder 的方法和例子参见 [6.1 绑定与解析](#binding-resolving)
 
 ### <a name="data-validation"></a>6.10 绑定参数校验
+
+TBD
 
 ## <a name="return-response"></a>7 返回响应
 * [7 返回响应]
