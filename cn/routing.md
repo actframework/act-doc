@@ -366,7 +366,7 @@ GET /syslog file[external]:/var/log/syslog
 如果有一个 `routes.conf` 文件在 `resources/conf/uat/` 下面, 
 其中配置的路由映射仅在应用运行在 `uat` 环境下才有效果.
 
-### <a name="route_conflict">1.3 系统内置路由
+### <a name="route_conflict"></a>1.3 系统内置路由
 
 ActFramework 内置了一些服务帮助简化应用开发:
 
@@ -383,7 +383,7 @@ ActFramework 在开发模式下的错误页面
 
 关于这些内置响应器的具体作用和使用方法, 参考[系统内置服务](reference/builtin-handler.md)
 
-### <a name="route_conflict"></name>１.4 路由冲突的处理
+### <a name="route_conflict"></a>１.4 路由冲突的处理
 
 如果应用存在映射冲突, 即同一个服务端点映射到了不同的响应器上，ActFramework 会依据一下规则处理：
 

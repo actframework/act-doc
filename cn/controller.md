@@ -74,19 +74,19 @@
 
 ```java
 // snippet 1a
-package com.proj;
+package actdoc.sample;
 
 import org.osgl.mvc.GetAction;
 
-public class ControllerDemo {
+public class AppEntry {
     @GetAction
     public void home() {}
 }
 ```
 
-上面的代码中 `@GetAction` 建立了从 `HTTP GET /` 请求到 `ControllerDemo.home()` 方法的映射. 当收到该请求时, `ControllerDemo.home()` 方法被调用, 并生成响应返回请求端. 注意到该方法没有执行任何指令, 框架会依据情况自动选择返回逻辑:
+上面的代码中 `@GetAction` 建立了从 `HTTP GET /` 请求到 `AppEntry.home()` 方法的映射. 当收到该请求时, `AppEntry.home()` 方法被调用, 并生成响应返回请求端. 注意到该方法没有执行任何指令, 框架会依据情况自动选择返回逻辑:
 
-1. 如果能找到 resources/rythm/com/proj/ControllerDemo/home.html 则用这个模板文件生成响应内容并返回. 否则
+1. 如果能找到 `resources/rythm/actdoc/sample/AppEntry/home.html` 则用这个模板文件生成响应内容并返回. 否则
 2. 返回一个没有内容的 200 Okay 状态响应
 
 下面是 actFramework 对控制器和请求处理方法的定义:
@@ -121,8 +121,8 @@ Servlet 架构使用 `HttpServletRequest` 和 `HttpServletResponse` 两个类来
 
 ```java
 // snippet 2.1a
-@GetAction("/echo")
-public void foo(H.Request req, H.Response resp) {
+@GetAction("echo/a")
+public void echo_a(H.Request req, H.Response resp) {
     String message = req.paramVal("message");
     resp.header("Content-Type", "text/plain").output().append(message).close();
 }
@@ -135,8 +135,8 @@ public void foo(H.Request req, H.Response resp) {
 
 ```java
 // snippet 2.1b
-@GetAction("/echo")
-public void foo(H.Request req, H.Response resp) {
+@GetAction("echo/b")
+public void echo_b(H.Request req, H.Response resp) {
     String message = req.paramVal("message");
     resp.writeText(message);
 }
@@ -150,8 +150,8 @@ public void foo(H.Request req, H.Response resp) {
 import static Controller.Util.renderText;
 ...
 
-@GetAction("/echo")
-public void foo(String message) {
+@GetAction("echo/c")
+public void echo_c(String message) {
     renderText(message);
 }
 ```
@@ -161,11 +161,13 @@ public void foo(String message) {
 <a name="s2-1d"></a>
 ```java
 // snippet 2.1d
-@GetAction("/echo")
-public String foo(String message) {
+@GetAction("echo/d")
+public String echo_d(String message) {
     return message;
 }
 ```
+
+
 
 ### <a name="req"></a>2.2 `H.Request` 请求对象
 
@@ -322,12 +324,12 @@ ActFramework 使用 `H.Response` 来封装 HTTP 请求，提供应用开发访�
 <a name="s3-3a"></a>
 ```java
 // snippet 3.3a
-@PutAction("/my/preference/theme")
+@PutAction("my/preference/theme")
 public void setTheme(String theme, H.Session session) {
     session.put("theme", theme);
 }
 
-@GetAction("/my/preference/theme")
+@GetAction("my/preference/theme")
 public String getTheme(H.Session session) {
     return session.get("theme");
 }
@@ -340,9 +342,9 @@ public String getTheme(H.Session session) {
 <a name="s3-3b"></a>
 ```java
 // snippet 3.3b
-@PostAction("/login")
-public void login(String username, String password, ActionContext context) {
-    if (!(authenticate(username, password)) {
+@PostAction("login")
+public void login(String username, char[] password, ActionContext context) {
+    if (!(authenticate(username, password))) {
         context.flash().error("authentication failed");
         redirect("/login");
     }
@@ -423,7 +425,7 @@ public void login(String username, String password, ActionContext context) {
 ```java
 // snippet 4.1a
 @PostAction("/login")
-public void login(String username, String password, ActionContext context) {
+public void login(String username, char[] password, ActionContext context) {
     if (!authenticate(username, password)) {
         context.flash().error("authentication failed")
         redirect("/login");
@@ -490,9 +492,9 @@ public String handleRequest(
 ```java
 // snippet 5.1b
 @Action("{id}/messages")
-public String handleRequest(String id, int months) {
+public void handleRequest(@Named("id") String employeeId, int months) {
     String msg = "employee request by id for paystub for previous months : " +
-              employeeId + ", "+ months);
+              employeeId + ", " + months;
     render("my-page", msg);
 }
 ```
@@ -505,7 +507,7 @@ Jersey 使用 `@Context` 在请求处理方法中注入系统对象:
 ```java
 // snippet 5.1c
 @GET
-@PATH("/foo")
+@PATH("foo")
 public String foo(@Context HttpServletRequest req) {
     return req.getParameter("foo");
 }
@@ -516,7 +518,7 @@ ActFramework 无需注解, 直接在参数列表中声明即可:
 <a name="s5-1d"></a>
 ```java
 // snippet 5.1d
-@GetAction("/foo")
+@GetAction("foo")
 public String foo(H.Request req) {
     return req.paramVal("foo");
 }
@@ -530,7 +532,7 @@ ActFramework 在参数列表中混合不同的参数类型:
 ```java
 // snippet 5.1e
 @PostAction("/login")
-public void login(String username, String password, ActionContext context) {
+public void login(String username, char[] password, ActionContext context) {
     if (!authenticate(username, password)) {
         context.flash().error("authentication failed")
         redirect("/login");
@@ -549,17 +551,15 @@ public void login(String username, String password, ActionContext context) {
 ```java
 // snippet 5.2a
 @UrlContext("users")
-public class UserService {
-    @Inject
-    private User.Dao userDao;
+public class UserService_5_2a {
 
     @GetAction("{id}")
-    public User findOne(String id) {
+    public User findOne(@NotNull Long id, User.Dao userDao) {
         return userDao.findById(id);
     }
 
     @PostAction
-    public User create(User user) {
+    public User create(User user, User.Dao userDao) {
         return userDao.save(user);
     }
 }
@@ -571,7 +571,7 @@ public class UserService {
 ```java
 // snippet 5.2b
 @UrlContext("users")
-public class UserService {
+public class UserService_5_2b {
 
     private User.Dao userDao;
 
@@ -618,11 +618,9 @@ public class UserService {
 <a name="s5-3a"></a>
 ```java
 // snippet 5.3a
-public class MyController {
+public class MyController_5_3a {
     @Inject @Stateless
-    private WeixinIntf weixin;
-
-    ...
+    private IStorageService storageService;
 }
 ```
 
@@ -660,9 +658,9 @@ public String test(String foo) {
 <a name="s6b"></a>
 ```java
 // snippet 6b
-public class MyController {
+public class MyController_6b {
     private String foo;
-    @GetAction("/foo/{foo}")
+    @GetAction("foo/{foo}")
     public String test() {
         return foo;
     }
@@ -675,7 +673,7 @@ public class MyController {
 ```java
 // snippet 6c
 @UrlContext("/foo/{foo}")
-public class MyController {
+public class MyController_6c {
     private String foo;
     @GetAction
     public String test() {
@@ -760,7 +758,7 @@ public String testBinder(@Bind(EmailBinder.class) String email) {
  * 获得指定日期范围内创建的 order 列表. 
  * 请求示例: /orders?date_start=20180202&date_end=20180303
  */
-@GetAction("/orders")
+@GetAction("orders")
 public Iterable<Order> searchOrder(@Named("date_start") DateTime start, @Named("date_end") DateTime end) {
     ...
 }
@@ -1618,11 +1616,108 @@ TBD
 
 ### <a name="customize-data-binding"></a>6.9 自定义数据绑定
 
-### <a name="customize-resolver"></a>6.9.1 自定义 StringValueResolver
+ActFramework 提供了强大的请求参数绑定支持, 应用几乎没有定义自己的 `StringValueResolver` 或 `Binder` 的需要. 
+
+### <a name="customize-resolver"></a>6.9.1 自定义 `StringValueResolver`
+
+假设应用对某种类型特殊编码方式, 可以采用自定义 `StringValueResolver`
+
+自定义类型:
+
+<a name="s6_9_1a"></a>
+```java
+// snippet 6.9.1a
+public class Foo {
+	public int id;
+	public String name;
+}
+```
+
+对于上面的类型 `Foo` 假设应用使用的编码方式为 `<id>-<name>`, 例如 `123-foobar`, 自定义的 `StringValueResolver` 为:
+
+<a name="s6_9_1b"></a>
+```java
+// snippet 6.9.1b
+public static class FooResolver extends StringValueResolver<Foo> {
+	@Override
+	public Foo resolve(String s) {
+		S.Pair pair = S.binarySplit(s, '-');
+		int id = $.convert(pair.left()).toInt();
+		String name = pair.right();
+		return new Foo(id, name);
+	}
+}
+```
+
+ActFramework 会自动注册 `FooResolver`, 并对所有的 `Foo` 对象尝试使用该 `resolver` 来解析, 下面是示例代码:
+
+<a name="s6_9_1c"></a>
+```java
+// snippet 6.9.1c
+@GetAction("1/c")
+@JsonView
+public Foo testFooResolver(Foo foo) {
+	return foo;
+}
+```
+
+向 `http://localhost:5460/6/9/1/c?foo=12-abc` 发出请求得到下面的响应:
+
+<a name="s6_9_1d"></a>
+```json
+{
+    "id": 12, 
+    "name": "abc"
+}
+```
 
 ### <a name="customize-binder"></a>6.9.2 自定义 Binder
 
+自定义 Binder 的方法和例子参见 [6.1 绑定与解析](#binding-resolving)
+
 ### <a name="data-validation"></a>6.10 绑定参数校验
+
+## <a name="return-response"></a>7 返回响应
+* [7 返回响应]
+    * [7.1 返回数据]
+        * [7.1.1 返回模板]
+        * [7.1.2 返回 JSON 响应]
+        * [4.1.3 文件下载]
+    * [7.2 返回状态]
+        * [7.2.1 默认状态返回规则]
+            * [7.2.1.1 200 Okay]
+            * [7.2.1.2 201 Created]
+            * [7.2.1.3 404 Not Found]
+            * [7.2.1.4 从 Java 异常映射为 HTTP 错误状态]
+        * [7.2.1 指定返回状态]
+        * [7.2.3 自定义错误页面]
+    * [7.3 设定 HTTP Header]
+        * [7.3.1 Content-Type]
+        * [7.3.2 设定其他 HTTP Header]
+* [8 异步返回]
+
+Act 支持 JSR 303 Bean 校验, 如下例所示:
+
+<a name="s6_10a"></a>
+```java
+@GetAction("notNull")
+public Result notNull(@NotNull String value) {
+	if (context.hasViolation()) {
+		return text("Error(s): \n%s", context.violationMessage());
+	}
+	return text("not null success with %s", fmt);
+}
+```
+
+当发送请求给上面的 `notNull` 端口没有指定 `value` 的时候, 将会得到如下响应:
+
+<a name="s6_10b"></a>
+```
+Error(s): 
+value: may not be null
+```
+
+
 
 ---------------------- 分割线 -------------------------
 
