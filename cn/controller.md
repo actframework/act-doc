@@ -48,7 +48,7 @@
         * [6.9.1 自定义 StringValueResolver](#customize-resolver)
         * [6.9.2 自定义 Binder](#customize-binder)
     * [6.10 绑定参数校验](#data-validation)
-* [7 返回响应]
+* [7 返回响应](#return-response)
     * [7.1 返回数据]
         * [7.1.1 返回模板]
         * [7.1.2 返回 JSON 响应]
