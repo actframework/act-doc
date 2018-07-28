@@ -1725,7 +1725,7 @@ value: may not be null
 
 下面的内容需要重写
 
-**小贴士** 尽管控制器不需要继承任何类，ActFramework推荐你的控制器继承`act.controller.Controll.Util`类，这样你可以在你的控制器中方便的使用各种工具方法。当你的控制器已经继承了其他类的时候，你可以使用`import static`来实现相同的功能：
+**小贴士** 尽管控制器不需要继承任何类，ActFramework推荐你的控制器继承`act.controller.Controller.Util`类，这样你可以在你的控制器中方便的使用各种工具方法。当你的控制器已经继承了其他类的时候，你可以使用`import static`来实现相同的功能：
 
 1. 继承 `act.controller.Controller.Util`:
 
