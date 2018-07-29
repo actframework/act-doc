@@ -2,14 +2,7 @@
 
 ActFramework支持基于[JSR330](https://jcp.org/en/jsr/detail?id=330)的依赖注入. 
 
-* [1 申明需要注入的对象](#declare_inject_target)
-	* [1.1 字段(field)注入](#field_injection)
-	* [1.2 构造器(constructor)注入](#constructor_injection)
-	* [1.3 设置器(setter)注入](#setter_injection)
-	* [1.4 方法参数注入](#param_injection)
-* [2 手动获取对象实例](#get_instance)
-* [3 通过 Module 类声明绑定](#module)
-* [4 Provider](#provider)
+<toc/>
 
 ## <a name="declare_inject_target"></a>1. 申明需要注入的对象
 
@@ -51,7 +44,7 @@ public class Foo {
 }
 ```
 
-## <a name="param_injection"></a>1.4 方法参数注入
+### <a name="param_injection"></a>1.4 方法参数注入
 
 方法参数注入和前面三种注入不一样, 是 ActFramework 特有的功能. Actframework支持三种方法参数注入：
 
@@ -96,6 +89,4 @@ public class GreetingModule extends org.osgl.inject.Module {
 内部创建`Injector`实例
 
 
-
-
-\newpage
+[返回目录](index.md)

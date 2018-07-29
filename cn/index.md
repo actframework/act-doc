@@ -48,4 +48,4 @@ ActFramework 是一款[高性能 Java 全栈框架](https://www.techempower.com/
 
 1. [配置](configuration.md)
 
-\newpage
+<new-page>

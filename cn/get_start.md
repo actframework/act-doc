@@ -1,23 +1,5 @@
 # 第一章 ActFramework简介
 
-* [1 准备工作](#prerequisites)
-	* [1.1 安装 JDK](#install-jdk)
-	* [1.2 安装 Maven](#install-maven)
-* [2 创建一个"Hello world"应用程序](#create_hello_world_app)
-	* [2.1 使用 maven archetype 生成应用框架](#use_maven_archetype)
-	* [2.2 启动项目](#run_app)
-* [3 将新建项目导入 IDE](#import_into_ide)
-* [4 理解 AppEntry](#understand_app_entry)
-	* [4.1 在 pom.xml 文件中指定应用启动类](#specify_app_entry)
-	* [4.2 主页响应方法](#home_method)
-		* [4.2.1 模板文件路径](#template_path)
-			* [4.2.1.1 通过代码指定模板文件路径](#specify_template_path)
-		* [4.2.2 模板文件内容](#template_content)
-	* [4.3 加入请求处理方法](#add_req_handler)
-* [5 ActFramework应用项目剖析](#anatomy)
-* [6 打包发布](#deploy)
-	* [6.1 配置前端 http 服务器](#frontend-http-server)
-
 ## <a name="prerequisites"></a>1. 准备工作
 
 你需要JDK和Maven来使用ActFramework创建应用程序. 因为需要Maven通过网络从中央库下载依赖包，一个良好的互联网链接也是必须的
@@ -425,4 +407,4 @@ server {
 }
 ```
 
-\newpage
+[返回目录](index.md)

@@ -4,6 +4,8 @@
 
 ActFramework 为应用程序开发人员提供了丰富的配置管理支持
 
+<toc/>
+
 ## <a name="define"></a>1. 定义配置
 
 ActFramework 读取 `resources/` 或 `resources/conf/` 下面的任何 `.properties` 文件来获得配置数据。这里是一个应用配置的例子：
@@ -392,7 +394,7 @@ public List<String> list3(@Configuration("myconf.list.demo") List<String> list) 
 ]
 ```
 
-### <a name="consume_impl"></a>2.4.3 注入接口实现
+#### <a name="consume_impl"></a>2.4.3 注入接口实现
 
 假设我们定义了一下接口:
 
@@ -595,4 +597,3 @@ TBD
 
 https://github.com/greenlaw110/act-doc-configuration
 
-\newpage

@@ -1,72 +1,5 @@
 # <a name="chapter_controller">第五章 控制器, 请求处理方法与响应返回
 
-* [1 介绍](#intro)
-* [2 请求与响应](#req_resp)
-    * [2.1 使用请求与响应](#req_resp_usage)
-    * [2.2 请求](#req)
-    * [2.3 响应](#resp)
-* [3 Session 和 Flash](#session_flash)
-    * [3.1 Session 应用技巧](#session_best_practice)
-    * [3.2 Session 和 Flash 的区别](#session_flash_diff)
-    * [3.3 Session/Flash 应用例子](#session_flash_usage)
-    * [3.4 Session 配置](#session_config)
-* [4 ActionContext](#context)
-    * [4.1 使用 ActionContext](#context_usage)
-* [5 控制器与请求处理方法](#controller_request-handler)
-    * [5.1 请求处理方法参数](#request-handler_params)
-    * [5.2 控制器的依赖注入](#controller-di)
-    * [5.3 单例还是多例](#single-multi)
-* [6 参数绑定](#param-binding)
-    * [6.1 绑定与解析](#binding-resolving)
-    * [6.2 数据来源](#data-source)
-        * [6.2.1 Cookie 数据绑定](#cookie-data-binding)
-        * [6.2.2 Header 数据绑定](#header-data-binding)
-        * [6.2.3 Session 数据绑定](#session-data-binding)
-    * [6.3 请求数据编码](#data-encoding)
-        * [6.3.1 Query 数组类型参数编码](#query-param-encoding)
-        * [6.3.2 POST Form 编码](#post-form-encoding)
-        * [6.3.3 POST JSON 编码](#post-json-encoding)
-    * [6.4 简单类型绑定](#simple-type-data-binding)
-        * [6.4.1 空值处理](#null-val)
-        * [6.4.2 错误数据处理](#bad-data)
-        * [6.4.3 枚举](#enum-binding)
-    * [6.5 数组与集合类型绑定](#array-collection-binding)
-        * [6.5.1 基本类型数组绑定](#primitive-array-binding)
-        * [6.5.2 包装类型数组绑定](#wrap-array-binding)
-        * [6.5.3 List 和 Set 绑定](#list-set-binding)
-        * [6.5.4 Map 绑定](#map-binding)
-    * [6.6 日期数据绑定](#date-data-binding)
-        * [6.6.1 日期格式](#date-format)
-        * [6.6.2 日期格式本地化](#date-format-localization)
-        * [6.6.3 在绑定参数上指定日期格式](#date-format-specified)
-    * [6.7 POJO 绑定](#pojo-binding)
-		* [6.7.1 单个 POJO 绑定](#single-pojo-binding)
-		* [6.7.2 POJO 数组或列表绑定](#list-pojo-binding)
-		* [6.7.3 POJO Map 绑定](#map-pojo-binding)
-    * [6.8 上传文件绑定](#file-upload)
-    * [6.9 自定义数据绑定](#customize-data-binding)
-        * [6.9.1 自定义 StringValueResolver](#customize-resolver)
-        * [6.9.2 自定义 Binder](#customize-binder)
-    * [6.10 绑定参数校验](#data-validation)
-* [7 返回响应](#return-response)
-    * [7.1 返回数据]
-        * [7.1.1 返回模板]
-        * [7.1.2 返回 JSON 响应]
-        * [4.1.3 文件下载]
-    * [7.2 返回状态]
-        * [7.2.1 默认状态返回规则]
-            * [7.2.1.1 200 Okay]
-            * [7.2.1.2 201 Created]
-            * [7.2.1.3 404 Not Found]
-            * [7.2.1.4 从 Java 异常映射为 HTTP 错误状态]
-        * [7.2.1 指定返回状态]
-        * [7.2.3 自定义错误页面]
-    * [7.3 设定 HTTP Header]
-        * [7.3.1 Content-Type]
-        * [7.3.2 设定其他 HTTP Header]
-* [8 异步返回]
-
-## <a name="intro"></a>1. 介绍
 
 控制器 (Controller) 和响应返回是 MVC 中的 "C" 和 "V" 部分, 也是整个框架的核心. 下面是一个简单的控制器代码:
 
@@ -105,7 +38,7 @@ public class AppEntry {
 
 **注意** 本章讨论范围是控制器和请求处理方法, 包括请求与响应, 请求参数绑定, 控制器依赖注入以及各种输出. 不包括从 URL 到请求处理方法的映射部分, 需要了解 ActFramework 如何从 URL 映射到请求处理方法的, 参见 [第四章 路由](routing.md)
 
-## <a name="req_resp"></a>2. 请求与响应
+## <a name="req_resp"></a>1. 请求与响应
 
 HTTP 请求与响应是 Web 应用的输入和输出, 是所有 web 编程框架的核心数据结构。
 
@@ -113,7 +46,7 @@ Servlet 架构使用 `HttpServletRequest` 和 `HttpServletResponse` 两个类来
 
 虽然提供了各种高层封装手段, 在少数情况下, 开发人员可能还是需要直接对请求和输出进行操作. ActFramework 使用 [osgl-http](https://github.com/osglworks/java-http) 提供的 `H.Request` 类来封装 HTTP 请求, `H.Response` 则封装了 HTTP 响应对象。
 
-### <a name="req_resp_usage"></a>2.1 使用请求与响应
+### <a name="req_resp_usage"></a>1.1 使用请求与响应
 
 在应用中使用请求与响应的示例代码:
 
@@ -169,7 +102,7 @@ public String echo_d(String message) {
 
 
 
-### <a name="req"></a>2.2 `H.Request` 请求对象
+### <a name="req"></a>1.2 `H.Request` 请求对象
 
 ActFramework 使用 `H.Request` 来封装 HTTP 请求，提供应用开发访问 HTTP 请求所需的方法：
 
@@ -229,7 +162,7 @@ ActFramework 使用 `H.Request` 来封装 HTTP 请求，提供应用开发访问
 
 **小贴士** 在 ActFramework 中大部分情况应用都不需要直接调用 `H.Request` 对象的方法.
 
-### <a name="resp"></a>2.3 `H.Response` 响应对象
+### <a name="resp"></a>1.3 `H.Response` 响应对象
 
 ActFramework 使用 `H.Response` 来封装 HTTP 请求，提供应用开发访问 HTTP 响应所需的方法：
 
@@ -276,7 +209,7 @@ ActFramework 使用 `H.Response` 来封装 HTTP 请求，提供应用开发访�
 
 **小贴士** 在 ActFramework 中大部分情况应用都不需要直接调用 `H.Response` 对象的方法.
 
-## <a name="session_flash"></a>3. Session 与 Flash
+## <a name="session_flash"></a>2. Session 与 Flash
 
 因为 HTTP 是无状态服务, 如果要在多次请求中跟踪用户与服务的交互信息, 需要某种形式的状态存储. ActFramework 使用 `H.Session` 和 `H.Flash` 两种 Scope 类型提供请求状态存取服务. `H.Session` 和 `H.Flash` 均为应用提供一下方法:
 
@@ -296,7 +229,7 @@ ActFramework 使用 `H.Response` 来封装 HTTP 请求，提供应用开发访�
 1. 整个 session 和 flash 的数据加起来不能超过 4k
 2. 存放的数据最终会转换为字符串. 取出来的时候也只能是字符串
 
-### <a name="session_best_practice"></a>3.1 Session 应用技巧
+### <a name="session_best_practice"></a>2.1 Session 应用技巧
 
 鉴于 Session 的特点与使用限制, 下面是一些使用 Session 的一些技巧:
 
@@ -306,7 +239,7 @@ ActFramework 使用 `H.Response` 来封装 HTTP 请求，提供应用开发访�
     - 如果一定要存放敏感数据, 应该打开 session 加密配置. 当然这样会带来性能上的损耗
 
 
-### <a name="session_flash_diff"></a>3.2 `H.Flash` 与 `H.Session` 的区别
+### <a name="session_flash_diff"></a>2.2 `H.Flash` 与 `H.Session` 的区别
 
 `H.Flash` 与 `H.Session` 的区别在于 flash 中存入的信息只保存到下一次请求处理完毕. 另外 flash 提供了几个快捷方法:
 
@@ -317,7 +250,7 @@ ActFramework 使用 `H.Response` 来封装 HTTP 请求，提供应用开发访�
 
 **注意** Flash 通常之用于后端模板生成的系统架构. 对于前后端分离的应用一般都没有使用 Flash 的理由.
 
-### <a name="session_flash_usage"></a>3.3 Session/Flash 使用例子
+### <a name="session_flash_usage"></a>2.3 Session/Flash 使用例子
 
 在应用中使用 session:
 
@@ -368,7 +301,7 @@ public void login(String username, char[] password, ActionContext context) {
     <button>Login</button>
 </form>
 ```
-### <a name="session_config"></a>3.4 Session 配置
+### <a name="session_config"></a>2.4 Session 配置
 
 * `session.secure` - 指定 session cookie 的 secure 选项. 默认值: 开发模式下为 `false`; 产品模式下为 `true`
     - **注意** 仅对给予 Cookie 的 session 存储有效. 对基于 Header 的 session 存储没有意义.
@@ -381,7 +314,7 @@ public void login(String username, char[] password, ActionContext context) {
 
 关于 Session/Flash 在框架实现方面更详尽的信息, 参考 [Session 与 Flash 的处理详解](reference/session_flash.md)
 
-## <a name="context"></a>4. `ActionContext`
+## <a name="context"></a>3. `ActionContext`
 
 `ActionContext` 是 ActFramework 为应用提供的一个封装类, 封装了处理 HTTP 请求需要用到的数据, 包括:
 
@@ -417,7 +350,7 @@ public void login(String username, char[] password, ActionContext context) {
 * `logout()` - 清空当前 session
 * `Locale locale(boolean required)` - 返回当前请求的 Locale, 当 `required` 是 `true` 的时候, 如果当前请求没有指定 locale, 则返回系统 Locale
 
-### <a name="context_usage"></a>4.1 使用 `ActionContext`
+### <a name="context_usage"></a>3.1 使用 `ActionContext`
 
 下面的代码演示了 `ActionContext` 在用户登陆逻辑上的应用:
 
@@ -434,7 +367,7 @@ public void login(String username, char[] password, ActionContext context) {
 }
 ```
 
-## <a name="controller_request-handler"></a>5. 控制器与请求处理方法
+## <a name="controller_request-handler"></a>4. 控制器与请求处理方法
 
 在[1. 介绍](#intro)中我们引入了控制器与请求处理方法的概念并提供了一段简单的代码演示如何使用控制器和请求处理方法来处理请求并返回响应. 本节我们会详细讨论下面几点:
 
@@ -442,7 +375,7 @@ public void login(String username, char[] password, ActionContext context) {
 2. 控制器的依赖注入
 3. 单例还是多例
 
-### <a name="request-handler_params"></a>5.1 请求处理方法参数
+### <a name="request-handler_params"></a>4.1 请求处理方法参数
 
 请求处理方法可以有 0 到多个参数, 参数数目不受限制. 通常来讲请求处理方法的参数分为两种:
 
@@ -543,7 +476,7 @@ public void login(String username, char[] password, ActionContext context) {
 
 上面代码中的 `username` 和 `password` 来自 POST 请求的表单字段, 而 `context` 则是由框架注入当前运算的 `ActionContext` 实例. ActFramework 有足够的能力分辨那些参数应该从请求中获得, 那些参数需要由 IOC 容器注入. 另外参数的位置不会影响参数注入过程.
 
-### <a name="controller-di"></a>5.2 控制器的依赖注入
+### <a name="controller-di"></a>4.2 控制器的依赖注入
 
 在上面的例子中我们都是将依赖对象注入到方法中. 这样做的问题是如果某个控制器有很多方法, 都需要某个依赖对象, 方法的参数就会变得复杂, 依照 DRY 原则, 我们不希望每个方法上面都重复同样的参数声明. 解决的办法是将依赖注入控制器类. 例如
 
@@ -598,7 +531,7 @@ public class UserService_5_2b {
 * 各种单例 (继承 `SingletonBase`, 或者有 `@Singleton` 注解的类)
 * 所有其他在框架 IOC 容器中注册了 Provider 的类
 
-### <a name="single-multi"></a>5.3 单例还是多例
+### <a name="single-multi"></a>4.3 单例还是多例
 
 当我们将依赖对象注入一个控制器类带来的一个问题是: 这个控制器是否是线程安全的, 是否单例, 还是多例. 对此 ActFramework 的回答是: 依情况而定.
 
@@ -626,7 +559,7 @@ public class MyController_5_3a {
 
 我们在注入 `weixin` 字段的同时加上 `@Stateless` 注解, 这样 ActFramework 就知道这个字段不会影响到 `MyController` 的状态, 因此会使用单例来调用 `MyController` 请求处理方法.
 
-## <a name="param-binding"></a>6. 请求参数绑定
+## <a name="param-binding"></a>5. 请求参数绑定
 
 ActFramework 在请求参数绑定方面提供了最大的灵活与方便. 请求参数可以来自不同的地方, 具有不同的编码方式, 绑定目标可以是请求处理方法的参数列表, 也可以是控制器类的实例字段. 在这之中, ActFramework 按照一下规则自动适配:
 
@@ -686,7 +619,7 @@ public class MyController_6c {
 
 **小贴士** 绑定到字段可以被子类继承, 缺点在于每次调用请求方法都必须启用一个新的控制器实例
 
-### <a name="binding-resolving"></a>6.1 绑定与解析
+### <a name="binding-resolving"></a>5.1 绑定与解析
 
 请求参数绑定到方法参数通常会有两种情况, 
 
@@ -737,7 +670,7 @@ public String testBinder(@Bind(EmailBinder.class) String email) {
 
 **在本文中, 术语 "绑定" 泛指从请求参数中取值并转换为目标方法参数, 而不加区分单对单类型的解析还是多对单类型的绑定**
 
-### <a name="data-source"></a>6.7 数据来源
+### <a name="data-source"></a>5.2 数据来源
 
 **无需注解即可直接绑定的数据**
 
@@ -773,7 +706,7 @@ public Iterable<Order> searchOrder(@Named("date_start") DateTime start, @Named("
 1. 请求头数据
 2. Session 数据
 
-#### <a name="cookie-data-binding"></a>6.2.1 Cookie 数据绑定
+#### <a name="cookie-data-binding"></a>5.2.1 Cookie 数据绑定
 
 对于直接绑定数据来源列表中的 URL 路径变量和 Query 参数绑定在前面的例 6.1 和例 6.2 中已有介绍. Form 表单绑定和上传文件我们会在后面详细介绍. 这里先讲一下 `Cookie` 的绑定, 看下面的例子:
 
@@ -830,7 +763,7 @@ public void countVisits(H.Request req, H.Response resp) {
 }
 ```
 
-#### <a name="header-data-binding"></a>6.2.2 Header 数据绑定
+#### <a name="header-data-binding"></a>5.2.2 Header 数据绑定
 
 应用使用 `@HeaderVariable` 注解表明参数从请求头绑定:
 
@@ -886,7 +819,7 @@ public String header(@HeaderVariable String userAgent) {
 2. 每个部分格式化为首字母大写其他部分小写
 3. 用 `-` (hyphen) 将所有部分串接起来
 
-#### <a name="session-data-binding"></a>6.2.3 Session 数据绑定
+#### <a name="session-data-binding"></a>5.2.3 Session 数据绑定
 
 应用使用 `@SessionVariable` 注解来标注某个参数需要从 Session 中绑定. 例如
 
@@ -921,11 +854,11 @@ public String session(@SessionVariable("user-name") String username) {
 }
 ```
 
-### <a name="data-encoding"></a>6.3 请求数据编码
+### <a name="data-encoding"></a>5.3 请求数据编码
 
 除了 URL 路径变量, Session, Cookie 和 Header, 其他的数据都存在不同编码方式的情况.
 
-#### <a name="query-param-encoding"></a>6.3.1 Query 数组类型参数编码
+#### <a name="query-param-encoding"></a>5.3.1 Query 数组类型参数编码
 
 对于下面的请求方法处理器:
 
@@ -957,7 +890,7 @@ public List<Integer> test(List<Integer> i) {
 }
 ```
 
-#### <a name="post-form-encoding"></a>6.3.2 POST Form 编码
+#### <a name="post-form-encoding"></a>5.3.2 POST Form 编码
 
 对于 POST 方法, 当使用 `application/x-www-form-urlencoded` 或者 `multipart/form-data` 的时候, 可以采用两种不同的方式来编码数据.
 
@@ -1046,7 +979,7 @@ public class BarService {
 </form>
 ```
 
-#### <a name="post-json-encoding"></a>6.3.3 POST JSON 编码
+#### <a name="post-json-encoding"></a>5.3.3 POST JSON 编码
 
 现在越来越多的前端代码使用 AJAX 和 JSON 方式和服务器交互. ActFramework 也支持 JSON 编码的数据绑定. 对于 [示例 6.3.2a](#s6_3_2a) 的代码, 当请求的 `Content-Type` 头为 `application/json` 时, ActFramework 按照 JSON 解析请求 body 并绑定到方法参数上, 对应的一个 JSON 格式数据示例为:
 
@@ -1075,7 +1008,7 @@ public class BarService {
 ```
 
 
-### <a name="simple-type-data-binding"></a>6.4 简单数据类型绑定
+### <a name="simple-type-data-binding"></a>5.4 简单数据类型绑定
 
 除了上传文件以外的大部分请求参数原始类型都是字串, 当绑定到方法参数的时候需要转换为声明的类型. ActFramework 可以转换请求参数字串(1个或者多个)为几乎所有的类型. 这里讨论简单数据类型的绑定. 所谓简单数据类型是指一下类型:
 
@@ -1088,7 +1021,7 @@ public class BarService {
 
 这里需要讲一下两个问题: 第一, 空值问题, 即当请求中没有数据, 目标参数如何设定值；第二错误值问题, 当请求数据无法转换到目标类型如何处理.
 
-#### <a name="null-val"></a>6.4.1 空值处理
+#### <a name="null-val"></a>5.4.1 空值处理
 
 ActFramework 按照一下规则处理空值:
 
@@ -1109,11 +1042,11 @@ ActFramework 按照一下规则处理空值:
 | long | `0l` |
 | double | `0d` |
 
-#### <a name="bad-data"></a>6.4.2 错误数据处理
+#### <a name="bad-data"></a>5.4.2 错误数据处理
 
 当用户请求传入错误数据, 例如需要绑定的数据类型是 `int`, 传入的数据是 `xyz`, 这时候 ActFramework 会返回一个 `400 Bad request` 响应给请求发起方
 
-#### <a name="enum-binding"></a>6.4.3 枚举类型的绑定
+#### <a name="enum-binding"></a>5.4.3 枚举类型的绑定
 
 当目标类型为 `Enum` 的时候, ActFramework 将请求数据中的字串和 enum 名字想匹配来查找绑定的 enum 值. 有两种绑定方式:
 
@@ -1156,11 +1089,11 @@ enum.resolving.exact_match=false
 1. act-1.8.8 之前的枚举解析不支持非精确匹配, 但是支持大小写不敏感匹配.
 2. act-1.8.8 之前匹配不成功会注入 `null` 到绑定参数, 不会返回 `400 Bad Request` 响应
 
-### <a name="array-collection-binding"></a>6.5 数组与集合类型绑定
+### <a name="array-collection-binding"></a>5.5 数组与集合类型绑定
 
 ActFramework 支持数组与集合类型的数据绑定. 对于数组, 列表(List) 和集合(Set), 请求数据的形式是一致的；对于 Map 类型的数据绑定, 请求参数的编码形式会有所变化. 这里我们介绍简单类型的数组与集合类型绑定, 对于复杂类型, 比如 POJO 的数组和集合类型在后面[POJO 绑定](#pojo-binding)会谈及
 
-#### <a name="primitive-array-binding"></a>6.5.1 基本类型数组绑定
+#### <a name="primitive-array-binding"></a>5.5.1 基本类型数组绑定
 
 ActFramework 支持除 char 以外所有的基本类型数组绑定. char 数组绑定不被支持因为和字串绑定冲突. 我们以 int[] 类型来说明 ActFramework 对基本数据类型数组绑定的支持. 假设我们有下面的请求处理方法:
 
@@ -1235,7 +1168,7 @@ public int[] test(int[] n) {
 
 这种方式通常都是前端采用 AJAX 请求向服务端发送 JSON 数据, 需要请求的 `Content-Type` 头置为 `application/json` 才能正确解析
 
-##### <a name="wrap-array-binding"></a>6.5.2 包装类型数组绑定
+##### <a name="wrap-array-binding"></a>5.5.2 包装类型数组绑定
 
 下面是使用包装数据类型绑定的请求处理方法演示代码:
 
@@ -1252,7 +1185,7 @@ public Integer[] test(Integer[] n) {
 
 字串和枚举数组和包装类型数组的处理类似, 无需多言.
 
-#### <a name="list-set-binding"></a>6.5.3 List 和 Set 绑定
+#### <a name="list-set-binding"></a>5.5.3 List 和 Set 绑定
 
 List 和 Set 绑定和包装类型数组绑定的处理与编码方式完全一样. 下面是使用 List/Set 类型的处理方法演示代码:
 
@@ -1283,7 +1216,7 @@ public void test(List<Integer> intList, Set<String> stringSet) {
 
 [6.5.1 节](#primitive-array-binding) 中提到的其他编码方式也都可以使用
 
-#### <a name="map-binding"></a>6.5.4 Map 绑定
+#### <a name="map-binding"></a>5.5.4 Map 绑定
 
 ActFramework 支持 Map 类型的绑定. Map 的 key 必须能从字串直接解析 (能找到对应的 `StringValueResolver`), Map 的 value 可以是任何类型. 我们这里先讨论 value 为基本类型的情况. 对于 value 为任何类型的讨论, 放到[6.7 POJO 绑定]详细讲述.
 
@@ -1345,7 +1278,7 @@ public Map<Integer, String> test(Map<Integer, String> map) {
 
 **如非必要, 不推荐使用字串以外的类型作为 Map 的 key**, 因为这样的 Map 数据不能生成合法的 JSON 字串.
 
-### <a name="date-data-binding"></a>6.6 日期数据绑定
+### <a name="date-data-binding"></a>5.6 日期数据绑定
 
 日期数据类型相对比较复杂, ActFramework 支持以下几种日期类型:
 
@@ -1361,7 +1294,7 @@ public Map<Integer, String> test(Map<Integer, String> map) {
 
 **ActFramework 推荐在系统中优先使用 `joda` 包的时期时间类型**
 
-#### <a name="date-format"></a>6.6.1 日期格式
+#### <a name="date-format"></a>5.6.1 日期格式
 
 ActFramework 支持三种日期格式的配置:
 
@@ -1400,7 +1333,7 @@ public LocalDate testLocalDate(LocalDate date) {
 
 如果应用在中国大陆, 发送的 GET 请求应该是 `/test/661/local-date?date=2018-4-23`, POST 请求的表单字段值也应类似.
 
-#### <a name="date-format-localization"></a>6.6.2 日期格式本地化
+#### <a name="date-format-localization"></a>5.6.2 日期格式本地化
 
 当设置了 `i18n=true` 打开 ActFramework 的国际化支持后, 日期和时间的格式处理会更加复杂. 首先系统会从请求的 `Accept-Language` 解析用户端的 `Locale` 并存储在 `ActionContext` 中. 
 
@@ -1415,7 +1348,7 @@ fmt.zh-tw.date=yyyy/M/d
 
 在没有设置本地日期格式的情况下, 框架默认使用 `DateFormat.MEDIUM` 来获取相应的日期时间格式
 
-#### <a name="date-format-specified"></a>6.6.3 在绑定参数上指定日期格式
+#### <a name="date-format-specified"></a>5.6.3 在绑定参数上指定日期格式
 
 有的时候对于特定的请求处理方法需要使用和全局设定不同的日期/时间模式, 这时候可以使用 `@act.data.annotation.DateTimeFormat` 注解, 如下例所示:
 
@@ -1428,7 +1361,7 @@ public LocalDate testCustomeDatePattern(@DateTimeFormat("yy-M-d") LocalDate date
 }
 ```
 
-### <a name="pojo-binding"></a>6.7 POJO 绑定
+### <a name="pojo-binding"></a>5.7 POJO 绑定
 
 ActFramework 支持 POJO 绑定. 在[6.3.2 POST Form 编码](#post-form-encoding) 我们已经通过实例讲述了 POJO 对象 POST Form 编码的两种方式: JQuery 和 dot 格式. 下面采用 jQuery 方式来详细介绍 POJO 的绑定, 包括:
 
@@ -1453,7 +1386,7 @@ public class Employee {
 }
 ```
 
-#### <a name="single-pojo-binding"></a>6.7.1 单个 POJO 绑定
+#### <a name="single-pojo-binding"></a>5.7.1 单个 POJO 绑定
 
 请求处理方法:
 
@@ -1486,7 +1419,7 @@ POST 编码:
 </form>
 ```
 
-#### <a name="list-pojo-binding"></a>6.7.2 POJO 数组或列表绑定
+#### <a name="list-pojo-binding"></a>5.7.2 POJO 数组或列表绑定
 
 请求处理方法:
 
@@ -1519,7 +1452,7 @@ POST 编码:
 </form>
 ```
 
-#### <a name="map-pojo-binding"></a>6.7.3 POJO Map 绑定
+#### <a name="map-pojo-binding"></a>5.7.3 POJO Map 绑定
 
 请求处理方法:
 
@@ -1552,7 +1485,7 @@ POST 编码:
 </form>
 ```
 
-### <a name="file-upload"></a>6.8 上传文件
+### <a name="file-upload"></a>5.8 上传文件
 
 先看一个简单的示例:
 
@@ -1597,7 +1530,7 @@ public void upload(ISObject upload) {
 	- `BlobStorage`: Azure Blob 存储
 3. 当上传文件长度小于某个特定阀值 (默认 10K) 时, 不会在服务器上产生临时文件触发 IO 操作
 
-#### <a name="upload-in-memory-cache"> 6.8.1 上传文件内存缓存
+#### <a name="upload-in-memory-cache">5.8.1 上传文件内存缓存
 
 通常来讲框架在将上传文件传递给用户应用的时候会事先生成临时文件, 方便应用对文件的各种处理, 比如存入某个永久存储, 或者进行图片剪裁等操作. 因为有了 osgl-storage 库, ActFramework 在此基础上提供了内存缓存的概念. 刚才讲到使用 `ISObject` 的好处第 3 项, 当上传文件长度小于某个阀值时, ActFramework 将生成内部实现为 `byte[]` 的 `ISObject` 实现, 这样无需因为临时文件而产生 IO 操作.
 
@@ -1610,15 +1543,15 @@ upload.in_memory.threshold=1024 * 100
 
 上面将阀值配置为 `100k`, 即所有长度小于 100k 的上传文件都不会因为临时文件产生 IO 操作. 前提是应用使用了 `ISObject` 来声明上传文件, 而不是 `File`.
 
-#### <a name="upload-base64"> 6.8.2 上传 BASE 64 编码
+#### <a name="upload-base64">5.8.2 上传 BASE 64 编码
 
 TBD
 
-### <a name="customize-data-binding"></a>6.9 自定义数据绑定
+### <a name="customize-data-binding"></a>5.9 自定义数据绑定
 
 ActFramework 提供了强大的请求参数绑定支持, 应用几乎没有定义自己的 `StringValueResolver` 或 `Binder` 的需要. 
 
-#### <a name="customize-resolver"></a>6.9.1 自定义 `StringValueResolver`
+#### <a name="customize-resolver"></a>5.9.1 自定义 `StringValueResolver`
 
 假设应用对某种类型特殊编码方式, 可以采用自定义 `StringValueResolver`
 
@@ -1671,32 +1604,11 @@ public Foo testFooResolver(Foo foo) {
 }
 ```
 
-#### <a name="customize-binder"></a>6.9.2 自定义 Binder
+#### <a name="customize-binder"></a>5.9.2 自定义 Binder
 
 自定义 Binder 的方法和例子参见 [6.1 绑定与解析](#binding-resolving)
 
-### <a name="data-validation"></a>6.10 绑定参数校验
-
-TBD
-
-## <a name="return-response"></a>7 返回响应
-* [7 返回响应]
-    * [7.1 返回数据]
-        * [7.1.1 返回模板]
-        * [7.1.2 返回 JSON 响应]
-        * [4.1.3 文件下载]
-    * [7.2 返回状态]
-        * [7.2.1 默认状态返回规则]
-            * [7.2.1.1 200 Okay]
-            * [7.2.1.2 201 Created]
-            * [7.2.1.3 404 Not Found]
-            * [7.2.1.4 从 Java 异常映射为 HTTP 错误状态]
-        * [7.2.1 指定返回状态]
-        * [7.2.3 自定义错误页面]
-    * [7.3 设定 HTTP Header]
-        * [7.3.1 Content-Type]
-        * [7.3.2 设定其他 HTTP Header]
-* [8 异步返回]
+### <a name="data-validation"></a>5.10 绑定参数校验
 
 Act 支持 JSR 303 Bean 校验, 如下例所示:
 
@@ -1720,6 +1632,27 @@ value: may not be null
 ```
 
 
+TBD
+
+
+## <a name="return-response"></a>6 返回响应
+* [7 返回响应]
+    * [7.1 返回数据]
+        * [7.1.1 返回模板]
+        * [7.1.2 返回 JSON 响应]
+        * [4.1.3 文件下载]
+    * [7.2 返回状态]
+        * [7.2.1 默认状态返回规则]
+            * [7.2.1.1 200 Okay]
+            * [7.2.1.2 201 Created]
+            * [7.2.1.3 404 Not Found]
+            * [7.2.1.4 从 Java 异常映射为 HTTP 错误状态]
+        * [7.2.1 指定返回状态]
+        * [7.2.3 自定义错误页面]
+    * [7.3 设定 HTTP Header]
+        * [7.3.1 Content-Type]
+        * [7.3.2 设定其他 HTTP Header]
+* [8 异步返回]
 
 ---------------------- 分割线 -------------------------
 

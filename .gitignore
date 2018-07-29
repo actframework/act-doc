@@ -15,5 +15,5 @@ classes
 deploy
 **/.act*
 git.log
-
+tmp/
 *.geany

@@ -2,29 +2,7 @@
 
 本篇介绍 ActFramework 的路由表以及路径变量的处理规则.
 
-* [1 路由表](#route_mapping)
-  * [1.1 路由注解](#annotation)
-    * [1.1.1 URL context](#urlcontext)
-		* [1.1.1.1 绝对路径和相对路径](#absolute_vs_relative)
-		* [1.1.1.2 URL context 的继承](#urlcontext_inheritance)
-  * [1.2 路由表文件](#route_table)
-    * [1.2.1 路由表指令与修饰符](#route_directive)
-    * [1.2.1.1 `file` 和 `resource` 指令](#file_resource)
-    * [1.2.2 基于环境的路由表](#profile_based_routes)
-  * [1.3 系统内置路由](#builtin-routes)
-  * [1.4 路由冲突的处理](#route_conflict)
-* [2 路径变量](#path_var)
-	* [2.1 正则表达式](#regex)
-		* [2.1.1 正则表达式宏](#regex-macro)
-	* [2.2 动态变量](#dyna_var)
-	* [2.3 可变长路径](#dyna_path)
-* [3 命名端口](#named_port)
-	* [3.1 配置命名端口](#config_named_port)
-	* [3.2 使用命名端口](#use_named_port)
-		* [3.2.1 将控制器绑定到命名端口](#use_named_port_in_controller)
-		* [3.2.2 服务端点同时绑定到了两个命名端口](#use_named_port_for_builtin_service)
-		* [3.2.3 将内置服务绑定到命名端口](#use_named_port_for_builtin_service)
-* [4 JAX-RS 路由](#jax-rs)
+<toc/>
 
 ## <a name="route_mapping"></a>1. 路由表
 
@@ -32,7 +10,7 @@
 
 ActFramework 应用可以通过不同的方式来定义路由映射, 包括在请求处理方法上标记路由注解和是用路由表文件.
 
-### <a name="annotation">1.1 路由注解
+### <a name="annotation"></a>1.1 路由注解
 
 ActFramework 使用 [osgl-mvc](https://github.com/osglworks/osgl-mvc) 提供的路由注解:
 
