@@ -3,10 +3,10 @@
 
 控制器 (Controller) 和响应返回是 MVC 中的 "C" 和 "V" 部分, 也是整个框架的核心. 下面是一个简单的控制器代码:
 
-<a name="s1a"></a>
+<a name="s0a"></a>
 
 ```java
-// snippet 1a
+// snippet 0a
 package actdoc.sample;
 
 import org.osgl.mvc.GetAction;
@@ -50,10 +50,10 @@ Servlet 架构使用 `HttpServletRequest` 和 `HttpServletResponse` 两个类来
 
 在应用中使用请求与响应的示例代码:
 
-<a name="s2-1a"></a>
+<a name="s1-1a"></a>
 
 ```java
-// snippet 2.1a
+// snippet 1.1a
 @GetAction("echo/a")
 public void echo_a(H.Request req, H.Response resp) {
     String message = req.paramVal("message");
@@ -64,10 +64,10 @@ public void echo_a(H.Request req, H.Response resp) {
 
 **小贴士** ActFramework 对于输出响应有更多的表达方式, 上面的代码可以简化为:
 
-<a name="s2-1b"></a>
+<a name="s1-1b"></a>
 
 ```java
-// snippet 2.1b
+// snippet 1.1b
 @GetAction("echo/b")
 public void echo_b(H.Request req, H.Response resp) {
     String message = req.paramVal("message");
@@ -77,9 +77,9 @@ public void echo_b(H.Request req, H.Response resp) {
 
 而更简单的方式则是完全不使用 Request 和 Response 对象:
 
-<a name="s2-1c"></a>
+<a name="s1-1c"></a>
 ```java
-// snippet 2.1c
+// snippet 1.1c
 import static Controller.Util.renderText;
 ...
 
@@ -91,9 +91,9 @@ public void echo_c(String message) {
 
 甚至可以这样:
 
-<a name="s2-1d"></a>
+<a name="s1-1d"></a>
 ```java
-// snippet 2.1d
+// snippet 1.1d
 @GetAction("echo/d")
 public String echo_d(String message) {
     return message;
@@ -254,9 +254,9 @@ ActFramework 使用 `H.Response` 来封装 HTTP 请求，提供应用开发访�
 
 在应用中使用 session:
 
-<a name="s3-3a"></a>
+<a name="s2-3a"></a>
 ```java
-// snippet 3.3a
+// snippet 2.3a
 @PutAction("my/preference/theme")
 public void setTheme(String theme, H.Session session) {
     session.put("theme", theme);
@@ -272,9 +272,9 @@ public String getTheme(H.Session session) {
 
 请求处理器代码
 
-<a name="s3-3b"></a>
+<a name="s2-3b"></a>
 ```java
-// snippet 3.3b
+// snippet 2.3b
 @PostAction("login")
 public void login(String username, char[] password, ActionContext context) {
     if (!(authenticate(username, password))) {
@@ -288,9 +288,9 @@ public void login(String username, char[] password, ActionContext context) {
 
 模板文件代码
 
-<a name="s3-3c"></a>
+<a name="s2-3c"></a>
 ```html
-<!-- 例 3.3c -->
+<!-- 例 2.3c -->
 <h1>Login form</h1>
 @if(_flash.error()) {
 <div class="alert alert-error">@_flash.error()</div>
@@ -314,7 +314,7 @@ public void login(String username, char[] password, ActionContext context) {
 
 关于 Session/Flash 在框架实现方面更详尽的信息, 参考 [Session 与 Flash 的处理详解](reference/session_flash.md)
 
-## <a name="context"></a>3. `ActionContext`
+## <a name="context"></a>3. ActionContext
 
 `ActionContext` 是 ActFramework 为应用提供的一个封装类, 封装了处理 HTTP 请求需要用到的数据, 包括:
 
@@ -354,9 +354,9 @@ public void login(String username, char[] password, ActionContext context) {
 
 下面的代码演示了 `ActionContext` 在用户登陆逻辑上的应用:
 
-<a name="s4-1a"></a>
+<a name="s3-1a"></a>
 ```java
-// snippet 4.1a
+// snippet 3.1a
 @PostAction("/login")
 public void login(String username, char[] password, ActionContext context) {
     if (!authenticate(username, password)) {
@@ -404,9 +404,9 @@ public void login(String username, char[] password, ActionContext context) {
 
 在 SpringMVC 代码中需要不同的注解来区分 URL 路径参数和请求 Query 参数, 如下例所示:
 
-<a name="s5-1a"></a>
+<a name="s4-1a"></a>
 ```java
-// snippet 5.1a
+// snippet 4.1a
 @RequestMapping("{id}/messages")
 public String handleRequest(
     @PathVariable("id") String employeeId,
@@ -419,13 +419,13 @@ public String handleRequest(
 }
 ```
 
-上面的代码在 ActFramework 的表达简洁很多:
+上面的代码在 ActFramework 的表达则简洁很多:
 
-<a name="s5-1b"></a>
+<a name="s4-1b"></a>
 ```java
-// snippet 5.1b
-@Action("{id}/messages")
-public void handleRequest(@Named("id") String employeeId, int months) {
+// snippet 4.1b
+@Action("{employeeId}/messages")
+public void handleRequest(String employeeId, int months) {
     String msg = "employee request by id for paystub for previous months : " +
               employeeId + ", " + months;
     render("my-page", msg);
@@ -436,9 +436,9 @@ public void handleRequest(@Named("id") String employeeId, int months) {
 
 Jersey 使用 `@Context` 在请求处理方法中注入系统对象:
 
-<a name="s5-1c"></a>
+<a name="s4-1c"></a>
 ```java
-// snippet 5.1c
+// snippet 4.1c
 @GET
 @PATH("foo")
 public String foo(@Context HttpServletRequest req) {
@@ -448,9 +448,9 @@ public String foo(@Context HttpServletRequest req) {
 
 ActFramework 无需注解, 直接在参数列表中声明即可:
 
-<a name="s5-1d"></a>
+<a name="s4-1d"></a>
 ```java
-// snippet 5.1d
+// snippet 4.1d
 @GetAction("foo")
 public String foo(H.Request req) {
     return req.paramVal("foo");
@@ -461,9 +461,9 @@ public String foo(H.Request req) {
 
 ActFramework 在参数列表中混合不同的参数类型:
 
-<a name="s5-1e"></a>
+<a name="s4-1e"></a>
 ```java
-// snippet 5.1e
+// snippet 4.1e
 @PostAction("/login")
 public void login(String username, char[] password, ActionContext context) {
     if (!authenticate(username, password)) {
@@ -480,9 +480,9 @@ public void login(String username, char[] password, ActionContext context) {
 
 在上面的例子中我们都是将依赖对象注入到方法中. 这样做的问题是如果某个控制器有很多方法, 都需要某个依赖对象, 方法的参数就会变得复杂, 依照 DRY 原则, 我们不希望每个方法上面都重复同样的参数声明. 解决的办法是将依赖注入控制器类. 例如
 
-<a name="s5-2a"></a>
+<a name="s4-2a"></a>
 ```java
-// snippet 5.2a
+// snippet 4.2a
 @UrlContext("users")
 public class UserService_5_2a {
 
@@ -500,9 +500,9 @@ public class UserService_5_2a {
 
 在上面的例子中 `userDao` 是一个数据访问对象, `UserService` 控制器中的每个方法中都需要使用这个对象, 因此上面的代码选择将 `userDao` 作为 `UserService` 控制器类的字段来注入, 而不是在每个方法中注入. 和方法参数注入不一样的地方是, 字段注入需要使用 `@javax.inject.Inject` 注解. `@Inject` 注解也可以放在构造函数上面:
 
-<a name="s5-2b"></a>
+<a name="s4-2b"></a>
 ```java
-// snippet 5.2b
+// snippet 4.2b
 @UrlContext("users")
 public class UserService_5_2b {
 
@@ -546,11 +546,11 @@ public class UserService_5_2b {
     * 大部分 Act App 服务类都注册为 Singleton, 包括 `EventBus`, `JobManager` 等等
 2. 如果一个类没有实例字段, 或者实例字段的类本身是无状态的, 则该类无状态.
 
-最后需要解决的问题是如何将来自第三方库的类标注为无状态. 假如某个三方库提供了线程安全的微信接口类 WeixinIntf,这个类本身没有标注为 `@Singleton`, 但作为开发我们知道这是线程安全的, 所以不希望因为这个类的注入导致控制器退出单例状态. 下面是解决办法:
+最后需要解决的问题是如何将来自第三方库的类标注为无状态. 假如某个三方库提供了线程安全的微信接口类 WeixinIntf,这个类本身没有标注为 `@Singleton`, 但作为开发我们知道这是线程安全的, 所以不希望因为这个类的注入导致控制器放弃单例. 下面是解决办法:
 
-<a name="s5-3a"></a>
+<a name="s4-3a"></a>
 ```java
-// snippet 5.3a
+// snippet 4.3a
 public class MyController_5_3a {
     @Inject @Stateless
     private IStorageService storageService;
@@ -571,9 +571,9 @@ ActFramework 在请求参数绑定方面提供了最大的灵活与方便. 请�
 
 **1. 绑定到方法参数**
 
-<a name="s6a"></a>
+<a name="s5a"></a>
 ```java
-// snippet 6a
+// snippet 5a
 @GetAction("/foo/{foo}")
 public String test(String foo) {
     return foo;
@@ -588,9 +588,9 @@ public String test(String foo) {
 
 **2. 绑定到控制器字段**
 
-<a name="s6b"></a>
+<a name="s5b"></a>
 ```java
-// snippet 6b
+// snippet 5b
 public class MyController_6b {
     private String foo;
     @GetAction("foo/{foo}")
@@ -602,9 +602,9 @@ public class MyController_6b {
 
 或者
 
-<a name="s6c"></a>
+<a name="s5c"></a>
 ```java
-// snippet 6c
+// snippet 5c
 @UrlContext("/foo/{foo}")
 public class MyController_6c {
     private String foo;
@@ -628,9 +628,9 @@ public class MyController_6c {
 
 对于第一种情况, 只需要从一个请求参数即可绑定到目标方法参数. 这个过程是一个字串到其他简单类型的转换过程, 我们称之为字串解析；与之对应的类, 我们称为 `StringValueResolver`．　下面是一个 `StringValueResolver` 的一个具体例子:
 
-<a name="s6_1a"></a>
+<a name="s5_1a"></a>
 ```java
-// snippet 6.1a
+// snippet 5.1a
 public class BooleanResolver extends StringValueResolver<Boolean> {
     public Boolean resolve(String value) {
         return S.empty(value) ? Boolean.FALSE : Boolean.parseBoolean(value);
@@ -644,9 +644,9 @@ public class BooleanResolver extends StringValueResolver<Boolean> {
 
 对于第二种情况, 大部分情况都需要从多个请求参数取值最后生成一个目标方法参数. 这种多对一的解析过程我们称之为绑定；与之对应的类, 在 ActFramework 中称为　`Binder`. 下面是一个 `Binder` 的具体例子:
 
-<a name="s6_1b"></a>
+<a name="s5_1b"></a>
 ```java
-// snippet 6.1b
+// snippet 5.1b
 public class EmailBinder extends Binder<String> {
     @Override
     public String resolve(String bean, String model, ParamValueProvider params) {
@@ -659,9 +659,9 @@ public class EmailBinder extends Binder<String> {
 
 在上面的示例代码中, 我们看到 `Binder` 是如何从两个请求参数取值最后生成一个字串值返回. 和字串解析器不同, Binder 需要应用使用 `@Bind` 注解来调用:
 
-<a name="s6_1c"></a>
+<a name="s5_1c"></a>
 ```java
-// snippet 6.1c
+// snippet 5.1c
 @GetAction("test/binder")
 public String testBinder(@Bind(EmailBinder.class) String email) {
     return email;
@@ -684,9 +684,9 @@ public String testBinder(@Bind(EmailBinder.class) String email) {
 
 **小贴士** 有可能会有方法参数和请求参数名字不匹配的情况, 这时候应该使用 `javax.inject.Named` 注解来适配, 例如:
 
-<a name="s6_2a"></a>
+<a name="s5_2a"></a>
 ```java
-// snippet 6.2a
+// snippet 5.2a
 /**
  * 获得指定日期范围内创建的 order 列表. 
  * 请求示例: /orders?date_start=20180202&date_end=20180303
@@ -710,9 +710,9 @@ public Iterable<Order> searchOrder(@Named("date_start") DateTime start, @Named("
 
 对于直接绑定数据来源列表中的 URL 路径变量和 Query 参数绑定在前面的例 6.1 和例 6.2 中已有介绍. Form 表单绑定和上传文件我们会在后面详细介绍. 这里先讲一下 `Cookie` 的绑定, 看下面的例子:
 
-<a name="s6_2_1a"></a>
+<a name="s5_2_1a"></a>
 ```java
-// snippet 6.2.1a
+// snippet 5.2.1a
 @Global
 @Before
 public void countVisits(H.Cookie count) {
@@ -734,9 +734,9 @@ public void countVisits(H.Cookie count) {
 
 **小贴士** 上面使用 Cookie 来实现自增计数只是用来演示 Cookie 参数绑定的代码, 实际项目中如果需要这样的功能建议使用 Session 来做:
 
-<a name="s6_2_1b"></a>
+<a name="s5_2_1b"></a>
 ```java
-// snippet 6.2.1b
+// snippet 5.2.1b
 @Global
 @Before
 public void countVisits(H.Session session) {
@@ -746,9 +746,9 @@ public void countVisits(H.Session session) {
 
 **注意** Cookie 参数直接绑定是 act-1.8.8 提供的特性, 1.8.8 以前的版本需要这样做:
 
-<a name="s6_2_1c"></a>
+<a name="s5_2_1c"></a>
 ```java
-// snippet 6.2.1c
+// snippet 5.2.1c
 @Global
 @Before
 public void countVisits(H.Request req, H.Response resp) {
@@ -767,9 +767,9 @@ public void countVisits(H.Request req, H.Response resp) {
 
 应用使用 `@HeaderVariable` 注解表明参数从请求头绑定:
 
-<a name="s6_2_2a"></a>
+<a name="s5_2_2a"></a>
 ```java
-// snippet 6.2.2a
+// snippet 5.2.2a
 @GetAction("/header/user-agent")
 public String header(@HeaderVariable("User-Agent") String userAgentString) {
     return userAgentString;
@@ -778,9 +778,9 @@ public String header(@HeaderVariable("User-Agent") String userAgentString) {
 
 上面的代码相当于:
 
-<a name="s6_2_2b"></a>
+<a name="s5_2_2b"></a>
 ```java
-// snippet 6.2.2b
+// snippet 5.2.2b
 @GetAction("/header/user-agent")
 public String header(H.Request req) {
     return req.header("User-Agent");
@@ -789,9 +789,9 @@ public String header(H.Request req) {
 
 **小贴士** 当方法参数变量名和请求头的名字可对应的时候可以省略 `@HeaderVariable` 注解里面的 `value` 参数:
 
-<a name="s6_2_2c"></a>
+<a name="s5_2_2c"></a>
 ```java
-// snippet 6.2.2c
+// snippet 5.2.2c
 @GetAction("/header/user-agent")
 public String header(@HeaderVariable String userAgent) {
     return userAgent;
@@ -823,9 +823,9 @@ public String header(@HeaderVariable String userAgent) {
 
 应用使用 `@SessionVariable` 注解来标注某个参数需要从 Session 中绑定. 例如
 
-<a name="s6_2_3a"></a>
+<a name="s5_2_3a"></a>
 ```java
-// snippet 6.2.3a
+// snippet 5.2.3a
 @GetAction("/session/username")
 public String session(@SessionVariable String username) {
     return username;
@@ -834,9 +834,9 @@ public String session(@SessionVariable String username) {
 
 上面的代码相当于:
 
-<a name="s6_2_3b"></a>
+<a name="s5_2_3b"></a>
 ```java
-// snippet 6.2.3b
+// snippet 5.2.3b
 @GetAction("/session/username")
 public String header(H.Session session) {
     return session.get("username");
@@ -845,9 +845,9 @@ public String header(H.Session session) {
 
 如果 session 中的 key 和变量名不一致, 需要在 `@SessionVariable` 注解上设置 `value` 参数:
 
-<a name="s6_2_3c"></a>
+<a name="s5_2_3c"></a>
 ```java
-// snippet 6.2.3c
+// snippet 5.2.3c
 @GetAction("/session/username")
 public String session(@SessionVariable("user-name") String username) {
     return username;
@@ -862,9 +862,9 @@ public String session(@SessionVariable("user-name") String username) {
 
 对于下面的请求方法处理器:
 
-<a name="s6_3_1a"></a>
+<a name="s5_3_1a"></a>
 ```java
-// snippet 6.3.1a
+// snippet 5.3.1a
 @GetAction("test")
 public int[] test(int[] i) {
     return i;
@@ -881,9 +881,9 @@ public int[] test(int[] i) {
 
 **小贴士** 所有数组类型的绑定也可以使用 List 来表达, 因此上面的代码也可以这样写:
 
-<a name="s6_3_1b"></a>
+<a name="s5_3_1b"></a>
 ```java
-// snippet 6.3.1b
+// snippet 5.3.1b
 @GetAction("test")
 public List<Integer> test(List<Integer> i) {
     return i;
@@ -896,9 +896,9 @@ public List<Integer> test(List<Integer> i) {
 
 使用下面的 POJO 与控制器代码为例来讲述:
 
-<a name="s6_3_2a"></a>
+<a name="s5_3_2a"></a>
 ```java
-// snippet 6.3.2a
+// snippet 5.3.2a
 public class Foo {
     public String name;
     public int[] scores;
@@ -923,9 +923,9 @@ public class BarService {
 
 该方式采用 JQuery 对 Form 的序列化形式, 这也是 PHP 访问请求数据的表达方式
 
-<a name="s6_3_2b"></a>
+<a name="s5_3_2b"></a>
 ```html
-<!-- snippet 6.3.2b -->
+<!-- snippet 5.3.2b -->
 <form action="/bars" method="post">
     <input name="bar[id]">
     <input name="bar[fooList][0][name]">
@@ -943,9 +943,9 @@ public class BarService {
 
 这是 ActFramework 支持的一种更方便读写的格式
 
-<a name="s6_3_2c"></a>
+<a name="s5_3_2c"></a>
 ```html
-<!-- snippet 6.3.2c -->
+<!-- snippet 5.3.2c -->
 <form action="/bars" method="post">
     <input name="bar.id">
     <input name="bar.fooList.0.name">
@@ -963,9 +963,9 @@ public class BarService {
 
 应用完全可以混合使用上面的两种编码方式. 下面的示例中对于数组部分采用了 JQuery 方式编码, 其他部分则使用 dot 编码方式:
 
-<a name="s6_3_2d"></a>
+<a name="s5_3_2d"></a>
 ```html
-<!-- snippet 6.3.2d -->
+<!-- snippet 5.3.2d -->
 <form action="/bars" method="post">
     <input name="bar.id">
     <input name="bar.fooList[0]name">
@@ -981,11 +981,11 @@ public class BarService {
 
 #### <a name="post-json-encoding"></a>5.3.3 POST JSON 编码
 
-现在越来越多的前端代码使用 AJAX 和 JSON 方式和服务器交互. ActFramework 也支持 JSON 编码的数据绑定. 对于 [示例 6.3.2a](#s6_3_2a) 的代码, 当请求的 `Content-Type` 头为 `application/json` 时, ActFramework 按照 JSON 解析请求 body 并绑定到方法参数上, 对应的一个 JSON 格式数据示例为:
+现在越来越多的前端代码使用 AJAX 和 JSON 方式和服务器交互. ActFramework 也支持 JSON 编码的数据绑定. 对于 [示例 5.3.2a](#s5_3_2a) 的代码, 当请求的 `Content-Type` 头为 `application/json` 时, ActFramework 按照 JSON 解析请求 body 并绑定到方法参数上, 对应的一个 JSON 格式数据示例为:
 
-<a name="s6_3_3a"></a>
+<a name="s5_3_3a"></a>
 ```json
-// snippet 6.3.3a 
+// snippet 5.3.3a 
 {
     "id": 1,
     "fooList": [
@@ -1017,7 +1017,7 @@ public class BarService {
 3. 字串
 4. 枚举
 
-在 [6.1 绑定与解析](#binding-resolving) 我们已经介绍了 `StringValueResolver` 是框架用来将字串类型的请求数据解析为目标参数类型的机制. 对于上面罗列的基本类型及其包装类型, Java JDK 库已经定义了明确的和字串之间的转换逻辑, 例如 `String` -> `Boolean`, 就是通过 `Boolean.parseBoolean(String)` 进行的, 这些众所周知的基本类型转换逻辑也是框架内定义的 `StringValueResolver` 的基础, 毋庸多谈. 
+在 [5.1 绑定与解析](#binding-resolving) 我们已经介绍了 `StringValueResolver` 是框架用来将字串类型的请求数据解析为目标参数类型的机制. 对于上面罗列的基本类型及其包装类型, Java JDK 库已经定义了明确的和字串之间的转换逻辑, 例如 `String` -> `Boolean`, 就是通过 `Boolean.parseBoolean(String)` 进行的, 这些众所周知的基本类型转换逻辑也是框架内定义的 `StringValueResolver` 的基础, 毋庸多谈. 
 
 这里需要讲一下两个问题: 第一, 空值问题, 即当请求中没有数据, 目标参数如何设定值；第二错误值问题, 当请求数据无法转换到目标类型如何处理.
 
@@ -1030,7 +1030,7 @@ ActFramework 按照一下规则处理空值:
 
 基本类型默认值列表
 
-<a name="t6_4_1a"></a>
+<a name="t5_4_1a"></a>
 | 类型 | 默认值 |
 | --- | ---: |
 | boolean | `falase` |
@@ -1054,9 +1054,9 @@ ActFramework 按照一下规则处理空值:
 
 假设有下面的 enum 定义:
 
-<a name="s6_4_3a"></a>
+<a name="s5_4_3a"></a>
 ```java
-// Snippet 6.4.3a
+// Snippet 5.4.3a
 public enum TestEnum {FOO_BAR}
 ```
 
@@ -1097,9 +1097,9 @@ ActFramework 支持数组与集合类型的数据绑定. 对于数组, 列表(Li
 
 ActFramework 支持除 char 以外所有的基本类型数组绑定. char 数组绑定不被支持因为和字串绑定冲突. 我们以 int[] 类型来说明 ActFramework 对基本数据类型数组绑定的支持. 假设我们有下面的请求处理方法:
 
-<a name="s6_5_1a"></a>
+<a name="s5_5_1a"></a>
 ```java
-// Snippet 6.5.1a
+// Snippet 5.5.1a
 @Action("/test")
 public int[] test(int[] n) {
     return n;
@@ -1108,15 +1108,15 @@ public int[] test(int[] n) {
 
 **GET 请求编码**
 
-在[6.3.1 Query 数组类型参数编码](#query-param-encoding)中已经介绍过基本数组类型在 GET 请求中的三种编码方式. 这里就不再复述.
+在[5.3.1 Query 数组类型参数编码](#query-param-encoding)中已经介绍过基本数组类型在 GET 请求中的三种编码方式. 这里就不再复述.
 
 **POST 请求编码**
 
 方式一 (Form 表单)
 
-<a name="s6_5_1b"></a>
+<a name="s5_5_1b"></a>
 ```html
-<!-- snippet 6.5.1b -->
+<!-- snippet 5.5.1b -->
 <form action="/test" method="post" enctype="application/x-www-form-urlencoded">
 <input name="n" value="1,2,3">
 </form>
@@ -1124,9 +1124,9 @@ public int[] test(int[] n) {
 
 方式二 (Form 表单)
 
-<a name="s6_5_1c"></a>
+<a name="s5_5_1c"></a>
 ```html
-<!-- snippet 6.5.1c -->
+<!-- snippet 5.5.1c -->
 <form action="/test" method="post" enctype="application/x-www-form-urlencoded">
 <input name="n" value="1">
 <input name="n" value="2">
@@ -1136,9 +1136,9 @@ public int[] test(int[] n) {
 
 方式三 (Form 表单)
 
-<a name="s6_5_1d"></a>
+<a name="s5_5_1d"></a>
 ```html
-<!-- snippet 6.5.1d -->
+<!-- snippet 5.5.1d -->
 <form action="/test" method="post" enctype="application/x-www-form-urlencoded">
 <input name="n[]" value="1">
 <input name="n[]" value="2">
@@ -1148,9 +1148,9 @@ public int[] test(int[] n) {
 
 方式四 (Form 表单)
 
-<a name="s6_5_1e"></a>
+<a name="s5_5_1e"></a>
 ```html
-<!-- snippet 6.5.1e -->
+<!-- snippet 5.5.1e -->
 <form action="/test" method="post" enctype="application/x-www-form-urlencoded">
 <input name="n[0]" value="1">
 <input name="n[2]" value="3">
@@ -1161,27 +1161,27 @@ public int[] test(int[] n) {
 
 方式五 (JSON 数据)
 
-<a name="s6_5_1f"></a>
+<a name="s5_5_1f"></a>
 ```json
 [1, 2, 3]
 ```
 
 这种方式通常都是前端采用 AJAX 请求向服务端发送 JSON 数据, 需要请求的 `Content-Type` 头置为 `application/json` 才能正确解析
 
-##### <a name="wrap-array-binding"></a>5.5.2 包装类型数组绑定
+#### <a name="wrap-array-binding"></a>5.5.2 包装类型数组绑定
 
 下面是使用包装数据类型绑定的请求处理方法演示代码:
 
-<a name="s6_5_2a"></a>
+<a name="s5_5_2a"></a>
 ```java
-// Snippet 6.5.2a
+// Snippet 5.5.2a
 @Action("/test")
 public Integer[] test(Integer[] n) {
     return n;
 }
 ```
 
-包装类型数组和基本数据类型数组的处理几乎完全一致, 唯一不同的地方在于对空值(`null`)的处理. 基本数据类型的空值采用默认值填入, 包装类型的空值也填入空值. 因此对于上面[方法四](#s6_5_1e)的情况, 绑定的 `Integer[] n` 的值为: `{1, null, 3}`. 需要特别注意的是这种数组目前无法转换为合法的 JSON 字串, 应用开发人员应该小心处理.
+包装类型数组和基本数据类型数组的处理几乎完全一致, 唯一不同的地方在于对空值(`null`)的处理. 基本数据类型的空值采用默认值填入, 包装类型的空值也填入空值. 因此对于上面[方法四](#s5_5_1e)的情况, 绑定的 `Integer[] n` 的值为: `{1, null, 3}`. 需要特别注意的是这种数组目前无法转换为合法的 JSON 字串, 应用开发人员应该小心处理.
 
 字串和枚举数组和包装类型数组的处理类似, 无需多言.
 
@@ -1189,20 +1189,20 @@ public Integer[] test(Integer[] n) {
 
 List 和 Set 绑定和包装类型数组绑定的处理与编码方式完全一样. 下面是使用 List/Set 类型的处理方法演示代码:
 
-<a name="s6_5_3a"></a>
+<a name="s5_5_3a"></a>
 ```java
-// Snippet 6.5.3a
+// Snippet 5.5.3a
 @Action("/test")
 public void test(List<Integer> intList, Set<String> stringSet) {
     render(intList, stringSet);
 }
 ```
 
-采用[方式二](#s6_5_1c)来编码的例子:
+采用[方式二](#s5_5_1c)来编码的例子:
 
-<a name="s6_5_3b"></a>
+<a name="s5_5_3b"></a>
 ```html
-<!-- snippet 6.5.3b -->
+<!-- snippet 5.5.3b -->
 <form action="/test" method="post" enctype="application/x-www-form-urlencoded">
 <input name="intList" value="1">
 <input name="intList" value="2">
@@ -1214,18 +1214,18 @@ public void test(List<Integer> intList, Set<String> stringSet) {
 
 获得的结果用 JSON 表达应该是: `{"stringSet":["bar","foo"],"intList":[1,2,3]}`
 
-[6.5.1 节](#primitive-array-binding) 中提到的其他编码方式也都可以使用
+[5.5.1 节](#primitive-array-binding) 中提到的其他编码方式也都可以使用
 
 #### <a name="map-binding"></a>5.5.4 Map 绑定
 
-ActFramework 支持 Map 类型的绑定. Map 的 key 必须能从字串直接解析 (能找到对应的 `StringValueResolver`), Map 的 value 可以是任何类型. 我们这里先讨论 value 为基本类型的情况. 对于 value 为任何类型的讨论, 放到[6.7 POJO 绑定]详细讲述.
+ActFramework 支持 Map 类型的绑定. Map 的 key 必须能从字串直接解析 (能找到对应的 `StringValueResolver`), Map 的 value 可以是任何类型. 我们这里先讨论 value 为基本类型的情况. 对于 value 为任何类型的讨论, 放到 [POJO 绑定](#param-binding) 详细讲述.
 
 对于下面的请求处理方法:
 
-<a name="s6_5_4a"></a>
+<a name="s5_5_4a"></a>
 ```java
-// 6.5.4a
-@Action("/test/654")
+// 5.5.4a
+@Action("/test/554")
 public Map<String, Integer> test(Map<String, Integer> map) {
     return map;
 }
@@ -1233,31 +1233,31 @@ public Map<String, Integer> test(Map<String, Integer> map) {
 
 假设需要获得 `{"a":1,"b":2}` 的结果下面是 GET 和 POST 请求的编码方式:
 
-<a name="s6_5_4b"></a>
+<a name="s5_5_4b"></a>
 **GET 请求编码**
 
 ```
-/test/654?map[a]=1&map[b]=2
+/test/554?map[a]=1&map[b]=2
 ```
 
 **POST 请求编码**
 
 方式一
 
-<a name="s6_5_4c"></a>
+<a name="s5_5_4c"></a>
 ```html
-<!-- snippet 6.5.4c -->
-<form action="/test/654" method="post" enctype="application/x-www-form-urlencoded">
+<!-- snippet 5.5.4c -->
+<form action="/test/554" method="post" enctype="application/x-www-form-urlencoded">
 <input name="map" value="a=1,b=2">
 </form>
 ```
 
 方式二
 
-<a name="s6_5_4d"></a>
+<a name="s5_5_4d"></a>
 ```html
-<!-- snippet 6.5.4d -->
-<form action="/test/654" method="post" enctype="application/x-www-form-urlencoded">
+<!-- snippet 5.5.4d -->
+<form action="/test/554" method="post" enctype="application/x-www-form-urlencoded">
 <input name="map[a]" value="1">
 <input name="map[b]" value="2">
 </form>
@@ -1265,16 +1265,16 @@ public Map<String, Integer> test(Map<String, Integer> map) {
 
 ActFramework 也支持以其他类型作为 Key, 比如:
 
-<a name="s6_5_4e"></a>
+<a name="s5_5_4e"></a>
 ```java
-// Snippet 6.5.4e
-@Action("/test/654")
+// Snippet 5.5.4e
+@Action("/test/554")
 public Map<Integer, String> test(Map<Integer, String> map) {
     return map;
 }
 ```
 
-只要请求发送的数据能够正确进行类型转换, ActFramework 都能完成绑定. 对于 GET 请求, 正确的请求参数为: `/test/654?1=a&2=b`. 对于 POST 请求也类似. 
+只要请求发送的数据能够正确进行类型转换, ActFramework 都能完成绑定. 对于 GET 请求, 正确的请求参数为: `/test/554?1=a&2=b`. 对于 POST 请求也类似. 
 
 **如非必要, 不推荐使用字串以外的类型作为 Map 的 key**, 因为这样的 Map 数据不能生成合法的 JSON 字串.
 
@@ -1322,16 +1322,16 @@ ActFramework 支持三种日期格式的配置:
 
 当请求发送日期数据时,其格式必须符合系统配置(默认或指定). 对于下面的请求处理方法:
 
-<a name="s6_6_1a"></a>
+<a name="s5_6_1a"></a>
 ```java
-// Snippet 6.6.1a
-@Action("test/661/local-date")
+// Snippet 5.6.1a
+@Action("test/561/local-date")
 public LocalDate testLocalDate(LocalDate date) {
 	return date;
 }
 ```
 
-如果应用在中国大陆, 发送的 GET 请求应该是 `/test/661/local-date?date=2018-4-23`, POST 请求的表单字段值也应类似.
+如果应用在中国大陆, 发送的 GET 请求应该是 `/test/561/local-date?date=2018-4-23`, POST 请求的表单字段值也应类似.
 
 #### <a name="date-format-localization"></a>5.6.2 日期格式本地化
 
@@ -1339,9 +1339,9 @@ public LocalDate testLocalDate(LocalDate date) {
 
 在接受日期或者时间参数的时候, 不再仅仅通过 `fmt.date`, `fmt.time` 以及 `fmt.date-time` 设置来确定日期时间字串的模式, 而是依据当前请求的 `Locale` 来判断应该使用的模式. ActFramework 支持对特定的语言时区定义日期时间格式, 如下例所示:
 
-<a name="s6_6_2a"></a>
+<a name="s5_6_2a"></a>
 ```
-# snippet 6.6.2a
+# snippet 5.6.2a
 fmt.zh-cn.date=yyyy-M-d
 fmt.zh-tw.date=yyyy/M/d
 ```
@@ -1352,10 +1352,10 @@ fmt.zh-tw.date=yyyy/M/d
 
 有的时候对于特定的请求处理方法需要使用和全局设定不同的日期/时间模式, 这时候可以使用 `@act.data.annotation.DateTimeFormat` 注解, 如下例所示:
 
-<a name="s6_6_3a"></a>
+<a name="s5_6_3a"></a>
 ```java
-// Snippet 6.6.3a
-@Action("test/663/local-date")
+// Snippet 5.6.3a
+@Action("test/563/local-date")
 public LocalDate testCustomeDatePattern(@DateTimeFormat("yy-M-d") LocalDate date) {
 	return date;
 }
@@ -1363,7 +1363,7 @@ public LocalDate testCustomeDatePattern(@DateTimeFormat("yy-M-d") LocalDate date
 
 ### <a name="pojo-binding"></a>5.7 POJO 绑定
 
-ActFramework 支持 POJO 绑定. 在[6.3.2 POST Form 编码](#post-form-encoding) 我们已经通过实例讲述了 POJO 对象 POST Form 编码的两种方式: JQuery 和 dot 格式. 下面采用 jQuery 方式来详细介绍 POJO 的绑定, 包括:
+ActFramework 支持 POJO 绑定. 在[5.3.2 POST Form 编码](#post-form-encoding) 我们已经通过实例讲述了 POJO 对象 POST Form 编码的两种方式: JQuery 和 dot 格式. 下面采用 jQuery 方式来详细介绍 POJO 的绑定, 包括:
 
 * 单个 POJO 对象绑定
 * POJO 数组或列表绑定
@@ -1371,9 +1371,9 @@ ActFramework 支持 POJO 绑定. 在[6.3.2 POST Form 编码](#post-form-encoding
 
 我们在下面的 POJO 绑定讨论中使用如下 POJO 对象:
 
-<a name="s6_7a"></a>
+<a name="s5_7a"></a>
 ```java
-// snipeet 6.7a
+// snipeet 5.7a
 public class Address {
 	public String street;
 	public int postCode;
@@ -1390,27 +1390,27 @@ public class Employee {
 
 请求处理方法:
 
-<a name="s6_7_1a"></a>
+<a name="s5_7_1a"></a>
 ```java
-// snipeet 6.7.1a
-@Action("/test/671")
-public Employee pojo671(Employee emp) {
+// snipeet 5.7.1a
+@Action("/test/571")
+public Employee pojo571(Employee emp) {
 	return emp;
 }
 ```
 
 GET 编码:
 
-<a name="s6_7_1b"></a>
+<a name="s5_7_1b"></a>
 ```
-GET /test/671?emp[no]=123&emp[name]=Bob&emp[address][street]=King%20st&emp[address][postCode]1234
+GET /test/571?emp[no]=123&emp[name]=Bob&emp[address][street]=King%20st&emp[address][postCode]1234
 ```
 
 POST 编码:
 
-<a name="s6_7_1c"></a>
+<a name="s5_7_1c"></a>
 ```html
-<!-- snippet 6.7.1c -->
+<!-- snippet 5.7.1c -->
 <form action="/test" method="post" enctype="application/x-www-form-urlencoded">
 <input name="emp[no]" value="123">
 <input name="emp[name]" value="Bob">
@@ -1423,10 +1423,10 @@ POST 编码:
 
 请求处理方法:
 
-<a name="s6_7_2a"></a>
+<a name="s5_7_2a"></a>
 ```java
-// snipeet 6.7.2a
-@Action("/test/672")
+// snipeet 5.7.2a
+@Action("/test/572")
 public List<Employee> pojo672(List<Employee> empList) {
 	return empList;
 }
@@ -1434,16 +1434,16 @@ public List<Employee> pojo672(List<Employee> empList) {
 
 GET 编码:
 
-<a name="s6_7_2b"></a>
+<a name="s5_7_2b"></a>
 ```
-GET /test/672?empList[0][no]=123&empList[0][name]=Bob&empList[0][address][street]=King%20st&empList[0][address][postCode]=1234
+GET /test/572?empList[0][no]=123&empList[0][name]=Bob&empList[0][address][street]=King%20st&empList[0][address][postCode]=1234
 ```
 
 POST 编码:
 
-<a name="s6_7_2c"></a>
+<a name="s5_7_2c"></a>
 ```html
-<!-- snippet 6.7.2c -->
+<!-- snippet 5.7.2c -->
 <form action="/test" method="post" enctype="application/x-www-form-urlencoded">
 <input name="empList[0][no]" value="123">
 <input name="empList[0][name]" value="Bob">
@@ -1456,10 +1456,10 @@ POST 编码:
 
 请求处理方法:
 
-<a name="s6_7_3a"></a>
+<a name="s5_7_3a"></a>
 ```java
-// snipeet 6.7.3a
-@Action("/test/673")
+// snipeet 5.7.3a
+@Action("/test/573")
 public Map<String, Employee> pojo673(Map<String, Employee> empMap) {
 	return empMap;
 }
@@ -1467,16 +1467,16 @@ public Map<String, Employee> pojo673(Map<String, Employee> empMap) {
 
 GET 编码:
 
-<a name="s6_7_3b"></a>
+<a name="s5_7_3b"></a>
 ```
-GET /test/673?empMap[bob][no]=123&empMap[bob][name]=Bob&empMap[bob][address][street]=King%20st&empMap[bob][address][postCode]=1234
+GET /test/573?empMap[bob][no]=123&empMap[bob][name]=Bob&empMap[bob][address][street]=King%20st&empMap[bob][address][postCode]=1234
 ```
 
 POST 编码:
 
-<a name="s6_7_3c"></a>
+<a name="s5_7_3c"></a>
 ```html
-<!-- snippet 6.7.3c -->
+<!-- snippet 5.7.3c -->
 <form action="/test" method="post" enctype="application/x-www-form-urlencoded">
 <input name="empMap[bob][no]" value="123">
 <input name="empMap[bob][name]" value="Bob">
@@ -1491,9 +1491,9 @@ POST 编码:
 
 上传文件表单
 
-<a name="s6_8a"></a>
+<a name="s5_8a"></a>
 ```html
-<!-- snippet 6.8a -->
+<!-- snippet 5.8a -->
 <form action="/test/file" method="post" enctype="multipart/form-data">
 	<input type="file" name="upload">
 </form>
@@ -1501,9 +1501,9 @@ POST 编码:
 
 请求处理方法:
 
-<a name="s6_8b"></a>
+<a name="s5_8b"></a>
 ```java
-// Snippet 6.8b
+// Snippet 5.8b
 @PostAction("/test/file")
 public void upload(File upload) {
 	// save uploaded file
@@ -1512,9 +1512,9 @@ public void upload(File upload) {
 
 上面的代码使用 `java.io.File` 来声明 `upload` 参数的类型, 没有问题. 不过 ActFramework 推荐使用 `org.osgl.storage.ISObject` 来替代 `java.io.File`:
 
-<a name="s6_8c"></a>
+<a name="s5_8c"></a>
 ```java
-// Snippet 6.8c
+// Snippet 5.8c
 @PostAction("/test/file")
 public void upload(ISObject upload) {
 	// save uploaded file
@@ -1536,7 +1536,7 @@ public void upload(ISObject upload) {
 
 这个阀值的配置示例如下:
 
-<a name="s6_8_1a"></a>
+<a name="s5_8_1a"></a>
 ```
 upload.in_memory.threshold=1024 * 100
 ```
@@ -1557,9 +1557,9 @@ ActFramework 提供了强大的请求参数绑定支持, 应用几乎没有定�
 
 自定义类型:
 
-<a name="s6_9_1a"></a>
+<a name="s5_9_1a"></a>
 ```java
-// snippet 6.9.1a
+// snippet 5.9.1a
 public class Foo {
 	public int id;
 	public String name;
@@ -1568,9 +1568,9 @@ public class Foo {
 
 对于上面的类型 `Foo` 假设应用使用的编码方式为 `<id>-<name>`, 例如 `123-foobar`, 自定义的 `StringValueResolver` 为:
 
-<a name="s6_9_1b"></a>
+<a name="s5_9_1b"></a>
 ```java
-// snippet 6.9.1b
+// snippet 5.9.1b
 public static class FooResolver extends StringValueResolver<Foo> {
 	@Override
 	public Foo resolve(String s) {
@@ -1584,9 +1584,9 @@ public static class FooResolver extends StringValueResolver<Foo> {
 
 ActFramework 会自动注册 `FooResolver`, 并对所有的 `Foo` 对象尝试使用该 `resolver` 来解析, 下面是示例代码:
 
-<a name="s6_9_1c"></a>
+<a name="s5_9_1c"></a>
 ```java
-// snippet 6.9.1c
+// snippet 5.9.1c
 @GetAction("1/c")
 @JsonView
 public Foo testFooResolver(Foo foo) {
@@ -1596,7 +1596,7 @@ public Foo testFooResolver(Foo foo) {
 
 向 `http://localhost:5460/6/9/1/c?foo=12-abc` 发出请求得到下面的响应:
 
-<a name="s6_9_1d"></a>
+<a name="s5_9_1d"></a>
 ```json
 {
     "id": 12, 
@@ -1606,14 +1606,15 @@ public Foo testFooResolver(Foo foo) {
 
 #### <a name="customize-binder"></a>5.9.2 自定义 Binder
 
-自定义 Binder 的方法和例子参见 [6.1 绑定与解析](#binding-resolving)
+自定义 Binder 的方法和例子参见 [5.1 绑定与解析](#binding-resolving)
 
 ### <a name="data-validation"></a>5.10 绑定参数校验
 
 Act 支持 JSR 303 Bean 校验, 如下例所示:
 
-<a name="s6_10a"></a>
+<a name="s5_10a"></a>
 ```java
+// snippet 5.10a
 @GetAction("notNull")
 public Result notNull(@NotNull String value) {
 	if (context.hasViolation()) {
@@ -1625,7 +1626,7 @@ public Result notNull(@NotNull String value) {
 
 当发送请求给上面的 `notNull` 端口没有指定 `value` 的时候, 将会得到如下响应:
 
-<a name="s6_10b"></a>
+<a name="s5_10b"></a>
 ```
 Error(s): 
 value: may not be null
@@ -1635,479 +1636,96 @@ value: may not be null
 TBD
 
 
-## <a name="return-response"></a>6 返回响应
-* [7 返回响应]
-    * [7.1 返回数据]
-        * [7.1.1 返回模板]
-        * [7.1.2 返回 JSON 响应]
-        * [4.1.3 文件下载]
-    * [7.2 返回状态]
-        * [7.2.1 默认状态返回规则]
-            * [7.2.1.1 200 Okay]
-            * [7.2.1.2 201 Created]
-            * [7.2.1.3 404 Not Found]
-            * [7.2.1.4 从 Java 异常映射为 HTTP 错误状态]
-        * [7.2.1 指定返回状态]
-        * [7.2.3 自定义错误页面]
-    * [7.3 设定 HTTP Header]
-        * [7.3.1 Content-Type]
-        * [7.3.2 设定其他 HTTP Header]
-* [8 异步返回]
+## <a name="return-response"></a>6. 返回响应
 
----------------------- 分割线 -------------------------
+ActFramework 提供非常灵活的方式(包括显式和隐式)让开发人员返回各种响应.
 
-下面的内容需要重写
+### <a name="return-template></a>6.1 使用模板生成返回结果
 
-**小贴士** 尽管控制器不需要继承任何类，ActFramework推荐你的控制器继承`act.controller.Controll.Util`类，这样你可以在你的控制器中方便的使用各种工具方法。当你的控制器已经继承了其他类的时候，你可以使用`import static`来实现相同的功能：
+可以使用隐式或显式两种方式指定模板路径
 
-1. 继承 `act.controller.Controller.Util`:
+#### <a name="implicit-template-path"></a>6.1.1 隐式模板路径指定
 
-    ```java
-    import act.Controller;
-    public class MyController extends Controller.Util {
-        ...
+对于下面的请求响应方法代码:
+
+<a name="s6_1_1"></a>
+```java
+// snippet 6.1.1
+package demo.controller;
+
+public class TemplateDemo extends Controller.Util {
+
+    @GetAction("/templateDemo/implicitTemplatePath")
+    public void implicitTemplatePath(String name, int id) {
+        render(name, id)
     }
-    ```
 
-1. import static:
+}
+```
 
-    ```java
-    import static act.Controller.Util.*;
-    public class MyController extends Controller.Util {
-        ...
+框架会自动到 `/${template-engine-id}/demo/controller/TemplateDemo/` 目录下寻找 `implicitTemplatePath.html` 模板文件来生成响应结果. 
+
+* 路径中的 `${template-engine-id}` 默认为 `rythm`, 如果应用引入了其他模板引擎插件, 比如 `act-freemarker` 或者 `act-thymeleaf` 等, 也可以变成对应的 `freemarker` 或者 `thymeleaf`. 
+* `demo/controller` 对应控制器类的 package: `demo.controller`
+* `TemplateDemo` 对应控制器类的名字 `(Class.getSimpleName())`
+* `implicitTemplatePath.html` 则对应请求响应方法名字以及当前请求的格式.
+
+有趣的地方在于 `.html` 格式后缀, 这个灵活性在于开发人员可以使用不同后缀名的模板文件来定义不同的响应结果返回,以匹配请求的 `Accept` 头指定. 假设应用希望能同时处理 `text/html`, `text/plaintext` 和 `application/json` 三种方式, 则可以在相应目录下定义下面三个模板文件:
+
+* `implicitTemplatePath.html`: 对应 `text/html` 请求
+* `implicitTemplatePath.txt`: 对应 `text/plaintext` 请求
+* `implicitTemplatePath.json`: 对应 `application/json` 请求
+
+#### <a name="explicit-template-path"></a>6.1.2 显式模板路径指定
+
+默认(隐式)模板路径通常都会很长, 因为缺乏 IDE 的支持, 用起来不是很方便, 所以在模板数量并不多的情况下可以采用显式模板路径指定:
+
+<a name="s6_1_2"></a>
+```java
+// snippet 6.1.2
+package demo.controller;
+
+public class TemplateDemo extends Controller.Util {
+
+    @GetAction("/templateDemo/explicitTemplatePath")
+    public void explicitTemplatePath(String name, int id) {
+        render("/explicit_templ_path", name, id)
     }
-    ```
 
-**注意** 本页下面的代码例子都假设控制器继承了`Controller.Util`类
+}
+```
 
+上面我们使用了 `"/explicit_templ_path"` 字面量来显式传递模板路径, 这个时候模板文件应该为: `/${template-engine-id}/explicit_templ_path.${fmt-suffix}`, 其中的 `${template-engine-id}` 依然是模板引擎 id, `${fmt-suffix}` 也还是请求格式化后缀. 这两处都可以在上一节 [隐式模板路径指定](#implicit-template-path) 中找到解释
 
-## <a name="parameter"></a>获得请求参数
+#### <a name="template-variable"></a>6.1.3 模板变量
 
-ActFramework从以下来源自动填充请求处理方法参数：
+在上面两节中我们看到 `render()` 语句中传递了 `name` 和 `id` 变量, 这两个变量会依其变量放到模板变量表里面, 在模板中可以分别使用 `name` 和 `id` 来获取变量值. 拿 [6.1.2](#s6_1_2) 作为例子, 这个过程大致相当于:
 
-1. URL路径参数
-1. 查询参数
-1. 表单参数
+<a name="s6_1_3"></a>
+```java
+// snippet 6.1.3
+package demo.controller;
+
+public class TemplateDemo extends Controller.Util {
+
+    @GetAction("/templateDemo/explicitTemplatePath2")
+    public void explicitTemplatePath2(String name, int id, ActionContext context) {
+        context.renderArg("name", name);
+        context.renderArg("id", id);
+        render("/explicit_templ_path")
+    }
+
+}
+```
+
+因为 ActFramework 在加载 TemplateDemo 控制器类的时候使用了 ASM 操作字节码, 所以自动帮助开发人员加上了 `context.renderArg()` 语句, 因此开发人员可以使用 
 
 ```java
-@PutAction("/customer/{customerId}/order/{orderId}")
-public void updateOrderAmount(String customerId, String orderId, int amount) {
-    ...
-}
+render(name, id, ...)));
 ```
 
-如上例所示URL路径变量`customerId`和`orderId`被自动填充为请求处理方法参数，参数`amount`则来自查询参数或者表单参数
+这样更加简介的方法来表达模板变量的传递. 我们注意到在显式指定模板路径的时候使用的是字串字面量 `"/explicit_templ_path"`, 而不是将值 `"/explicit_templ_path"` 放进某个字串变量, 比如 `templatePath` 中, 再传递给 `render()` 方法, 原因就在于当框架的字节码增强器检测到变量的时候, 认定这是模板变量, 而不是模板路径, 所以会将值 `"/explicit_templ_path"` 传递给模板, 而不是当作模板路径处理. 
 
-### <a name="binding"></a>POJO绑定
 
-ActFramework可以将复杂的表单变量绑定到域模型对象（POJO实例）. 假设你有如下类:
-
-```java
-public class Order {
-    private String id;
-    private String customerId;
-    private List<Item> items;
-
-    public String getId() {
-        return id;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-    public static class Item {
-        private String description;
-        private int amount;
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDecsription(String desc) {
-            this.description = desc;
-        }
-
-        public int getAmount() {
-            return amount;
-        }
-
-        public void setAmount(int amount) {
-            this.amount = amount;
-        }
-    }
-}
-```
-
-你的订单表单如下:
-
-```html
-<form action="/customer/@customer.getId()/order" method="POST">
-<div class="line-item">
-    <span class="desc"><input name="order[items][][description]"></span>
-    <span class="amount"><input name="order[items][][amount]"></span>
-</div>
-<div class="line-item">
-    <span class="desc"><input name="order[items][][description]"></span>
-    <span class="amount"><input name="order[items][][amount]"></span>
-</div>
-<div class="line-item">
-    <span class="desc"><input name="order[items][][description]"></span>
-    <span class="amount"><input name="order[items][][amount]"></span>
-</div>
-...
-</form>
-```
-
-你可以在请求处理方法中直接声明`Order`类型变量:
-
-```java
-@PostAction("/customer/{customerId}/order")
-public void createOrder(String customerId, Order order) {
-    order.setCustomerId(customerId);
-    dao.save(order);
-}
-```
-
-### <a name="json-param"></a>JSON内容绑定
-
-上面的`createOrder`请求处理方法也可以从类似下面的JSON内容绑定:
-
-```JSON
-{
-    "items": [
-        {
-            "description": "item 1",
-            "amount": 10000
-        },
-        {
-            "description": "item 2",
-            "amount": 12300
-        },
-        ...
-    ]
-}
-```
-
-**Note** ActFramework暂不支持从XML内容的绑定
-
-### <a name="file"></a>获取上传文件
-
-假设你的文件上传表单如下:
-
-```html
-<form method="POST" enctype="multipart/form-data" action="/upload">
-    Please specify file to upload: <input type="file" name="myfile"><br />
-    <input type="submit" value="submit">
-</form>
-```
-
-你可以直接在你的请求处理方法中申明`File`类型参数：
-
-```java
-public void handleUpload(File myfile) {
-    ...
-}
-```
-
-
-## <a name="response"></a>发回响应
-
-ActFramework提供多种不同的方法让开发人员指定响应内容，每种方式都简单易用。
-
-### <a name="implicity-200"></a>自动返回200 Okay
-
-当请求处理方法方法没有返回类型，也没有抛出异常ActFramework自动发回代码为`200 Okay`的空响应。如果有[相应的模板定义](templating.md#location)，则根据模板生成返回内容。自动返回可以让一些PUT和POST的请求处理方法非常简练：
-
-```java
-@PostAction("/order")
-public void createOrder(Order order) {
-    orderService.save(order);
-}
-```
-
-### <a name="explicity-200"></a>程序中制定返回200 Okay
-
-对于有轻微强迫症的猿们，一定要通过程序显式返回200 Okay才舒服，ActFramework提供两种方式：
-
-1. 返回`org.osgl.mvc.result.Result`
-
-    ```java
-    @PostAction("/order")
-    public Result createOrder(Order order) {
-        orderService.save(order);
-        return ok();
-        // 或者 return new Ok();
-    }
-    ```
-
-1. 抛出`org.osgl.mvc.result.Result`
-
-    ```java
-    @PostAction("/order")
-    public void createOrder(Order order) {
-        orderService.save(order);
-        throw ok();
-        // or throw new Ok();
-    }
-    ```
-
-    你甚至可以将`Result`隐式抛出:
-
-    ```java
-    @PostAction("/order")
-    public void createOrder(Order order) {
-        orderService.save(order);
-        ok();
-    }
-    ```
-
-**注意** ActFramework会对控制器的响应方法做字节码增强，当某一条语句返回`Result`类型，但没有返回上级调用，框架会自动将Result作为异常抛出，这就是上例可以简单写一句`ok()`的原因所在
-
-### <a name="return-404"></a>返回404 Not Found
-
-对于http服务来讲，当请求的资源无法找到的时候服务器应该返回`404 NotFound`响应。ActFramework程序可以使用如下方式返回`404`错误：
-
-```java
-@GetAction("/order/{orderId}")
-public Order getOrder(String orderId) {
-    Order order = dao.findById(orderId);
-    if (null == order) {
-        throw new NotFound();
-    }
-}
-```
-
-对上述代码的一种更为简洁的表述为：
-
-```java
-@GetAction("/order/{orderId}")
-public Order getOrder(String orderId) {
-    Order order = dao.findById(orderId);
-    notFoundIfNull(order);
-}
-```
-
-而极简方式则为：
-
-```java
-@GetAction("/order/{orderId}")
-public Order getOrder(String orderId) {
-    return dao.findById(orderId);
-}
-```
-
-你没有看错，没有任何语句检查返回订单对象是否为空。ActFramework将自动检查，如果请求处理方法返回空值，且方法申明有返回类型，则自动返回`404`错误
-
-### <a name="return-400"></a>返回其他错误
-
-下面的代码演示了如何返回其他错误类型：
-
-```java
-public void foo(int status) {
-    badRequestIf(400 == status);
-    unauthorizedIf(401 == status);
-    forbiddenIf(403 == status);
-    notFoundIf(404 == status);
-    conflictIf(409 == status);
-    // none of the above?
-    throw ActServerError.of(status);
-}
-```
-
-### <a name="exception-mapping"></a>从Java异常自动映射为HTTP错误响应
-
-你的代码有异常抛出嘛? ActFramework会自动将它们映射为错误响应：
-
-1. `IllegalArgumentException` -> 400 Bad Request
-1. `IndexOutOfBoundsException` -> 400 Bad Request
-1. `IllegalStateException` -> 409 Conflict
-1. `UnsupportedOperationException` -> 501 Not Implemented
-1. Other uncaught exception -> 500 Internal Error
-
-### <a name="return-data"></a>返回数据
-
-ActFramework允许返回任何类型的数据，并根据上下文情况判断最终返回格式。当请求的`Accept`http头设置为`application/json`的时候下面两组代码的效果是完全相同的:
-
-```java
-@GetAction("/order/{orderId}")
-public Order getOrder(String orderId) {
-    return dao.findById(orderId);
-}
-```
-
-```java
-@GetAction("/order/{orderId}")
-public Result getOrder(String orderId) {
-    Order order = orderService.findById(orderId);
-    return renderJSON(order);
-}
-```
-
-推荐使用第一种方式，原因在于：
-
-1. 更加简洁
-1. 当请求要求不同的返回格式的时候，ActFramework能够满足要求
-
-### <a name="render-template"></a>使用模板
-
-传统的MVC应用几乎都会设计模板。ActFramework支持下面三种方式来调用模板:
-
-1. 隐式模板调用
-
-    对于任何请求处理方法，如果定义了相应的模板文件，则总是启用模板文件来生成响应。
-
-    如果请求处理方法返回某个对象，该对象可以在模板中使用`result`参数来引用
-
-1. 显式模板调用
-
-    ```java
-    @GetAction("/order/editForm")
-    public Result orderEditForm(String orderId) {
-        Order order = orderService.findById(orderId);
-        boolean hasWritePermission = ...;
-        return render(order, hasWritePermission);
-    }
-    ```
-    以上代码明确调用模板来生成响应结果。在调用模板的时候传进两个参数`order`和`hasWritePermission`，这两个参数可以在模板中被直接引用
-
-1. 显式调用模板并制定路径
-
-    ```java
-    @GetAction("/order/editForm")
-    public Result orderEditForm(String orderId) {
-        Order order = orderService.findById(orderId);
-        boolean hasWritePermission = ...;
-        return renderTemplate("/myTemplateRoot/orderForm.html", order, hasWritePermission);
-    }
-    ```
-
-    在上例中传递给`renderTemplate`的第一个参数是一个字串量(String literal)，而不是一个变量。在这种情况下，ActFramework将其作为模板路径处理，其他的参数则继续作为模板参数处理。
-
-
-### <a name="render-binary"></a>发回二进制数据
-
-1. 发回嵌入二进制流（例如图片或者嵌入式PDF）
-
-    ```java
-    @GetAction("/user/{userId}/avatar")
-    public Result getAvatar(String userId) {
-        User user = userDao.findById(userId);
-        return binary(user.getAvatarFile());
-    }
-    ```
-
-2. 发回下载文件
-
-    ```java
-    @GetAction("/invoice/{id}/photoCopy")
-    public Result downloadInvoicePhotoCopy(String id) {
-        Invoice invoice = dao.findById(id);
-        return download(invoice.getPhoto());
-    }
-    ```
-
-## <a name="content-negotiation"></a>内容格式
-
-ActFramework检测请求的`Accept`头并根据其设定生成不同的响应内容
-
-```java
-@GetAction("/person/{id}")
-public Person getPerson(String id) {
-    return dao.findById(id);
-}
-```
-
-对于上例代码，当`Accept`头设置为"application/json"的时候, 响应是JSON体:
-
-```json
-{
-  "firstName": "John",
-  "lastName": "Smith"
-}
-```
-
-当设置为`text/html`或`text/plain`的时候, 响应将调用`Person.toString()`方法，生成下面的内容
-
-```
-John Smith
-```
-
-你甚至可以为请求处理方法定义多个不同的后缀名的模板文件。
-
-`getPerson.html`
-
-```
-@args Person result
-<div>
-  <span class="label">First name</span><span>@result.getFirstName()</span>
-</div>
-<div>
-  <span class="label">Last name</span><span>@result.getLastName()</span>
-</div>
-```
-
-`getPerson.json`
-
-```
-@args Person result
-{
-    "firstName": "@result.getFirstName()",
-    "lastName: "@result.getLastName()"
-}
-```
-
-ActFramework根据`Accept`头的内容来选择适合的模板文件
-
-## 会话和快闪对象
-
-如果需要在多个HTTP请求之间保存数据, 可以将它们存入会话(Session)或者快闪(Flash)中. 在Session中的数据在整个用户会话过程中均可使用. 在Flash中的数据仅维持到下一个请求.
-
-一个很重要的概念是Session以及Flash数据并非存在服务器中,而是通过Cookie机制在每个接下来的HTTP请求里携带这些数据. 因此数据大小是有限制的(最多4KB)而且只能保存为字符串
-
-当然, ActFramework使用了应用配置的密匙来对cookie内容进行签名以确保其不会被篡改, 否则就会失效. 另外ActFramework的session并不是用来当做缓存(Cache)使用的. 如果你需要缓存一些和Session相关的结构化数据, 可以调用`Session.cache()` APIs. 例如:
-
-
-```java
-@GetAction
-public void index(H.Session session, Message.Dao dao) {
-    List<String> messages = session.cached("messages");
-    if (null == messages) {
-        // Cache miss
-        messages = dao.findByUser(me);
-        session.cacheFor30Min("messages", messages);
-    }
-    render(messages);
-}
-```
-
-Session数据在用户关闭浏览器之后即失效, 除非你打开了[session.persistent](configuration#session_persistent)配置
-需要注意的一点, 虽然都能保存结构化数据, 但是缓存和传统的Servlet HTTP Session对象有不同的语义. 你不能指望数据总是存在缓存中. 因此应用必须处理缓存失效的情况. 这也确保了你的应用完全无状态化.
-
-## 总结
-
-本章讲述了以下概念：
-
-1. 控制器`Controller`和请求处理方法`Action handler`的概念
-1. 如何写一个简单的控制器
-1. 如何获取请求参数以及POJO绑定
-1. 如何发回不同的响应代码
-1. 如何返回数据
-1. 如何隐式或显式的指定响应模板
-1. 如何返回二进制流或下载文档
-1. `Accept`头对ActFramework行为的影响
-1. 如何使用回话和快闪对象
 
 [返回目录](index.md)

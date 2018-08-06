@@ -19,7 +19,7 @@
   <properties>
     <!-- remove the following line if you are on Java 7-->
     <java.version>1.8</java.version>
-    <app.entry>act.doc.Processor</app.entry>
+    <app.entry>actdoc.Processor</app.entry>
   </properties>
 
   <dependencies>

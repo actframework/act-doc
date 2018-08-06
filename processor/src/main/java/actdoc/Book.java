@@ -1,4 +1,4 @@
-package act.doc;
+package actdoc;
 
 import act.app.conf.AutoConfig;
 import act.util.SimpleBean;

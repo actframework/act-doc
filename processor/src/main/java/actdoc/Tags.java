@@ -1,4 +1,4 @@
-package act.doc;
+package actdoc;
 
 import act.inject.util.LoadResource;
 import org.osgl.util.Keyword;

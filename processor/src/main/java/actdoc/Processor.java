@@ -1,4 +1,4 @@
-package act.doc;
+package actdoc;
 
 import act.Act;
 import act.cli.Command;
