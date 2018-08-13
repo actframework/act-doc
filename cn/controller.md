@@ -1640,7 +1640,7 @@ TBD
 
 ActFramework 提供非常灵活的方式(包括显式和隐式)让开发人员返回各种响应.
 
-### <a name="return-template></a>6.1 使用模板生成返回结果
+### <a name="return-template"></a>6.1 使用模板生成返回结果
 
 可以使用隐式或显式两种方式指定模板路径
 
@@ -1663,9 +1663,9 @@ public class TemplateDemo extends Controller.Util {
 }
 ```
 
-框架会自动到 `/${template-engine-id}/demo/controller/TemplateDemo/` 目录下寻找 `implicitTemplatePath.html` 模板文件来生成响应结果. 
+框架会自动到 `/${view-id}/demo/controller/TemplateDemo/` 目录下寻找 `implicitTemplatePath.html` 模板文件来生成响应结果. 
 
-* 路径中的 `${template-engine-id}` 默认为 `rythm`, 如果应用引入了其他模板引擎插件, 比如 `act-freemarker` 或者 `act-thymeleaf` 等, 也可以变成对应的 `freemarker` 或者 `thymeleaf`. 
+* 路径中的 `${view-id}` 默认为 `rythm`, 如果应用引入了其他视图插件, 比如 `act-freemarker` 或者 `act-thymeleaf` 等, 也可以变成对应的 `freemarker` 或者 `thymeleaf`. 
 * `demo/controller` 对应控制器类的 package: `demo.controller`
 * `TemplateDemo` 对应控制器类的名字 `(Class.getSimpleName())`
 * `implicitTemplatePath.html` 则对应请求响应方法名字以及当前请求的格式.
@@ -1695,15 +1695,15 @@ public class TemplateDemo extends Controller.Util {
 }
 ```
 
-上面我们使用了 `"/explicit_templ_path"` 字面量来显式传递模板路径, 这个时候模板文件应该为: `/${template-engine-id}/explicit_templ_path.${fmt-suffix}`, 其中的 `${template-engine-id}` 依然是模板引擎 id, `${fmt-suffix}` 也还是请求格式化后缀. 这两处都可以在上一节 [隐式模板路径指定](#implicit-template-path) 中找到解释
+上面我们使用了 `"/explicit_templ_path"` 字面量来显式传递模板路径, 这个时候模板文件应该为: `/${view-id}/explicit_templ_path.${fmt-suffix}`, 其中的 `${view-id}` 依然是视图 id, `${fmt-suffix}` 也还是请求格式化后缀. 这两处都可以在上一节 [隐式模板路径指定](#implicit-template-path) 中找到解释
 
 #### <a name="template-variable"></a>6.1.3 模板变量
 
 在上面两节中我们看到 `render()` 语句中传递了 `name` 和 `id` 变量, 这两个变量会依其变量放到模板变量表里面, 在模板中可以分别使用 `name` 和 `id` 来获取变量值. 拿 [6.1.2](#s6_1_2) 作为例子, 这个过程大致相当于:
 
-<a name="s6_1_3"></a>
+<a name="s6_1_3a"></a>
 ```java
-// snippet 6.1.3
+// snippet 6.1.3a
 package demo.controller;
 
 public class TemplateDemo extends Controller.Util {
@@ -1720,11 +1720,94 @@ public class TemplateDemo extends Controller.Util {
 
 因为 ActFramework 在加载 TemplateDemo 控制器类的时候使用了 ASM 操作字节码, 所以自动帮助开发人员加上了 `context.renderArg()` 语句, 因此开发人员可以使用 
 
+<a name="s6_1_3b"></a>
 ```java
+// snippet 6.1.3a
 render(name, id, ...)));
 ```
 
 这样更加简介的方法来表达模板变量的传递. 我们注意到在显式指定模板路径的时候使用的是字串字面量 `"/explicit_templ_path"`, 而不是将值 `"/explicit_templ_path"` 放进某个字串变量, 比如 `templatePath` 中, 再传递给 `render()` 方法, 原因就在于当框架的字节码增强器检测到变量的时候, 认定这是模板变量, 而不是模板路径, 所以会将值 `"/explicit_templ_path"` 传递给模板, 而不是当作模板路径处理. 
+
+#### <a name="supported-template-engines"></a>6.1.4 支持的模板引擎
+
+ActFramework 提供了以下模板引擎集成用于生成基于文本的响应输出:
+
+| 视图 ID |  模板引擎 | 插件 |
+| ------- | ---- | --- |
+| rythm | [Rythm](http://rythmengine.org) | 内置 | 
+| beetl | [Beetl](http://ibeetl.com/) | [act-beetl](https://github.com/actframework/act-beetl) |
+| freemarker | [FreeMarker](https://freemarker.apache.org/) | [act-freemarker](https://github.com/actframework/act-freemarker) |
+| mustache | [Mustache](https://github.com/spullara/mustache.java) | [act-mustache](https://github.com/actframework/act-mustache) |
+| thymeleaf | [Thymeleaf](https://www.thymeleaf.org/) | [act-thymeleaf](https://github.com/actframework/act-thymeleaf) |
+| velocity | [Velocity](https://velocity.apache.org/) | [act-velocity](https://github.com/actframework/act-velocity) |
+
+因为 ActFramework 采用视图 ID 来管理模板引擎文件, 很自然地提供了对多模板引擎的支持, 非常方便迁移老项目. 比如老项目是基于 spring + thymeleaf, 可以直接将以前的 thymeleaf 模板放置进 `resources/thymeleaf/` 目录下, 而新开发的特性则可以放进 `resources/rythm` 目录下, ActFramework 会自动查找到需要的模板引擎文件.
+
+#### <a name="special-template-engine"></a>6.1.5 Excel 视图
+
+在上一节我们提到的模板引擎都是用于生成基于文本的响应输出, ActFramework 的视图机制也同样适用于非文本响应, 例如 Excel 文件输出. 
+
+目前唯一支持的非文本响应视图是由 [https://github.com/actframework/act-excel](act-excel) 插件提供 Excel 视图. 该插件依赖于 [jxls 库](http://jxls.sourceforge.net/getting_started.html) Excel 模板支持. Excel 视图 ID 为 `excel`.
+
+当请求的 Accept 头为 Excel 的 MIME 类型的时候, act-excel 插件生成 Excel 下载文件. 值得一提的是这种机制对于控制器是完全透明的, 控制器代码只需要提供数据而无需关注视图实现, 对于下面的控制器代码:
+
+<a name="s6_1_5"></a>
+```java
+// snippet s6.1.5
+@GetAction("/foo")
+public void foo(String fooName, int barNo) {
+    render(fooName, barNo);
+}
+```
+
+模板视图的选择机制为:
+
+* 当发送的请求 Accept 头为 `text/html` 的时候, 框架从 `resources/${view-id}/...` 下寻找 `foo.html` 模板文件
+* 当发送的请求 Accept 头为 `application/vnd.ms-excel` 的时候, 框架从 `resources/excel/...` 下寻找 `foo.xls` 模板文件
+* 当发送的请求 Accept 头为 `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` 头的时候, 框架从 `resources/excel...` 下寻找 `foo.xlsx` 模板文件.
+
+对应 [s6.1.5](#s6_1_5) 控制器代码的模板文件接受 `fooName` 和 `barNo` 两个模板变量, 生成响应的响应输出.
+
+更多关于 Excel 视图的情况可以参考 [Excel 视图的示例项目](https://github.com/actframework/act-demo-apps/tree/master/excel)
+
+### <a name="return-value"></a>6.2 直接返回数据
+
+对于 RESTful 服务这样的应用来讲直接返回数据更加直观和简洁. 例如:
+
+<a name="s6_2"></a>
+```java
+// snippet 6.2
+@GetAction("/users/{id}")
+public User getUser(Long id, User.Dao userDao) {
+    return userDao.findById(id);
+}
+```
+
+#### <a name="return-content_type"></a>6.2.1 返回数据的类型
+
+直接返回数据的代码非常简洁, 一个有趣的问题是框架是如何从返回数据生成最终响应的呢. 关键在于请求的数据类型. HTTP 协议定义了 `Accept` 头, 用于指定响应应该返回的数据类型. ActFramework 依据这个来确定返回数据类型, 进而生成最终响应. 目前 ActFramework 支持的数据类型及响应生成方式有:
+
+* `text/html` - 首先确定是否有和请求方法对应的模板, 模板寻找方法参见 [隐式模板路径指定](#implicit-template-path)
+    - 如果找到对应模板, 返回数据以 `result` 名字传入模板变量列表, 并生成响应
+    - 如果没有对应模板, 则直接在返回值对象上调用 `Object.toString()` 方法生成响应
+* `application/json` - 首先确定是否有和请求方法对应的模板, 模板寻找方法参见 [隐式模板路径指定](#implicit-template-path), 注意这种类型对应的模板文件扩展名为 `.json` 而不是 `.html`
+    - 如果找到对应模板, 返回数据以 `result` 名字传入模板变量列表, 并生成响应
+    - 如果没有对应模板, 则调用内置 JSON 库生成响应
+* `text/csv` - 首先确定是否有和请求方法对应的模板, 模板寻找方法参见 [隐式模板路径指定](#implicit-template-path), 注意这种类型对应的模板文件扩展名为 `.csv`
+    - 如果找到对应模板, 返回数据以 `result` 名字传入模板变量列表, 并生成响应
+    - 如果没有对应模板, 则调用内置 csv 工具生成响应
+* `application/vnd.ms-excel` 
+    - 如果找到对应模板 (后缀名为 `.xls`), 返回数据以 `result` 名字传入模板变量列表, 并生成响应
+    - 如果没有对应模板, 则调用 `act-excel` 内置 excel 工具生成 excel 2003 格式的下载文件
+* `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`
+    - 如果找到对应模板 (后缀名为 `.xlsx`), 返回数据以 `result` 名字传入模板变量列表, 并生成响应
+    - 如果没有对应模板, 则调用 `act-excel` 内置 excel 工具生成 excel 2007 格式的下载文件
+
+### <a name="output-binary"></a>6.3 输出二进制内容
+
+
+### <a name="response-status-code"></a>6.4 响应代码
+
 
 
 
