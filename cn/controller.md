@@ -1805,6 +1805,97 @@ public User getUser(Long id, User.Dao userDao) {
 
 ### <a name="output-binary"></a>6.3 输出二进制内容
 
+#### <a name="output-inline-content"></a>6.3.1 输出内嵌(inline)二进制内容
+
+下面的代码输出内嵌二进制内容:
+
+<a name="s6_3_1a"></a>
+```java
+// snippet s6.3.1a
+public void renderImage(String imgId) {
+    Image img = imgDao.findById(imgId);
+    byte[] blob = img.blob();
+    Controller.Util.renderBinary(blob);
+}
+```
+
+`Controller.Util` 上其他生成内嵌二进制内容的 API:
+
+```java
+// dump file content to response
+renderBinary(File file);
+
+// dump binray content from input stream to response
+renderBinary(InputStream inputStream);
+
+// dump content from an `ISobject` instance
+renderBinary(ISObject storageObject);
+```
+
+**小贴士** 每个 `renderBinary` 方法都有一个别名为 `binary` 的方法与其对应并提供完全一样的实现. 下面是 [s6.3.1a](#s6_3_1a) 的另一种表达方式:
+
+<a name="s6_3_1b"></a>
+```java
+// snippet s6.3.1b
+public Result renderImage(String imgId) {
+    Image img = imgDao.findById(imgId);
+    byte[] blob = img.blob();
+    return Controller.Util.binary(blob);
+}
+```
+
+<a name="download"></a>6.3.2 输出下载(attachment)内容
+
+下面的代码输出下载文件:
+
+<a name="s6_3_2a"></a>
+```java
+// snippet s6.3.2a
+public void downloadAttachment(String postId, int attachmentId) {
+    Post post = postDao.findById(postId);
+    Attachment attachment = post.getAttachmentById(attachmentId);
+    byte[] blob = attachment.getBlob();
+    String name = attachment.getName();
+    Controller.Util.download(blob, name);
+}
+```
+
+下面是功能完全一致的另一种表达方式:
+
+<a name="s6_3_2b"></a>
+```java
+// snippet s6.3.2b
+public Result downloadAttachment(String postId, int attachmentId) {
+    Post post = postDao.findById(postId);
+    Attachment attachment = post.getAttachmentById(attachmentId);
+    byte[] blob = attachment.getBlob();
+    String name = attachment.getName();
+    return Controller.Util.download(blob, name);
+}
+```
+
+
+`Controller.Util` 上其他生成下载内容的 API:
+
+```java
+// download URL content using specified name
+download(URL url, String attachmentName);
+
+// download URL content using inferred name
+download(URL url);
+
+// download File content using specified name
+download(File file, String attachmentName);
+
+// download File content using infferred name
+download(File file);
+
+// download content from inputstream using specified name
+download(InputStream is, String attachmentName);
+
+// download content from inputstream using inferred name
+download(InputStream is);
+```
 
 ### <a name="response-status-code"></a>6.4 响应代码
 
