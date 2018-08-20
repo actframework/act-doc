@@ -1783,7 +1783,7 @@ public User getUser(Long id, User.Dao userDao) {
 }
 ```
 
-#### <a name="return-content_type"></a>6.2.1 返回数据的类型
+#### <a name="return-content_type"></a>6.2.1 内容类型与响应生成逻辑
 
 直接返回数据的代码非常简洁, 一个有趣的问题是框架是如何从返回数据生成最终响应的呢. 关键在于请求的数据类型. HTTP 协议定义了 `Accept` 头, 用于指定响应应该返回的数据类型. ActFramework 依据这个来确定返回数据类型, 进而生成最终响应. 目前 ActFramework 支持的数据类型及响应生成方式有:
 
@@ -1871,7 +1871,7 @@ public Result downloadAttachment(String postId, int attachmentId) {
     byte[] blob = attachment.getBlob();
     String name = attachment.getName();
     return Controller.Util.download(blob, name);
-}
+}   
 ```
 
 
@@ -1897,9 +1897,97 @@ download(InputStream is, String attachmentName);
 download(InputStream is);
 ```
 
-### <a name="response-status-code"></a>6.4 响应代码
+### <a name="redirect"></a>6.4 重定向
 
+HTTP 标准定义了多种重定向语义, 在 ActFramework 中都有对应的 API:
 
+| 状态码 | 语义 | ActFramework API |
+| --- | --- | --- |
+| 301 Moved Permanently | 永久移动 | `Controller.Util.moved(String url)` |
+| 302 Found | 临时移动 | `Controller.Util.found(String url)` |
+| 303 See Other | 临时移动 | `Controller.Util.seeOther(String url)` |
+| 307 Temporary Redirect | 临时重定向 | `Controller.Util.temporaryRedirect(String url)` |
+| 308 Permanent Redirect | 永久重定向 | `Controller.Util.permanentRedirect(String url)` |
 
+关于 5 种重定向的一些解释:
+
+* 301 的语义非常清晰, 就是被请求的资源已永久移动到新位置
+* 302 的情况比较复杂, 业界(浏览器)对这个状态的处理和标准定义不一致, 基本上是按照 303 的语义来处理的, 具体来说就是 POST 请求受到 302 响应之后发送 GET 请求到新路径
+* 303 因为业界对 302 的实现不清晰, 因此出了个 303, 当 POST|PUT|DEETE 请求的响应为 303 的时候, 浏览器发出 GET 请求到新路径. **注意** HTTP/1.1 以前的浏览器不识别 303, 如果需要兼容旧浏览器的话, 应用应该选择 302 而不是 303.
+* 307 对 302 原始语义的新定义, 当 POST 请求收到 307 响应的时候继续使用 POST 方法向新 URL 发出响应.
+* 308 是 307 的永久版本. 308 和 307 的关系类似于 302 和 301 的关系.
+
+#### <a name="ajax-redirect"></a>6.4.1 AJAX 重定向
+
+应用开发中常常还会遇到另一种情况, 就是 ajax 请求的重定向, 上面所有标准制定的重定向方式都是针对 ajax 请求本身, 即当发送的 ajax 请求收到重定向响应之后, 再次发送 ajax 请求到新的 URL. 而应用常常会碰到另一种情形, 即 ajax 请求收到重定向指令之后将整个页面重定向到新的 URL. 最常见的情况就是当页面的 session 过期之后发送 AJAX 请求需要重定向到登录页面.
+
+这种需求上面所有的重定向标准都不支持, 不过业界有一种约定俗成的做法: 返回 `278` 状态码和 `Location` 响应头. 在前端捕获到 `278` 状态码的时候使用 JavaScript 对 `window.location.href` 赋值来进行页面跳转.
+
+ActFramework 提供了一下 API 对 AJAX 请求返回 `278`:
+
+```java
+Controller.Util.redirect(String url);
+```
+
+这个方法会首先判断请求是否是 AJAX, 如果是 AJAX 则使用 `278` 状态码, 否则使用 `302` 状态码.
+
+ActFramwork 还提供了一个前端 JavaScript 库: `jquery.ext.js` 来扩展 jQuery 库支持对 `278` 的自动处理. 应用只需要在页面引入该库即可:
+
+```html
+<script src="/~/asset/js/jquery.js"></script>
+<script src="/~/asset/js/jquery.ext.js"></script>
+```
+
+#### <a name="forward"></a>6.4.2 转发 (Forward)
+
+Forward 严格来讲不属于重定向, 这个 API 实现了 Java Servlet 中的 `RequestDispatcher.forward(String url)` 语义:
+
+```java
+Controller.Util.forward(String url);
+```
+
+调用上面的 API 不会向请求方返回重定向响应, 而是通过 URL 解析出新 URL 的处理器并将请求路由过去.
+
+### <a name="response-status-code"></a>6.5 响应状态码
+
+ActFramework 遵循 HTTP 标准定义的语义自动设置返回响应的 HTTP 状态码:
+
+| 状态码 | 返回条件 |
+| --- | --- |
+| 200 Okay | 一般正常返回 |
+| 201 Created | 对 POST 请求的正常返回 |
+| 204 No Content | 请求处理方法没有返回类型声明 |
+| 400 Bad Request | 应用抛出 `IllegalArgumentException` |
+| 400 Bad Request | 应用抛出 `IndexOutOfBoundsException` |
+| 400 Bad Request | 应用抛出 `ValidationException` |
+| 404 Not Found | 路由表中没有找到对应请求处理方法 |
+| 404 Not Found | 请求处理方法有返回类型声明, 但返回值为 `null` |
+| 409 Conflict | 应用抛出了 `IllegalStateException` |
+| 500 Server Error | 应用抛出了其他未处理 `Exception` |
+| 501 Not Implemented | 应用抛出了 `UnsupportedOperation` |
+
+通过 API 调用返回状态码:
+
+```java
+Controller.Util.ok(); // send back 200 Okay
+Controller.Util.created(); // send back 201 Created
+Controller.Util.created(String); // send back 201 Created with new resource location URL
+throw Controller.Util.NO_CONTENT; // send back 204 No Content
+Controller.Util.badRequest(); // send 400 Bad request
+Controller.Util.notFound(); // send 404 Not Found
+Controller.Util.conflict(); // send 409 Conflict
+```
+
+在请求处理方法上加注解指定返回状态码:
+
+```java
+@ResponseStatus(H.Status.OK)
+@PostAction("/users")
+public void createUser(User user) {
+    dao.save(user);
+}
+```
+
+以上代码强制将对 POST 请求默认的 201 Created 改为 200 Okay.
 
 [返回目录](index.md)

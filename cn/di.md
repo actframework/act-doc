@@ -2,8 +2,6 @@
 
 ActFramework支持基于[JSR330](https://jcp.org/en/jsr/detail?id=330)的依赖注入. 
 
-<toc/>
-
 ## <a name="declare_inject_target"></a>1. 申明需要注入的对象
 
 ActFramework通过`javax.inject.Inject`注解识别需要注入的对象. 你可以通过以下三种标准方式申明需要注入的对象：
