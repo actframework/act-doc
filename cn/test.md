@@ -628,6 +628,42 @@ Scenario:
 
 **提示** 数组校验可以和 POJO 校验混合使用
 
+#### <a name="html-response"></a> 8.5.3.5 html 类型内容校验
+
+对于传统的后端生成页面的情况需要校验页面元素. ActFramework 提供了类似 jQuery 查询的方法来校验页面. 假设请求 GET /page/1 返回的结果为:
+
+<a name="s8_5_3_5a"></a>
+
+```html
+<!-- snippet s8.5.3.5a -->
+<html>
+<head>
+</head>
+<body>
+<h1>Page One</h1>
+<p id="content">This is page one</p>
+</body>
+</html>
+```
+
+对应的测试脚本为:
+
+<a name="s8_5_3_5b"></a>
+
+```yaml
+# snippet s8.5.3.5b
+Scenario
+  interactions:
+    - description: test GET /page/1
+      request:
+        get: /page/1
+      response:
+        html:
+          h1: Page One
+          p#content:
+            - contains: page one
+```
+
 ## <a name="correlated_interactions"></a> 8.6 关联多个交互测试
 
 很多时候多个测试交互相互之间需要关联起来, 例如测试创建用户就需要两个交互:
