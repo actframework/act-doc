@@ -1,4 +1,4 @@
-# 模板
+# 第七章 模板
 
 目前ActFramework支持的模板引擎:
 
@@ -62,7 +62,7 @@ Velocity依赖:
 </dependency>
 ```
 
-## <a name="location"></a>模板文件的位置
+## <a name="location"></a>7.1 模板文件的位置
 
 ActFramework依照以下管理访问模板文件:
 
@@ -99,7 +99,7 @@ public class MyController {
 /src/main/resources/rythm/com/mycom/myprj/MyController/getFoo.json
 ``` 
 
-## 模板参数传递
+## <a name="argument"></a> 7.2 模板参数传递
 
 ActFramework使用ASM对响应方法做了增强，因此你不必像在Spring MVC应用中那样显示指定参数
 
@@ -137,7 +137,7 @@ c = @c
 
 **注意** 其他模板不需要参数声明
 
-## 向模板传递返回值
+### <a name="passing_return_value"></a> 7.2.1 向模板传递返回值
 
 如果你的控制器需要向模板传递函数返回值
 
@@ -154,7 +154,7 @@ public Foo getFoo() {
 Foo is @foo
 ```
 
-## 参考
+## <a name="reference"></a> 7.3 参考
 
 * [Beetl官网](http://www.ibeetl.com)
 * [Freemarker官网](http://freemarker.incubator.apache.org/)
@@ -165,7 +165,7 @@ Foo is @foo
 * [Velocity官网](http://velocity.apache.org)
 
 
-### 演示项目
+## <a name="demo_project"></a> 7.4 演示项目
 
 你可以在[github](https://github.com/actframework/act-demo-apps/tree/master/views)或者[码云](https://git.oschina.net/actframework/demo-apps/tree/master/views?dir=1&filepath=views)上访问模板引擎演示项目 
 

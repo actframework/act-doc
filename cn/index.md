@@ -6,20 +6,16 @@ ActFramework 是一款[高性能 Java 全栈框架](https://www.techempower.com/
 
 <wip>
 
-## 了解ActFramework
-
-1. [准备工作](get_start.md#prerequisites)
-1. [创建一个"Hello world"程序](get_start.md#create_hello_world_app)
-1. [Act程序解析](get_start.md#anatomy)
-
 ## 基本概念
 
-1. [配置](configuration.md)
-1. [依赖注入](di.md)
-1. [路由](routing.md)
-1. [控制器](controller.md)
-1. [域模型和数据访问](model.md)
-1. [模板](templating.md)
+1. [1. 入门](get_start.md)
+1. [2. 配置](configuration.md)
+1. [3. 依赖注入](di.md)
+1. [4. 路由](routing.md)
+1. [5. 控制器](controller.md)
+1. [6. 域模型和数据访问](model.md)
+1. [7. 模板](templating.md)
+1. [8. 测试](test.md)
 
 ## 高级课题
 
@@ -42,6 +38,7 @@ ActFramework 是一款[高性能 Java 全栈框架](https://www.techempower.com/
 1. [依赖注入 - 注入对象类型](recipe/di-inject-type.md)
 1. [用户密码的存储与验证机制与应用](recipe/user-password-hash.md)
 1. [依赖注入III - 自定义绑定](recipe/di-binding.md)
+1. [加载资源文件](recipe/resource_loading.md)
 
 ## 参考手册
 
