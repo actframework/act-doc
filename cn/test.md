@@ -698,7 +698,7 @@ public class UserService {
 
 测试用户创建的脚本为:
 
-<a name="s8_6b></a>
+<a name="s8_6b"></a>
 
 ```yaml
 # snippet s8.6b
@@ -730,7 +730,7 @@ Scenario(CREATE_USER):
 
 因为每次交互都会有新的响应, 因此 `last` 缓存会被下一次交互重置. 如果需要保存某一次交互的响应, 则应该使用 `cache` 来给出缓存名字:
 
-<a name="s8_6_1a></a>
+<a name="s8_6_1a"></a>
 
 ```yaml
 # snippet s8.6.1a
@@ -769,7 +769,7 @@ Scenario(CREATE_USER):
 
 通常测试希望采用随机数据来确保不会因为硬编码而漏掉逻辑中的一些错误. ActFramework 提供了随机测试数据生成机制, 下面是的用户创建测试脚本完全去掉了硬编码:
 
-<a name="s8_6_2a></a>
+<a name="s8_6_2a"></a>
 
 ```yaml
 # snippet s8.6.2a
@@ -806,7 +806,7 @@ Scenario(CREATE_USER):
 
 测试场景有可能有依赖关系, 典型的例子是大部分需要用户认证的测试场景都依赖于用户登录场景, 这个时候可以使用 `depends` 来指定依赖场景:
 
-<a name="s8_7a></a>
+<a name="s8_7a"></a>
 
 ```yaml
 # snippet s8.7a
