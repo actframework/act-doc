@@ -15,16 +15,21 @@ ActFramework 是一款[高性能 Java 全栈框架](https://www.techempower.com/
 1. [5. 控制器](controller.md)
 1. [6. 域模型和数据访问](model.md)
 1. [7. 模板](templating.md)
+
+## 工具
+
 1. [8. 测试](test.md)
+1. [9. 认证授权与记账]
+1. [10. 从社交服务认证]
 
 ## 高级课题
 
-1. [拦截器](interceptor.md)
-1. [作业调度](job.md)
-1. [事件绑定与分发](event.md)
-1. [发送邮件](email.md)
-1. [创建命令行程序](cli.md)
-1. [WebSocket支持](websocket.md)
+1. [. 拦截器](interceptor.md)
+1. [. 作业调度](job.md)
+1. [. 事件绑定与分发](event.md)
+1. [. 发送邮件](email.md)
+1. [. 创建命令行程序](cli.md)
+1. [. WebSocket支持](websocket.md)
 1. Using CLI to inspect and manage your application
 1. Using act-aaa to implement security
 1. Using act-storage to implement file persistence
