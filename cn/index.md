@@ -20,7 +20,7 @@ ActFramework 是一款[高性能 Java 全栈框架](https://www.techempower.com/
 
 1. [8. 测试](test.md)
 1. [9. 认证授权与记账]
-1. [10. 从社交服务认证]
+1. [10. 从社交服务认证](social_link.md)
 
 ## 高级课题
 
