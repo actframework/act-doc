@@ -119,37 +119,13 @@ social_link.linkedin.secret=your_consumer_secret
 @OnEvent
 public void handleSocialLogin(SocialProfile.Fetched profileFetchedEvent, ActionContext context, User.Dao userDao) {
     SocialProfile profile = profileFetchedEvent.source();
-    String provider = profileFetchedEvent.provider();
     String email = profile.getEmail();
-    User user = userDao.ensureAccount(email, provider, profile);
-    notFoundIfNull(user);
-    context.login(email);
-    redirect(email.endsWith("@thinking.group") ? "/admin" : "/");
-}
-```
-
-其中 `userDao.ensureAccount` 的实现如下:
-
-```java
-public User ensureAccount(String email, String socialProvider, SocialProfile profile) {
-    User user = findByEmail(email);
+    User user = userDao.findByEmail(email);
     if (null == user) {
-        if (email.endsWith("@thinking.group")) {
-            user = new User();
-            user.email = email;
-            user.privilege = Privileges.ADMIN;
-            user.socialLinks.put(socialProvider, profile);
-            return save(user);
-        } else {
-            return null;
-        }
-    } else {
-        // Attach new social profile
-        if (!user.socialLinks.containsKey(socialProvider)) {
-            user.socialLinks.put(socialProvider, profile);
-            return save(user);
-        }
-        return user;
+        // register new user
+        user = new User(profile);
+        userDao.save(user);
     }
+    context.login(user.email);
 }
 ```
