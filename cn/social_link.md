@@ -32,6 +32,25 @@ ActFramework 核心库并没有提供社交服务认证的工具, 而是通过 S
 * Github - https://github.com/settings/developers
 * LinkedIn - https://www.linkedin.com/developer/apps
 
+**注意** 每个社交服务注册页面中都有 origin 和 redirect URL 的设置, 其中的 origin 需要设置请求发起的站点名, 例如:
+
+```
+https://myapp.mycom.com
+```
+
+而 redirect URL 则需要设置为下面的方式:
+
+```
+https://myapp.mycom.com/~/social/callback?provider=<provider_id>
+```
+
+上面的 `provider-id` 可以是:
+
+* google
+* facebook
+* github
+* linkedin
+
 在注册应用账号并获得服务 `key` 和 `secret` 之后将相关信息放进应用的配置文件中:
 
 ```
@@ -82,10 +101,10 @@ social_link.linkedin.secret=your_consumer_secret
 所有社交服务都使用相同的社交认证链接:
 
 ```
-/~/social/start?provider=<social-provider-id>
+/~/social/start?provider=<provider-id>
 ```
 
-上面的 `social-provider-id` 可以是:
+上面的 `provider-id` 可以是:
 
 * google
 * facebook
@@ -113,7 +132,7 @@ social_link.linkedin.secret=your_consumer_secret
 
 ### <a name='handle-social-profile'></a> 10.3.2 处理用户的社交 Profile
 
-下面是一段处理用户 social profile 的示例代码:
+当用户点击上节中讲到的社交链接之后, SocialLink 会向社交服务发起 OAuth 认证请求, 触发一系列交互过程, 包括用户在社交网上的登录以及认证确认. 这一系列操作都无需应用介入. 但认证最终结束之后 SocialLink 将会拿到用户的 Social Profile, 并触发一个 `SocialProfile.Fetched` 事件, 应用需要侦听该事件并完成用户登录. 下面是处理该事件的示例代码:
 
 ```java
 @OnEvent
