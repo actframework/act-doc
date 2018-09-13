@@ -562,16 +562,17 @@ public void renderQuestionPage(@DbBind @NotNull Question question, String __path
 #### <a name="hierarchical_path"></a>2.3.2 用于创建需要处理请求路径的处理器
 
 另一种使用 `...` 的情况是需要处理路径参数的场合, 比如 `"https://gitee.com/actframework/actframework/blob/master/src/main/java/act/Act.java"
-`, 其中的 `"/src/main/java/act/Act.java"` 就是需要请求响应器处理的参数, 处理这样的参数也需要在路径变量中使用 `"..."`:
+`, 其中的 `"/src/main/java/act/Act.java"` 就是需要请求响应器处理的参数, 处理这样的参数也需要在路径中使用 `"..."`:
 
 ```java
 @GetAction("/{group}/{prj}/blob/{branch}/...")
 public void renderSourcePage(
-    @DbBind Group group,
-    @DbBind Project prj,
+    @DbBind @NotNull Group group,
+    String prj,
     String branch,
     String __path
 ) {
+    Project project = group.getProject(prj);
     ...
 }
 ```
