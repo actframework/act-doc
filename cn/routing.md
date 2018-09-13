@@ -2,8 +2,6 @@
 
 本篇介绍 ActFramework 的路由表以及路径变量的处理规则.
 
-<toc/>
-
 ## <a name="route_mapping"></a>1. 路由表
 
 路由是从 (HTTP Method, URL path) 到响应器的映射定义. 在某个特定端口上所有的路由构成该端口上的路由表. ActFramework 允许定义一个默认 HTTP 端口和若干命名端口. 这里先介绍默认 HTTP 端口上的路由表配置, 对于命名端口的配置参见[第三节](#named_port).
@@ -525,13 +523,64 @@ public void handleData(Map<String, String> data) {}
 
 在 URL path 的最后部分如果是 `/...` 则创建了一条可变长路径. 有两项功能
 
-#### <a name="soe_path"></a>2.3.1 用于生成 SOE 路径
+#### <a name="soe_path"></a>2.3.1 用于生成 SEO 路径
 
-TBD
+典型的例子是 StackOverflow 的 URL, 例如 `https://stackoverflow.com/questions/46483151/how-to-use-actframework-with-jwt-auth-and-social-login`, 其中 `https://stackoverflow.com/questions/46483151` 才是路由的关键, 后面的 `how-to-use-actframework-with-jwt-auth-and-social-login` 是为 SEO (搜索引擎优化) 服务的, 方便搜索引擎的爬虫为该 URL 建立索引.
+
+如果需要在应用中实现这种特性, 可以这样写路由:
+
+```java
+@Get("/questions/{question}/...")
+public void renderQuestionPage(@DbBind @NotNull Question question) {
+    render(question);
+}
+```
+
+如果希望像 StackOverflow 那样把 `https://stackoverflow.com/questions/46483151/aaa` 重新定向到 `https://stackoverflow.com/questions/46483151/how-to-use-actframework-with-jwt-auth-and-social-login`, 则需要稍作处理:
+
+```java
+@Get("/questions/{question}/...")
+public void renderQuestionPage(@DbBind @NotNull Question question, String __path) {
+    redirectIfNot(S.eq(question.getDescriptionPath(), __path), "/questions" + question.getId() + question.getDescriptionPath());
+    render(question);
+}
+```
+
+上面的代码中, 如果收到的 URL 是 `/questions/46483151/aaa`, 那 `renderQuestionPage` 会拿到两个参数: 
+
+1. 对应与 `46483151` 的 Question 数据对象
+2. `/aaa`
+
+假设 question 数据对象的 `descriptionPath` 属性为 `/how-to-use-actframework-with-jwt-auth-and-social-login`, 那 `redirectIfNot` 中的条件就会为 `false`, 因此重定向会发生, 并重定向到 `/questions/46483151/how-to-use-actframework-with-jwt-auth-and-social-login`. 之后会再次收到请求, 这一次的处理 `__path` 就会变成 `/how-to-use-actframework-with-jwt-auth-and-social-login`, 和 question 对象的 `descriptionPath` 匹配, 于是会继续下一行 `render(question)` 生成 Question[46483151] 的页面.
+
+**注意**
+
+1. `__path` 变量是系统定义的, 专门为了传递 `...` 这种表达的后续路径部分. `__path` 是有两个下划线前缀: `_`
+2. `__path` 变量的值总是以 `/` 开头
+
 
 #### <a name="soe_path"></a>2.3.2 用于创建需要处理请求路径的处理器
 
-TBD
+另一种使用 `...` 的情况是需要处理路径参数的场合, 比如 `https://gitee.com/actframework/actframework/blob/master/src/main/java/act/Act.java`, 其中的 `/src/main/java/act/Act.java` 就是需要请求响应器处理的参数, 处理这样的参数也需要在路径变量中使用 `...`:
+
+```java
+@GetAction("/{group}/{prj}/blob/{branch}/...")
+public void renderSourcePage(
+    @DbBind Group group,
+    @DbBind Project prj,
+    String branch,
+    String __path
+) {
+    ...
+}
+```
+
+对于请求 `/actframework/actframework/blob/master/src/main/java/act/Act.java`, 上面的 `renderSourcePage` 函数收到的参数为:
+
+* 名为 `actframework` 的 Group 实例
+* 名为 `actframework` 的 Project 实例
+* 字串 branch: `"master"`
+* 字串 __path: `"/src/main/java/act/Act.java"`
 
 ## <a name="named_port"></a>3. 命名端口
 
