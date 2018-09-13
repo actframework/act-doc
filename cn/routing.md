@@ -581,8 +581,8 @@ public void renderSourcePage(
 
 * 名为 `actframework` 的 Group 实例
 * 名为 `actframework` 的 Project 实例
-* 字串 branch: `"master"`
-* 字串 __path: `"/src/main/java/act/Act.java"`
+* 字串 `branch`: `"master"`
+* 字串 `__path`: `"/src/main/java/act/Act.java"`
 
 还有一种典型的请求路径处理场合是用户自定义的文件服务器:
 
