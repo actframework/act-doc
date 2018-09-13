@@ -525,7 +525,7 @@ public void handleData(Map<String, String> data) {}
 
 #### <a name="seo_path"></a>2.3.1 用于生成 SEO 路径
 
-典型的例子是 StackOverflow 的 URL, 例如 `https://stackoverflow.com/questions/46483151/how-to-use-actframework-with-jwt-auth-and-social-login`, 其中 `https://stackoverflow.com/questions/46483151` 才是路由的关键, 后面的 `how-to-use-actframework-with-jwt-auth-and-social-login` 是为 SEO (搜索引擎优化) 服务的, 方便搜索引擎的爬虫为该 URL 建立索引.
+典型的例子是 StackOverflow 的 URL, 例如 `"https://stackoverflow.com/questions/46483151/how-to-use-actframework-with-jwt-auth-and-social-login"`, 其中 `"https://stackoverflow.com/questions/46483151"` 才是路由的关键, 后面的 `"how-to-use-actframework-with-jwt-auth-and-social-login"` 是为 SEO (搜索引擎优化) 服务的, 方便搜索引擎的爬虫为该 URL 建立索引.
 
 如果需要在应用中实现这种特性, 可以这样写路由:
 
@@ -536,7 +536,7 @@ public void renderQuestionPage(@DbBind @NotNull Question question) {
 }
 ```
 
-如果希望像 StackOverflow 那样把 `https://stackoverflow.com/questions/46483151/aaa` 重新定向到 `https://stackoverflow.com/questions/46483151/how-to-use-actframework-with-jwt-auth-and-social-login`, 则需要稍作处理:
+如果希望像 StackOverflow 那样把 `"https://stackoverflow.com/questions/46483151/aaa"` 重新定向到 `"https://stackoverflow.com/questions/46483151/how-to-use-actframework-with-jwt-auth-and-social-login"`, 则需要稍作处理:
 
 ```java
 @Get("/questions/{question}/...")
@@ -548,20 +548,21 @@ public void renderQuestionPage(@DbBind @NotNull Question question, String __path
 
 上面的代码中, 如果收到的 URL 是 `/questions/46483151/aaa`, 那 `renderQuestionPage` 会拿到两个参数: 
 
-1. 对应与 `46483151` 的 Question 数据对象
-2. `/aaa`
+1. `question`: 对应与 `46483151` 的 Question 数据对象
+2. `__path`: `"/aaa"`
 
-假设 question 数据对象的 `descriptionPath` 属性为 `/how-to-use-actframework-with-jwt-auth-and-social-login`, 那 `redirectIfNot` 中的条件就会为 `false`, 因此重定向会发生, 并重定向到 `/questions/46483151/how-to-use-actframework-with-jwt-auth-and-social-login`. 之后会再次收到请求, 这一次的处理 `__path` 就会变成 `/how-to-use-actframework-with-jwt-auth-and-social-login`, 和 question 对象的 `descriptionPath` 匹配, 于是会继续下一行 `render(question)` 生成 Question[46483151] 的页面.
+假设 `question` 数据对象的 `descriptionPath` 属性为 `"/how-to-use-actframework-with-jwt-auth-and-social-login"`, 那 `redirectIfNot` 中的条件就会为 `false`, 因此重定向会发生, 并重定向到 `/questions/46483151/how-to-use-actframework-with-jwt-auth-and-social-login`. 之后会再次收到请求, 这一次的处理 `__path` 就会变成 `"/how-to-use-actframework-with-jwt-auth-and-social-login"`, 和 `question` 对象的 `descriptionPath` 匹配, 于是会继续下一行 `render(question)` 生成 Question[46483151] 的页面.
 
 **注意**
 
-1. `__path` 变量是系统定义的, 专门为了传递 `...` 这种表达的后续路径部分. `__path` 是有两个下划线前缀: `_`
+1. `__path` 变量是系统定义的, 专门为了传递 `"..."` 这种表达的后续路径部分. `__path` 是有两个下划线前缀: `_`
 2. `__path` 变量的值总是以 `/` 开头
 
 
 #### <a name="hierarchical_path"></a>2.3.2 用于创建需要处理请求路径的处理器
 
-另一种使用 `...` 的情况是需要处理路径参数的场合, 比如 `https://gitee.com/actframework/actframework/blob/master/src/main/java/act/Act.java`, 其中的 `/src/main/java/act/Act.java` 就是需要请求响应器处理的参数, 处理这样的参数也需要在路径变量中使用 `...`:
+另一种使用 `...` 的情况是需要处理路径参数的场合, 比如 `"https://gitee.com/actframework/actframework/blob/master/src/main/java/act/Act.java"
+`, 其中的 `"/src/main/java/act/Act.java"` 就是需要请求响应器处理的参数, 处理这样的参数也需要在路径变量中使用 `"..."`:
 
 ```java
 @GetAction("/{group}/{prj}/blob/{branch}/...")
@@ -581,6 +582,21 @@ public void renderSourcePage(
 * 名为 `actframework` 的 Project 实例
 * 字串 branch: `"master"`
 * 字串 __path: `"/src/main/java/act/Act.java"`
+
+还有一种典型的请求路径处理场合是用户自定义的文件服务器:
+
+```java
+@GetAction("/file_server/...")
+public Result handle(String __path) {
+    File file = new File(BASE_DIR, __path);
+    notFoundIfNot(file.exists());
+    if (file.isFile()) {
+        return download(file); // 下载文件
+    } else {
+        return render(file); // 生成目录页面
+    }
+}
+```
 
 ## <a name="named_port"></a>3. 命名端口
 
