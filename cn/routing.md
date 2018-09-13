@@ -523,7 +523,7 @@ public void handleData(Map<String, String> data) {}
 
 在 URL path 的最后部分如果是 `/...` 则创建了一条可变长路径. 有两项功能
 
-#### <a name="soe_path"></a>2.3.1 用于生成 SEO 路径
+#### <a name="seo_path"></a>2.3.1 用于生成 SEO 路径
 
 典型的例子是 StackOverflow 的 URL, 例如 `https://stackoverflow.com/questions/46483151/how-to-use-actframework-with-jwt-auth-and-social-login`, 其中 `https://stackoverflow.com/questions/46483151` 才是路由的关键, 后面的 `how-to-use-actframework-with-jwt-auth-and-social-login` 是为 SEO (搜索引擎优化) 服务的, 方便搜索引擎的爬虫为该 URL 建立索引.
 
@@ -559,7 +559,7 @@ public void renderQuestionPage(@DbBind @NotNull Question question, String __path
 2. `__path` 变量的值总是以 `/` 开头
 
 
-#### <a name="soe_path"></a>2.3.2 用于创建需要处理请求路径的处理器
+#### <a name="hierarchical_path"></a>2.3.2 用于创建需要处理请求路径的处理器
 
 另一种使用 `...` 的情况是需要处理路径参数的场合, 比如 `https://gitee.com/actframework/actframework/blob/master/src/main/java/act/Act.java`, 其中的 `/src/main/java/act/Act.java` 就是需要请求响应器处理的参数, 处理这样的参数也需要在路径变量中使用 `...`:
 
