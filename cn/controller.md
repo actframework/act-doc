@@ -1803,6 +1803,62 @@ public User getUser(Long id, User.Dao userDao) {
     - 如果找到对应模板 (后缀名为 `.xlsx`), 返回数据以 `result` 名字传入模板变量列表, 并生成响应
     - 如果没有对应模板, 则调用 `act-excel` 内置 excel 工具生成 excel 2007 格式的下载文件
 
+#### <a name="advice-return-value"></a>6.2.2 修改返回数据
+
+有的时候我们希望提供统一的返回数据结构修改机制. 比如对于所有的返回数据 v, 希望最终客户端收到的数据格式为:
+
+<a name="s6_2_2a"></a>
+
+```json
+{
+    "code": 0,
+    "data": v
+}
+```
+
+这种情况可以通过 `ReturnValueAdvice` 来实现:
+
+<a name="s6_2_2b"></a>
+
+```java
+// snippet 6.2.2b
+public class MyAdvice implements ReturnValueAdvice {
+    @Override
+    public Object applyTo(Object o, ActionContext actionContext) {
+        return C.Map("code", 0, "data", o);
+    }
+}
+```
+
+实现了上面的 `MyAdvice` 之后需要在应用配置文件里面加上:
+
+<a name="s6_2_2c"></a>
+
+```
+# snippet 6.2.2c
+globalReturnValueAdvice=com.myproj.MyAdvice
+```
+
+一旦配置 `globalReturnValueAdvice`, 该 Advice 将会对所有具有返回值的请求处理方法返回值进行处理. 如某些请求处理方法或控制器参数不需要该逻辑, 可以将 `@NoReturnValueAdvice` 注解加到方法或者类上来规避.
+
+如果某个请求处理方法或者某个控制器的所有请求处理方法都需要某个特定的 `ReturnValueAdvice`, 可以选择使用 `@ReturnValueAdvisor` 注解:
+
+<a name="s6_2_2d"></a>
+
+```java
+// snippet 6.2.2d
+@ReturnValueAdvisor(MySecondAdvice.class)
+public Pojo foo() {
+    ...
+}
+```
+
+注意:
+
+1. 加载在方法上的 `@ReturnValueAdvisor` 注解覆盖加载在控制器上的注解.
+2. 如果请求处理方法有对应的模板, 则返回值将不会被任何 Advice 修改.
+
+
 ### <a name="output-binary"></a>6.3 输出二进制内容
 
 #### <a name="output-inline-content"></a>6.3.1 输出内嵌(inline)二进制内容
@@ -1844,7 +1900,7 @@ public Result renderImage(String imgId) {
 }
 ```
 
-<a name="download"></a>6.3.2 输出下载(attachment)内容
+#### <a name="download"></a> 6.3.2 输出下载(attachment)内容
 
 下面的代码输出下载文件:
 
@@ -1871,7 +1927,7 @@ public Result downloadAttachment(String postId, int attachmentId) {
     byte[] blob = attachment.getBlob();
     String name = attachment.getName();
     return Controller.Util.download(blob, name);
-}   
+}
 ```
 
 
@@ -1896,6 +1952,60 @@ download(InputStream is, String attachmentName);
 // download content from inputstream using inferred name
 download(InputStream is);
 ```
+
+##### <a name="download-return-value"></a> 6.3.2.1 直接下载返回数据
+
+ActFramework 可以依据请求的 `Accept` 头来决定返回响应的格式. 有的响应格式是需要文件下载的, 例如 `text/csv` 和 `application/vnd.ms-excel`, 分别对应了 `.csv` 和 `.xls` 文件下载.
+
+对于下面的请求处理方法:
+
+<a name="s6_3_2_1"></a>
+
+```java
+// snippet 6.3.2.1
+@GetAction("orders")
+public List<Orders> listOrders() {
+    ...
+}
+```
+
+当请求的 `Accept` 头为 `text/csv` 的时候会生成 `orders.csv` 文件下载; 而当 `Accept` 头为 `application/vnd.ms-excel` 的时候会生成 `orders.xls` 下载 (需要应用引入 act-excel 插件的依赖). 这里下载文件的名字是 URL 最后一个路径部分 `orders`, 后缀名则更加下载文件格式自动决定.
+
+##### <a name="download-filename-for-return-value"></a> 6.3.2.2 修改直接下载返回数据的文件名
+
+在上一节中我们看到了下载文件的文件名是 URL 的最后一部分, 但有的时候我们希望应用能够自己控制下载文件名, 可以通过 `@DownloadFilename` 注解实现:
+
+<a name="s6_3_2_2a"></a>
+
+```java
+// snippet 6.3.2.2a
+@GetAction("orders")
+@DownloadFilename("order-report")
+public List<Orders> listOrders() {
+    ...
+}
+```
+
+注意在 `@DownloadFilename` 注解中不要加上文件后缀, 例如 `.xls`, 因为框架会自动根据下载文件格式添加后缀.
+
+在需要动态文件名的时候可以使用 `ActionContext` 提供的 API:
+
+<a name="s6_3_2_2b"></a>
+
+```java
+// snippet 6.3.2.2b
+@GetAction("orders")
+public List<Orders> listOrders(ActionContext context) {
+    String dateTag = getDateTag(); // 返回当日标记, 类似这样的: 20180101 
+    context.downloadFileName("order-report-" + dateTag);
+    ...
+}
+```
+
+基于同样的理由, 请不要在 `ActionContext.downloadFilename(String)` API 中传入文件后缀名.
+
+**小贴士** 通常这种下载文件的 GET 请求都不会使用 JavaScript 来操控 AJAX 请求格式, 而是直接从浏览器发起, 所以很难设置 `Accept` 头. ActFramework 提供了 `content_suffix.aware` 配置, 当该配置设置为 `true` 的时候, 可以通过在 URL 路径后面加上 content suffix 的办法来篡改 `Accept` 头. 例如: `/report/xls` 将 `/report` 请求的 Accept 篡改为 `application/vnd.ms-excel` 而 `/report/xlsx` 则将 `Accept` 头篡改为 `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`.
+
 
 ### <a name="redirect"></a>6.4 重定向
 
@@ -1989,5 +2099,95 @@ public void createUser(User user) {
 ```
 
 以上代码强制将对 POST 请求默认的 201 Created 改为 200 Okay.
+
+### <a name="cache-response"></a> 6.6 缓存响应.
+
+应用可以使用 `@CacheFor` 注解来缓存响应. 该注解接受一下参数:
+
+* `value` - 缓存有效期时长 - 以秒为单位; 默认值为 3600, 即 1 小时
+* `id` - CacheFor 的缓存 ID, 如忽略则使用控制器类名 + 请求处理方法名为 ID
+* `keys` - 用于构造缓存 key 的请求参数名字数组, 如忽略则使用所有请求参数生成缓存 key
+* `supportPost` - 是否缓存 POST 响应, 默认为 false
+* `usePrivate` - 当设置为 `true` 的时候, 生成的 `Cache-Control` 头会使用 `private`, 否则使用 `public`. 默认为 `false`
+* `noCacheControl` - 当设置为 `true` 的时候不会生成 `Cache-Control` 头. 默认为 `false`
+
+下面是一个使用 `@CacheFor` 的例子:
+
+<a name="s6_6a"></a>
+
+```java
+// snippt 6.6a
+@GetAction("users")
+@CacheFor
+public Iterable<User> search(String q, User.Dao dao) {
+    return dao.list(q);
+}
+```
+
+以上代码将响应缓存 1 小时, 缓存的 key 和 请求参数 `q` 的值相关. 也就是如果下次请求的 `q` 有变化, 不会导致返回以前的缓存结果.
+
+**注意** 缓存的 key 生成除了和请求参数值相关,还和一下因素相关:
+
+1. 根据 User-Agent 头判断请求是否来自移动设备还是其他 - 对来自移动设备的请求响应和其他设备的请求响应用不同的缓存 key
+2. 请求的 `Accept` 头 - 对不同的响应格式使用不同的缓存 key
+
+### <a name="clear-cache-response"></a> 6.6.1 清除响应缓存
+
+有的时候可能需要从程序中清除缓存, 以便让新的数据立刻生效. 这个时候可以通过 `CacheFor.Manager` 来清除缓存. 下面的 pseudo 代码可以演示这种场景:
+
+<a name="s6_6_1a"></a>
+
+```java
+// snippet 6.6.1a
+public class PostcodesService {
+
+    // CacheFor 的缓存 ID
+    private static final String CACHE_FOR_ID = "postcode-diff-report";
+
+    @NoBind
+    private Map<String, Object> report;
+
+    @Inject
+    private CacheFor.Manager cacheForManager;
+
+    // 提供 postcodes geolocation 数据变更报表. 该接口使用 @CacheFor 标注为
+    // 需要缓存响应.
+    @GetAction("/postcodes")
+    @CacheFor(id = CACHE_FOR_ID)
+    public Map<String, Object> downloadReport() {
+        return report;
+    }
+
+    private void calculateDiffReport() {
+        // 清除 CacheFor 缓存
+        cacheForManager.resetCache(CACHE_FOR_ID);
+        // calculate postcodes diff report
+        ...
+    }
+
+    public void save(List<PostCode> postCodeList) {
+        backupCurrent();
+        List<PostCode> sorted = C.newList(postCodeList).sorted();
+        IO.write(JSON.toJSONString(sorted)).to(LIST_CURRENT);
+        calculateDiffReport();
+    }
+
+    private void backupCurrent() {
+        if (LIST_CURRENT.exists()) {
+            IO.write(LIST_CURRENT).to(LIST_LAST);
+        }
+    }
+
+    @Every("1d")
+    @Command(name = "postcodes.reload", help = "reload postcode geolocation data from Aus Post")
+    public void downloadFromAusPost() {
+        // 从 AusPost 服务下载 postcodes geolocation 数据
+        ...
+        save(postCodeList);
+    }
+    ...
+}
+```
+
 
 [返回目录](index.md)
