@@ -164,7 +164,7 @@ resources
 根据当前运行环境加载配置文件, 带出来一个问题, 如何设定运行环境. 答案是在启动应用的时候通过 JVM 参数设定应用的运行环境:
 
 ```
-java ... -Dprofilie=uat ...
+java ... -Dprofile=uat ...
 ```
 
 其中 `-Dprofile=uat` 设定应用的运行环境为 `uat`.
