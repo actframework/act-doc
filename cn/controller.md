@@ -2189,5 +2189,79 @@ public class PostcodesService {
 }
 ```
 
+### <a name="async-response"></a> 6.7 异步响应.
+
+当请求需要较长时间来完成的时候, 可以使用 `@act.util.Async` 来表示请求处理器为异步, 同时应用可以注入一个 `act.util.ProgressGauge` 对象用于跟踪处理进度:
+
+<a name="s6_7a"></a>
+
+```java
+// snippt 6.7a
+@Async
+@PostAction("processOrders")
+public void processOrders(ProgressGauge gauge) {
+    int orderCount = getOrderCount();
+    gauge.updateMaxHint(orderCount);
+    try {
+        for (int i = 0; i < orderCount(); ++i) {
+            processOrder(i);
+            gauge.step();
+        }
+    } finally {
+        gauge.markAsDone();
+    }
+}
+```
+
+当框架发现某个请求处理函数被标注为 `@Async` 的时候会生成一个 Job 来执行该函数, 同时返回 jobId:
+
+
+<a name="s6_7b"></a>
+
+```json
+{"jobId": "2k9b0d5iaC"}
+```
+
+前端应用可以使用 `jobId` 来获取该 Job 的执行情况. 有两种方式:
+
+#### <a name="track-job-with-query"></a> 6.7.1 使用 GET 请求来获取 Job 执行情况:
+
+<a name="s6_7_1a"></a>
+
+```javascript
+$.getJSON('/~/jobs/' + jobId + '/progress', function(data) {
+    console.log(data)
+})
+```
+
+执行上面的代码会获得下面的数据结构:
+
+
+<a name="s6_7_1b"></a>
+
+```json
+{
+  "currentSteps": 143,
+  "destroyed": false,
+  "done": false,
+  "id": "2k9b0d5iaC",
+  "maxHint": 1000,
+  "progressPercent": 14
+}
+```
+
+#### <a name="track-job-with-ws"></a> 6.7.2 链接到 websocket 端口让系统自动推送 Job 执行情况:
+
+<a name="s6_7_2a"></a>
+
+```javascript
+var ws = $.createWebSocket('/~/ws/jobs/' + jobId + '/progress')
+ws.onmessage = function(frame) {
+    var gauge = JSON.parse(frame.data).act_job_progress
+    console.log(gauge)
+}
+```
+
+上面的代码可以让系统在 Job 状态发生变化的时候自动推送到前端.
 
 [返回目录](index.md)
