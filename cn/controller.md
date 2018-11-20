@@ -2229,6 +2229,7 @@ public void processOrders(ProgressGauge gauge) {
 <a name="s6_7_1a"></a>
 
 ```javascript
+// 注意, 页面必须引入 `/~/asset/js/jquery.js` 文件
 $.getJSON('/~/jobs/' + jobId + '/progress', function(data) {
     console.log(data)
 })
@@ -2255,6 +2256,7 @@ $.getJSON('/~/jobs/' + jobId + '/progress', function(data) {
 <a name="s6_7_2a"></a>
 
 ```javascript
+// 注意, 页面必须引入 `/~/asset/js/jquery.js` 和 `/~/asset/js/jquery.ext.js` 文件
 var ws = $.createWebSocket('/~/ws/jobs/' + jobId + '/progress')
 ws.onmessage = function(frame) {
     var gauge = JSON.parse(frame.data).act_job_progress
@@ -2262,6 +2264,6 @@ ws.onmessage = function(frame) {
 }
 ```
 
-上面的代码可以让系统在 Job 状态发生变化的时候自动推送到前端.
+上面的代码可以让系统在 Job 状态发生变化的时候自动推送到前端, 数据结构和上节中的完全一致
 
 [返回目录](index.md)
