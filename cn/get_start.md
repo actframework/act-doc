@@ -205,7 +205,7 @@ public Result home(ActionContext context) {
 
 ##### <a name="specify_template_path"></a>4.2.1.1 通过代码指定模板文件路径
 
-如果模板文件放在其他地方，比如 `resources/rythm/home.html` 则需要使用 `act.controller.Controller.Util.renderTemplate.renderTemplate` 方法来指定：
+如果模板文件放在其他地方，比如 `resources/rythm/home.html` 则需要使用 `act.controller.Controller.Util.renderTemplate` 方法来指定：
 
 ```java
     @GetAction
