@@ -180,7 +180,7 @@ public class ProductAdmin extends AdminBase {...}
 
 除了路由注解外, ActFramework
 也支持使用路由表文件来配置路由, 默认路由表文件为
-`/src/main/resources/route.conf`. 和[1.1 节
+`/src/main/resources/routes.conf`. 和[1.1 节
 路由注解](#annotation)中的示例代码相对应的路由表文件内容为 (假设控制器的类名为`com.mycom.myprj.MyController`):
 
 ```
