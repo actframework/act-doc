@@ -130,7 +130,7 @@ Dao 只需要很简单的 继承自 act.db.jpa.JPADao 就行了。
 package com.mycom.myprj;
 
 import act.db.jpa.JPADao;
-import com.mcjiyou.entity.db.User;
+import com.mycom.myprj.User;
 
 public class UserDao extends JPADao<Integer,User> {
 
