@@ -6,6 +6,7 @@
 
 1. JDK (Java Development Kit), version 1.7或以上
 1. Maven (Project Management Tool), version 3.5或以上
+(目前仅支持JDK1.7，JDK1.8)
 
 ### <a name="install-jdk"></a>1.1 安装JDK
 
@@ -30,7 +31,7 @@ mvn archetype:generate -B \
     -DappName=helloworld \
     -DarchetypeGroupId=org.actframework \
     -DarchetypeArtifactId=archetype-quickstart \
-    -DarchetypeVersion=1.8.7.2
+    -DarchetypeVersion=1.8.21.0
 ``` 
 
 **注意** 对于真正的项目, 你可能需要替换上面的 `groupId`, `artifactId` 以及 `appName`
@@ -315,6 +316,8 @@ ActFramework使用标准的maven项目布局来组织文件. 下面是一种常�
 ```
 
 **注意** 根据你的应用程序的包组织方式，你看到的有可能和以上结构有不一样的地方
+**注意** asset文件夹可能不会默认被创建，你可以在有需要的时候手动创建。
+**注意** asset文件夹拥有默认的路由/asset/
 
 1. 包组织方式完全由项目决定。你的项目中可能使用了`service`包而不是`controller`来存放所有的RESTful控制器类。 而你的业务层也许不是一个`model`包, 而是分布在多个不同的包里. ActFramework在项目文件组织上没有任何限制
 1. ActFramework使用`common`配置目录来获取缺省的配置信息。而上例所示的`sit`和`dev`目录则完全由项目决定，你可以使用其他任何名字，你也可以增加另一种配置组，比如`uat`。如果项目不需要多个配置组，使用`common`即可。
