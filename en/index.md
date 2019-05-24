@@ -50,3 +50,4 @@ ActFramework is created to make programming MVC application in Java easy and fun
 ## References
 
 1. [Configuration](reference/configuration.md)
+1. [API doc](https://www.javadoc.io/doc/org.actframework/act/1.8.22)
