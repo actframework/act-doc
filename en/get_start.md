@@ -288,8 +288,8 @@ Act use the standard maven layout to organize the project with a few specific ru
 │   │       │   └── js                          -> Javascript files
 │   │       ├── conf                            -> configuration file root
 │   │       │   ├── common                      -> common configurations applied to all profiles
-│   │       │   ├── sit                         -> "sit" profile configurations that overwrite commond configurations
-│   │       │   └── dev                         -> "dev" profile configurations that overwrite commond configurations
+│   │       │   ├── sit                         -> "sit" profile configurations that overwrite common configurations
+│   │       │   └── dev                         -> "dev" profile configurations that overwrite common configurations
 │   │       ├── messages.properties             -> message resource files
 │   │       ├── routes                          -> route table file
 │   │       └── rythm                           -> RythmEngine template root
