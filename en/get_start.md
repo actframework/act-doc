@@ -224,7 +224,7 @@ Once you've done the change, go to your browser and navigate to <a href="http://
 
 If you were a minimalist like me, you might feel things like `Controller.Util.render` a little bit annoying, there are two ways to simplify it:
 
-1. Make your controller extends `act.controller.Controller.Util` class, which is my favorite way to get things done:
+1. Make your controller extend `act.controller.Controller.Util` class, which is my favorite way to get things done:
 
     ```java
     import act.controller.Controller;
@@ -241,7 +241,7 @@ If you were a minimalist like me, you might feel things like `Controller.Util.re
     }
     ```
     
-2. In some rare case that your controller has already extended from other class, then [static import](https://docs.oracle.com/javase/1.5.0/docs/guide/language/static-import.html) is your friend:
+2. In some rare cases your controller may be already extended from other class, then [static import](https://docs.oracle.com/javase/1.5.0/docs/guide/language/static-import.html) is your friend:
 
     ```java
     import static act.controller.Controller.Util.*;
@@ -260,9 +260,9 @@ If you were a minimalist like me, you might feel things like `Controller.Util.re
 
 In either case, you can write in a more expressive way to render the result.
 
-## <a name="anatomy"></a>The anatomy of a Act application
+## <a name="anatomy"></a>The anatomy of an Act application
 
-Act use the standard maven layout to organize the project with a few specific rule. After first compile an Act application looks like this:
+Act use the standard maven layout to organize the project with a few specific rules. After the first compile, an Act application looks like this:
 
 ```
 .
@@ -288,8 +288,8 @@ Act use the standard maven layout to organize the project with a few specific ru
 │   │       │   └── js                          -> Javascript files
 │   │       ├── conf                            -> configuration file root
 │   │       │   ├── common                      -> common configurations applied to all profiles
-│   │       │   ├── sit                         -> "sit" profile configurations that overwrite commond configurations
-│   │       │   └── dev                         -> "dev" profile configurations that overwrite commond configurations
+│   │       │   ├── sit                         -> "sit" profile configurations that overwrite common configurations
+│   │       │   └── dev                         -> "dev" profile configurations that overwrite common configurations
 │   │       ├── messages.properties             -> message resource files
 │   │       ├── routes                          -> route table file
 │   │       └── rythm                           -> RythmEngine template root
@@ -311,10 +311,10 @@ Act use the standard maven layout to organize the project with a few specific ru
         └── uploads                             -> the temporary dir to store the uploaded files
 ```
 
-Note your application might look a little bit different from above in that
+Note, your application might look different from above in that
 
-1. the package structure is totally project specifc. E.g. you might not have a `controller` folder, instead you have `service` folder to put in all the RESTful service classes. And your business logic layer might not be organized in one `model` folder, instead in a set of different packages. In general Act does not define how your organize your java source package, you are in complete freedom to do that based on your project needs.
-1. The `common` configuration folder is a convention used by Act to look for default configurations. However the `sit` and `dev` are the profiles defined by yourself, you are free to give them a different name or add other profiles e.g. `uat` and `prod` etc. It is totally okay if you decide not to define profile and just use `common` configurations.
+1. the package structure is totally project specific. For example, you might not have a `controller` folder, instead you have `service` folder to put in all the RESTful service classes. And your business logic layer might not be organized in one `model` folder, instead in a different set of packages. In general Act does not define how you organize your java source package, you have complete freedom to do that based on your project needs.
+1. The `common` configuration folder is a convention used by Act to look for default configurations. However the `sit` and `dev` are the profiles defined by yourself, you are free to give them a different name or add other profiles like `uat` and `prod` etc. It is totally okay if you decide not to define a profile and just use `common` configuration.
 1. The `route` file is optional. You can just rely on the annotation based route. However if `route` table is provided it allows to overwrite the annotation based route definition
 
 

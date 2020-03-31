@@ -1,13 +1,13 @@
 # Controller and Action handler
 
-ActFramework provides maximum flexibility in creating controller and action handlers.
+ActFramework provides maximum flexibility while creating controller and action handlers.
 
 ## <a name="term"></a>Concept
 
 1. **Controller**. Controller refers to a class that contains one or more action handlers. 
     
-    Note in ActFramework it does NOT require controller class to extend a specific class, neither does it require controller class to be annotated with a certain annotation  
-
+    Note in ActFramework it does NOT require controller class to extend a specific class, neither does it require controller class to be annotated with a certain annotation
+    
 1. **Action handler**. An action handler is a method that provides logic to handler an incoming request. In other words, action handler is a method that has been configured as a route destination.
 
     An action handler could be either static method or non-static method
@@ -37,11 +37,11 @@ You can also use annotation based routing which is usually easier way to go:
 public void home() {}
 ```
 
-If you haven't define any template, the handler will be a dumb handler which returns `200 Okay` response with no body content
+If you haven't defined any template, the handler will be a dumb handler which returns `200 Okay` response with no body content
 
 If you have a template file created in [proper location](templating.md#location), ActFramework will render that file and put the render result into the response body
 
-**Tips** Although it does not require a controller to extend any class, it is good to have your controller class to extend `act.controller.Controller.Util` to get a set of handy utilities that helps to return responses. If your controller already extends other classes, you can use `static import` to achieve the same effect as demonstrated below:
+**Tips** Although it does not require a controller to extend any class, it is good to have your controller class extend `act.controller.Controller.Util` to get a set of handy utilities that helps to return responses. If your controller already extends other classes, you can use `static import` to achieve the same effect as demonstrated below:
 
 1. Extend `act.controller.Controller.Util`:
 
@@ -52,7 +52,7 @@ If you have a template file created in [proper location](templating.md#location)
     } 
     ``` 
 
-1. import static:
+1. Import static:
 
     ```java
     import static act.Controller.Util.*;
@@ -61,12 +61,12 @@ If you have a template file created in [proper location](templating.md#location)
     } 
     ```
 
-**Note** In the following section of this page, it assumes the controller code has extended the `Controller.Util` class or has the static import statement as shown above.
+**Note** In the following section of this page, it is assumed that the controller code has extended the `Controller.Util` class or has the static import statement as shown above.
 
  
 ## <a name="parameter"></a>Getting parameters
 
-ActFramework automatically popluate your action handler parameters from
+ActFramework automatically populates your action handler parameters from
 
 1. URL path variables
 1. Query parameters
@@ -79,11 +79,11 @@ public void updateOrderAmount(String customerId, String orderId, int amount) {
 }
 ```
 
-In the above example, the `customerId` and `orderId` is the URL path variable and `amount` is either the query param specified in the URL or the form data depending on the PUT request encoding.
+In the above example, the `customerId` and `orderId` is the URL path variable and `amount` is either the query parameter specified in the URL or the form data depending on the PUT request encoding.
 
 ### <a name="binding"></a>Binding to POJO
 
-ActFramework support binding complex form data to a domain model class (a POJO). Suppose you have the following model class:
+ActFramework support binding of complex form data to a domain model class (a POJO). Assume you have the following model class:
 
 ```java
 public class Order {
@@ -166,7 +166,7 @@ public void createOrder(String customerId, Order order) {
 
 ### <a name="json-param"></a>Binding from JSON content
 
-The above `createOrder` method is also able to bind the JSON body: 
+The above `createOrder` method is also able to bind to the JSON body: 
 
 ```JSON
 {
@@ -188,7 +188,7 @@ The above `createOrder` method is also able to bind the JSON body:
 
 ### <a name="file"></a>Binding to file
 
-Suppose you have the file upload form in your html page:
+Assume you have the file upload form in your html page:
 
 ```html
 <form method="POST" enctype="multipart/form-data" action="/upload">
@@ -221,9 +221,9 @@ public void createOrder(Order order) {
 }
 ```
 
-### <a name="explicity-200"></a>Explicity 200 Okay
+### <a name="explicity-200"></a>Explicit 200 Okay
 
-For developer who really want to make everything be explicity, here are two ways to create a `200 Okay` response:
+For developer who really want to make everything be explicit, here are two ways to create a `200 Okay` response:
 
 1. Return result
 
@@ -255,11 +255,11 @@ You can even throw out the result implicitly
         ok();
     }
     ```
-**Note** ActFramework will enhance your controller action method, so that if a `Result` type exception has been returned in the source code be thrown out automatically.
+**Note** ActFramework will enhance your controller action method, so that if a `Result` type exception has been returned in the source code it is to be thrown out automatically.
 
 ### <a name="return-404"></a>Return 404 Not Found
 
-The server respond with `404 NotFound` automatically when it cannot find a handler to service an incoming request in route table. However there are cases that your business logic needs to return a 404 response, e.g. when a query to an order by order ID cannot locate the order in the database with the given order ID, here is what you can do:
+The server responds with `404 NotFound` when it cannot find a handler to service to an incoming request in route table. However there are cases that your business logic needs to return a 404 response, e.g. when a query to an order by order ID cannot locate the order in the database with the given order ID, here is what you can do:
 
 ```java
 @GetAction("/order/{orderId}")
@@ -290,11 +290,11 @@ public Order getOrder(String orderId) {
 }
 ```
 
-ActFramework will check if there is return type on action handler signature and it returns `null` then 404 will be send to response automatically.
+ActFramework will check if there is a return type on action handler signature and if it returns `null` then 404 will be send as response.
 
 ### <a name="return-400"></a>Return other error request
 
-Here is the demo code shows how to return response with different HTTP status code
+Here is the demo code shows how to return a response with different HTTP status codes
 
 ```java
 public void foo(int status) {
@@ -340,19 +340,19 @@ public Result getOrder(String orderId) {
 However the first style is recommended because:
 
 1. It is simpler
-1. It allow the flexibility of content-negotiation
+1. It allows the flexibility of content-negotiation
 
 ### <a name="render-template"></a>Render template
 
-For classic MVC application it always needs to render response via templating solution. There are three ways to render through templating.
+For classic MVC applications it is always needed to render response via templating. There are three ways to render through templating.
 
-1. Implicity template rendering
+1. Implicit template rendering
 
     For any action handler, if the corresponding template is defined, the template will always be called to render the response
     
     If an action handler has return value, the value will be passed to the template by variable named `result`
     
-1. Explicity `renderTemplate` call
+1. Explicit `renderTemplate` call
 
     ```java
     @GetAction("/order/editForm")
@@ -362,7 +362,7 @@ For classic MVC application it always needs to render response via templating so
         return renderTemplate(order, hasWritePermission);
     }
     ```
-    The above code will call the template (location by convention) with parameter named `order` and `hasWritePermission`
+    The above code will call the template (location by convention) with the parameters named `order` and `hasWritePermission`
     
 1. Specify the template path
 
@@ -374,12 +374,12 @@ For classic MVC application it always needs to render response via templating so
         return renderTemplate("/myTemplateRoot/orderForm.html", order, hasWritePermission);
     }
     ```
-    As shown above, when the first parameter passed to `renderTemplate` is a String literal, (not String variable), it will treated as template path, instead of render argument
+    As shown above, when the first parameter passed to `renderTemplate` is a String literal, not String variable, it will be treated as template path, instead of render argument
     
 
 ### <a name="render-binary"></a>Render binary data
 
-1. Render binnary as stream embedded in browser (e.g. a PDF or image):
+1. Render binary as stream embedded in browser (e.g. a PDF or image):
 
     ```java
     @GetAction("/user/{userId}/avatar")
@@ -389,7 +389,7 @@ For classic MVC application it always needs to render response via templating so
     }
     ```
     
-2. Render binnary as a download file
+2. Render binary as a download file
 
     ```java
     @GetAction("/invoice/{id}/photoCopy")
@@ -401,7 +401,7 @@ For classic MVC application it always needs to render response via templating so
 
 ## <a name="content-negotiation"></a>Content awareness
 
-ActFramework detects the request's `accept` header and render content accordingly
+ActFramework detects the request's `accept` header and renders content accordingly
 
 ```java
 @GetAction("/person/{id}")
@@ -410,7 +410,7 @@ public Person getPerson(String id) {
 }
 ```
 
-With the action handler code showed above, if the request's `Accept` header is "application/json", the response will be something like:
+With the action handler code shown above, if the request's `Accept` header is "application/json", the response will be something like:
 
 ```
 {
@@ -419,13 +419,13 @@ With the action handler code showed above, if the request's `Accept` header is "
 }
 ```
 
-While if the header is `text/html` or `text/plain`, the response will just be the plain String like
+While if the header is `text/html` or `text/plain`, the response will be the plain String:
 
 ```
 John Smith
 ```
 
-You can define template files with different suffix if you need tweak the default rendered result:
+You can define template files with different suffixes if you need to tweak the default render result:
 
 `getPerson.html`
 
@@ -449,15 +449,15 @@ You can define template files with different suffix if you need tweak the defaul
 }
 ```
 
-ActFramework will pickup the propery template file based on the `Accept` header
+ActFramework will pickup the proper template file based on the `Accept` header
 
 ## Session and Flash
 
-If you have to keep data across multiple HTTP Requests, you can save them in the Session or the Flash scope. Data stored in the Session are available during the whole user session, and data stored in the flash scope are available to the next request only.
+If you have to keep data across multiple HTTP requests, you can save them in the Session or the Flash scope. Data stored in the Session are available during the whole user session, and data stored in the Flash scope are available to the next request only.
 
-It’s important to understand that Session and Flash data are not stored in the server but are added to each subsequent HTTP Request, using the Cookie mechanism. So the data size is very limited (up to 4 KB) and you can only store String values.
+It’s important to understand that Session and Flash data are not stored in the server but are added to each subsequent HTTP request, using the Cookie mechanism. So the data size is very limited (up to 4 KB) and you can only store String values.
 
-Of course, cookies are signed with a secret key so the client can’t modify the cookie data (or it will be invalidated). The ActFramework session is not aimed to be used as a cache. If you need to cache some data related to a specific session, you can use the `Session.cache()` APIs to keep them related to a specific user session.
+Of course, cookies are signed with a secret key so the client can’t modify the cookie data (or it will be invalidated). The ActFramework session is not aimed to be used as a cache. If you need to cache some data related to a specific session, you can use the `Session.cache()` API to keep them related to a specific user session.
 
 Example:
 
@@ -474,17 +474,17 @@ public void index(H.Session session, Message.Dao dao) {
 }
 ```
 
-The session expires when you close your web browser, unless you enabled [session.persistent](configuration#session_persistent)
+The session expires when you close your web browser, unless you have enabled [session.persistent](configuration#session_persistent)
 
 The cache has different semantics to the classic Servlet HTTP session object. You can’t assume that these objects will be always in the cache. So it forces you to handle the cache miss cases, and keeps your application fully stateless.
 
 ## Wrap up
 
-In the section we have explained/demonstrates:
+In the section we have explained/demonstrated:
 
 1. The concept of `Controller` and `Action handler` in ActFramework
 1. How to write a simple controller
-1. How to handle request parameters includingn binding request parameters to POJO instance
+1. How to handle request parameters including binding request parameters to POJO instance
 1. How to respond request with different status code
 1. How to return data
 1. How to find/specify template to render the response
