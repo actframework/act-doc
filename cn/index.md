@@ -54,4 +54,7 @@ ActFramework 是一款[高性能 Java 全栈框架](https://www.techempower.com/
 
 1. [配置（r1.8.8）](configuration.md)
 
+## 与其他工具集成
+1. [Lombok](lombok.md)
+
 <new-page>
