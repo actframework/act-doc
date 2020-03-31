@@ -86,7 +86,7 @@ Scenario:
 
 ## <a name="fixtures"></a> 8.2 准备/清理测试数据
 
-除非极为简单的情况, 测试都需要准备和清理测试数据. ActFramework test 提供了两种测试数据准备方法
+除非极为简单的情况, 测试都需要准备和清理测试数据. ActFramework test 提供了多种工具方便开发人员准备测试数据
 
 ### <a name="load-fixture-yaml"></a> 8.2.1 从 Fixture YAML 文件中加载
 
@@ -224,9 +224,27 @@ Scenario(One):
 
 当测试 Scenario 不依赖于其他 Scenario 的时候 ActFramework 总是会清除掉所有的数据存储. 这一点感觉比较危险, 但因为产品模式下 ActFramework 是不会运行自动测试的, 所以不会对线上系统造成任何危害. 但如果开发调试过程中有手工生成数据就需要小心处理测试. 最好的办法是创建一个特殊的配置用来运行调试自动化测试, 该配置可以定义单独的数据库连接.
 
+对于某些数据特别是长期不变的配置数据, 如果测试不涉及数据的增删改操作, 可以使用 `NoFixture` 注解来告诉框架不要在测试过程中对此类数据进行清理操作:
+
+```java
+@Entity(mame = "city")
+@NoFixture
+public class City extends SimpleBean {
+  public String name;
+  ...
+}
+```
+
+如上例所示, `City` 类上有 `NoFixture` 注解,因此在自动测试过程中 city 数据不会被清理.
+
 ## <a name="scenario-structure"></a> 8.3 测试场景文件结构
 
-系统默认测试场景文件为 `resources/test/scenarios.yml`. 测试场景文件结构如下:
+测试场景是 ActFramework 进行自动测试的核心数据. 测试场景定义在 `.yml` 文件中, ActFramework 从以下文件加载测试场景:
+
+1. `resources/test/scenarios.yml`
+2. `resources/test/scenarios` 目录下的任何 `.yml` 文件
+
+测试场景文件结构如下:
 
 ![image](https://user-images.githubusercontent.com/216930/45152661-099ad700-b215-11e8-95c4-318cc3e7a3df.png)
 
@@ -349,15 +367,16 @@ ActFramework 内置了以下值校验器:
 
 * after: 检查日期是否在给定日期参数之后
 * before: 检查日期是否在给定日期参数之前
-* lte: 检查值是否小于或等于给定参数
-* lt: 检查值是否小于给定参数
-* gte: 检查值是否大于或等于给定参数
-* gt: 检查值是否大于给定参数
 * contains: 检查字串类型值是否包含给定字串
+* containsIgnoreCase: 检查字串类型值是否包含给定字串(大小写不区分)
 * ends: 检查字串类型值是否以给定字串结束
 * eq: 检查值是否等于给定参数
 * eqIgnoreCase: 检查字串类型值是否与给定字串相等 (忽略大小写差异)
 * exists: 检查是否有值
+* gt: 检查值是否大于给定参数
+* gte: 检查值是否大于或等于给定参数
+* lt: 检查值是否小于给定参数
+* lte: 检查值是否小于或等于给定参数
 * neq: 检查值是否不等于给定参数
 * starts: 检查字串类型值是否以给定字串开头
 
@@ -389,6 +408,8 @@ response:
 * `yyyy-MM-dd hh:mm:ss`
 * `yyyy-MM-dd HH:mm:ss`
 * `yyyy-MM-dd`
+
+这里的日期格式并非应用输出的日期格式, 而是在测试场景文件中指定用于验证应用输出日期值的格式
 
 下面是日期类型的验证示例:
 
@@ -626,7 +647,24 @@ Scenario:
             - lt: 6   # less than `6`
 ```
 
-**提示** 数组校验可以和 POJO 校验混合使用
+**提示** 数组校验可以和 POJO 校验混合使用, 例如:
+
+```yaml
+# s8.5.3.4.2d
+Scenario:
+  interactions:
+    - description: test list employees
+      request:
+        get: /employees?q=Tom
+      response:
+        json:
+          size:
+            - gt: 0   # there must exists element in the response
+          ?:          # for any element in the array, it shall be
+            fullName: # the full name must contains "tom" (case insensitive)
+              - containsIgnoreCase: Tom
+
+```
 
 #### <a name="html-response"></a> 8.5.3.5 html 类型内容校验
 
@@ -774,8 +812,8 @@ Scenario(CREATE_USER):
 ```yaml
 # snippet s8.6.2a
 Scenario(CREATE_USER):
-  constants:
-    newUserFirstName: ${randomFirstName()}
+  constants: # define random generated data and associated each data with a name
+    newUserFirstName: ${randomFirstName()} 
     newUserLastName: ${randomLastName()}
     newUserEmail: ${randomEmail()}
   interactions:
@@ -783,9 +821,9 @@ Scenario(CREATE_USER):
       request:
         post: /users
         params:
-          firstName: ${newUserFirstName}
-          lastName: ${newUserLastName}
-          email: ${newUserEmail}
+          firstName: ${newUserFirstName} # refer to random data by name `newUserFirstName`
+          lastName: ${newUserLastName} # refer to random data by name `newUserLastName`
+          email: ${newUserEmail} # refer to random data by name `newUserEmail`
       response:
         json:
           id: 
@@ -801,6 +839,32 @@ Scenario(CREATE_USER):
           lastName: ${newUserLastName}
           email: ${newUserEmail}
 ```
+
+在上面的例子中我们使用了一下几个随机数据生成器:
+
+* randomFirstName - 随机生成名 (英文)
+* randomLastName - 随机生成姓 (英文)
+* randomEmail - 随机生成电子邮件
+
+ActFramework 还提供了更多的随机数据生成器, 包括:
+
+* randomStr - 随机生成字串
+* randomInt - 随机生成整型数字
+* randomBoolean - 随机生成布尔数据
+* randomLong - 随机生成长整型数字
+* randomDate - 随机生成日期型数据
+* randomFullName - 随机生成姓名 (英文)
+* randomPassword - 随机生成密码字串
+* randomUrl - 随机生成 URL
+* randomUsername - 随机生成用户名
+* randomCompanyName - 随机生成公司名 (英文)
+* randomHost - 随机生成主机名
+* randomMobile - 随机生成手机号码 (澳洲)
+* randomPhone - 随机生成座机号码 (澳洲)
+* randomPostCode - 随机生成邮编 (澳洲)
+* randomState - 随机生成州名 (澳洲)
+* randomStreet - 随机生成街名 (英文)
+* randomSuburb - 随机生成区名 (英文)
 
 ## <a name="scenario-dependency"></a> 8.7 测试场景依赖
 
@@ -828,6 +892,47 @@ Scenario(B):
   ...
 ```
 
-## <a name="organize-scenario-files"></a> 8.8 组织测试场景文件
+## <a name="scenario-partition"></a> 8.8 测试场景分区
+
+当测试场景依赖关系涉及到多个测试测试场景的时候有可能由于执行顺序导致依赖关系被打破, 这时候需要定义测试分区. 假设我们有以下测试场景:
+
+1. login
+2. logout
+3. add-bookmark
+4. add-bookmark-unauthorized
+5. update-bookmark
+6. update-bookmark-unauthorized
+
+其中 `add-bookmark`, `update-bookmark` 依赖与 `login`, 而 `add-bookmark-unauthorized`, `update-bookmark-unauthorized` 则依赖于 `logout`. 假如执行顺序为以上列表自上而下, 在执行 3. `add-bookmark` 的时候就会遇到问题, 因为其依赖 `login` 已经执行过了, 但会话又被 `logout` 了,因此场景 `add-bookmark` 将不会成功, 这个时候我们需要将这些测试场景使用 `partition` 关键字来标注分区, 用 `logout` 和 `add-bookmark-unauthorized` 来举例:
+
+```yml
+Scenario(Logout):
+  partition: non-authenticated #分区
+  setup: true
+  noIssue: true
+  description: Prepare - logout the current session
+  interactions:
+    - description: logout the current session
+      request:
+        get: logout
+Scenario(Add bookmark - unauthorized):
+  partition: non-authenticated #分区
+  urlContext: bookmarks
+  interactions:
+    - description: It shall respond 401 if a guest user (user that not logged in) submit request to add bookmark
+      request:
+        method: post
+        json:
+          url: https://google.com
+          description: The gate of the net
+      response:
+        status: 401
+```
+
+在上面的测试场景定义中我们使用了 `non-authenticated` 标注 `logout` 和 `add-bookmark` 测试场景, (显而易见, `update-bookmark-unauthozied` 也应该加入 `non-authenticated` 分区). 使用分区的目的在于保证同一个分区类的测试场景运行不会被其他分区测试场景干扰. 
+
+当测试场景没有定义分区的时候归入 `default` 分区.
+
+## <a name="organize-scenario-files"></a> 8.9 组织测试场景文件
 
 默认的测试场景文件为 `/resources/test/scenarios.yml`, 应用可以将所有的测试场景全部放进这个文件中. 但如果测试场景太多, 管理会比较混乱, 同时还会对版本控制带来麻烦. 这个时候可以按照应用自己的方式将测试场景放进多个 `yml` 文件中, 所有测试场景文件应用放进 `resources/test/scenarios/` 目录. 例如 [act Github Issue 测试项目](https://github.com/actframework/actframework/tree/develop/testapps/GHIssues/src/main/resources/test/scenarios) 就将测试场景按照 issue 组织在 `resources/test/scenarios` 目录中.
